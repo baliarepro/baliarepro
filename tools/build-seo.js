@@ -6,7 +6,7 @@ const path = require("path");
 const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
-const BASE = "https://baliarepro.github.io/baliarepro/";
+const BASE = "https://baliareproperty.com/";
 const LANGS = ["id", "en", "ru"];
 const LOCALE = { id: "id_ID", en: "en_US", ru: "ru_RU" };
 const DESC = {

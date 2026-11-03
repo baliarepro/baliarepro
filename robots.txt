@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://baliarepro.github.io/baliarepro/sitemap.xml
+Sitemap: https://baliareproperty.com/sitemap.xml
