@@ -104,6 +104,17 @@ ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-si
 .btn.ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
 .btn:hover{filter:brightness(1.08)}
 
+.cta-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:22px}
+.cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 14px;padding:16px 18px;border-radius:16px;text-decoration:none;background:var(--sea);color:var(--bg)}
+.cta.owner{background:var(--sand-soft);color:var(--ink);border:1.5px solid var(--sand)}
+.cta small{grid-column:1;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.cta b{grid-column:1;font-family:var(--display);font-size:21px;line-height:1.15}
+.cta span{grid-column:1;font-size:14px;opacity:.85;line-height:1.4}
+.cta svg{grid-column:2;grid-row:1/4;width:22px;height:22px}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.cta{transition:filter .15s,transform .15s}.cta:hover{transform:translateY(-1px)}}
+
 .contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 22px;margin-block:36px 24px;display:grid;gap:14px}
 .contact h2{color:var(--bg);font-size:26px}
 .contact p{margin:0;opacity:.8}
@@ -130,6 +141,10 @@ footer>span{min-width:0}
     <div class="eyebrow">Bali Are Property</div>
     <h1>Listing Properti</h1>
     <p class="lead">Tanah, villa, rumah, dan properti komersial siap transaksi di Bali. Dikelompokkan per jenis properti dan area.</p>
+    <div class="cta-duo">
+      <a class="cta" href="inquiry.html#buyer"><small>Untuk buyer</small><b>Cari properti</b><span>Belum ketemu yang cocok? Isi kebutuhan Anda, kami carikan.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="cta owner" href="inquiry.html#owner"><small>Untuk pemilik</small><b>Titip jual properti</b><span>Pasang tanah, villa, atau rumah Anda di listing kami.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
     <div class="filters">
       <div class="frow" role="group" aria-label="Filter jenis properti">
         <span class="flabel">Jenis properti</span>
@@ -1500,6 +1515,10 @@ footer>span{min-width:0}
     <div class="actions">
       <a class="btn primary" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti." target="_blank" rel="noopener">Chat WhatsApp</a>
       <button class="btn ghost" id="copy" type="button">Salin nomor</button>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" href="inquiry.html#buyer">Form cari properti</a>
+      <a class="btn ghost" href="inquiry.html#owner">Form titip jual</a>
     </div>
   </section>
 
