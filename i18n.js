@@ -621,7 +621,11 @@
     ["Total", "Total", "Общая"],
     ["Estimasi total", "Estimated total", "Estimated total"],
     ["Setara per are", "Equivalent per are", "Equivalent per are"],
-    ["1 are = 100 m²", "1 are = 100 m²", "1 ар = 100 м²"]
+    ["1 are = 100 m²", "1 are = 100 m²", "1 ар = 100 м²"],
+    ["Nomor terpilih, tekan salin", "Number selected, press copy", "Номер выделен, нажмите «Копировать»"],
+    ["Detail listing", "Listing details", "Подробнее"],
+    ["Listing lainnya di area ini", "More listings in this area", "Другие объекты в этом районе"],
+    ["Land, villas and houses for sale in Bali", "Land, villas and houses for sale in Bali", "Земля, виллы и дома на Бали"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
@@ -743,12 +747,36 @@
   window.BAP_I18N = { tr: tr, apply: apply, setLang: setLang, get lang() { return lang; } };
 
   function init() {
-    document.querySelectorAll(".lang-btn").forEach(function (b) {
-      b.addEventListener("click", function () { setLang(b.dataset.lang, true); });
-    });
+    var root = document.documentElement;
+    var st = root.getAttribute("data-static-lang");   // halaman sudah diterjemahkan (untuk Google)
+    var pl = root.getAttribute("data-page-lang");     // halaman diterjemahkan saat dibuka (form)
     var q = (location.search.match(/[?&]lang=(id|en|ru)/) || [])[1], saved;
     try { saved = localStorage.getItem("bap_lang"); } catch (e) {}
-    setLang(q || saved || "id", !!q);
+    var fixed = st || pl;
+    if (fixed) {
+      // Bendera = link ke versi bahasa lain; simpan pilihan sebelum pindah halaman
+      document.querySelectorAll("a.lang-btn").forEach(function (b) {
+        b.addEventListener("click", function () {
+          try { localStorage.setItem("bap_lang", b.dataset.lang); } catch (e) {}
+          if (location.hash) b.href = b.href.split("#")[0] + location.hash;
+        });
+      });
+      var want = q || saved;
+      if (want && want !== fixed) {
+        var alt = document.querySelector('a.lang-btn[data-lang="' + want + '"]');
+        if (alt && alt.href) { location.replace(alt.href.split("#")[0] + location.hash); return; }
+      }
+      if (q) { try { localStorage.setItem("bap_lang", q); } catch (e) {} }
+      if (st) {
+        lang = st;
+        document.querySelectorAll(".lang-btn").forEach(function (b) { b.setAttribute("aria-current", b.dataset.lang === st ? "true" : "false"); });
+      } else setLang(pl, false);
+    } else {
+      document.querySelectorAll(".lang-btn").forEach(function (b) {
+        b.addEventListener("click", function (e) { e.preventDefault(); setLang(b.dataset.lang, true); });
+      });
+      setLang(q || saved || "id", !!q);
+    }
     // Teks yang berubah setelah halaman dimuat (form, tombol salin) ikut diterjemahkan
     var ok = function (n) {
       var p = n.parentNode;
