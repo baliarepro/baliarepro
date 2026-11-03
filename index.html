@@ -110,7 +110,11 @@ ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-si
 .phone{font-family:var(--mono);font-size:clamp(22px,5vw,28px);user-select:all;letter-spacing:.04em}
 .contact .btn.primary{background:var(--sand);color:#10282C}
 .contact .btn.ghost{border-color:var(--bg);color:var(--bg)}
-footer{font-size:13px;color:var(--muted);padding-block:0 40px}
+footer{font-size:13px;color:var(--muted);padding-block:0 40px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+footer>span{min-width:0}
+.visits{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px}
+.visits svg{width:16px;height:16px;flex:none;color:var(--sea)}
+.visits b{font-variant-numeric:tabular-nums}
 
 @media (max-width:560px){
   dl.specs{grid-template-columns:1fr}
@@ -1499,7 +1503,10 @@ footer{font-size:13px;color:var(--muted);padding-block:0 40px}
     </div>
   </section>
 
-  <footer>Harga dapat berubah sewaktu-waktu. Sketsa hanya ilustrasi; data resmi mengikuti sertifikat.</footer>
+  <footer>
+    <span>Harga dapat berubah sewaktu-waktu. Sketsa hanya ilustrasi; data resmi mengikuti sertifikat.</span>
+    <span class="visits" id="visits" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span><b id="visits-n">0</b> kali dikunjungi</span></span>
+  </footer>
 </div>
 
 <script>
@@ -1529,5 +1536,18 @@ footer{font-size:13px;color:var(--muted);padding-block:0 40px}
 })();
 </script>
 
+
+<script>
+(function(){
+  var box=document.getElementById('visits'),n=document.getElementById('visits-n');
+  var live=location.hostname==='baliarepro.github.io';
+  var url='https://abacus.jasoncameron.dev/'+(live?'hit':'get')+'/baliarepro.github.io/visits';
+  try{
+    fetch(url).then(function(r){return r.ok?r.json():null}).then(function(d){
+      if(d&&typeof d.value==='number'){n.textContent=d.value.toLocaleString('id-ID');box.hidden=false}
+    }).catch(function(){});
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
