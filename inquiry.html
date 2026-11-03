@@ -30,7 +30,8 @@ body{background:var(--bg);color:var(--ink);font:400 15px/1.55 var(--f-body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
 .wrap{max-width:1060px;margin:0 auto}
 header.top{display:flex;flex-direction:column;gap:6px;margin-bottom:22px}
-.back{align-self:flex-start;font:600 14px var(--f-body);color:var(--accent);text-decoration:none;margin-bottom:10px}.back:hover{text-decoration:underline}
+header.top .top-row{margin-bottom:10px}
+.back{align-self:flex-start;font:600 14px var(--f-body);color:var(--accent);text-decoration:none;}.back:hover{text-decoration:underline}
 .brand{font:500 12px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 h1{font:700 clamp(28px,5vw,42px)/1.08 var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
 .lede{color:var(--muted);max-width:60ch;margin:4px 0 0}
@@ -76,6 +77,15 @@ textarea{min-height:90px;resize:vertical}
 .f.bad .chip span{border-color:var(--err)}
 .f .errmsg{color:var(--err);font-size:12.5px;font-weight:600}
 
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.langs{display:flex;gap:10px;margin-left:auto}
+.lang-btn{width:42px;height:42px;padding:0;border:0;border-radius:50%;overflow:hidden;cursor:pointer;background:transparent;box-shadow:0 0 0 1px var(--line);opacity:.82}
+.lang-btn svg{display:block;width:100%;height:100%}
+.lang-btn:hover{opacity:1}
+.lang-btn[aria-pressed="true"]{opacity:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--accent)}
+.lang-btn:focus-visible{outline:2px solid var(--accent);outline-offset:7px}
+@media (prefers-reduced-motion:no-preference){.lang-btn{transition:box-shadow .15s,opacity .15s}}
+
 aside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:12px;min-width:0}
 .prev{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
 .prev h3{margin:0;font:600 15px var(--f-display);display:flex;justify-content:space-between;align-items:center}
@@ -100,7 +110,14 @@ aside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex
 <body>
 <div class="wrap">
   <header class="top">
-    <a class="back" href="./">← Lihat semua listing</a>
+    <div class="top-row">
+      <a class="back" href="./">← Lihat semua listing</a>
+      <div class="langs" role="group" aria-label="Pilih bahasa / Language">
+        <button type="button" class="lang-btn" data-lang="id" aria-label="Bahasa Indonesia" aria-pressed="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="18" fill="#CE1126"/><rect y="18" width="36" height="18" fill="#FFFFFF"/></svg></button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English" aria-pressed="false"><svg viewBox="15 0 30 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg></button>
+        <button type="button" class="lang-btn" data-lang="ru" aria-label="Русский" aria-pressed="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="12" fill="#FFFFFF"/><rect y="12" width="36" height="12" fill="#0039A6"/><rect y="24" width="36" height="12" fill="#D52B1E"/></svg></button>
+      </div>
+    </div>
     <div class="brand">Bali Are Property · Seluruh Bali</div>
     <h1 id="h1">Form Inquiry Properti</h1>
     <p class="lede" id="lede">Isi kebutuhan Anda, lalu kirim langsung ke WhatsApp kami. Tim kami akan membalas dengan pilihan properti yang cocok.</p>
@@ -116,13 +133,13 @@ aside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex
     <aside>
       <div class="prev">
         <h3>Pesan WhatsApp <small>pratinjau</small></h3>
-        <pre class="bubble" id="bubble"></pre>
+        <pre class="bubble" id="bubble" data-noi18n></pre>
         <div class="status" id="status"></div>
         <div class="btn-row">
           <a class="btn primary" id="wa" href="#" target="_blank" rel="noopener">Kirim via WhatsApp</a>
           <button class="btn ghost" type="button" id="copy">Salin</button>
         </div>
-        <div class="contact">WhatsApp: <b>+62 812 868 080</b> (Bagoes)</div>
+        <div class="contact">WhatsApp: <b data-noi18n>+62 812 868 080</b> (Bagoes)</div>
         <div class="tip" id="tip"></div>
       </div>
       <button class="btn ghost" type="button" id="reset">Kosongkan form</button>
@@ -341,22 +358,24 @@ function update(){
     const lab=document.querySelector('label[for="o_harga"]'); lab.innerHTML = `Harga ${v.o_mode==="Per are"?"per are":"total"} <span class="req">*</span>`;
   }
   // message
-  const lines=[F.intro];
+  const ML = (window.BAP_I18N && BAP_I18N.lang!=="id") ? "en" : "id";
+  const T = x => ML==="id" ? x : BAP_I18N.tr(String(x), "en");
+  const lines=[T(F.intro)];
   F.sections.forEach(s=>{
     if(s.show && !s.show(v)) return;
     const block=[];
     s.fields.flatMap(flat).forEach(f=>{
       if(!visible(f,s,v) || f.silent) return;
-      if(f.price){ block.push(...priceLines(v)); return; }
+      if(f.price){ block.push(...priceLines(v).map(l=>{ const i=l.indexOf(": "); return T(l.slice(0,i))+": "+T(l.slice(i+2)); })); return; }
       const val=v[f.id]; if(!filled(val)) return;
-      let txt = Array.isArray(val)? val.join(", ") : val;
-      if(f.type==="money") txt = rpFull(num(f.id));
-      else if(f.fmt) txt = f.fmt(num(f.id));
-      block.push(`${f.key||f.l}: ${txt}`);
+      let txt = Array.isArray(val)? val.map(T).join(", ") : T(val);
+      if(f.type==="money") txt = T(rpFull(num(f.id)));
+      else if(f.fmt) txt = T(f.fmt(num(f.id)));
+      block.push(`${T(f.key||f.l)}: ${txt}`);
     });
-    if(block.length){ lines.push("", `*${s.t.toUpperCase()}*`, ...block); }
+    if(block.length){ lines.push("", `*${T(s.t).toUpperCase()}*`, ...block); }
   });
-  lines.push("", "Terima kasih.");
+  lines.push("", T("Terima kasih."));
   const msg=lines.join("\n");
   $("#bubble").textContent=msg;
   $("#wa").href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
@@ -425,8 +444,10 @@ function restore(){
 function setRole(r, push){ role=r; if(push && location.hash!=="#"+r) location.hash=r; render(); }
 document.querySelectorAll(".role").forEach(b=>b.addEventListener("click",()=>setRole(b.dataset.role,true)));
 window.addEventListener("hashchange",()=>{ const r=location.hash.slice(1); if(FORMS[r] && r!==role) setRole(r,false); });
+document.addEventListener("bap:lang", ()=>update());
 setRole(FORMS[location.hash.slice(1)] ? location.hash.slice(1) : "buyer", false);
 </script>
 
+<script src="i18n.js"></script>
 </body>
 </html>

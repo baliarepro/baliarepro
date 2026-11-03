@@ -115,6 +115,15 @@ ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-si
 .cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 @media (prefers-reduced-motion:no-preference){.cta{transition:filter .15s,transform .15s}.cta:hover{transform:translateY(-1px)}}
 
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.langs{display:flex;gap:10px;margin-left:auto}
+.lang-btn{width:42px;height:42px;padding:0;border:0;border-radius:50%;overflow:hidden;cursor:pointer;background:transparent;box-shadow:0 0 0 1px var(--line);opacity:.82}
+.lang-btn svg{display:block;width:100%;height:100%}
+.lang-btn:hover{opacity:1}
+.lang-btn[aria-pressed="true"]{opacity:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--sea)}
+.lang-btn:focus-visible{outline:2px solid var(--sea);outline-offset:7px}
+@media (prefers-reduced-motion:no-preference){.lang-btn{transition:box-shadow .15s,opacity .15s}}
+
 .contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 22px;margin-block:36px 24px;display:grid;gap:14px}
 .contact h2{color:var(--bg);font-size:26px}
 .contact p{margin:0;opacity:.8}
@@ -138,7 +147,14 @@ footer>span{min-width:0}
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow">Bali Are Property</div>
+    <div class="top-row">
+      <div class="eyebrow">Bali Are Property</div>
+      <div class="langs" role="group" aria-label="Pilih bahasa / Language">
+        <button type="button" class="lang-btn" data-lang="id" aria-label="Bahasa Indonesia" aria-pressed="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="18" fill="#CE1126"/><rect y="18" width="36" height="18" fill="#FFFFFF"/></svg></button>
+        <button type="button" class="lang-btn" data-lang="en" aria-label="English" aria-pressed="false"><svg viewBox="15 0 30 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg></button>
+        <button type="button" class="lang-btn" data-lang="ru" aria-label="Русский" aria-pressed="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="12" fill="#FFFFFF"/><rect y="12" width="36" height="12" fill="#0039A6"/><rect y="24" width="36" height="12" fill="#D52B1E"/></svg></button>
+      </div>
+    </div>
     <h1>Listing Properti</h1>
     <p class="lead">Tanah, villa, rumah, dan properti komersial siap transaksi di Bali. Dikelompokkan per jenis properti dan area.</p>
     <div class="cta-duo">
@@ -1511,7 +1527,7 @@ footer>span{min-width:0}
   <section class="contact" aria-labelledby="c-head">
     <div class="eyebrow" style="color:var(--sand)">Info &amp; survey lokasi</div>
     <h2 id="c-head">Bagoes Rally</h2>
-    <div class="phone" id="phone">0812 868 080</div>
+    <div class="phone" id="phone" data-noi18n>0812 868 080</div>
     <div class="actions">
       <a class="btn primary" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti." target="_blank" rel="noopener">Chat WhatsApp</a>
       <button class="btn ghost" id="copy" type="button">Salin nomor</button>
@@ -1524,7 +1540,7 @@ footer>span{min-width:0}
 
   <footer>
     <span>Harga dapat berubah sewaktu-waktu. Sketsa hanya ilustrasi; data resmi mengikuti sertifikat.</span>
-    <span class="visits" id="visits" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span><b id="visits-n">0</b> kali dikunjungi</span></span>
+    <span class="visits" id="visits" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span><b id="visits-n" data-noi18n>0</b> kali dikunjungi</span></span>
   </footer>
 </div>
 
@@ -1568,5 +1584,6 @@ footer>span{min-width:0}
   }catch(e){}
 })();
 </script>
+<script src="i18n.js"></script>
 </body>
 </html>
