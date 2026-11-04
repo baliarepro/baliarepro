@@ -24,6 +24,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 
 ## Bali Property Guide — TETAP (tidak diupdate mingguan)
 - Artikel di `tools/guide-content.js` dibiarkan seperti sekarang atas permintaan pemilik. Jangan menambah atau mengubah artikel Guide kecuali pemilik memintanya.
+- Halaman Guide sengaja tanpa label mingguan ("Edisi minggu ini") dan tanpa tanggal tampil, karena isinya tetap.
 
 ## News — update mingguan (berita properti Bali)
 - Menu "News/Berita/Новости" (`news.html`, `news/<slug>.html`, juga di `en/` dan `ru/`). Menu ini menggantikan menu "Sell"; tombol "List your property" tetap ada di homepage.

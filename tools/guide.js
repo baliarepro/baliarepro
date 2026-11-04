@@ -106,28 +106,20 @@ ${copyScript}
 
 function renderHub(o) {
   const { L, esc } = o, g = G[L];
-  // ARTICLES diurutkan dari yang terbaru. 5 teratas = edisi minggu ini, sisanya arsip.
+  // Guide bersifat tetap: semua artikel tampil tanpa label mingguan dan tanpa tanggal.
   const card = (a, first) => {
     const t = a[L];
-    return `<a class="gd-card${first ? " first" : ""}" href="guide/${a.slug}.html"><span class="tag">${esc(t.tag)} · ${esc(fmtDate(a.date, L))}</span><h2>${esc(t.title)}</h2><p>${esc(t.summary)}</p><span class="go">${esc(g.read)} →</span></a>`;
+    return `<a class="gd-card${first ? " first" : ""}" href="guide/${a.slug}.html"><span class="tag">${esc(t.tag)}</span><h2>${esc(t.title)}</h2><p>${esc(t.summary)}</p><span class="go">${esc(g.read)} →</span></a>`;
   };
-  const latest = ARTICLES.slice(0, 5), archive = ARTICLES.slice(5);
-  const L_LATEST = { id: "Edisi minggu ini", en: "This week's edition", ru: "Выпуск этой недели" }[L];
-  const L_ARCH = { id: "Arsip artikel", en: "Article archive", ru: "Архив статей" }[L];
   const body = `  ${top({ ...o, up: "", current: true })}
   <header class="gd-hero">
     <div class="eyebrow">${esc(g.eyebrow)}</div>
     <h1>${esc(g.h1)}</h1>
     <p>${esc(g.intro)}</p>
   </header>
-  <h2 class="gd-sec">${esc(L_LATEST)}</h2>
-  <section class="gd-list" aria-label="${esc(L_LATEST)}">
-      ${latest.map((a, i) => card(a, i === 0)).join("\n      ")}
+  <section class="gd-list" aria-label="${esc(g.eyebrow)}">
+      ${ARTICLES.map((a, i) => card(a, i === 0)).join("\n      ")}
   </section>
-  ${archive.length ? `<h2 class="gd-sec">${esc(L_ARCH)}</h2>
-  <section class="gd-list" aria-label="${esc(L_ARCH)}">
-      ${archive.map((a) => card(a, false)).join("\n      ")}
-  </section>` : ""}
   <div style="margin-top:36px">${o.cta}</div>`;
   return shell({ ...o, title: g.hubTitle, body });
 }
@@ -152,7 +144,7 @@ function renderArticle(o) {
   <article class="art">
     <span class="tag">${esc(t.tag)}</span>
     <h1>${esc(t.title)}</h1>
-    <div class="meta">${esc(g.published)} ${esc(fmtDate(article.date, L))} · Bali Are Property</div>
+    <div class="meta">Bali Are Property</div>
     <p class="lead">${esc(t.summary)}</p>
     <div class="body">
       ${t.body.map((b) => renderBlock(b, L, esc)).join("\n      ")}
