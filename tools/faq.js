@@ -98,6 +98,7 @@ ${CSS}
       <a href="about.html">${esc(h.nav[3])}</a>
       <a href="listings.html">${esc(h.nav[0])}</a>
       <a href="inquiry.html#owner">${esc(h.nav[1])}</a>
+      <a href="guide.html">${esc(h.nav[5])}</a>
       <a href="faq.html" aria-current="page">${esc(h.nav[4])}</a>
       <a href="#kontak">${esc(h.nav[2])}</a>
     </nav>

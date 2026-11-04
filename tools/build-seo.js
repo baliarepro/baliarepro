@@ -219,6 +219,39 @@ ${copyScript}
     }
   }
 
+  // ---------- Bali Property Guide (3 bahasa) ----------
+  const GD = require("./guide.js");
+  for (const L of LANGS) {
+    const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
+    const common = { L, head, esc, flags, cta: out[L].cta, contact: out[L].contact, footer: out[L].footer, copyScript };
+    { // halaman daftar artikel
+      const file = langDir(L) + "guide.html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "guide.html")]));
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT, { "@type": "CollectionPage", name: GD.G[L].hubTitle, url: alts[L], inLanguage: L,
+        hasPart: GD.ARTICLES.map((a) => ({ "@type": "Article", headline: a[L].title, url: url(L, "guide/" + a.slug + ".html") })) }] };
+      let html = GD.renderHub({ ...common, i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc: GD.G[L].hubDesc, ogTitle: GD.G[L].hubTitle, jsonld }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "guide.html")])), L);
+      write(file, html);
+    }
+    for (const a of GD.ARTICLES) {
+      const file = langDir(L) + "guide/" + a.slug + ".html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "guide/" + a.slug + ".html")]));
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
+        { "@type": "Article", headline: a[L].title, description: a[L].summary, inLanguage: L, url: alts[L], mainEntityOfPage: alts[L],
+          datePublished: a.date, dateModified: a.date, image: BASE + "og.png",
+          author: { "@id": BASE + "#agent" }, publisher: { "@id": BASE + "#agent" } },
+        { "@type": "BreadcrumbList", itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Bali Are Property", item: url(L, "") },
+          { "@type": "ListItem", position: 2, name: "Bali Property Guide", item: url(L, "guide.html") },
+          { "@type": "ListItem", position: 3, name: a[L].title, item: alts[L] }] }] };
+      let html = GD.renderArticle({ ...common, article: a, i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc: a[L].summary, ogTitle: a[L].title, jsonld }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "guide/" + a.slug + ".html")])), L);
+      write(file, html);
+    }
+  }
+
   // ---------- Homepage (3 bahasa) ----------
   const { T: HT, renderHome } = require("./home.js");
   const visitsSrc = (srcIndex.match(/<script>\n\(function\(\)\{\n  var box=document\.getElementById\('visits'\)[\s\S]*?<\/script>/) || [""])[0]
@@ -232,7 +265,9 @@ ${copyScript}
     const jsonld = { "@context": "https://schema.org", "@graph": [agent,
       { "@type": "WebSite", name: "Bali Are Property", url: BASE, inLanguage: ["id", "en", "ru"], publisher: { "@id": BASE + "#agent" } }] };
     const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
-    let html = renderHome({ L, head, esc, flags, cards: out[L].cards, cta: out[L].cta, contact: out[L].contact, footer: out[L].footer,
+    const GDh = require("./guide.js");
+    let html = renderHome({ guide: GDh.ARTICLES.slice(0, 3).map((a) => ({ slug: a.slug, ...a[L] })),
+      guideLabels: { all: { id: "Semua artikel", en: "All articles", ru: "Все статьи" }[L] }, L, head, esc, flags, cards: out[L].cards, cta: out[L].cta, contact: out[L].contact, footer: out[L].footer,
       seoBlock: seo({ L, pageUrl: alts[L], alts, desc: HT[L].desc, ogTitle: HT[L].title, jsonld }),
       visitsScript: visitsSrc, copyScript, i18nSrc: rel(file, "i18n.js") });
     html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k))])), L);
@@ -270,7 +305,7 @@ ${copyScript}
 
   // ---------- Sitemap & robots ----------
   const today = new Date().toISOString().slice(0, 10);
-  const pages = ["", "about.html", "faq.html", "listings.html", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
+  const pages = ["", "about.html", "faq.html", "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
   const urls = pages.flatMap((p) => LANGS.map((L) => `  <url>
     <loc>${url(L, p)}</loc>
     <lastmod>${today}</lastmod>
