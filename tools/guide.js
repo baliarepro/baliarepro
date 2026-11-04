@@ -25,6 +25,7 @@ const CSS = `<style>
 .gd-hero{padding-block:56px 28px;display:grid;gap:14px;max-width:760px}
 .gd-hero h1{font-size:clamp(34px,6.4vw,60px);font-weight:800;letter-spacing:-.025em;line-height:1.04}
 .gd-hero p{margin:0;font-size:18px;color:var(--muted);max-width:60ch}
+.gd-sec{font-size:clamp(22px,3vw,28px);margin:28px 0 14px}
 .gd-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .gd-card{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;text-decoration:none;color:var(--ink)}
 .gd-card:hover{border-color:var(--sea)}
@@ -105,19 +106,28 @@ ${copyScript}
 
 function renderHub(o) {
   const { L, esc } = o, g = G[L];
-  const cards = ARTICLES.map((a, i) => {
+  // ARTICLES diurutkan dari yang terbaru. 5 teratas = edisi minggu ini, sisanya arsip.
+  const card = (a, first) => {
     const t = a[L];
-    return `<a class="gd-card${i === 0 ? " first" : ""}" href="guide/${a.slug}.html"><span class="tag">${esc(t.tag)}</span><h2>${esc(t.title)}</h2><p>${esc(t.summary)}</p><span class="go">${esc(g.read)} →</span></a>`;
-  }).join("\n      ");
+    return `<a class="gd-card${first ? " first" : ""}" href="guide/${a.slug}.html"><span class="tag">${esc(t.tag)} · ${esc(fmtDate(a.date, L))}</span><h2>${esc(t.title)}</h2><p>${esc(t.summary)}</p><span class="go">${esc(g.read)} →</span></a>`;
+  };
+  const latest = ARTICLES.slice(0, 5), archive = ARTICLES.slice(5);
+  const L_LATEST = { id: "Edisi minggu ini", en: "This week's edition", ru: "Выпуск этой недели" }[L];
+  const L_ARCH = { id: "Arsip artikel", en: "Article archive", ru: "Архив статей" }[L];
   const body = `  ${top({ ...o, up: "", current: true })}
   <header class="gd-hero">
     <div class="eyebrow">${esc(g.eyebrow)}</div>
     <h1>${esc(g.h1)}</h1>
     <p>${esc(g.intro)}</p>
   </header>
-  <section class="gd-list" aria-label="${esc(g.eyebrow)}">
-      ${cards}
+  <h2 class="gd-sec">${esc(L_LATEST)}</h2>
+  <section class="gd-list" aria-label="${esc(L_LATEST)}">
+      ${latest.map((a, i) => card(a, i === 0)).join("\n      ")}
   </section>
+  ${archive.length ? `<h2 class="gd-sec">${esc(L_ARCH)}</h2>
+  <section class="gd-list" aria-label="${esc(L_ARCH)}">
+      ${archive.map((a) => card(a, false)).join("\n      ")}
+  </section>` : ""}
   <div style="margin-top:36px">${o.cta}</div>`;
   return shell({ ...o, title: g.hubTitle, body });
 }
