@@ -73,7 +73,7 @@ function parseRp(t) {
 }
 
 (async () => {
-  const srcIndex = read("index.html");
+  const srcIndex = read("listings.html");
   const srcInq = read("inquiry.html");
   const head = srcIndex.split("<head>")[1].split("</head>")[0]
     .replace(/<title>[\s\S]*?<\/title>\n?/, "").replace(/<!--seo-->[\s\S]*?<!--\/seo-->\n?/, "");
@@ -104,12 +104,14 @@ function parseRp(t) {
           eyebrow: (c.querySelector(".eyebrow") || {}).textContent || "",
           type: sec.querySelector("h2").textContent.trim(), areaTitle: area.querySelector(".area-head h3").textContent.trim(),
           areaSub: area.querySelector(".area-head p").textContent.trim(),
+          rec: c.classList.contains("recommended"),
           sold: c.classList.contains("sold") || /SOLD/.test(c.innerHTML), priceText: pb ? pb.textContent : "",
           html: clone.outerHTML };
       });
       document.documentElement.setAttribute("lang", L);
       return { cards, html: "<!doctype html>\n" + document.documentElement.outerHTML,
         title: document.title, back: T("← Lihat semua listing"), detail: T("Detail listing"),
+        typeNames: [...document.querySelectorAll("section.type h2")].map((h) => h.textContent.trim()),
         cta: document.querySelector(".cta-duo").outerHTML, contact: document.querySelector("section.contact").outerHTML,
         footer: document.querySelector("footer > span").textContent };
     }, L);
@@ -121,8 +123,8 @@ function parseRp(t) {
 
   // ---------- Halaman utama (3 bahasa) ----------
   for (const L of LANGS) {
-    const file = langDir(L) + "index.html";
-    const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "")]));
+    const file = langDir(L) + "listings.html";
+    const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "listings.html")]));
     const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
       { "@type": "ItemList", name: L === "id" ? "Listing Properti Bali" : out[L].title,
         itemListElement: out[L].cards.map((c, i) => ({ "@type": "ListItem", position: i + 1, url: url(L, "listing/" + c.slug + ".html"), name: c.title })) }] };
@@ -136,7 +138,7 @@ function parseRp(t) {
         .replace('src="i18n.js"', 'src="../i18n.js"')
         .replace('<script type="text/plain">', "<script>");
     }
-    html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k))])), L);
+    html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "listings.html")])), L);
     write(file, html);
   }
 
@@ -168,6 +170,7 @@ main .cta-duo{margin-top:0}
       const file = langDir(L) + "listing/" + c.slug + ".html";
       const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "listing/" + c.slug + ".html")]));
       const home = rel(file, langDir(L));
+      const list = rel(file, langDir(L) + "listings.html");
       const desc = (c.desc.trim() || c.title).replace(/\s+/g, " ");
       const offer = { "@type": "Offer", priceCurrency: "IDR", availability: c.sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock", seller: { "@id": BASE + "#agent" } };
       if (prices[c.slug]) offer.price = prices[c.slug];
@@ -192,7 +195,7 @@ ${pageCss}
       <a class="eyebrow" href="${home}">Bali Are Property</a>
       ${flags}
     </div>
-    <a class="back" href="${home}">${esc(out[L].back)}</a>
+    <a class="back" href="${list}">${esc(out[L].back)}</a>
     <p class="crumb">${esc(c.type)} · ${esc(c.areaTitle)} · ${esc(c.areaSub)}</p>
   </header>
   <main>
@@ -216,9 +219,29 @@ ${copyScript}
     }
   }
 
+  // ---------- Homepage (3 bahasa) ----------
+  const { T: HT, renderHome } = require("./home.js");
+  const visitsSrc = (srcIndex.match(/<script>\n\(function\(\)\{\n  var box=document\.getElementById\('visits'\)[\s\S]*?<\/script>/) || [""])[0]
+    .replace("'get'+'/baliarepro", "(live?'hit':'get')+'/baliarepro");
+  for (const L of LANGS) {
+    const file = langDir(L) + "index.html";
+    const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "")]));
+    const agent = Object.assign({}, AGENT, { description: HT[L].about[0], foundingDate: "2009",
+      areaServed: ["Kuta Selatan, Badung, Bali", "Kuta Utara, Badung, Bali", "Bali, Indonesia"].map((n) => ({ "@type": "Place", name: n })),
+      knowsAbout: HT.en.spec });
+    const jsonld = { "@context": "https://schema.org", "@graph": [agent,
+      { "@type": "WebSite", name: "Bali Are Property", url: BASE, inLanguage: ["id", "en", "ru"], publisher: { "@id": BASE + "#agent" } }] };
+    const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
+    let html = renderHome({ L, head, esc, flags, cards: out[L].cards, cta: out[L].cta, contact: out[L].contact, footer: out[L].footer,
+      seoBlock: seo({ L, pageUrl: alts[L], alts, desc: HT[L].desc, ogTitle: HT[L].title, jsonld }),
+      visitsScript: visitsSrc, copyScript, i18nSrc: rel(file, "i18n.js") });
+    html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k))])), L);
+    write(file, html);
+  }
+
   // ---------- Sitemap & robots ----------
   const today = new Date().toISOString().slice(0, 10);
-  const pages = ["", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
+  const pages = ["", "listings.html", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
   const urls = pages.flatMap((p) => LANGS.map((L) => `  <url>
     <loc>${url(L, p)}</loc>
     <lastmod>${today}</lastmod>
