@@ -3,7 +3,7 @@ const T = {
   id: {
     title: "Bali Are Property – Agen Properti di Bali Sejak 2009",
     desc: "Agen properti independen di Bali sejak 2009. Tanah dijual, tanah investasi, dan villa di Kuta Selatan (Ungasan, Jimbaran, Uluwatu, Pecatu) dan Kuta Utara (Canggu, Berawa, Pererenan).",
-    nav: ["Listing", "Titip jual", "Kontak"],
+    nav: ["Listing", "Titip jual", "Kontak", "Tentang kami"], more: "Selengkapnya tentang kami",
     eyebrow: "Agen properti di Bali · Sejak 2009",
     h1: "Mitra Properti Terpercaya Anda di Bali",
     sub: "Jual beli properti, investasi tanah, dan peluang villa di Bali.",
@@ -29,7 +29,7 @@ const T = {
   en: {
     title: "Bali Are Property – Property Agent in Bali Since 2009",
     desc: "Independent property agency in Bali since 2009. Land for sale, investment land and villas in South Kuta (Ungasan, Jimbaran, Uluwatu, Pecatu) and North Kuta (Canggu, Berawa, Pererenan).",
-    nav: ["Listings", "Sell", "Contact"],
+    nav: ["Listings", "Sell", "Contact", "About"], more: "More about us",
     eyebrow: "Property agency in Bali · Since 2009",
     h1: "Your Trusted Property Partner in Bali",
     sub: "Property sales, land investment and villa opportunities in Bali.",
@@ -55,7 +55,7 @@ const T = {
   ru: {
     title: "Bali Are Property – агентство недвижимости на Бали с 2009 года",
     desc: "Независимое агентство недвижимости на Бали с 2009 года. Земля, инвестиционные участки и виллы в Южной Куте (Унгасан, Джимбаран, Улувату, Пекату) и Северной Куте (Чангу, Берава, Перененан).",
-    nav: ["Объекты", "Продать", "Контакты"],
+    nav: ["Объекты", "Продать", "Контакты", "О нас"], more: "Подробнее о нас",
     eyebrow: "Агентство недвижимости на Бали · с 2009 года",
     h1: "Ваш надёжный партнёр по недвижимости на Бали",
     sub: "Продажа недвижимости, инвестиции в землю и виллы на Бали.",
@@ -103,6 +103,8 @@ const CSS = `<style>
 .about .text{display:grid;gap:14px;max-width:64ch}
 .about .text p{margin:0}
 .about .text p:first-child{font-size:18px}
+.more-link{color:var(--sea);font-weight:600;text-decoration:none}
+.more-link:hover{text-decoration:underline}
 .spec{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .spec li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 18px 44px;position:relative;font-weight:600;line-height:1.35}
 .spec li::before{content:"";position:absolute;left:18px;top:24px;width:12px;height:12px;border-radius:3px;background:var(--sand);transform:rotate(45deg)}
@@ -155,6 +157,7 @@ ${CSS}
   <div class="home-top">
     <span class="eyebrow">Bali Are Property</span>
     <nav aria-label="Menu">
+      <a href="about.html">${esc(t.nav[3])}</a>
       <a href="listings.html">${esc(t.nav[0])}</a>
       <a href="inquiry.html#owner">${esc(t.nav[1])}</a>
       <a href="#kontak">${esc(t.nav[2])}</a>
@@ -179,7 +182,7 @@ ${CSS}
 
   <section class="hsec about" aria-labelledby="h-about">
     <h2 id="h-about">${esc(t.aboutH)}</h2>
-    <div class="text">${t.about.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
+    <div class="text">${t.about.map((p) => `<p>${esc(p)}</p>`).join("")}<p><a class="more-link" href="about.html">${esc(t.more)} →</a></p></div>
   </section>
 
   <section class="hsec" aria-labelledby="h-spec">
@@ -230,4 +233,4 @@ ${visitsScript}
 `;
 }
 
-module.exports = { T, renderHome };
+module.exports = { T, renderHome, CSS };
