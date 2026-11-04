@@ -482,6 +482,11 @@
     ["±15 menit ke RS internasional Sanur dan ICON Bali Mall", "±15 min to the international hospital in Sanur and ICON Bali Mall", "±15 мин до международной больницы в Сануре и ICON Bali Mall"],
     ["±15 menit ke pusat pemerintahan dan Plaza Renon", "±15 min to the government centre and Plaza Renon", "±15 мин до правительственного центра и Plaza Renon"],
     ["±35 menit ke Bandara Ngurah Rai", "±35 min to Ngurah Rai Airport", "±35 мин до аэропорта Нгурах-Рай"],
+    ["Rumah 2 kamar tidur di perumahan one gate Pering", "2-bedroom house in a gated estate in Pering", "Дом с 2 спальнями в охраняемом комплексе в Перинге"],
+    ["Pering · Blahbatuh", "Pering · Blahbatuh", "Перинг · Блахбату"],
+    ["Rumah di perumahan dengan sistem one gate yang nyaman dan aman, di atas tanah 210 m² sehingga masih ada ruang untuk dikembangkan. Cocok untuk tempat tinggal maupun investasi. Sewa jangka panjang juga bisa.", "A house in a comfortable, secure one-gate estate, on 210 m² of land with room to expand. Suits living or investment. Long-term lease is also possible.", "Дом в уютном охраняемом комплексе с одним въездом, на участке 210 м² с местом для расширения. Для жизни или инвестиций. Возможна долгосрочная аренда."],
+    ["Bisa, tanya harga", "Available, ask for price", "Возможна, цена по запросу"],
+    ["Perumahan one gate system", "One-gate residential estate", "Комплекс с одним въездом"],
     // ---------- Form inquiry ----------
     ["Form Inquiry – Bali Are Property", "Inquiry Form – Bali Are Property", "Форма запроса – Bali Are Property"],
     ["← Lihat semua listing", "← See all listings", "← Все объекты"],

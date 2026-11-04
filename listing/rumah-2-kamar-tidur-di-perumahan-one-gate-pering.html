@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="id" data-static-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: catalog — header + kawasan filter chips, grouped by jenis properti then kawasan, each listing a brochure card; shared contact block at end */
+:root{
+  --bg:#F3F4F0; --surface:#FFFFFF; --ink:#10282C; --muted:#56676A; --line:#D8DDD8;
+  --sea:#13706E; --sea-soft:#DCEDEA; --sand:#B89A5E; --sand-soft:#F1E9D8; --wa:#1A8D4A; --sold:#B3261E;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1B1E; --surface:#13272B; --ink:#E7EEEC; --muted:#9DB0AE; --line:#24403F;
+  --sea:#4FC2B4; --sea-soft:#163A3A; --sand:#D6BC84; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0C1B1E; --surface:#13272B; --ink:#E7EEEC; --muted:#9DB0AE; --line:#24403F;
+  --sea:#4FC2B4; --sea-soft:#163A3A; --sand:#D6BC84; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+
+header{padding-block:44px 20px}
+h1{font-size:clamp(34px,7vw,56px);font-weight:800;letter-spacing:-.02em;margin-top:12px}
+.lead{color:var(--muted);font-size:17px;max-width:58ch;margin:12px 0 0}
+
+.filters{display:grid;gap:14px;margin-top:22px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flabel{flex-basis:100%;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.chip.empty{opacity:.4}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:600 14px var(--body);cursor:pointer}
+.chip small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.chip:focus-visible,.btn:focus-visible{outline:3px solid var(--sand);outline-offset:3px}
+
+.type{padding-block:28px 8px;border-top:2px solid var(--ink);margin-top:20px}
+.type-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.type-head h2{font-size:30px;font-weight:800}
+.type-head span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+.area{padding-block:24px 8px}
+.area-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.area-head h3{font-size:22px;font-weight:700}
+.area-head p{margin:0;color:var(--muted);font-size:14px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px;display:grid;gap:18px}
+.card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.card h4{font-family:var(--display);font-size:clamp(22px,4.5vw,28px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
+.card .desc{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--sea-soft);color:var(--sea);white-space:nowrap}
+.badge.sand{background:var(--sand-soft);color:var(--ink)}
+
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.price div{background:var(--surface);padding:14px 16px;min-width:0}
+.price small{display:block;font-size:12px;color:var(--muted)}
+.price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
+.price .hl b{color:var(--sea)}
+
+dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
+dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+dt{color:var(--muted);font-size:14px}
+dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;min-width:0}
+
+.plot{background:var(--bg);border-radius:12px;padding:12px;overflow-x:auto}
+.plot svg{display:block;width:100%;min-width:300px;height:auto}
+.plot p{font-size:12px;color:var(--muted);margin:6px 0 0}
+
+.card.sold{position:relative;overflow:hidden}
+.sold-stamp{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 16px;border:3px solid var(--sold);border-radius:10px;color:var(--sold);transform:rotate(-6deg);font-family:var(--display);line-height:1;text-align:center;white-space:nowrap}
+.sold-stamp b{font-size:26px;font-weight:800;letter-spacing:.08em}
+.sold-stamp small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.card.sold .price b{text-decoration:line-through;text-decoration-thickness:2px;opacity:.6}
+.card.sold .price .sold-note b{text-decoration:none;opacity:1;color:var(--sold)}
+.sold-stamp.plain{border-color:var(--muted);color:var(--muted);padding:10px 20px}
+.card.sold-plain .price .sold-note b{color:var(--muted)}
+.card.recommended{border:2px solid var(--sea)}
+.rec-tag{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;justify-self:start;background:var(--sea);color:var(--bg);border-radius:8px;padding:8px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.rec-tag svg{width:20px;height:20px;flex:none}
+.rec-tag .rt{display:flex;flex-direction:column;gap:2px}
+.rec-tag b{font-size:13px;white-space:nowrap}
+.rec-tag small{font-size:10px;opacity:.85;white-space:nowrap}
+ul.points{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;font-size:15px}
+ul.points li{position:relative;padding-left:20px;min-width:0}
+ul.points li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:2px;background:var(--sea)}
+@media (max-width:560px){ul.points{grid-template-columns:1fr}}
+ul.uses{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:500}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;border:0;cursor:pointer;font-family:var(--body)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn.primary{background:var(--sea);color:var(--bg)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+.btn:hover{filter:brightness(1.08)}
+
+.cta-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:22px}
+.cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 14px;padding:16px 18px;border-radius:16px;text-decoration:none;background:var(--sea);color:var(--bg)}
+.cta.owner{background:var(--sand-soft);color:var(--ink);border:1.5px solid var(--sand)}
+.cta small{grid-column:1;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.cta b{grid-column:1;font-family:var(--display);font-size:21px;line-height:1.15}
+.cta span{grid-column:1;font-size:14px;opacity:.85;line-height:1.4}
+.cta svg{grid-column:2;grid-row:1/3;width:22px;height:22px}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.cta{transition:filter .15s,transform .15s}.cta:hover{transform:translateY(-1px)}}
+
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.langs{display:flex;gap:10px;margin-left:auto}
+.lang-btn{display:block;width:42px;height:42px;padding:0;border:0;border-radius:50%;overflow:hidden;cursor:pointer;background:transparent;box-shadow:0 0 0 1px var(--line);opacity:.82}
+.lang-btn svg{display:block;width:100%;height:100%}
+.lang-btn:hover{opacity:1}
+.lang-btn[aria-pressed="true"],.lang-btn[aria-current="true"]{opacity:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--sea)}
+.lang-btn:focus-visible{outline:2px solid var(--sea);outline-offset:7px}
+@media (prefers-reduced-motion:no-preference){.lang-btn{transition:box-shadow .15s,opacity .15s}}
+
+.card h4 a{color:inherit;text-decoration:none}
+.card h4 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+a.home-link{text-decoration:none}
+a.home-link:hover{text-decoration:underline}
+.contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 22px;margin-block:36px 24px;display:grid;gap:14px}
+.contact h2{color:var(--bg);font-size:26px}
+.contact p{margin:0;opacity:.8}
+.phone{font-family:var(--mono);font-size:clamp(22px,5vw,28px);user-select:all;letter-spacing:.04em}
+.contact .btn.primary{background:var(--sand);color:#10282C}
+.contact .btn.ghost{border-color:var(--bg);color:var(--bg)}
+footer{font-size:13px;color:var(--muted);padding-block:0 40px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+footer>span{min-width:0}
+.visits{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px}
+.visits svg{width:16px;height:16px;flex:none;color:var(--sea)}
+.visits b{font-variant-numeric:tabular-nums}
+
+@media (max-width:560px){
+  dl.specs{grid-template-columns:1fr}
+  .card{padding:18px}
+}
+@media (prefers-reduced-motion:no-preference){.btn,.chip{transition:filter .15s,background .15s}}
+</style>
+
+<title>Rumah 2 kamar tidur di perumahan one gate Pering – Bali Are Property</title>
+<!--seo-->
+<meta name="description" content="Rumah di perumahan dengan sistem one gate yang nyaman dan aman, di atas tanah 210 m² sehingga masih ada ruang untuk dikembangkan. Cocok untuk tempat tinggal maupun investasi. Sewa jangka panjang juga bisa.">
+<link rel="canonical" href="https://baliareproperty.com/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html">
+<link rel="alternate" hreflang="id" href="https://baliareproperty.com/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html">
+<link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html">
+<link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html">
+<link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html">
+<link rel="icon" href="https://baliareproperty.com/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bali Are Property">
+<meta property="og:title" content="Rumah 2 kamar tidur di perumahan one gate Pering">
+<meta property="og:description" content="Rumah di perumahan dengan sistem one gate yang nyaman dan aman, di atas tanah 210 m² sehingga masih ada ruang untuk dikembangkan. Cocok untuk tempat tinggal maupun investasi. Sewa jangka panjang juga bisa.">
+<meta property="og:url" content="https://baliareproperty.com/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html">
+<meta property="og:image" content="https://baliareproperty.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"RealEstateAgent","@id":"https://baliareproperty.com/#agent","name":"Bali Are Property","url":"https://baliareproperty.com/","telephone":"+62812868080","image":"https://baliareproperty.com/og.png","logo":"https://baliareproperty.com/favicon.svg","areaServed":{"@type":"Place","name":"Bali, Indonesia"},"address":{"@type":"PostalAddress","addressRegion":"Bali","addressCountry":"ID"}},{"@type":"RealEstateListing","name":"Rumah 2 kamar tidur di perumahan one gate Pering","description":"Rumah di perumahan dengan sistem one gate yang nyaman dan aman, di atas tanah 210 m² sehingga masih ada ruang untuk dikembangkan. Cocok untuk tempat tinggal maupun investasi. Sewa jangka panjang juga bisa.","url":"https://baliareproperty.com/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html","inLanguage":"id","image":"https://baliareproperty.com/og.png","contentLocation":{"@type":"Place","name":"Pering · Blahbatuh, Bali, Indonesia"},"offers":{"@type":"Offer","priceCurrency":"IDR","availability":"https://schema.org/InStock","seller":{"@id":"https://baliareproperty.com/#agent"},"price":1200000000}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bali Are Property","item":"https://baliareproperty.com/"},{"@type":"ListItem","position":2,"name":"Rumah 2 kamar tidur di perumahan one gate Pering","item":"https://baliareproperty.com/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html"}]}]}</script>
+<!--/seo-->
+<style>
+.lp-head{display:flex;flex-direction:column;gap:6px;padding-block:28px 18px}
+a.eyebrow{text-decoration:none}
+.back{align-self:flex-start;margin-top:12px;color:var(--sea);font-weight:600;text-decoration:none}
+.back:hover{text-decoration:underline}
+.crumb{color:var(--muted);font-size:14px;margin:0}
+.card h1{font-family:var(--display);font-size:clamp(26px,5.5vw,34px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
+main{display:flex;flex-direction:column;gap:22px}
+main .cta-duo{margin-top:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="lp-head">
+    <div class="top-row">
+      <a class="eyebrow" href="../">Bali Are Property</a>
+      <div class="langs" role="group" aria-label="Pilih bahasa / Language">
+        <a class="lang-btn" data-lang="id" hreflang="id" href="rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html" aria-label="Bahasa Indonesia" aria-current="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="18" fill="#CE1126"></rect><rect y="18" width="36" height="18" fill="#FFFFFF"></rect></svg></a>
+        <a class="lang-btn" data-lang="en" hreflang="en" href="../en/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html" aria-label="English" aria-current="false"><svg viewBox="15 0 30 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"></path></clipPath><rect width="60" height="30" fill="#012169"></rect><path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"></path><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"></path><path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"></path><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"></path></svg></a>
+        <a class="lang-btn" data-lang="ru" hreflang="ru" href="../ru/listing/rumah-2-kamar-tidur-di-perumahan-one-gate-pering.html" aria-label="Русский" aria-current="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="12" fill="#FFFFFF"></rect><rect y="12" width="36" height="12" fill="#0039A6"></rect><rect y="24" width="36" height="12" fill="#D52B1E"></rect></svg></a>
+      </div>
+    </div>
+    <a class="back" href="../listings.html">← Lihat semua listing</a>
+    <p class="crumb">Rumah · Area Blahbatuh · Kabupaten Gianyar · 1 listing</p>
+  </header>
+  <main>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Pering · Blahbatuh</div>
+            <h1>Rumah 2 kamar tidur di perumahan one gate Pering</h1>
+            <p class="desc">Rumah di perumahan dengan sistem one gate yang nyaman dan aman, di atas tanah 210 m² sehingga masih ada ruang untuk dikembangkan. Cocok untuk tempat tinggal maupun investasi. Sewa jangka panjang juga bisa.</p>
+          </div>
+          <span class="badge sand">Jual / Sewa</span>
+        </div>
+
+        <div class="price">
+          <div class="hl"><small>Harga (nego)</small><b>Rp1,2 Miliar</b></div>
+          <div><small>Sewa jangka panjang</small><b>Bisa, tanya harga</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>210 m²</dd></div>
+          <div><dt>Luas bangunan</dt><dd>60 m²</dd></div>
+          <div><dt>Kamar tidur</dt><dd>2</dd></div>
+          <div><dt>Kamar mandi</dt><dd>1</dd></div>
+          <div><dt>Listrik</dt><dd>1.300 watt</dd></div>
+          <div><dt>Air</dt><dd>PDAM</dd></div>
+          <div><dt>Legalitas</dt><dd>SHM, IMB</dd></div>
+          <div><dt>Lingkungan</dt><dd>Perumahan one gate system</dd></div>
+          <div><dt>Lokasi</dt><dd>Diberikan saat survei</dd></div>
+        </dl>
+
+        <ul class="uses"><li>Rumah tinggal</li><li>Sewa jangka panjang</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Rumah%202%20KT%20di%20perumahan%20one%20gate%20Pering%2C%20Blahbatuh%20%28Rp1%2C2%20M%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Rumah%202%20KT%20di%20perumahan%20one%20gate%20Pering%2C%20Blahbatuh%20%28Rp1%2C2%20M%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1jeXjCCxCunNUwZU2WCML_SJHrvcRi9M6" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <div class="cta-duo">
+      <a class="cta" href="../inquiry.html#buyer"><b>Cari properti</b><span>Belum ketemu yang cocok? Isi kebutuhan Anda, kami carikan.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+      <a class="cta owner" href="../inquiry.html#owner"><b>Titip jual properti</b><span>Pasang tanah, villa, atau rumah Anda di listing kami.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </div>
+  </main>
+  <section class="contact" aria-labelledby="c-head">
+    <div class="eyebrow" style="color:var(--sand)">Info &amp; survey lokasi</div>
+    <h2 id="c-head">Bali Are Property</h2>
+    <div class="phone" id="phone" data-noi18n="">0812 868 080</div>
+    <div class="actions">
+      <a class="btn primary" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti." target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti.">Chat WhatsApp</a>
+      <button class="btn ghost" id="copy" type="button">Salin nomor</button>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" href="inquiry.html#buyer">Form cari properti</a>
+      <a class="btn ghost" href="inquiry.html#owner">Form titip jual</a>
+    </div>
+  </section>
+  <footer><span>Harga dapat berubah sewaktu-waktu. Sketsa hanya ilustrasi; data resmi mengikuti sertifikat.</span></footer>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var done=function(){btn.textContent='Nomor disalin';setTimeout(function(){btn.textContent='Salin nomor'},1800)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(document.getElementById('phone'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Nomor terpilih, tekan salin'};
+    try{navigator.clipboard.writeText('0812868080').then(done,sel)}catch(e){sel()}
+  });
+})();
+</script>
+<script src="../i18n.js"></script>
+</body>
+</html>
