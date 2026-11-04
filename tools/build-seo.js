@@ -30,6 +30,7 @@ const AGENT = { "@type": "RealEstateAgent", "@id": BASE + "#agent", name: "Bali 
   telephone: "+62812868080", image: BASE + "og.png", logo: BASE + "favicon.svg",
   areaServed: { "@type": "Place", name: "Bali, Indonesia" }, address: { "@type": "PostalAddress", addressRegion: "Bali", addressCountry: "ID" } };
 
+const ogFile = (L) => (L === "id" ? "og.png" : "og-" + L + ".png");
 function seo({ L, pageUrl, alts, desc, ogTitle, jsonld }) {
   const link = LANGS.map((k) => `<link rel="alternate" hreflang="${k}" href="${alts[k]}">`).join("\n");
   return `<!--seo-->
@@ -43,7 +44,7 @@ ${link}
 <meta property="og:title" content="${esc(ogTitle)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${pageUrl}">
-<meta property="og:image" content="${BASE}og.png">
+<meta property="og:image" content="${BASE}${ogFile(L)}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="${LOCALE[L]}">
@@ -175,7 +176,7 @@ main .cta-duo{margin-top:0}
       const offer = { "@type": "Offer", priceCurrency: "IDR", availability: c.sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock", seller: { "@id": BASE + "#agent" } };
       if (prices[c.slug]) offer.price = prices[c.slug];
       const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
-        { "@type": "RealEstateListing", name: c.title, description: desc, url: alts[L], inLanguage: L, image: BASE + "og.png",
+        { "@type": "RealEstateListing", name: c.title, description: desc, url: alts[L], inLanguage: L, image: BASE + ogFile(L),
           contentLocation: { "@type": "Place", name: c.eyebrow.trim() + ", Bali, Indonesia" }, offers: offer },
         { "@type": "BreadcrumbList", itemListElement: [
           { "@type": "ListItem", position: 1, name: "Bali Are Property", item: url(L, "") },
@@ -239,7 +240,7 @@ ${copyScript}
       const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "guide/" + a.slug + ".html")]));
       const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
         { "@type": "Article", headline: a[L].title, description: a[L].summary, inLanguage: L, url: alts[L], mainEntityOfPage: alts[L],
-          datePublished: a.date, dateModified: a.date, image: BASE + "og.png",
+          datePublished: a.date, dateModified: a.date, image: BASE + ogFile(L),
           author: { "@id": BASE + "#agent" }, publisher: { "@id": BASE + "#agent" } },
         { "@type": "BreadcrumbList", itemListElement: [
           { "@type": "ListItem", position: 1, name: "Bali Are Property", item: url(L, "") },
@@ -319,22 +320,30 @@ ${urls.join("\n")}
 `);
   write("robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${BASE}sitemap.xml\n`);
 
-  // ---------- Gambar pratinjau (og.png) ----------
+  // ---------- Gambar pratinjau per bahasa (og.png, og-en.png, og-ru.png) ----------
+  const OG = {
+    id: { a: "Tanah · Villa · Rumah", b: "di Bali", c: "Jimbaran · Uluwatu · Ungasan · Pandawa · Canggu · Ubud", wa: "WhatsApp 0812 868 080", since: "Agen properti sejak 2009" },
+    en: { a: "Land · Villas · Houses", b: "in Bali", c: "Jimbaran · Uluwatu · Ungasan · Pandawa · Canggu · Ubud", wa: "WhatsApp +62 812 868 080", since: "Property agent since 2009" },
+    ru: { a: "Земля · Виллы · Дома", b: "на Бали", c: "Джимбаран · Улувату · Унгасан · Пандава · Чангу · Убуд", wa: "WhatsApp +62 812 868 080", since: "Агентство с 2009 года" }
+  };
   const og = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
-  await og.setContent(`<html><body style="margin:0">
+  for (const L of LANGS) {
+    const o = OG[L];
+    await og.setContent(`<html><body style="margin:0">
 <div style="width:1200px;height:630px;box-sizing:border-box;padding:72px 80px;background:#10282C;color:#F3F4F0;font-family:'Inter Display','Inter',sans-serif;display:flex;flex-direction:column;justify-content:space-between">
-  <div style="font:600 22px 'DejaVu Sans Mono',monospace;letter-spacing:.18em;color:#4FC2B4">BALI ARE PROPERTY</div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 22px 'DejaVu Sans Mono',monospace;letter-spacing:.18em;color:#4FC2B4">BALI ARE PROPERTY</span><span style="font-size:22px;color:#B9C8C6">${o.since}</span></div>
   <div>
-    <div style="font-weight:800;font-size:92px;line-height:1;letter-spacing:-.02em">Tanah · Villa · Rumah</div>
-    <div style="font-weight:800;font-size:92px;line-height:1.05;letter-spacing:-.02em;color:#D6BC84">di Bali</div>
-    <div style="margin-top:26px;font-size:30px;color:#B9C8C6">Jimbaran · Uluwatu · Ungasan · Pandawa · Canggu · Ubud</div>
+    <div style="font-weight:800;font-size:${L === "ru" ? 84 : 92}px;line-height:1;letter-spacing:-.02em">${o.a}</div>
+    <div style="font-weight:800;font-size:92px;line-height:1.05;letter-spacing:-.02em;color:#D6BC84">${o.b}</div>
+    <div style="margin-top:26px;font-size:30px;color:#B9C8C6">${o.c}</div>
   </div>
   <div style="display:flex;justify-content:space-between;align-items:center;font-size:26px">
-    <span style="background:#1A8D4A;color:#fff;padding:14px 26px;border-radius:999px;font-weight:600">WhatsApp 0812 868 080</span>
-    <span style="color:#B9C8C6">ID · EN · RU</span>
+    <span style="background:#1A8D4A;color:#fff;padding:14px 26px;border-radius:999px;font-weight:600">${o.wa}</span>
+    <span style="color:#B9C8C6">baliareproperty.com</span>
   </div>
 </div></body></html>`);
-  await og.screenshot({ path: path.join(ROOT, "og.png") });
+    await og.screenshot({ path: path.join(ROOT, ogFile(L)) });
+  }
   write("favicon.svg", `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#13706E"/><path d="M10 44 L26 22 L36 34 L42 27 L54 44 Z" fill="#F3F4F0"/><circle cx="46" cy="18" r="5" fill="#D6BC84"/></svg>\n`);
 
   await browser.close();
