@@ -253,6 +253,39 @@ ${copyScript}
     }
   }
 
+  // ---------- News (3 bahasa) ----------
+  const NW = require("./news.js");
+  for (const L of LANGS) {
+    const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
+    const common = { L, head, esc, flags, cta: out[L].cta, contact: out[L].contact, footer: out[L].footer, copyScript };
+    {
+      const file = langDir(L) + "news.html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "news.html")]));
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT, { "@type": "CollectionPage", name: NW.N[L].hubTitle, url: alts[L], inLanguage: L,
+        hasPart: NW.NEWS.map((a) => ({ "@type": "NewsArticle", headline: a[L].title, url: url(L, "news/" + a.slug + ".html"), datePublished: a.date })) }] };
+      let html = NW.renderNewsHub({ ...common, i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc: NW.N[L].hubDesc, ogTitle: NW.N[L].hubTitle, jsonld }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "news.html")])), L);
+      write(file, html);
+    }
+    for (const a of NW.NEWS) {
+      const file = langDir(L) + "news/" + a.slug + ".html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "news/" + a.slug + ".html")]));
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
+        { "@type": "NewsArticle", headline: a[L].title, description: a[L].summary, inLanguage: L, url: alts[L], mainEntityOfPage: alts[L],
+          datePublished: a.date, dateModified: a.date, image: BASE + ogFile(L),
+          author: { "@id": BASE + "#agent" }, publisher: { "@id": BASE + "#agent" }, isBasedOn: a.sources.map((s) => s.u) },
+        { "@type": "BreadcrumbList", itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Bali Are Property", item: url(L, "") },
+          { "@type": "ListItem", position: 2, name: "News", item: url(L, "news.html") },
+          { "@type": "ListItem", position: 3, name: a[L].title, item: alts[L] }] }] };
+      let html = NW.renderNewsItem({ ...common, item: a, i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc: a[L].summary, ogTitle: a[L].title, jsonld }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "news/" + a.slug + ".html")])), L);
+      write(file, html);
+    }
+  }
+
   // ---------- Homepage (3 bahasa) ----------
   const { T: HT, renderHome } = require("./home.js");
   const visitsSrc = (srcIndex.match(/<script>\n\(function\(\)\{\n  var box=document\.getElementById\('visits'\)[\s\S]*?<\/script>/) || [""])[0]
@@ -267,7 +300,9 @@ ${copyScript}
       { "@type": "WebSite", name: "Bali Are Property", url: BASE, inLanguage: ["id", "en", "ru"], publisher: { "@id": BASE + "#agent" } }] };
     const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
     const GDh = require("./guide.js");
-    let html = renderHome({ guide: GDh.ARTICLES.slice(0, 3).map((a) => ({ slug: a.slug, ...a[L] })),
+    let html = renderHome({ news: require("./news.js").NEWS.slice(0, 3).map((a) => ({ slug: a.slug, ...a[L] })),
+      newsLabels: { h: { id: "Berita properti terbaru", en: "Latest property news", ru: "Свежие новости" }[L], all: { id: "Semua berita", en: "All news", ru: "Все новости" }[L] },
+      guide: GDh.ARTICLES.slice(0, 3).map((a) => ({ slug: a.slug, ...a[L] })),
       guideLabels: { all: { id: "Semua artikel", en: "All articles", ru: "Все статьи" }[L] }, L, head, esc, flags, cards: out[L].cards, cta: out[L].cta, contact: out[L].contact, footer: out[L].footer,
       seoBlock: seo({ L, pageUrl: alts[L], alts, desc: HT[L].desc, ogTitle: HT[L].title, jsonld }),
       visitsScript: visitsSrc, copyScript, i18nSrc: rel(file, "i18n.js") });
@@ -306,7 +341,7 @@ ${copyScript}
 
   // ---------- Sitemap & robots ----------
   const today = new Date().toISOString().slice(0, 10);
-  const pages = ["", "about.html", "faq.html", "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
+  const pages = ["", "about.html", "faq.html", "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
   const urls = pages.flatMap((p) => LANGS.map((L) => `  <url>
     <loc>${url(L, p)}</loc>
     <lastmod>${today}</lastmod>

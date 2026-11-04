@@ -10,9 +10,10 @@ Pemilik: Bagoes (WhatsApp 0812868080). Bahasa kerja dengan pemilik: Bahasa Indon
 - `tools/home.js`, `tools/about.js`, `tools/faq.js` — teks homepage, Tentang Kami, FAQ (3 bahasa).
 - `tools/guide-content.js` — artikel Bali Property Guide (3 bahasa) + tabel harga.
 - `tools/guide.js` — tampilan halaman Guide.
+- `tools/news-content.js` — berita properti (3 bahasa); `tools/news.js` — tampilan halaman News.
 
 ## File hasil build (JANGAN diedit tangan)
-`index.html`, `about.html`, `faq.html`, `guide.html`, `guide/`, `listing/`, `en/`, `ru/`, `sitemap.xml`, `robots.txt`, `og.png`.
+`index.html`, `about.html`, `faq.html`, `guide.html`, `guide/`, `news.html`, `news/`, `listing/`, `en/`, `ru/`, `sitemap.xml`, `robots.txt`, `og.png`.
 Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalankan dari root repo).
 
 ## Menambah listing
@@ -21,17 +22,21 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 3. Perbarui angka di chip filter & ringkasan area bila perlu.
 4. `node tools/build-seo.js`, cek, commit, push ke `main`.
 
-## Bali Property Guide — update mingguan (5 artikel baru per minggu)
-- Artikel ada di array `ARTICLES` di `tools/guide-content.js`, **urut dari terbaru**. Artikel baru DITAMBAHKAN DI AWAL array. Halaman Guide otomatis menampilkan 5 teratas sebagai "Edisi minggu ini" dan sisanya sebagai arsip; homepage menampilkan 3 teratas.
-- Setiap artikel: `slug` unik (huruf kecil-tanda-hubung), `date` (YYYY-MM-DD, tanggal terbit), `sources` (array `{t, u}`; URL asli yang benar-benar dibaca), lalu `id`, `en`, `ru` masing-masing berisi `tag`, `title`, `summary`, `body` (blok `{h}`, `{p}`, `{ul:[…]}`, `{note}`).
-- Fokus konten: perkembangan properti di Kuta Selatan (Ungasan, Jimbaran, Pecatu, Uluwatu, Kutuh, Pandawa, Balangan, Nusa Dua/Benoa) dan Kuta Utara (Canggu, Berawa, Pererenan, Tibubeneng, Kerobokan), plus area lain di Bali (Tabanan, Gianyar/Ubud, Buleleng, dll.), infrastruktur, regulasi lahan/izin, pariwisata yang memengaruhi properti, dan panduan praktis untuk pembeli/penjual.
+## Bali Property Guide — TETAP (tidak diupdate mingguan)
+- Artikel di `tools/guide-content.js` dibiarkan seperti sekarang atas permintaan pemilik. Jangan menambah atau mengubah artikel Guide kecuali pemilik memintanya.
+
+## News — update mingguan (berita properti Bali)
+- Menu "News/Berita/Новости" (`news.html`, `news/<slug>.html`, juga di `en/` dan `ru/`). Menu ini menggantikan menu "Sell"; tombol "List your property" tetap ada di homepage.
+- Isi ada di array `NEWS` di `tools/news-content.js`, **urut dari terbaru**. Berita baru DITAMBAHKAN DI AWAL array. Halaman News menampilkan berita 7 hari terakhir (berdasarkan `date` terbaru) sebagai "Berita minggu ini" dan sisanya sebagai arsip; homepage menampilkan 3 berita teratas.
+- Setiap berita: `slug` unik (huruf kecil-tanda-hubung), `date` (YYYY-MM-DD, tanggal terbit di website), `sources` (array `{t, u}`; judul + tanggal berita asli, URL yang benar-benar dibaca), lalu `id`, `en`, `ru` masing-masing berisi `tag`, `title`, `summary`, `body` (blok `{h}`, `{p}`, `{ul:[…]}`, `{note}`).
+- Target pembaca: calon buyer dan investor besar. Topik prioritas: perkembangan properti di Kuta Selatan (Ungasan, Jimbaran, Pecatu, Uluwatu, Kutuh, Pandawa, Balangan, Nusa Dua/Benoa) dan sekitarnya, proyek developer & resort/hotel/branded residences, transaksi jual beli besar (hotel, villa, lahan, akuisisi, aksi korporasi emiten properti), data investasi (DPMPTSP/BKPM), pasar hotel (okupansi, tarif, pipeline), infrastruktur (jalan, air, bandara), regulasi/izin dan penertiban; lalu Kuta Utara dan area lain di Bali.
 - Aturan isi:
-  - Fakta (angka, tanggal, nama proyek, aturan) HANYA dari sumber yang dibaca minggu itu (utamakan media resmi/kredibel: detik, Kompas, ANTARA, Bisnis, CNN Indonesia, Tribun Bali, situs pemerintah). Cantumkan sumbernya. Jangan mengarang angka.
-  - Harga tanah hanya dari listing di `listings.html` (sebut sebagai "harga penawaran listing kami") atau dari sumber yang dikutip.
-  - Jangan mengulang topik/berita yang sudah ada di artikel lama; kalau berita minggu itu sedikit, tulis panduan praktis (evergreen) yang belum pernah dibahas.
-  - Topik hukum/regulasi diberi `{note}` "bukan nasihat hukum, konsultasikan notaris/PPAT". Topik investasi diberi catatan "bukan nasihat investasi".
-  - Gaya: kalimat jelas dan langsung, 300–500 kata per artikel per bahasa, dari sudut pandang Bali Are Property (agen independen sejak 2009). EN dan RU adalah terjemahan setia dari versi ID.
-- Setelah menambah artikel: `node tools/build-seo.js` (sitemap ikut diperbarui), cek bahwa `guide.html` dan halaman artikel baru terbentuk di `/`, `en/`, `ru/`, lalu commit & push ke `main`.
+  - Hanya berita nyata dari 7–14 hari terakhir (boleh berita sedikit lebih lama bila belum pernah dibahas dan masih relevan). Fakta (angka, tanggal, nama perusahaan/proyek, aturan) HANYA dari sumber yang dibaca; utamakan media kredibel (detik, Kompas, ANTARA, Bisnis, Kontan, CNN Indonesia, Tribun Bali, NusaBali, siaran pers resmi/pemerintah, laporan riset Colliers/Horwath/JLL/Knight Frank). Cantumkan sumbernya. Jangan mengarang angka.
+  - Jangan mengulang berita yang sudah ada di `NEWS`.
+  - Tiap berita 150–300 kata per bahasa: ringkas faktanya, lalu 1 paragraf "artinya bagi buyer/investor/pemilik lahan" dari sudut pandang Bali Are Property.
+  - Topik hukum/regulasi diberi `{note}` bukan nasihat hukum; topik investasi/saham diberi catatan bukan nasihat investasi.
+  - EN dan RU adalah terjemahan setia dari versi ID.
+- Setelah menambah berita: `node tools/build-seo.js` (sitemap ikut diperbarui), cek bahwa `news.html` dan halaman berita baru terbentuk di `/`, `en/`, `ru/`, lalu commit & push ke `main`.
 
 ## Commit
 - Identitas commit: `git config user.name Claude && git config user.email noreply@anthropic.com`.

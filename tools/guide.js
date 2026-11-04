@@ -70,8 +70,8 @@ function top({ L, up, flags, esc, current }) {
     <nav aria-label="Menu">
       ${a("about.html", h.nav[3])}
       ${a("listings.html", h.nav[0])}
-      ${a("inquiry.html#owner", h.nav[1])}
-      ${a("guide.html", NAV_GUIDE[L], current)}
+      ${a("news.html", h.nav[1], current === "news")}
+      ${a("guide.html", NAV_GUIDE[L], current === true || current === "guide")}
       ${a("faq.html", h.nav[4])}
       <a href="#kontak">${esc(h.nav[2])}</a>
     </nav>
@@ -169,4 +169,4 @@ function renderArticle(o) {
   return shell({ ...o, title: t.title + " | Bali Are Property", body });
 }
 
-module.exports = { G, NAV_GUIDE, ARTICLES, renderHub, renderArticle };
+module.exports = { G, NAV_GUIDE, ARTICLES, renderHub, renderArticle, CSS, top, shell, renderBlock, fmtDate };
