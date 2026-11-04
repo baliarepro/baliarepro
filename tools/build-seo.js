@@ -253,9 +253,24 @@ ${copyScript}
     write(file, html);
   }
 
+  // ---------- FAQ (3 bahasa) ----------
+  const { F: FT, renderFaq } = require("./faq.js");
+  for (const L of LANGS) {
+    const file = langDir(L) + "faq.html";
+    const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "faq.html")]));
+    const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
+      { "@type": "FAQPage", url: alts[L], inLanguage: L,
+        mainEntity: FT[L].qa.map((q) => ({ "@type": "Question", name: q[0], acceptedAnswer: { "@type": "Answer", text: q[1] } })) }] };
+    const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
+    let html = renderFaq({ L, head, esc, flags, contact: out[L].contact, footer: out[L].footer, copyScript,
+      seoBlock: seo({ L, pageUrl: alts[L], alts, desc: FT[L].desc, ogTitle: FT[L].title, jsonld }), i18nSrc: rel(file, "i18n.js") });
+    html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "faq.html")])), L);
+    write(file, html);
+  }
+
   // ---------- Sitemap & robots ----------
   const today = new Date().toISOString().slice(0, 10);
-  const pages = ["", "about.html", "listings.html", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
+  const pages = ["", "about.html", "faq.html", "listings.html", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
   const urls = pages.flatMap((p) => LANGS.map((L) => `  <url>
     <loc>${url(L, p)}</loc>
     <lastmod>${today}</lastmod>

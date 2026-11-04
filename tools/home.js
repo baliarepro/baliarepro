@@ -3,7 +3,7 @@ const T = {
   id: {
     title: "Bali Are Property – Agen Properti di Bali Sejak 2009",
     desc: "Agen properti independen di Bali sejak 2009. Tanah dijual, tanah investasi, dan villa di Kuta Selatan (Ungasan, Jimbaran, Uluwatu, Pecatu) dan Kuta Utara (Canggu, Berawa, Pererenan).",
-    nav: ["Listing", "Titip jual", "Kontak", "Tentang kami"], more: "Selengkapnya tentang kami",
+    nav: ["Listing", "Titip jual", "Kontak", "Tentang kami", "FAQ"], more: "Selengkapnya tentang kami",
     eyebrow: "Agen properti di Bali · Sejak 2009",
     h1: "Mitra Properti Terpercaya Anda di Bali",
     sub: "Jual beli properti, investasi tanah, dan peluang villa di Bali.",
@@ -29,7 +29,7 @@ const T = {
   en: {
     title: "Bali Are Property – Property Agent in Bali Since 2009",
     desc: "Independent property agency in Bali since 2009. Land for sale, investment land and villas in South Kuta (Ungasan, Jimbaran, Uluwatu, Pecatu) and North Kuta (Canggu, Berawa, Pererenan).",
-    nav: ["Listings", "Sell", "Contact", "About"], more: "More about us",
+    nav: ["Listings", "Sell", "Contact", "About", "FAQ"], more: "More about us",
     eyebrow: "Property agency in Bali · Since 2009",
     h1: "Your Trusted Property Partner in Bali",
     sub: "Property sales, land investment and villa opportunities in Bali.",
@@ -55,7 +55,7 @@ const T = {
   ru: {
     title: "Bali Are Property – агентство недвижимости на Бали с 2009 года",
     desc: "Независимое агентство недвижимости на Бали с 2009 года. Земля, инвестиционные участки и виллы в Южной Куте (Унгасан, Джимбаран, Улувату, Пекату) и Северной Куте (Чангу, Берава, Перененан).",
-    nav: ["Объекты", "Продать", "Контакты", "О нас"], more: "Подробнее о нас",
+    nav: ["Объекты", "Продать", "Контакты", "О нас", "Вопросы"], more: "Подробнее о нас",
     eyebrow: "Агентство недвижимости на Бали · с 2009 года",
     h1: "Ваш надёжный партнёр по недвижимости на Бали",
     sub: "Продажа недвижимости, инвестиции в землю и виллы на Бали.",
@@ -160,6 +160,7 @@ ${CSS}
       <a href="about.html">${esc(t.nav[3])}</a>
       <a href="listings.html">${esc(t.nav[0])}</a>
       <a href="inquiry.html#owner">${esc(t.nav[1])}</a>
+      <a href="faq.html">${esc(t.nav[4])}</a>
       <a href="#kontak">${esc(t.nav[2])}</a>
     </nav>
     ${flags}

@@ -49,6 +49,30 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/about.html"/>
   </url>
   <url>
+    <loc>https://baliareproperty.com/faq.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="id" href="https://baliareproperty.com/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/faq.html"/>
+  </url>
+  <url>
+    <loc>https://baliareproperty.com/en/faq.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="id" href="https://baliareproperty.com/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/faq.html"/>
+  </url>
+  <url>
+    <loc>https://baliareproperty.com/ru/faq.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <xhtml:link rel="alternate" hreflang="id" href="https://baliareproperty.com/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/faq.html"/>
+  </url>
+  <url>
     <loc>https://baliareproperty.com/listings.html</loc>
     <lastmod>2026-11-04</lastmod>
     <xhtml:link rel="alternate" hreflang="id" href="https://baliareproperty.com/listings.html"/>
