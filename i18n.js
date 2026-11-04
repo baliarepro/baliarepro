@@ -474,7 +474,6 @@
     ["Teks dipilih", "Text selected", "Текст выделен"],
     ["Kosongkan form", "Clear form", "Очистить форму"],
     ["WhatsApp:", "WhatsApp:", "WhatsApp:"],
-    ["(Bagoes)", "(Bagoes)", "(Багус)"],
     ["Wajib diisi", "Required", "Обязательно"],
     ["Pilih…", "Choose…", "Выберите…"],
     ["Pilih kecamatan…", "Choose district…", "Выберите район…"],
