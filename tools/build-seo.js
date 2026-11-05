@@ -31,7 +31,7 @@ const AGENT = { "@type": "RealEstateAgent", "@id": BASE + "#agent", name: "Bali 
   areaServed: { "@type": "Place", name: "Bali, Indonesia" }, address: { "@type": "PostalAddress", addressRegion: "Bali", addressCountry: "ID" } };
 
 const ogFile = (L) => (L === "id" ? "og.png" : "og-" + L + ".png");
-function seo({ L, pageUrl, alts, desc, ogTitle, jsonld }) {
+function seo({ L, pageUrl, alts, desc, ogTitle, jsonld, image }) {
   const link = LANGS.map((k) => `<link rel="alternate" hreflang="${k}" href="${alts[k]}">`).join("\n");
   return `<!--seo-->
 <meta name="description" content="${esc(desc)}">
@@ -44,9 +44,9 @@ ${link}
 <meta property="og:title" content="${esc(ogTitle)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${pageUrl}">
-<meta property="og:image" content="${BASE}${ogFile(L)}">
+${image ? `<meta property="og:image" content="${image}">` : `<meta property="og:image" content="${BASE}${ogFile(L)}">
 <meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image:height" content="630">`}
 <meta property="og:locale" content="${LOCALE[L]}">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>
@@ -165,7 +165,48 @@ a.eyebrow{text-decoration:none}
 .card h1{font-family:var(--display);font-size:clamp(26px,5.5vw,34px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
 main{display:flex;flex-direction:column;gap:22px}
 main .cta-duo{margin-top:0}
+.gallery{display:grid;grid-template-columns:2fr 1fr;grid-auto-rows:1fr;gap:8px;margin:0}
+.gallery a{display:block;border-radius:12px;overflow:hidden;background:var(--line)}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:4/3}
+.gallery a:first-child{grid-row:span 2}
+.gallery a:first-child img{aspect-ratio:auto}
+.gallery.n1{grid-template-columns:1fr}.gallery.n1 a:first-child{grid-row:auto}.gallery.n1 a:first-child img{aspect-ratio:16/9}
+.gallery.n2{grid-template-columns:1fr 1fr}.gallery.n2 a:first-child{grid-row:auto}.gallery.n2 a:first-child img{aspect-ratio:4/3}
+@media (max-width:560px){.gallery{grid-template-columns:1fr 1fr;grid-auto-rows:auto}.gallery a:first-child{grid-column:1/-1;grid-row:auto}.gallery a:first-child img{aspect-ratio:16/10}.gallery.n2 a:first-child{grid-column:auto}}
+.print-only{display:none}
+@media print{
+  @page{size:A4;margin:14mm 14mm 16mm}
+  html,body{background:#fff !important;color:#111 !important}
+  .wrap{max-width:none;padding:0}
+  .lp-head,.langs,main .cta-duo,section.contact,footer,.actions,.back{display:none !important}
+  .print-only{display:block}
+  .print-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #111;padding-bottom:6px;margin-bottom:10px;font-size:11pt}
+  .print-head b{font-family:var(--display);font-size:15pt}
+  .print-foot{margin-top:12px;padding-top:8px;border-top:1px solid #999;font-size:10pt}
+  .card{border:0;padding:0;margin:0;gap:12px;box-shadow:none;background:#fff}
+  .card h1{font-size:20pt}
+  .gallery{break-inside:avoid;height:68mm;grid-auto-rows:auto}
+  .gallery img{aspect-ratio:auto !important;height:100%}
+  .gallery.n3{grid-template-rows:1fr 1fr}
+  .gallery a{border-radius:6px}
+  .price,.specs,.plot,.uses{break-inside:avoid}
+  a{color:inherit;text-decoration:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>`;
+  const PDF = { id: "Download PDF", en: "Download PDF", ru: "Скачать PDF" };
+  const PHOTOS = { id: "Foto", en: "Photo", ru: "Фото" };
+  const CONTACT = {
+    id: "Info & survei lokasi: Bagoes · WhatsApp +62 812 868 080 · baliareproperty.com",
+    en: "Info & site visit: Bagoes · WhatsApp +62 812 868 080 · baliareproperty.com",
+    ru: "Информация и просмотр: Багус · WhatsApp +62 812 868 080 · baliareproperty.com" };
+  const pdfIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>';
+  // Foto listing: img/listing/<slug>/ (maks. 3 file jpg/jpeg/png/webp, urut nama file)
+  const photosOf = (slug) => {
+    const dir = path.join(ROOT, "img/listing", slug);
+    if (!fs.existsSync(dir)) return [];
+    return fs.readdirSync(dir).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).sort().slice(0, 3).map((f) => "img/listing/" + slug + "/" + f);
+  };
   for (const L of LANGS) {
     for (const c of out[L].cards) {
       const file = langDir(L) + "listing/" + c.slug + ".html";
@@ -176,17 +217,23 @@ main .cta-duo{margin-top:0}
       const offer = { "@type": "Offer", priceCurrency: "IDR", availability: c.sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock", seller: { "@id": BASE + "#agent" } };
       if (prices[c.slug]) offer.price = prices[c.slug];
       const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
-        { "@type": "RealEstateListing", name: c.title, description: desc, url: alts[L], inLanguage: L, image: BASE + ogFile(L),
+        { "@type": "RealEstateListing", name: c.title, description: desc, url: alts[L], inLanguage: L, image: photosOf(c.slug).length ? photosOf(c.slug).map((p) => BASE + p) : BASE + ogFile(L),
           contentLocation: { "@type": "Place", name: c.eyebrow.trim() + ", Bali, Indonesia" }, offers: offer },
         { "@type": "BreadcrumbList", itemListElement: [
           { "@type": "ListItem", position: 1, name: "Bali Are Property", item: url(L, "") },
           { "@type": "ListItem", position: 2, name: c.title, item: alts[L] }] }] };
       const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
       const fix = (s) => s.replace(/href="inquiry\.html/g, 'href="' + rel(file, langDir(L) + "inquiry.html"));
+      const photos = photosOf(c.slug);
+      const gallery = photos.length ? `<div class="gallery n${photos.length}">` + photos.map((p, i) =>
+        `<a href="${rel(file, p)}" target="_blank" rel="noopener"><img src="${rel(file, p)}" alt="${esc(PHOTOS[L] + " " + (i + 1) + " – " + c.title)}" loading="${i ? "lazy" : "eager"}" decoding="async"></a>`).join("") + `</div>\n        ` : "";
+      const cardHtml = c.html
+        .replace('<div class="price"', gallery + '<div class="price"')
+        .replace(/(<div class="actions">[\s\S]*?)(<\/div>\s*<\/article>\s*)$/, `$1  <button class="btn ghost pdf" type="button" onclick="window.print()">${pdfIcon}${esc(PDF[L])}</button>\n        $2`);
       let html = `<!doctype html>
 <html lang="${L}" data-static-lang="${L}">
 <head>${head}<title>${esc(c.title)} – Bali Are Property</title>
-${seo({ L, pageUrl: alts[L], alts, desc, ogTitle: c.title, jsonld })}
+${seo({ L, pageUrl: alts[L], alts, desc, ogTitle: c.title, jsonld, image: photos[0] ? BASE + photos[0] : "" })}
 ${pageCss}
 </head>
 <body>
@@ -200,7 +247,9 @@ ${pageCss}
     <p class="crumb">${esc(c.type)} · ${esc(c.areaTitle)} · ${esc(c.areaSub)}</p>
   </header>
   <main>
-    ${c.html}
+    <div class="print-only print-head"><b>Bali Are Property</b><span>baliareproperty.com</span></div>
+    ${cardHtml}
+    <p class="print-only print-foot">${esc(CONTACT[L])}</p>
     ${fix(out[L].cta)}
   </main>
   ${out[L].contact}

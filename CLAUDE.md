@@ -22,6 +22,12 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 3. Perbarui angka di chip filter & ringkasan area bila perlu.
 4. `node tools/build-seo.js`, cek, commit, push ke `main`.
 
+## Foto & tombol PDF di halaman listing
+- Foto listing disimpan di `img/listing/<slug>/` (maks. 3 file jpg/png/webp, diurutkan nama: `1.jpg`, `2.jpg`, `3.jpg`; foto pertama = foto utama & gambar preview saat link dibagikan di WhatsApp). Kecilkan dulu ke lebar ±1600 px, kualitas JPEG ±80.
+- Build otomatis menampilkan galeri di halaman listing bila foldernya ada; tanpa folder, halaman tampil seperti biasa.
+- Setiap halaman listing punya tombol "Download PDF" (`window.print()` + CSS cetak A4 berlogo dan kontak WhatsApp). Semua diatur di `tools/build-seo.js` bagian "Halaman per listing".
+- Google Drive tidak bisa diakses dari container; foto harus dikirim pemilik lewat chat.
+
 ## Bali Property Guide — TETAP (tidak diupdate mingguan)
 - Artikel di `tools/guide-content.js` dibiarkan seperti sekarang atas permintaan pemilik. Jangan menambah atau mengubah artikel Guide kecuali pemilik memintanya.
 - Halaman Guide sengaja tanpa label mingguan ("Edisi minggu ini") dan tanpa tanggal tampil, karena isinya tetap.
