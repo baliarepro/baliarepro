@@ -4,7 +4,7 @@
 (function () {
   var D = [
     // ---------- Umum / header ----------
-    ["Bali Are Property – Listing Tanah", "Bali Are Property – Property Listings", "Bali Are Property – Недвижимость на Бали"],
+    ["Tanah, Villa & Rumah Dijual di Bali – Daftar Listing | Bali Are Property", "Land, Villas & Houses for Sale in Bali – Listings | Bali Are Property", "Земля, виллы и дома на продажу на Бали – объекты | Bali Are Property"],
     ["Listing Properti", "Property Listings", "Объекты недвижимости"],
     ["Tanah, villa, rumah, dan properti komersial siap transaksi di Bali. Dikelompokkan per jenis properti dan area.", "Land, villas, houses and commercial property ready to buy in Bali. Grouped by property type and area.", "Земля, виллы, дома и коммерческая недвижимость на Бали, готовые к сделке. Сгруппированы по типу и району."],
     ["Untuk buyer", "For buyers", "Для покупателей"],
@@ -503,7 +503,7 @@
     ["±10 menit berkendara ke Bandara Ngurah Rai", "±10-minute drive to Ngurah Rai Airport", "±10 минут на машине до аэропорта Нгурах-Рай"],
     ["Rumah liburan", "Holiday home", "Дом для отдыха"],
     // ---------- Form inquiry ----------
-    ["Form Inquiry – Bali Are Property", "Inquiry Form – Bali Are Property", "Форма запроса – Bali Are Property"],
+    ["Cari atau Titip Jual Properti di Bali – Form Inquiry | Bali Are Property", "Find or List a Property in Bali – Inquiry Form | Bali Are Property", "Найти или продать недвижимость на Бали – заявка | Bali Are Property"],
     ["← Lihat semua listing", "← See all listings", "← Все объекты"],
     ["Bali Are Property · Seluruh Bali", "Bali Are Property · All of Bali", "Bali Are Property · Весь Бали"],
     ["Form Inquiry Properti", "Property Inquiry Form", "Форма запроса"],

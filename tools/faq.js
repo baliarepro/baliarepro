@@ -6,7 +6,7 @@ const ruYears = (k) => (k % 10 === 1 && k % 100 !== 11 ? "года" : "лет");
 
 const F = {
   id: {
-    title: "FAQ – Bali Are Property",
+    title: "FAQ Beli Tanah & Villa di Bali | Bali Are Property",
     desc: "Pertanyaan umum tentang Bali Are Property: agen properti independen di Bali sejak 2009, area Kuta Selatan & Kuta Utara, jenis properti, dan layanan untuk pembeli lokal maupun asing.",
     eyebrow: "FAQ · Bali Are Property",
     h1: "Pertanyaan yang Sering Diajukan",
@@ -23,7 +23,7 @@ const F = {
     waText: "Halo Pak Bagoes, saya punya pertanyaan tentang properti di Bali."
   },
   en: {
-    title: "FAQ – Bali Are Property",
+    title: "FAQ: Buying Land & Villas in Bali | Bali Are Property",
     desc: "Common questions about Bali Are Property: an independent property agency in Bali since 2009, South & North Kuta, property types and help for local and international buyers.",
     eyebrow: "FAQ · Bali Are Property",
     h1: "Frequently Asked Questions",
@@ -40,7 +40,7 @@ const F = {
     waText: "Hello Pak Bagoes, I have a question about property in Bali."
   },
   ru: {
-    title: "Частые вопросы – Bali Are Property",
+    title: "Вопросы о покупке земли и вилл на Бали | Bali Are Property",
     desc: "Частые вопросы о Bali Are Property: независимое агентство недвижимости на Бали с 2009 года, Южная и Северная Кута, типы объектов, помощь местным и иностранным покупателям.",
     eyebrow: "FAQ · Bali Are Property",
     h1: "Частые вопросы",

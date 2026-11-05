@@ -4,7 +4,8 @@ Situs statis di GitHub Pages (repo `baliarepro/baliarepro`, cabang `main`, domai
 Pemilik: Bagoes (WhatsApp 0812868080). Bahasa kerja dengan pemilik: Bahasa Indonesia.
 
 ## File sumber (diedit tangan)
-- `listings.html` — katalog listing (Bahasa Indonesia). Judul halaman tetap "Bali Are Property – Listing Tanah".
+- `listings.html` — katalog listing (Bahasa Indonesia). Judul halaman (SEO): "Tanah, Villa & Rumah Dijual di Bali – Daftar Listing | Bali Are Property"; bila diubah, ubah juga kuncinya di `i18n.js`.
+- `tools/seo-titles.js` — judul `<title>` & meta description SEO per listing (3 bahasa). Pola judul: kata transaksi (Dijual / for Sale / Продажа; Terjual / Sold / Продано untuk yang sudah laku) + jenis + luas/kamar + lokasi + Bali, ±50–70 karakter; deskripsi ±140–165 karakter berisi fakta utama, harga, ajakan WhatsApp. H1 tetap judul kartu.
 - `inquiry.html` — form inquiry Buyer/Owner.
 - `i18n.js` — kamus terjemahan EN/RU untuk listing & form (`["teks Indonesia", "English", "Русский"]`).
 - `tools/home.js`, `tools/about.js`, `tools/faq.js` — teks homepage, Tentang Kami, FAQ (3 bahasa).
@@ -20,7 +21,11 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 1. Tambahkan kartu `<article class="card">` di `listings.html`, dikelompokkan per jenis properti (section.type) dan area (div.area). Judul di `<h4><a href="listing/<slug>.html">…</a></h4>` (slug huruf kecil, tanpa simbol).
 2. Tambahkan terjemahan EN/RU untuk semua teks baru di `i18n.js`.
 3. Perbarui angka di chip filter & ringkasan area bila perlu.
-4. `node tools/build-seo.js`, cek, commit, push ke `main`.
+4. Tambahkan judul & deskripsi SEO 3 bahasa di `tools/seo-titles.js` (build memberi peringatan bila belum ada). Bila listing terjual, ganti judulnya ke pola "Terjual:".
+5. `node tools/build-seo.js`, cek, commit, push ke `main`.
+
+## SEO & GEO
+- Build membuat JSON-LD `RealEstateListing` per listing (alamat, harga, ketersediaan, semua spesifikasi sebagai `additionalProperty`), breadcrumb 3 level, sitemap, dan `llms.txt` (ringkasan situs + semua listing untuk mesin AI).
 
 ## Foto & tombol PDF di halaman listing
 - Foto listing disimpan di `img/listing/<slug>/` (maks. 3 file jpg/png/webp, diurutkan nama: `1.jpg`, `2.jpg`, `3.jpg`; foto pertama = foto utama & gambar preview saat link dibagikan di WhatsApp). Kecilkan dulu ke lebar ±1600 px, kualitas JPEG ±80.

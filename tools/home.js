@@ -1,7 +1,7 @@
 // Homepage Bali Are Property (3 bahasa). Teks diedit di objek T di bawah.
 const T = {
   id: {
-    title: "Bali Are Property – Agen Properti di Bali Sejak 2009",
+    title: "Agen Properti Bali Sejak 2009 – Jual Tanah & Villa | Bali Are Property",
     desc: "Agen properti independen di Bali sejak 2009. Tanah dijual, tanah investasi, dan villa di Kuta Selatan (Ungasan, Jimbaran, Uluwatu, Pecatu) dan Kuta Utara (Canggu, Berawa, Pererenan).",
     nav: ["Listing", "Berita", "Kontak", "Tentang kami", "FAQ", "Guide"], more: "Selengkapnya tentang kami",
     eyebrow: "Agen properti di Bali · Sejak 2009",
@@ -27,7 +27,7 @@ const T = {
     tagline: "Menghubungkan peluang properti dengan investor yang tepat di Bali."
   },
   en: {
-    title: "Bali Are Property – Property Agent in Bali Since 2009",
+    title: "Bali Property Agent Since 2009 – Land & Villas for Sale | Bali Are Property",
     desc: "Independent property agency in Bali since 2009. Land for sale, investment land and villas in South Kuta (Ungasan, Jimbaran, Uluwatu, Pecatu) and North Kuta (Canggu, Berawa, Pererenan).",
     nav: ["Listings", "News", "Contact", "About", "FAQ", "Guide"], more: "More about us",
     eyebrow: "Property agency in Bali · Since 2009",
@@ -53,7 +53,7 @@ const T = {
     tagline: "Connecting property opportunities with the right investors in Bali."
   },
   ru: {
-    title: "Bali Are Property – агентство недвижимости на Бали с 2009 года",
+    title: "Агентство недвижимости на Бали с 2009 г. – земля и виллы | Bali Are Property",
     desc: "Независимое агентство недвижимости на Бали с 2009 года. Земля, инвестиционные участки и виллы в Южной Куте (Унгасан, Джимбаран, Улувату, Пекату) и Северной Куте (Чангу, Берава, Перененан).",
     nav: ["Объекты", "Новости", "Контакты", "О нас", "Вопросы", "Гид"], more: "Подробнее о нас",
     eyebrow: "Агентство недвижимости на Бали · с 2009 года",

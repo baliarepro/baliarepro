@@ -3,7 +3,7 @@ const { T: HT, CSS: HOME_CSS } = require("./home.js");
 
 const A = {
   id: {
-    title: "Tentang Kami – Bali Are Property",
+    title: "Tentang Kami – Agen Properti Independen di Bali | Bali Are Property",
     desc: "Bali Are Property, agen real estat independen di Bali sejak 2009. Keahlian di Kuta Selatan dan Kuta Utara: penjualan properti, pencarian lahan, villa, dan tanah investasi.",
     eyebrow: "Tentang Bali Are Property",
     h1: ["Pengalaman properti lokal.", "Pemahaman pasar.", "Peluang investasi."],
@@ -29,7 +29,7 @@ const A = {
     closing: "Bali Are Property – Mitra properti lokal Anda di Bali sejak 2009."
   },
   en: {
-    title: "About Us – Bali Are Property",
+    title: "About Us – Independent Property Agency in Bali | Bali Are Property",
     desc: "Bali Are Property is an independent real estate agency in Bali since 2009, focused on South Kuta and North Kuta: property sales, land sourcing, villas and investment land.",
     eyebrow: "About Bali Are Property",
     h1: ["Local property experience.", "Market knowledge.", "Investment opportunities."],
@@ -55,7 +55,7 @@ const A = {
     closing: "Bali Are Property – Your local property partner in Bali since 2009."
   },
   ru: {
-    title: "О нас – Bali Are Property",
+    title: "О нас – независимое агентство недвижимости на Бали | Bali Are Property",
     desc: "Bali Are Property — независимое агентство недвижимости на Бали с 2009 года. Южная и Северная Кута: продажа, подбор земли, виллы и инвестиционные участки.",
     eyebrow: "О Bali Are Property",
     h1: ["Местный опыт в недвижимости.", "Знание рынка.", "Инвестиционные возможности."],

@@ -6,6 +6,7 @@ const path = require("path");
 const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
+const SEOT = require("./seo-titles.js");
 const BASE = "https://baliareproperty.com/";
 const LANGS = ["id", "en", "ru"];
 const LOCALE = { id: "id_ID", en: "en_US", ru: "ru_RU" };
@@ -107,6 +108,7 @@ function parseRp(t) {
           areaSub: area.querySelector(".area-head p").textContent.trim(),
           rec: c.classList.contains("recommended"),
           sold: c.classList.contains("sold") || /SOLD/.test(c.innerHTML), priceText: pb ? pb.textContent : "",
+          specs: [...c.querySelectorAll("dl.specs > div")].map((d) => [(d.querySelector("dt") || {}).textContent, (d.querySelector("dd") || {}).textContent].map((x) => (x || "").replace(/\s+/g, " ").trim())).filter((x) => x[0] && x[1]),
           html: clone.outerHTML };
       });
       document.documentElement.setAttribute("lang", L);
@@ -147,9 +149,10 @@ function parseRp(t) {
   for (const L of LANGS) {
     const file = langDir(L) + "inquiry.html";
     const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "inquiry.html")]));
-    const block = seo({ L, pageUrl: alts[L], alts, desc: INQ_DESC[L], ogTitle: "Bali Are Property – Inquiry",
+    const INQ_T = { id: 'Cari atau Titip Jual Properti di Bali – Form Inquiry | Bali Are Property', en: 'Find or List a Property in Bali – Inquiry Form | Bali Are Property', ru: 'Найти или продать недвижимость на Бали – заявка | Bali Are Property' };
+    const block = seo({ L, pageUrl: alts[L], alts, desc: INQ_DESC[L], ogTitle: INQ_T[L],
       jsonld: { "@context": "https://schema.org", "@graph": [AGENT, { "@type": "ContactPage", url: alts[L], inLanguage: L, about: { "@id": BASE + "#agent" } }] } });
-    let html = putSeo(srcInq, block).replace('data-page-lang="id"', 'data-page-lang="' + L + '"');
+    let html = putSeo(srcInq, block).replace('data-page-lang="id"', 'data-page-lang="' + L + '"').replace(/<title>[^<]*<\/title>/, '<title>' + esc(INQ_T[L]) + '</title>');
     if (L !== "id") html = html.replace('<html lang="id"', '<html lang="' + L + '"').replace('src="i18n.js"', 'src="../i18n.js"');
     html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "inquiry.html")])), L);
     write(file, html);
@@ -248,15 +251,22 @@ main .cta-duo{margin-top:0}
       const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "listing/" + c.slug + ".html")]));
       const home = rel(file, langDir(L));
       const list = rel(file, langDir(L) + "listings.html");
-      const desc = (c.desc.trim() || c.title).replace(/\s+/g, " ");
+      const SEOL = (SEOT[c.slug] || {})[L];
+      if (!SEOL) console.warn("SEO judul belum ada di tools/seo-titles.js:", c.slug, L);
+      const desc = SEOL ? SEOL.d : (c.desc.trim() || c.title).replace(/\s+/g, " ");
+      const pageTitle = SEOL ? SEOL.t : c.title + " – Bali Are Property";
+      const loc = c.eyebrow.split("·").map((x) => x.trim()).filter(Boolean);
       const offer = { "@type": "Offer", priceCurrency: "IDR", availability: c.sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock", seller: { "@id": BASE + "#agent" } };
       if (prices[c.slug]) offer.price = prices[c.slug];
       const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
         { "@type": "RealEstateListing", name: c.title, description: desc, url: alts[L], inLanguage: L, image: photosOf(c.slug).length ? photosOf(c.slug).map((p) => BASE + p) : BASE + ogFile(L),
-          contentLocation: { "@type": "Place", name: c.eyebrow.trim() + ", Bali, Indonesia" }, offers: offer },
+          contentLocation: { "@type": "Place", name: loc.join(", ") + ", Bali, Indonesia",
+            address: { "@type": "PostalAddress", streetAddress: loc.length > 1 ? loc[0] : undefined, addressLocality: loc[loc.length - 1], addressRegion: "Bali", addressCountry: "ID" } },
+          additionalProperty: c.specs.map(([n, v]) => ({ "@type": "PropertyValue", name: n, value: v })), offers: offer },
         { "@type": "BreadcrumbList", itemListElement: [
           { "@type": "ListItem", position: 1, name: "Bali Are Property", item: url(L, "") },
-          { "@type": "ListItem", position: 2, name: c.title, item: alts[L] }] }] };
+          { "@type": "ListItem", position: 2, name: out[L].title, item: url(L, "listings.html") },
+          { "@type": "ListItem", position: 3, name: c.title, item: alts[L] }] }] };
       const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
       const fix = (s) => s.replace(/href="inquiry\.html/g, 'href="' + rel(file, langDir(L) + "inquiry.html"));
       const photos = photosOf(c.slug);
@@ -267,8 +277,8 @@ main .cta-duo{margin-top:0}
         .replace(/(<div class="actions">[\s\S]*?)(<\/div>\s*<\/article>\s*)$/, `$1  <button class="btn ghost pdf" type="button" onclick="window.print()">${pdfIcon}${esc(PDF[L])}</button>\n        $2`);
       let html = `<!doctype html>
 <html lang="${L}" data-static-lang="${L}">
-<head>${head}<title>${esc(c.title)} – Bali Are Property</title>
-${seo({ L, pageUrl: alts[L], alts, desc, ogTitle: c.title, jsonld, image: photos[0] ? BASE + photos[0] : "" })}
+<head>${head}<title>${esc(pageTitle)}</title>
+${seo({ L, pageUrl: alts[L], alts, desc, ogTitle: pageTitle, jsonld, image: photos[0] ? BASE + photos[0] : "" })}
 ${pageCss}
 </head>
 <body>
@@ -466,6 +476,38 @@ ${urls.join("\n")}
 </urlset>
 `);
   write("robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${BASE}sitemap.xml\n`);
+
+  // ---------- llms.txt (GEO: ringkasan situs untuk mesin AI) ----------
+  {
+    const line = (c, L) => {
+      const t = ((SEOT[c.slug] || {})[L] || {}).t || c.title, d = ((SEOT[c.slug] || {})[L] || {}).d || c.desc.trim();
+      return `- [${t}](${url(L, "listing/" + c.slug + ".html")}): ${d.replace(/\s+/g, " ")}`;
+    };
+    const byType = (L) => {
+      const groups = {};
+      for (const c of out[L].cards) (groups[c.type] = groups[c.type] || []).push(c);
+      return Object.entries(groups).map(([k, cs]) => `### ${k}\n\n` + cs.map((c) => line(c, L)).join("\n")).join("\n\n");
+    };
+    write("llms.txt", `# Bali Are Property
+
+> Independent property agency in Bali, Indonesia, founded in 2009 by Bagoes. Sells land, villas, houses and commercial property, mainly in South Kuta (Ungasan, Jimbaran, Pecatu/Uluwatu, Kutuh/Pandawa, Balangan) and North Kuta (Canggu, Berawa, Pererenan, Tibubeneng, Kerobokan), plus Kuta, Ubud, Gianyar and Tabanan. Prices in Indonesian rupiah (IDR); titles are mostly SHM (freehold certificate). Contact: WhatsApp +62 812 868 080, ${BASE}. Site languages: Indonesian (default), English (/en/), Russian (/ru/).
+
+## Key pages
+
+- [Property listings (EN)](${url("en", "listings.html")}): all current listings grouped by property type and area
+- [Daftar listing (ID)](${url("id", "listings.html")})
+- [About](${url("en", "about.html")}) · [FAQ](${url("en", "faq.html")}) · [Bali Property Guide](${url("en", "guide.html")}) · [Bali property news](${url("en", "news.html")})
+- [Inquiry form](${url("en", "inquiry.html")}): find a property or list yours for sale
+
+## Listings (English)
+
+${byType("en")}
+
+## Listing (Bahasa Indonesia)
+
+${byType("id")}
+`);
+  }
 
   // ---------- Gambar pratinjau per bahasa (og.png, og-en.png, og-ru.png) ----------
   const OG = {
