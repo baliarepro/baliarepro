@@ -183,23 +183,55 @@ main .cta-duo{margin-top:0}
 @media (max-width:560px){.gallery{grid-template-columns:1fr 1fr;grid-auto-rows:auto}.gallery a:first-child{grid-column:1/-1;grid-row:auto}.gallery a:first-child img{aspect-ratio:16/10}.gallery.n2 a:first-child{grid-column:auto}}
 .print-only{display:none}
 @media print{
-  @page{size:A4;margin:14mm 14mm 16mm}
-  html,body{background:#fff !important;color:#111 !important}
-  .wrap{max-width:none;padding:0}
-  .lp-head,.langs,main .cta-duo,section.contact,footer,.actions,.back{display:none !important}
-  .print-only{display:block}
-  .print-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #111;padding-bottom:6px;margin-bottom:10px;font-size:11pt}
-  .print-head b{font-family:var(--display);font-size:15pt}
-  .print-foot{margin-top:12px;padding-top:8px;border-top:1px solid #999;font-size:10pt}
-  .card{border:0;padding:0;margin:0;gap:12px;box-shadow:none;background:#fff}
-  .card h1{font-size:20pt}
-  .gallery{break-inside:avoid;height:68mm;grid-auto-rows:auto}
-  .gallery img{aspect-ratio:auto !important;height:100%}
-  .gallery.n3{grid-template-rows:1fr 1fr}
-  .gallery a{border-radius:6px}
-  .price,.specs,.plot,.uses{break-inside:avoid}
-  a{color:inherit;text-decoration:none}
+  html:root{--bg:#F3F4F0 !important;--surface:#FFFFFF !important;--ink:#10282C !important;--muted:#56676A !important;--line:#D8DDD8 !important;--sea:#13706E !important;--sea-soft:#DCEDEA !important;--sand:#B89A5E !important;--sand-soft:#F1E9D8 !important;--sold:#B3261E !important;color-scheme:light}
+  @page{size:A4;margin:0}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{background:#fff !important;color:var(--ink) !important;margin:0;padding:0}
+  .wrap{max-width:none;padding:0;margin:0}
+  .lp-head,.langs,main .cta-duo,section.contact,body>.wrap>footer,.actions,.back{display:none !important}
+  a{color:inherit;text-decoration:none}
+  main{width:210mm;min-height:297mm;display:flex;flex-direction:column;gap:0;margin:0;box-sizing:border-box}
+  .print-only{display:block}
+  .print-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;background:var(--ink);color:#fff;padding:6mm 12mm}
+  .print-head .ph-brand b{display:block;font-family:var(--display);font-size:17pt;font-weight:800;letter-spacing:-.01em;line-height:1}
+  .print-head .ph-brand span{display:block;font-family:var(--mono);font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#C9D6D3;margin-top:1.6mm}
+  .print-head .ph-contact{text-align:right;font-size:8pt;line-height:1.45;color:#E7EEEC}
+  .print-head .ph-contact b{color:#fff;font-weight:600}
+  .print-band{height:1.6mm;background:var(--sand)}
+  .card{border:0 !important;border-radius:0;padding:6mm 12mm 0;margin:0;gap:3.4mm;box-shadow:none;background:#fff}
+  .card .card-top{gap:4mm}
+  .card .eyebrow{font-size:7pt}
+  .card h1{font-size:19pt;line-height:1.12;margin-top:1mm}
+  .card .desc{font-size:8.8pt;line-height:1.45;margin:1.5mm 0 0;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .badge{font-size:6.5pt;padding:1mm 2.4mm}
+  .rec-tag{font-size:6.5pt;padding:1.4mm 3mm}
+  .sold-stamp{transform:rotate(-6deg) scale(.8)}
+  .gallery{height:72mm;gap:2mm;grid-auto-rows:auto;break-inside:avoid}
+  .gallery.n3{grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr}
+  .gallery.n2{grid-template-columns:1fr 1fr;height:64mm}
+  .gallery a{border-radius:2.5mm}
+  .gallery img{aspect-ratio:auto !important;height:100% !important}
+  .price{border-radius:2.5mm;grid-template-columns:repeat(auto-fit,minmax(38mm,1fr))}
+  .price div{padding:2.2mm 3.2mm}
+  .price small{font-size:6.5pt;text-transform:uppercase;letter-spacing:.04em}
+  .price b{font-size:13pt}
+  dl.specs{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 6mm}
+  dl.specs div{padding:1.5mm 0;gap:3mm}
+  dl.specs dt{font-size:7.5pt}
+  dl.specs dd{font-size:8pt}
+  ul.points{font-size:8pt;gap:1.2mm 6mm;line-height:1.35}
+  ul.points li{padding-left:3.6mm}
+  ul.points li::before{width:1.5mm;height:1.5mm;left:0;top:.5em}
+  ul.uses{gap:1.6mm}
+  ul.uses li{font-size:7pt;padding:.8mm 2.6mm}
+  .plot{padding:2mm;border-radius:2.5mm;max-height:46mm;overflow:hidden;break-inside:avoid}
+  .plot svg{min-width:0;max-height:38mm;width:auto;max-width:100%;margin:0 auto}
+  .plot p{font-size:6.5pt;margin-top:1mm}
+  .print-foot{margin-top:auto;display:grid;grid-template-columns:1.25fr 1fr;gap:4mm 10mm;align-items:end;padding:5mm 12mm 7mm;border-top:.4mm solid var(--line);font-size:8pt;line-height:1.45}
+  .print-foot .pf-label{display:block;font-family:var(--mono);font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--sea);margin-bottom:1mm}
+  .print-foot .pf-name{font-family:var(--display);font-size:12pt;font-weight:700}
+  .print-foot .pf-link{word-break:break-all;color:var(--sea)}
+  .print-foot .pf-note{grid-column:1/-1;font-size:6.5pt;color:var(--muted);border-top:.2mm dashed var(--line);padding-top:2mm}
 }
 </style>
 </head>
@@ -218,7 +250,8 @@ main .cta-duo{margin-top:0}
     <p class="crumb">Tanah · Area Kuta · Kabupaten Badung · 1 listing</p>
   </header>
   <main>
-    <div class="print-only print-head"><b>Bali Are Property</b><span>baliareproperty.com</span></div>
+    <div class="print-only print-head"><div class="ph-brand"><b>Bali Are Property</b><span>Agen properti independen · Bali · sejak 2009</span></div><div class="ph-contact"><b>WhatsApp +62 812 868 080</b><br>baliareproperty.com</div></div>
+    <div class="print-only print-band"></div>
     <article class="card">
         <div class="card-top">
           <div>
@@ -253,7 +286,7 @@ main .cta-duo{margin-top:0}
           <button class="btn ghost pdf" type="button" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Download PDF</button>
         </div>
       </article>
-    <p class="print-only print-foot">Info &amp; survei lokasi: Bagoes · WhatsApp +62 812 868 080 · baliareproperty.com</p>
+    <div class="print-only print-foot"><div><span class="pf-label">Info &amp; survei lokasi</span><span class="pf-name">Bagoes</span> · WhatsApp <b>+62 812 868 080</b><br>wa.me/62812868080</div><div><span class="pf-label">Lihat listing online</span><a class="pf-link" href="https://baliareproperty.com/listing/tanah-1620-m2-di-jalan-dewi-sri-area-nakula.html">baliareproperty.com/listing/tanah-1620-m2-di-jalan-dewi-sri-area-nakula.html</a></div><p class="pf-note">Harga, ketersediaan, dan spesifikasi dapat berubah sewaktu-waktu. Mohon konfirmasi ke Bali Are Property sebelum mengambil keputusan. Dicetak dari baliareproperty.com.</p></div>
     <div class="cta-duo">
       <a class="cta" href="../inquiry.html#buyer"><b>Cari properti</b><span>Belum ketemu yang cocok? Isi kebutuhan Anda, kami carikan.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
       <a class="cta owner" href="../inquiry.html#owner"><b>Titip jual properti</b><span>Pasang tanah, villa, atau rumah Anda di listing kami.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
