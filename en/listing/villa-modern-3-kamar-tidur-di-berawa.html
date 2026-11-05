@@ -184,21 +184,21 @@ main .cta-duo{margin-top:0}
 .print-only{display:none}
 @media print{
   html:root{--bg:#F3F4F0 !important;--surface:#FFFFFF !important;--ink:#10282C !important;--muted:#56676A !important;--line:#D8DDD8 !important;--sea:#13706E !important;--sea-soft:#DCEDEA !important;--sand:#B89A5E !important;--sand-soft:#F1E9D8 !important;--sold:#B3261E !important;color-scheme:light}
-  @page{size:A4;margin:0}
+  @page{size:A4 portrait;margin:10mm}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   html,body{background:#fff !important;color:var(--ink) !important;margin:0;padding:0}
   .wrap{max-width:none;padding:0;margin:0}
   .lp-head,.langs,main .cta-duo,section.contact,body>.wrap>footer,.actions,.back{display:none !important}
   a{color:inherit;text-decoration:none}
-  main{width:210mm;min-height:297mm;display:flex;flex-direction:column;gap:0;margin:0;box-sizing:border-box}
+  main{width:auto;display:flex;flex-direction:column;gap:0;margin:0;box-sizing:border-box}
   .print-only{display:block}
-  .print-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;background:var(--ink);color:#fff;padding:6mm 12mm}
+  .print-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;background:var(--ink);color:#fff;padding:5mm 7mm;border-radius:2.5mm 2.5mm 0 0}
   .print-head .ph-brand b{display:block;font-family:var(--display);font-size:17pt;font-weight:800;letter-spacing:-.01em;line-height:1}
   .print-head .ph-brand span{display:block;font-family:var(--mono);font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#C9D6D3;margin-top:1.6mm}
   .print-head .ph-contact{text-align:right;font-size:8pt;line-height:1.45;color:#E7EEEC}
   .print-head .ph-contact b{color:#fff;font-weight:600}
   .print-band{height:1.6mm;background:var(--sand)}
-  .card{border:0 !important;border-radius:0;padding:6mm 12mm 0;margin:0;gap:3.4mm;box-shadow:none;background:#fff}
+  .card{border:0 !important;border-radius:0;padding:5mm 1mm 0;margin:0;gap:3.4mm;box-shadow:none;background:#fff}
   .card .card-top{gap:4mm}
   .card .eyebrow{font-size:7pt}
   .card h1{font-size:19pt;line-height:1.12;margin-top:1mm}
@@ -227,13 +227,14 @@ main .cta-duo{margin-top:0}
   .plot{padding:2mm;border-radius:2.5mm;max-height:46mm;overflow:hidden;break-inside:avoid}
   .plot svg{min-width:0;max-height:38mm;width:auto;max-width:100%;margin:0 auto}
   .plot p{font-size:6.5pt;margin-top:1mm}
-  .print-foot{margin-top:auto;display:grid;grid-template-columns:1.25fr 1fr;gap:4mm 10mm;align-items:end;padding:5mm 12mm 7mm;border-top:.4mm solid var(--line);font-size:8pt;line-height:1.45}
+  .print-foot{margin-top:5mm;display:grid;grid-template-columns:1.25fr 1fr;gap:4mm 10mm;align-items:end;padding:4mm 1mm 0;border-top:.4mm solid var(--line);font-size:8pt;line-height:1.45}
   .print-foot .pf-label{display:block;font-family:var(--mono);font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--sea);margin-bottom:1mm}
   .print-foot .pf-name{font-family:var(--display);font-size:12pt;font-weight:700}
   .print-foot .pf-link{word-break:break-all;color:var(--sea)}
   .print-foot .pf-note{grid-column:1/-1;font-size:6.5pt;color:var(--muted);border-top:.2mm dashed var(--line);padding-top:2mm}
 }
 </style>
+<style id="fit">@media print{main{zoom:0.948;margin:0 auto}}</style>
 </head>
 <body>
 <div class="wrap">
