@@ -39,7 +39,12 @@ function seo({ L, pageUrl, alts, desc, ogTitle, jsonld, image }) {
 <link rel="canonical" href="${pageUrl}">
 ${link}
 <link rel="alternate" hreflang="x-default" href="${alts.id}">
+<link rel="icon" href="${BASE}favicon.ico" sizes="48x48">
 <link rel="icon" href="${BASE}favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${BASE}favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="${BASE}apple-touch-icon.png">
+<link rel="manifest" href="${BASE}site.webmanifest">
+<meta name="theme-color" content="#123F36">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Bali Are Property">
 <meta property="og:title" content="${esc(ogTitle)}">

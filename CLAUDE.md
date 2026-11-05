@@ -17,6 +17,10 @@ Pemilik: Bagoes (WhatsApp 0812868080). Bahasa kerja dengan pemilik: Bahasa Indon
 `index.html`, `about.html`, `faq.html`, `guide.html`, `guide/`, `news.html`, `news/`, `listing/`, `en/`, `ru/`, `sitemap.xml`, `robots.txt`, `og.png`.
 Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalankan dari root repo).
 
+## Logo & favicon
+- Logo: gerbang candi bentar + matahari + ombak (hijau #123F36, emas #D9A441). Lambang kecil di header tiap halaman ada sebagai SVG inline (`class="bap-mark"`).
+- `favicon.svg` & `logo.png` dibuat oleh build. `favicon.ico`, `favicon-16/32/48.png`, `apple-touch-icon.png`, `icon-192/512.png`, `site.webmanifest` adalah file statis (dibuat sekali dari `favicon.svg`); buat ulang bila logo berubah.
+
 ## Menambah listing
 1. Tambahkan kartu `<article class="card">` di `listings.html`, dikelompokkan per jenis properti (section.type) dan area (div.area). Judul di `<h4><a href="listing/<slug>.html">…</a></h4>` (slug huruf kecil, tanpa simbol).
 2. Tambahkan terjemahan EN/RU untuk semua teks baru di `i18n.js`.
