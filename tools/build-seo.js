@@ -183,7 +183,7 @@ main .cta-duo{margin-top:0}
 @media (max-width:560px){.gallery{grid-template-columns:1fr 1fr;grid-auto-rows:auto}.gallery a:first-child{grid-column:1/-1;grid-row:auto}.gallery a:first-child img{aspect-ratio:16/10}.gallery.n2 a:first-child{grid-column:auto}}
 .print-only{display:none}
 @media print{
-  html:root{--bg:#F3F4F0 !important;--surface:#FFFFFF !important;--ink:#10282C !important;--muted:#56676A !important;--line:#D8DDD8 !important;--sea:#13706E !important;--sea-soft:#DCEDEA !important;--sand:#B89A5E !important;--sand-soft:#F1E9D8 !important;--sold:#B3261E !important;color-scheme:light}
+  html:root{--bg:#F6F2EA !important;--surface:#FFFFFF !important;--ink:#1C2421 !important;--muted:#59625D !important;--line:#E2DACB !important;--sea:#123F36 !important;--sea-soft:#E2EBE5 !important;--sand:#946410 !important;--sand-soft:#F6EAD0 !important;--sold:#B3261E !important;color-scheme:light}
   @page{size:A4 portrait;margin:10mm}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   html,body{background:#fff !important;color:var(--ink) !important;margin:0;padding:0}
@@ -192,12 +192,12 @@ main .cta-duo{margin-top:0}
   a{color:inherit;text-decoration:none}
   main{width:auto;display:flex;flex-direction:column;gap:0;margin:0;box-sizing:border-box}
   .print-only{display:block}
-  .print-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;background:var(--ink);color:#fff;padding:5mm 7mm;border-radius:2.5mm 2.5mm 0 0}
+  .print-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;background:#123F36;color:#fff;padding:5mm 7mm;border-radius:2.5mm 2.5mm 0 0}
   .print-head .ph-brand{display:flex;align-items:center;gap:3.5mm}
   .print-head .ph-mark{width:11mm;height:11mm;flex:none}
   .print-head .ph-brand b{display:block;font-family:var(--display);font-size:17pt;font-weight:800;letter-spacing:-.01em;line-height:1}
   .print-head .ph-brand span{display:block;font-family:var(--mono);font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#C9D6D3;margin-top:1.6mm}
-  .print-head .ph-contact{text-align:right;font-size:8pt;line-height:1.45;color:#E7EEEC}
+  .print-head .ph-contact{text-align:right;font-size:8pt;line-height:1.45;color:#EDF0EA}
   .print-head .ph-contact b{color:#fff;font-weight:600}
   .print-band{height:1.6mm;background:var(--sand)}
   .card{border:0 !important;border-radius:0;padding:5mm 1mm 0;margin:0;gap:3.4mm;box-shadow:none;background:#fff}
@@ -292,14 +292,14 @@ ${pageCss}
 <div class="wrap">
   <header class="lp-head">
     <div class="top-row">
-      <a class="eyebrow" href="${home}"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
+      <a class="eyebrow" href="${home}"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
       ${flags}
     </div>
     <a class="back" href="${list}">${esc(out[L].back)}</a>
     <p class="crumb">${esc(c.type)} · ${esc(c.areaTitle)} · ${esc(c.areaSub)}</p>
   </header>
   <main>
-    <div class="print-only print-head"><div class="ph-brand"><svg viewBox="0 0 120 120" width="40" height="40" aria-hidden="true" class="ph-mark"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#fff"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg><div><b>Bali Are Property</b><span>${esc(PT[L].tag)}</span></div></div><div class="ph-contact"><b>WhatsApp +62 812 868 080</b><br>baliareproperty.com</div></div>
+    <div class="print-only print-head"><div class="ph-brand"><svg viewBox="0 0 120 120" width="40" height="40" aria-hidden="true" class="ph-mark"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#fff"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg><div><b>Bali Are Property</b><span>${esc(PT[L].tag)}</span></div></div><div class="ph-contact"><b>WhatsApp +62 812 868 080</b><br>baliareproperty.com</div></div>
     <div class="print-only print-band"></div>
     ${cardHtml}
     <div class="print-only print-foot"><div><span class="pf-label">${esc(PT[L].contact)}</span><span class="pf-name">${esc(PT[L].name)}</span> · WhatsApp <b>+62 812 868 080</b><br>wa.me/62812868080</div><div><span class="pf-label">${esc(PT[L].online)}</span><a class="pf-link" href="${alts[L]}">${esc(alts[L].replace(/^https:\/\//, ""))}</a></div><p class="pf-note">${esc(PT[L].note)}</p></div>
@@ -526,11 +526,11 @@ ${byType("id")}
   for (const L of LANGS) {
     const o = OG[L];
     await og.setContent(`<html><body style="margin:0">
-<div style="width:1200px;height:630px;box-sizing:border-box;padding:72px 80px;background:#10282C;color:#F3F4F0;font-family:'Inter Display','Inter',sans-serif;display:flex;flex-direction:column;justify-content:space-between">
-  <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="display:flex;align-items:center;gap:16px;font:600 22px 'DejaVu Sans Mono',monospace;letter-spacing:.18em;color:#4FC2B4"><svg viewBox="0 0 120 120" width="56" height="56" aria-hidden="true"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#F3F4F0"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg>BALI ARE PROPERTY</span><span style="font-size:22px;color:#B9C8C6">${o.since}</span></div>
+<div style="width:1200px;height:630px;box-sizing:border-box;padding:72px 80px;background:#123F36;color:#F6F2EA;font-family:'Inter Display','Inter',sans-serif;display:flex;flex-direction:column;justify-content:space-between">
+  <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="display:flex;align-items:center;gap:16px;font:600 22px 'DejaVu Sans Mono',monospace;letter-spacing:.18em;color:#F6F2EA"><svg viewBox="0 0 120 120" width="56" height="56" aria-hidden="true"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#F6F2EA"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg>BALI ARE PROPERTY</span><span style="font-size:22px;color:#B9C8C6">${o.since}</span></div>
   <div>
     <div style="font-weight:800;font-size:${L === "ru" ? 84 : 92}px;line-height:1;letter-spacing:-.02em">${o.a}</div>
-    <div style="font-weight:800;font-size:92px;line-height:1.05;letter-spacing:-.02em;color:#D6BC84">${o.b}</div>
+    <div style="font-weight:800;font-size:92px;line-height:1.05;letter-spacing:-.02em;color:#D9A441">${o.b}</div>
     <div style="margin-top:26px;font-size:30px;color:#B9C8C6">${o.c}</div>
   </div>
   <div style="display:flex;justify-content:space-between;align-items:center;font-size:26px">

@@ -9,18 +9,18 @@
 <style>
 /* Layout: catalog — header + kawasan filter chips, grouped by jenis properti then kawasan, each listing a brochure card; shared contact block at end */
 :root{
-  --bg:#F3F4F0; --surface:#FFFFFF; --ink:#10282C; --muted:#56676A; --line:#D8DDD8;
-  --sea:#13706E; --sea-soft:#DCEDEA; --sand:#B89A5E; --sand-soft:#F1E9D8; --wa:#1A8D4A; --sold:#B3261E;
+  --bg:#F6F2EA; --surface:#FFFFFF; --ink:#1C2421; --muted:#59625D; --line:#E2DACB;
+  --sea:#123F36; --sea-soft:#E2EBE5; --sand:#946410; --sand-soft:#F6EAD0; --wa:#1A8D4A; --sold:#B3261E;
   --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
   --body:"Figtree","Segoe UI",Roboto,Arial,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0C1B1E; --surface:#13272B; --ink:#E7EEEC; --muted:#9DB0AE; --line:#24403F;
-  --sea:#4FC2B4; --sea-soft:#163A3A; --sand:#D6BC84; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }}
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#0C1B1E; --surface:#13272B; --ink:#E7EEEC; --muted:#9DB0AE; --line:#24403F;
-  --sea:#4FC2B4; --sea-soft:#163A3A; --sand:#D6BC84; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }
 
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
 .wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -130,7 +130,7 @@ a.home-link:hover{text-decoration:underline}
 .contact h2{color:var(--bg);font-size:26px}
 .contact p{margin:0;opacity:.8}
 .phone{font-family:var(--mono);font-size:clamp(22px,5vw,28px);user-select:all;letter-spacing:.04em}
-.contact .btn.primary{background:var(--sand);color:#10282C}
+.contact .btn.primary{background:var(--sand);color:#1C2421}
 .contact .btn.ghost{border-color:var(--bg);color:var(--bg)}
 footer{font-size:13px;color:var(--muted);padding-block:0 40px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
 footer>span{min-width:0}

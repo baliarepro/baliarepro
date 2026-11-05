@@ -18,7 +18,7 @@ Pemilik: Bagoes (WhatsApp 0812868080). Bahasa kerja dengan pemilik: Bahasa Indon
 Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalankan dari root repo).
 
 ## Logo & favicon
-- Logo: gerbang candi bentar + matahari + ombak (hijau #123F36, emas #D9A441). Lambang kecil di header tiap halaman ada sebagai SVG inline (`class="bap-mark"`).
+- Logo: gerbang candi bentar + matahari + ombak (hijau #123F36, emas #D9A441). Warna website mengikuti logo: hijau hutan #123F36 (utama), krem pasir #F6F2EA (latar), emas #946410/#D9A441 (aksen). Lambang kecil di header tiap halaman ada sebagai SVG inline (`class="bap-mark"`).
 - `favicon.svg` & `logo.png` dibuat oleh build. `favicon.ico`, `favicon-16/32/48.png`, `apple-touch-icon.png`, `icon-192/512.png`, `site.webmanifest` adalah file statis (dibuat sekali dari `favicon.svg`); buat ulang bila logo berubah.
 
 ## Menambah listing
