@@ -66,7 +66,7 @@ function top({ L, up, flags, esc, current }) {
   const h = HT[L];
   const a = (href, label, cur) => `<a href="${up}${href}"${cur ? ' aria-current="page"' : ""}>${esc(label)}</a>`;
   return `<div class="home-top">
-    <a class="eyebrow home-link" href="${up || "./"}">Bali Are Property</a>
+    <a class="eyebrow home-link" href="${up || "./"}"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
     <nav aria-label="Menu">
       ${a("about.html", h.nav[3])}
       ${a("listings.html", h.nav[0])}

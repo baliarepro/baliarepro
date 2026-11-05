@@ -28,7 +28,7 @@ const langDir = (L) => (L === "id" ? "" : L + "/");
 const url = (L, p) => BASE + langDir(L) + p;
 
 const AGENT = { "@type": "RealEstateAgent", "@id": BASE + "#agent", name: "Bali Are Property", url: BASE,
-  telephone: "+62812868080", image: BASE + "og.png", logo: BASE + "favicon.svg",
+  telephone: "+62812868080", image: BASE + "og.png", logo: BASE + "logo.png",
   areaServed: { "@type": "Place", name: "Bali, Indonesia" }, address: { "@type": "PostalAddress", addressRegion: "Bali", addressCountry: "ID" } };
 
 const ogFile = (L) => (L === "id" ? "og.png" : "og-" + L + ".png");
@@ -188,6 +188,8 @@ main .cta-duo{margin-top:0}
   main{width:auto;display:flex;flex-direction:column;gap:0;margin:0;box-sizing:border-box}
   .print-only{display:block}
   .print-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;background:var(--ink);color:#fff;padding:5mm 7mm;border-radius:2.5mm 2.5mm 0 0}
+  .print-head .ph-brand{display:flex;align-items:center;gap:3.5mm}
+  .print-head .ph-mark{width:11mm;height:11mm;flex:none}
   .print-head .ph-brand b{display:block;font-family:var(--display);font-size:17pt;font-weight:800;letter-spacing:-.01em;line-height:1}
   .print-head .ph-brand span{display:block;font-family:var(--mono);font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#C9D6D3;margin-top:1.6mm}
   .print-head .ph-contact{text-align:right;font-size:8pt;line-height:1.45;color:#E7EEEC}
@@ -285,14 +287,14 @@ ${pageCss}
 <div class="wrap">
   <header class="lp-head">
     <div class="top-row">
-      <a class="eyebrow" href="${home}">Bali Are Property</a>
+      <a class="eyebrow" href="${home}"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
       ${flags}
     </div>
     <a class="back" href="${list}">${esc(out[L].back)}</a>
     <p class="crumb">${esc(c.type)} · ${esc(c.areaTitle)} · ${esc(c.areaSub)}</p>
   </header>
   <main>
-    <div class="print-only print-head"><div class="ph-brand"><b>Bali Are Property</b><span>${esc(PT[L].tag)}</span></div><div class="ph-contact"><b>WhatsApp +62 812 868 080</b><br>baliareproperty.com</div></div>
+    <div class="print-only print-head"><div class="ph-brand"><svg viewBox="0 0 120 120" width="40" height="40" aria-hidden="true" class="ph-mark"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#fff"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg><div><b>Bali Are Property</b><span>${esc(PT[L].tag)}</span></div></div><div class="ph-contact"><b>WhatsApp +62 812 868 080</b><br>baliareproperty.com</div></div>
     <div class="print-only print-band"></div>
     ${cardHtml}
     <div class="print-only print-foot"><div><span class="pf-label">${esc(PT[L].contact)}</span><span class="pf-name">${esc(PT[L].name)}</span> · WhatsApp <b>+62 812 868 080</b><br>wa.me/62812868080</div><div><span class="pf-label">${esc(PT[L].online)}</span><a class="pf-link" href="${alts[L]}">${esc(alts[L].replace(/^https:\/\//, ""))}</a></div><p class="pf-note">${esc(PT[L].note)}</p></div>
@@ -520,7 +522,7 @@ ${byType("id")}
     const o = OG[L];
     await og.setContent(`<html><body style="margin:0">
 <div style="width:1200px;height:630px;box-sizing:border-box;padding:72px 80px;background:#10282C;color:#F3F4F0;font-family:'Inter Display','Inter',sans-serif;display:flex;flex-direction:column;justify-content:space-between">
-  <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 22px 'DejaVu Sans Mono',monospace;letter-spacing:.18em;color:#4FC2B4">BALI ARE PROPERTY</span><span style="font-size:22px;color:#B9C8C6">${o.since}</span></div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="display:flex;align-items:center;gap:16px;font:600 22px 'DejaVu Sans Mono',monospace;letter-spacing:.18em;color:#4FC2B4"><svg viewBox="0 0 120 120" width="56" height="56" aria-hidden="true"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#F3F4F0"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg>BALI ARE PROPERTY</span><span style="font-size:22px;color:#B9C8C6">${o.since}</span></div>
   <div>
     <div style="font-weight:800;font-size:${L === "ru" ? 84 : 92}px;line-height:1;letter-spacing:-.02em">${o.a}</div>
     <div style="font-weight:800;font-size:92px;line-height:1.05;letter-spacing:-.02em;color:#D6BC84">${o.b}</div>
@@ -533,7 +535,12 @@ ${byType("id")}
 </div></body></html>`);
     await og.screenshot({ path: path.join(ROOT, ogFile(L)) });
   }
-  write("favicon.svg", `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#13706E"/><path d="M10 44 L26 22 L36 34 L42 27 L54 44 Z" fill="#F3F4F0"/><circle cx="46" cy="18" r="5" fill="#D6BC84"/></svg>\n`);
+  const FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#123F36"/><g transform="translate(14 10) scale(.77)"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#F6F2EA"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="7" stroke-linecap="round"/></g></svg>`;
+  write("favicon.svg", FAVICON + "\n");
+  // logo.png 512 px (untuk schema "logo" / Google)
+  const lg = await browser.newPage({ viewport: { width: 512, height: 512 }, deviceScaleFactor: 1 });
+  await lg.setContent(`<html><body style="margin:0">${FAVICON.replace("<svg ", '<svg width="512" height="512" ')}</body></html>`);
+  await lg.screenshot({ path: path.join(ROOT, "logo.png"), omitBackground: true });
 
   await browser.close();
   console.log("listing:", idCards.length, "· halaman listing:", idCards.length * 3, "· url sitemap:", urls.length);
