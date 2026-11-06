@@ -37,6 +37,11 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - Setiap halaman listing punya tombol "Download PDF" (`window.print()` + CSS cetak A4). PDF wajib **maksimal 1 halaman** dan tampil profesional: header gelap berlogo + kontak, foto, harga, spesifikasi 3 kolom, footer kontak & link listing + catatan harga dapat berubah. Lembar didesain untuk area ±180×245 mm (aman untuk A4 maupun Letter dengan margin bawaan browser); build mengukur tiap halaman dan otomatis menambah `<style id="fit">` (zoom) bila lebih panjang. Uji: PDF A4 dan Letter harus 1 halaman. Semua diatur di `tools/build-seo.js` bagian "Halaman per listing" dan "PDF listing".
 - Foto bisa diambil dari folder Google Drive listing (link "Lihat Foto") lewat konektor Google Drive bila terhubung; file >±7 MB gagal diunduh lewat konektor, minta pemilik kirim versi lebih kecil.
 
+## Jumlah dilihat per iklan (ikon mata)
+- `views.js` (dimuat di `listings.html` dan semua halaman detail listing lewat template di `tools/build-seo.js`; halaman detail punya `<body data-listing="<slug>">`). Menambah ikon mata + angka di baris eyebrow tiap kartu (`.card-top .eyebrow`); disembunyikan di PDF.
+- Penghitung gratis abacus.jasoncameron.dev, namespace `baliarepro.github.io`, kunci `v-<slug>` (gabungan ID/EN/RU). Dihitung 1x per sesi browser: buka halaman detail, atau kartu katalog terlihat ≥1 detik. Hanya domain asli yang menambah angka; angka 0 tidak ditampilkan.
+- Jangan ganti slug listing yang sudah tayang (angka dilihat akan mulai dari 0).
+
 ## Aplikasi Android (PWA, gratis)
 - Website bisa dipasang sebagai aplikasi di Android (Chrome: tombol "Pasang aplikasi" muncul otomatis, atau menu ⋮ → "Instal aplikasi"/"Tambahkan ke layar utama"). Tanpa Play Store, tanpa biaya.
 - File: `site.webmanifest` (nama, ikon, warna, shortcut, screenshot), `sw.js` (service worker: halaman network-first + salinan offline, gambar/skrip cache), `offline.html`, `app.js` (daftar service worker + banner pasang 3 bahasa, ditutup = tidak muncul 7 hari), ikon `icon-maskable-192/512.png`, screenshot `img/app/*.jpg`.

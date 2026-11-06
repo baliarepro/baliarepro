@@ -289,7 +289,7 @@ main .cta-duo{margin-top:0}
 ${seo({ L, pageUrl: alts[L], alts, desc, ogTitle: pageTitle, jsonld, image: photos[0] ? BASE + photos[0] : "" })}
 ${pageCss}
 </head>
-<body>
+<body data-listing="${c.slug}">
 <div class="wrap">
   <header class="lp-head">
     <div class="top-row">
@@ -314,6 +314,7 @@ ${pageCss}
 ${copyScript}
 })();
 </script>
+<script src="/views.js" defer></script>
 <script src="${rel(file, "i18n.js")}"></script>
 </body>
 </html>
