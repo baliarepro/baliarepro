@@ -103,6 +103,10 @@ module.exports = {
     id: { t: "Dijual Tanah Hook 300 m² di Jalan Tulip, Ungasan Bali", d: "Tanah hook (posisi sudut) 300 m² SHM, ITR kuning di Jl. Tulip, Ungasan, Kuta Selatan. Rp6,5 jt/m², total Rp1,95 M. Lingkungan villa. Info & survei via WhatsApp." },
     en: { t: "300 m² Corner Plot for Sale on Jalan Tulip, Ungasan Bali", d: "300 m² SHM corner plot, yellow (residential) zoning, on Jl. Tulip, Ungasan, South Kuta. IDR 6.5M/m², IDR 1.95B total. Villa neighbourhood. Ask on WhatsApp." },
     ru: { t: "Продажа углового участка 300 м² на Джалан Тулип, Унгасан, Бали", d: "Угловой участок 300 м², SHM, жилая (жёлтая) зона, Джл. Тулип, Унгасан, Южная Кута. 6,5 млн IDR/м², всего 1,95 млрд IDR. Район вилл. Пишите в WhatsApp." } },
+  "tanah-hook-430-m2-di-poros-jalan-pantai-melasti": {
+    id: { t: "Dijual Tanah Hook 430 m² di Poros Jalan Pantai Melasti, Ungasan Bali", d: "Tanah hook 430 m² (2 SHM × 215 m²), ITR perumahan, hadap barat & utara di poros jalan menuju Pantai Melasti, Ungasan. Rp7,5 jt/m², total Rp3,225 M. Tanya via WhatsApp." },
+    en: { t: "430 m² Corner Plot for Sale on the Melasti Beach Road, Ungasan Bali", d: "430 m² corner plot (2 SHM titles × 215 m²), residential zoning, facing west & north, on the main road to Melasti Beach, Ungasan. IDR 7.5M/m², IDR 3.225B total. Ask on WhatsApp." },
+    ru: { t: "Продажа углового участка 430 м² у дороги к пляжу Меласти, Унгасан", d: "Угловой участок 430 м² (2 SHM по 215 м²), жилая зона, запад и север, на главной дороге к пляжу Меласти, Унгасан. 7,5 млн IDR/м², всего 3,225 млрд IDR. WhatsApp." } },
   "tanah-ocean-view-2-x-650-m2-di-balangan": {
     id: { t: "Dijual Tanah Ocean View 2 × 650 m² di Balangan, Jimbaran Bali", d: "Dua bidang 650 m² SHM bersebelahan, view laut tanpa halangan di kawasan villa mewah Balangan. Rp14,5 jt/m²; Rp9,425 M per bidang, Rp18,85 M sekaligus. Tanya via WhatsApp." },
     en: { t: "Ocean-View Land for Sale, 2 × 650 m² in Balangan, Jimbaran Bali", d: "Two adjoining 650 m² SHM plots with unobstructed ocean views in Balangan's luxury villa area. IDR 14.5M/m²; IDR 9.425B per plot, IDR 18.85B for both. Ask on WhatsApp." },
