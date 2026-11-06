@@ -7,6 +7,8 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const SEOT = require("./seo-titles.js");
+// Di GitHub Actions font Google boleh dimuat (ukuran PDF & gambar og lebih akurat); di tempat lain semua jaringan diblokir.
+const netRoute = (r) => (process.env.GITHUB_ACTIONS && /^https:\/\/fonts\.(googleapis|gstatic)\.com\//.test(r.request().url()) ? r.continue() : r.abort());
 const BASE = "https://baliareproperty.com/";
 const LANGS = ["id", "en", "ru"];
 const LOCALE = { id: "id_ID", en: "en_US", ru: "ru_RU" };
@@ -371,7 +373,7 @@ ${copyScript}
   // Ukur tinggi lembar cetak tiap halaman listing; bila lebih dari A4, perkecil (zoom) seluruh lembar.
   {
     const pp = await browser.newPage({ viewport: { width: 680, height: 926 } });
-    await pp.route(/^https?:/, (r) => r.abort());
+    await pp.route(/^https?:/, netRoute);
     await pp.emulateMedia({ media: "print" });
     const A4 = 926; // ±245 mm: aman untuk A4 & Letter dengan margin bawaan browser (lebar ±180 mm)
     for (const L of LANGS) {
@@ -380,6 +382,7 @@ ${copyScript}
         let html = read(file).replace(/\n<style id="fit">[\s\S]*?<\/style>/, "");
         write(file, html);
         await pp.goto("file://" + path.join(ROOT, file));
+        await pp.evaluate(() => document.fonts.ready.then(() => 0)).catch(() => {});
         const h = await pp.evaluate(() => {
           const m = document.querySelector("main"), f = m.querySelector(".print-foot");
           f.style.marginTop = "0"; const r = m.scrollHeight; f.style.marginTop = ""; return r;
