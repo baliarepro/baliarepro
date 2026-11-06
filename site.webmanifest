@@ -1,1 +1,31 @@
-{"name":"Bali Are Property","short_name":"Bali Are","icons":[{"src":"/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"/icon-512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#123F36","background_color":"#F6F2EA","display":"standalone","start_url":"/"}
+{
+  "id": "/",
+  "name": "Bali Are Property",
+  "short_name": "Bali Are",
+  "description": "Tanah, villa & rumah dijual di Bali – agen properti independen sejak 2009. Land, villas & houses for sale in Bali.",
+  "lang": "id",
+  "dir": "ltr",
+  "start_url": "/?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#123F36",
+  "background_color": "#F6F2EA",
+  "categories": ["business", "lifestyle"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Listing properti", "short_name": "Listing", "url": "/listings.html?source=app", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Berita properti Bali", "short_name": "Berita", "url": "/news.html?source=app", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Cari / titip jual properti", "short_name": "Inquiry", "url": "/inquiry.html?source=app", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "/img/app/home.jpg", "sizes": "618x1373", "type": "image/jpeg", "form_factor": "narrow", "label": "Beranda Bali Are Property" },
+    { "src": "/img/app/listings.jpg", "sizes": "618x1373", "type": "image/jpeg", "form_factor": "narrow", "label": "Daftar listing tanah, villa & rumah" },
+    { "src": "/img/app/listing.jpg", "sizes": "618x1373", "type": "image/jpeg", "form_factor": "narrow", "label": "Detail listing dengan foto & PDF" }
+  ]
+}
