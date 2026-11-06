@@ -2,7 +2,7 @@
    - Halaman: ambil dari internet dulu (selalu versi terbaru), simpan salinan; bila offline pakai salinan / offline.html.
    - Gambar, skrip, font: pakai salinan dulu lalu diperbarui di latar belakang.
    Naikkan VERSION bila daftar PRECACHE berubah. */
-const VERSION = "bap-v1";
+const VERSION = "bap-v2";
 const PRECACHE = ["/", "/listings.html", "/offline.html", "/i18n.js", "/app.js", "/favicon.svg", "/icon-192.png", "/icon-512.png", "/logo.png"];
 
 self.addEventListener("install", (e) => {

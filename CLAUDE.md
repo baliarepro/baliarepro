@@ -51,7 +51,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 ## Aplikasi Android (PWA, gratis)
 - Website bisa dipasang sebagai aplikasi di Android (Chrome: tombol "Pasang aplikasi" muncul otomatis, atau menu ⋮ → "Instal aplikasi"/"Tambahkan ke layar utama"). Tanpa Play Store, tanpa biaya.
 - File: `site.webmanifest` (nama, ikon, warna, shortcut, screenshot), `sw.js` (service worker: halaman network-first + salinan offline, gambar/skrip cache), `offline.html`, `app.js` (daftar service worker + banner pasang 3 bahasa, ditutup = tidak muncul 7 hari), ikon `icon-maskable-192/512.png`, screenshot `img/app/*.jpg`.
-- `app.js` dimuat di semua halaman lewat blok SEO di `tools/build-seo.js`. Bila daftar PRECACHE di `sw.js` diubah, naikkan `VERSION`.
+- `app.js` dimuat di semua halaman lewat blok SEO di `tools/build-seo.js`. `app.js` juga menambah tombol **Bagikan/Share/Поделиться** di setiap kartu iklan (detail & katalog): Web Share API (WhatsApp dll.), cadangan salin link. Bila daftar PRECACHE di `sw.js` diubah, naikkan `VERSION`.
 - Bila nanti ingin masuk Google Play: bungkus situs ini dengan PWABuilder (TWA); butuh akun Google Play Developer (biaya sekali bayar).
 
 ## Bali Property Guide — TETAP (tidak diupdate mingguan)
