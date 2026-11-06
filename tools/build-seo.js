@@ -324,6 +324,49 @@ ${copyScript}
     }
   }
 
+  // ---------- Iklan diturunkan (data-status="hidden" di listings.html, diatur dari admin.html) ----------
+  // Halaman detailnya diganti pemberitahuan "tidak tersedia" (noindex), tidak masuk katalog, sitemap, llms.txt.
+  {
+    const UN = {
+      id: { h: "Iklan ini sedang tidak ditampilkan", p: "Properti ini sementara tidak dipasarkan atau sedang diperbarui. Lihat listing lain yang tersedia, atau tanyakan langsung ke kami.", b: "Lihat semua listing", w: "Tanya via WhatsApp" },
+      en: { h: "This listing is currently unavailable", p: "This property is temporarily off the market or being updated. Browse our other listings, or ask us directly.", b: "See all listings", w: "Ask on WhatsApp" },
+      ru: { h: "Это объявление сейчас недоступно", p: "Объект временно снят с продажи или обновляется. Посмотрите другие объекты или напишите нам.", b: "Все объекты", w: "Написать в WhatsApp" } };
+    const hiddenRe = /<article\b[^>]*data-status="hidden"[^>]*>([\s\S]*?)<\/article>/g;
+    let m, nHidden = 0;
+    while ((m = hiddenRe.exec(srcIndex))) {
+      const slugM = m[1].match(/href="listing\/([^"]+)\.html"/);
+      if (!slugM) continue;
+      nHidden++;
+      const slug = slugM[1];
+      const h4 = (m[1].match(/<h4>([\s\S]*?)<\/h4>/) || ["", slug])[1].replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+      for (const L of LANGS) {
+        const file = langDir(L) + "listing/" + slug + ".html";
+        const T = UN[L], name = ((SEOT[slug] || {})[L] || {}).t || h4;
+        const wa = "https://wa.me/62812868080?text=" + encodeURIComponent(L === "id" ? `Halo Pak Bagoes, saya tertarik dengan listing "${h4}". Apakah masih tersedia?` : `Hello Pak Bagoes, I'm interested in the listing "${name}". Is it still available?`);
+        write(file, `<!doctype html>
+<html lang="${L}">
+<head>${head}<title>${esc(T.h)} – Bali Are Property</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="${BASE}favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#123F36">
+<script src="/app.js" defer></script>
+<style>.un{max-width:560px;margin:12vh auto;padding:0 4px;text-align:center}.un h1{font-family:var(--display);font-size:clamp(24px,5vw,32px);margin:14px 0 8px}.un p{color:var(--muted)}.un .eyebrow{display:block}.un .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}</style>
+</head>
+<body>
+<div class="wrap"><main class="un">
+  <a class="eyebrow" href="${rel(file, langDir(L))}">Bali Are Property</a>
+  <h1>${esc(T.h)}</h1>
+  <p>${esc(T.p)}</p>
+  <div class="row"><a class="btn primary" href="${rel(file, langDir(L) + "listings.html")}">${esc(T.b)}</a><a class="btn wa" href="${esc(wa)}" target="_blank" rel="noopener">${esc(T.w)}</a></div>
+</main></div>
+</body>
+</html>
+`);
+      }
+    }
+    if (nHidden) console.log("iklan diturunkan:", nHidden);
+  }
+
   // ---------- PDF listing: pastikan muat 1 halaman A4 ----------
   // Ukur tinggi lembar cetak tiap halaman listing; bila lebih dari A4, perkecil (zoom) seluruh lembar.
   {

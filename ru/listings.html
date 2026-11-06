@@ -76,6 +76,7 @@ h1{font-size:clamp(34px,7vw,56px);font-weight:800;letter-spacing:-.02em;margin-t
 .area-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
 .area-head h3{font-size:22px;font-weight:700}
 .area-head p{margin:0;color:var(--muted);font-size:14px}
+article.card[data-status="hidden"]{display:none!important}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px;display:grid;gap:18px}
 .card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
@@ -1825,13 +1826,20 @@ footer>span{min-width:0}
 <script>
 (function(){
   var J='all',F='all';
+  // Iklan yang diturunkan dari halaman admin (data-status="hidden") tidak ditampilkan
+  document.querySelectorAll('article.card[data-status="hidden"]').forEach(function(c){c.remove()});
+  document.querySelectorAll('.area').forEach(function(a){
+    var n=a.querySelectorAll('article.card').length, p=a.querySelector('.area-head p');
+    if(p) p.textContent=p.textContent.replace(/\d+ listing/, n+' listing');
+    if(!n) a.setAttribute('data-empty','');
+  });
   var jc=document.querySelectorAll('.chip[data-j]'), fc=document.querySelectorAll('.chip[data-f]');
   var cards=[].slice.call(document.querySelectorAll('.card')).map(function(c){return {j:c.closest('section.type').dataset.type,f:c.closest('.area').dataset.area}});
   function count(j,f){return cards.filter(function(c){return (j==='all'||c.j===j)&&(f==='all'||c.f===f)}).length}
   function apply(){
     document.querySelectorAll('section.type').forEach(function(sec){
       var okJ=J==='all'||sec.dataset.type===J;
-      sec.querySelectorAll('.area').forEach(function(a){a.hidden=!(okJ&&(F==='all'||a.dataset.area===F))});
+      sec.querySelectorAll('.area').forEach(function(a){a.hidden=a.hasAttribute('data-empty')||!(okJ&&(F==='all'||a.dataset.area===F))});
       sec.hidden=!sec.querySelector('.area:not([hidden])');
     });
     jc.forEach(function(b){var n=count(b.dataset.j,F);b.querySelector('small').textContent=n;b.classList.toggle('empty',n===0);b.setAttribute('aria-pressed',b.dataset.j===J?'true':'false')});

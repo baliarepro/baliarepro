@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#123F36">
+<title>Admin Iklan – Bali Are Property</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+:root{--bg:#F6F2EA;--surface:#fff;--ink:#1C2421;--muted:#59625D;--line:#E2DACB;--green:#123F36;--green-soft:#E3ECE7;--gold:#D9A441;--gold-ink:#946410;--red:#B3261E;--red-soft:#F8E3E1;--wa:#1A8D4A;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0B1814;--surface:#12241D;--ink:#EDF0EA;--muted:#A3B1A8;--line:#24392F;--green:#7FC4A8;--green-soft:#173129;--gold-ink:#E7BE6A;--red:#FF8A80;--red-soft:#3A1E1C;color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:16px 16px calc(96px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+header .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+header img{width:34px;height:34px;border-radius:8px}
+h1{font-size:22px;margin:0}
+h2{font-size:18px;margin:22px 0 8px}
+p{margin:6px 0}
+.muted{color:var(--muted);font-size:14px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+input,textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:88px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;padding:10px 16px;font:600 15px system-ui,sans-serif;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn.primary{background:var(--green);color:var(--bg)}
+.btn.gold{background:var(--gold);color:#1C2421}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.danger{background:var(--red-soft);color:var(--red)}
+.btn.small{padding:7px 12px;font-size:14px}
+.btn:disabled{opacity:.5;cursor:wait}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.tools input{flex:1 1 220px}
+.seg{display:flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:transparent;color:var(--ink);padding:8px 12px;font:600 14px system-ui,sans-serif;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--green);color:var(--bg)}
+.list{display:grid;gap:10px}
+.item{display:grid;grid-template-columns:72px 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.item.off{opacity:.72;border-style:dashed}
+.thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;background:var(--green-soft)}
+.item h3{font-size:16px;margin:0;line-height:1.3}
+.meta{font-size:13px;color:var(--muted);margin:2px 0 8px;display:flex;flex-wrap:wrap;gap:4px 10px}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--green-soft);color:var(--green)}
+.pill.off{background:var(--red-soft);color:var(--red)}
+.pill.sold{background:#EEE6D3;color:var(--gold-ink)}
+.eye{display:inline-flex;align-items:center;gap:3px}
+.eye svg{width:14px;height:14px}
+.grid2{display:grid;grid-template-columns:1fr 1.4fr auto;gap:6px;align-items:center;margin-bottom:6px}
+.grid2 input{padding:8px 10px}
+.x{border:0;background:transparent;color:var(--red);font-size:22px;line-height:1;padding:4px 8px;cursor:pointer}
+#toast{position:fixed;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));max-width:620px;margin:0 auto;background:var(--green);color:#F6F2EA;border-radius:14px;padding:12px 16px;box-shadow:0 8px 28px rgba(0,0,0,.3);z-index:50;font-size:15px}
+#toast.err{background:var(--red)}
+#toast[hidden]{display:none}
+dialog{width:min(760px,100%);max-height:calc(100% - 24px);border:0;border-radius:16px;padding:0;background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.dlg-h{position:sticky;top:0;background:var(--surface);display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);z-index:2}
+.dlg-h h2{margin:0;font-size:17px}
+.dlg-b{padding:4px 16px 16px}
+.dlg-f{position:sticky;bottom:0;background:var(--surface);display:flex;gap:8px;justify-content:flex-end;padding:12px 16px;border-top:1px solid var(--line)}
+fieldset{border:1px solid var(--line);border-radius:12px;padding:6px 12px 12px;margin:14px 0 0}
+legend{font-weight:700;font-size:14px;padding:0 6px}
+ol{padding-left:20px}
+ol li{margin:6px 0}
+code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14px}
+.note{background:#FBF4E4;border:1px solid #EAD9AE;color:#5B4510;border-radius:12px;padding:10px 12px;font-size:14px;margin-top:12px}
+@media (prefers-color-scheme:dark){.note{background:#2A2414;border-color:#4A3D1E;color:#E9D6A6}}
+@media (max-width:520px){.grid2{grid-template-columns:1fr auto}.grid2 input:first-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><img src="/icon-192.png" alt=""><div><h1>Admin Iklan</h1><div class="muted">baliareproperty.com</div></div></div>
+    <button class="btn ghost small" id="logout" hidden>Keluar</button>
+  </header>
+
+  <!-- Login -->
+  <section id="login" class="box" hidden>
+    <h2 style="margin-top:0">Masuk</h2>
+    <p class="muted">Halaman ini menyimpan perubahan langsung ke website lewat GitHub. Masukkan kunci akses GitHub (token) satu kali di HP ini.</p>
+    <label for="tok">Token GitHub</label>
+    <input id="tok" type="password" autocomplete="off" placeholder="github_pat_…">
+    <div class="row" style="margin-top:12px"><button class="btn primary" id="go">Masuk</button></div>
+    <details style="margin-top:16px">
+      <summary><b>Cara membuat token (sekali saja, ±3 menit)</b></summary>
+      <ol>
+        <li>Login GitHub dengan akun <b>baliarepro</b>, lalu buka <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>
+        <li><b>Token name</b>: <code>Admin website</code>. <b>Expiration</b>: pilih 1 tahun (atau sesuai keinginan).</li>
+        <li><b>Repository access</b>: pilih <i>Only select repositories</i> → <code>baliarepro/baliarepro</code>.</li>
+        <li><b>Permissions → Repository permissions</b>: <i>Contents</i> = <b>Read and write</b>. (Opsional: <i>Actions</i> = Read-only, supaya status update terlihat di sini.)</li>
+        <li>Klik <b>Generate token</b>, salin, lalu tempel di kolom di atas.</li>
+      </ol>
+      <p class="muted">Token hanya tersimpan di browser HP ini. Jangan dibagikan ke siapa pun. Bila HP hilang, hapus tokennya di halaman GitHub yang sama.</p>
+    </details>
+  </section>
+
+  <!-- Daftar iklan -->
+  <section id="app" hidden>
+    <div class="tools">
+      <input id="q" type="search" placeholder="Cari judul atau lokasi…">
+      <div class="seg" role="group" aria-label="Filter status">
+        <button data-s="all" aria-pressed="true">Semua</button>
+        <button data-s="on" aria-pressed="false">Tampil</button>
+        <button data-s="off" aria-pressed="false">Turun</button>
+      </div>
+    </div>
+    <p class="muted" id="summary"></p>
+    <div class="list" id="list"></div>
+    <div class="note">Iklan <b>baru</b> dan perubahan <b>status Terjual</b> tetap lewat chat dengan Claude, supaya 3 bahasa &amp; SEO langsung lengkap. Teks yang diedit di sini langsung tampil di versi Indonesia; versi English/Русский dan judul Google ikut dirapikan oleh Claude.</div>
+  </section>
+</div>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <div class="dlg-h"><h2 id="dlg-t">Edit iklan</h2><button class="x" value="cancel" aria-label="Tutup" formnovalidate>×</button></div>
+    <div class="dlg-b" id="dlg-b"></div>
+    <div class="dlg-f"><button class="btn ghost" value="cancel" formnovalidate>Batal</button><button class="btn primary" id="save" value="save">Simpan &amp; tayangkan</button></div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+  var OWNER = "baliarepro", REPO = "baliarepro", BRANCH = "main", API = "https://api.github.com/repos/" + OWNER + "/" + REPO;
+  var SRC = "listings.html", SEO = "tools/seo-titles.js", PEND = "tools/perlu-terjemahan.json";
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  var token = ""; try { token = localStorage.getItem("bap-admin-token") || ""; } catch (e) {}
+  var src = "", seo = "", items = [], filter = "all";
+
+  function toast(msg, err, ms) {
+    var t = $("#toast"); t.textContent = msg; t.className = err ? "err" : ""; t.hidden = false;
+    clearTimeout(toast.t); if (ms !== 0) toast.t = setTimeout(function () { t.hidden = true; }, ms || 4500);
+  }
+  function gh(path, opt) {
+    opt = opt || {};
+    var h = { "Authorization": "Bearer " + token, "Accept": opt.raw ? "application/vnd.github.raw+json" : "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" };
+    if (opt.body) h["Content-Type"] = "application/json";
+    return fetch(API + path, { method: opt.method || "GET", headers: h, body: opt.body ? JSON.stringify(opt.body) : undefined, cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) return r.text().then(function (t) { var e = new Error(r.status + " " + t.slice(0, 160)); e.status = r.status; throw e; });
+        return opt.raw ? r.text() : r.json();
+      });
+  }
+  function readFile(p) { return gh("/contents/" + p + "?ref=" + BRANCH + "&t=" + Date.now(), { raw: true }); }
+
+  // Satu commit berisi beberapa file (Git Data API). Diulang bila main berubah di tengah jalan.
+  function commit(files, message, tries) {
+    tries = tries || 0;
+    var head;
+    return gh("/git/ref/heads/" + BRANCH).then(function (ref) {
+      head = ref.object.sha;
+      return gh("/git/commits/" + head);
+    }).then(function (c) {
+      return gh("/git/trees", { method: "POST", body: { base_tree: c.tree.sha, tree: files.map(function (f) { return { path: f.path, mode: "100644", type: "blob", content: f.content }; }) } });
+    }).then(function (tree) {
+      return gh("/git/commits", { method: "POST", body: { message: message, tree: tree.sha, parents: [head] } });
+    }).then(function (nc) {
+      return gh("/git/refs/heads/" + BRANCH, { method: "PATCH", body: { sha: nc.sha } }).then(function () { return nc.sha; });
+    }).catch(function (e) {
+      if (e.status === 422 && tries < 2) return commit(files, message, tries + 1);
+      throw e;
+    });
+  }
+
+  // ---------- Membaca kartu iklan dari listings.html ----------
+  function cardRange(text, slug) {
+    var i = text.indexOf('href="listing/' + slug + '.html"');
+    if (i < 0) return null;
+    var s = text.lastIndexOf("<article", i), e = text.indexOf("</article>", i);
+    if (s < 0 || e < 0) return null;
+    return [s, e + "</article>".length];
+  }
+  function parseCard(html) {
+    var t = document.createElement("template"); t.innerHTML = html; return t.content.firstElementChild;
+  }
+  function txt(el) { return el ? el.textContent.replace(/ /g, " ").replace(/\s+/g, " ").trim() : ""; }
+  function parseAll() {
+    var doc = new DOMParser().parseFromString(src, "text/html");
+    items = $$("article.card", doc).map(function (c) {
+      var a = $("h4 a", c); if (!a) return null;
+      var slug = a.getAttribute("href").replace(/^listing\//, "").replace(/\.html$/, "");
+      var sec = c.closest("section.type"), area = c.closest(".area");
+      return { slug: slug, title: txt($("h4", c)), eyebrow: txt($(".eyebrow", c)),
+        type: sec ? txt($("h2", sec)) : "", area: area ? txt($(".area-head h3", area)) : "",
+        off: c.getAttribute("data-status") === "hidden", sold: c.classList.contains("sold"),
+        price: txt($(".price .hl b", c) || $(".price b", c)) };
+    }).filter(Boolean);
+  }
+
+  // ---------- Daftar ----------
+  var EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function render() {
+    var q = $("#q").value.toLowerCase().trim();
+    var shown = items.filter(function (it) {
+      if (filter === "on" && it.off) return false;
+      if (filter === "off" && !it.off) return false;
+      return !q || (it.title + " " + it.eyebrow + " " + it.area + " " + it.type).toLowerCase().indexOf(q) >= 0;
+    });
+    var on = items.filter(function (i) { return !i.off; }).length;
+    $("#summary").textContent = items.length + " iklan · " + on + " tampil · " + (items.length - on) + " diturunkan";
+    $("#list").innerHTML = shown.map(function (it) {
+      return '<div class="item' + (it.off ? " off" : "") + '" data-slug="' + it.slug + '">' +
+        '<img class="thumb" loading="lazy" alt="" src="/img/listing/' + it.slug + '/1.jpg" onerror="this.style.visibility=\'hidden\'">' +
+        '<div><h3>' + esc(it.title) + '</h3><div class="meta"><span>' + esc(it.eyebrow) + '</span><span>' + esc(it.price) + '</span>' +
+        '<span class="eye" data-eye="' + it.slug + '">' + EYE + '<b>–</b></span>' +
+        (it.off ? '<span class="pill off">Diturunkan</span>' : it.sold ? '<span class="pill sold">Terjual</span>' : '<span class="pill">Tampil</span>') + '</div>' +
+        '<div class="row">' +
+        (it.off ? '<button class="btn gold small" data-act="show">Tampilkan lagi</button>' : '<button class="btn danger small" data-act="hide">Turunkan</button>') +
+        '<button class="btn ghost small" data-act="edit">Edit</button>' +
+        '<a class="btn ghost small" target="_blank" rel="noopener" href="/listing/' + it.slug + '.html">Lihat</a>' +
+        '</div></div></div>';
+    }).join("") || '<p class="muted">Tidak ada iklan yang cocok.</p>';
+    loadViews(shown);
+  }
+  var viewCache = {};
+  function loadViews(list) {
+    var i = 0;
+    (function next() {
+      if (i >= list.length) return;
+      var slug = list[i++].slug;
+      var put = function (v) { var el = document.querySelector('[data-eye="' + slug + '"] b'); if (el) el.textContent = v.toLocaleString("id-ID"); };
+      if (slug in viewCache) { put(viewCache[slug]); return next(); }
+      fetch("https://abacus.jasoncameron.dev/get/baliarepro.github.io/v-" + slug)
+        .then(function (r) { return r.ok ? r.json() : { value: 0 }; })
+        .then(function (d) { viewCache[slug] = d.value || 0; put(viewCache[slug]); })
+        .catch(function () {}).then(function () { setTimeout(next, 340); });
+    })();
+  }
+
+  function load() {
+    toast("Memuat iklan…", false, 0);
+    return Promise.all([readFile(SRC), readFile(SEO).catch(function () { return ""; })]).then(function (r) {
+      src = r[0]; seo = r[1]; parseAll(); render(); $("#toast").hidden = true;
+    });
+  }
+
+  function pending(slug) {
+    return readFile(PEND).then(function (t) { try { return JSON.parse(t); } catch (e) { return {}; } }, function () { return {}; })
+      .then(function (p) { p[slug] = new Date().toISOString(); return JSON.stringify(p, null, 2) + "\n"; });
+  }
+  function afterCommit(sha, msg) {
+    toast(msg + " Website diperbarui otomatis dalam ±3–5 menit.", false, 8000);
+    // Status build (butuh izin Actions: Read-only; bila tidak ada, diam saja)
+    var n = 0;
+    (function poll() {
+      if (++n > 40) return;
+      gh("/actions/runs?head_sha=" + sha).then(function (r) {
+        var run = r.workflow_runs && r.workflow_runs[0];
+        if (!run || run.status !== "completed") return setTimeout(poll, 15000);
+        if (run.conclusion === "success") toast("✓ Website sudah diperbarui.", false, 8000);
+        else toast("Update website gagal (" + run.conclusion + "). Kabari Claude untuk dicek.", true, 0);
+      }).catch(function () {});
+    })();
+  }
+
+  // ---------- Turunkan / tampilkan ----------
+  function setStatus(slug, off, btn) {
+    btn.disabled = true;
+    readFile(SRC).then(function (cur) {
+      src = cur;
+      var rg = cardRange(src, slug); if (!rg) throw new Error("Iklan tidak ditemukan.");
+      var card = src.slice(rg[0], rg[1]);
+      var open = card.slice(0, card.indexOf(">") + 1).replace(/\s*data-status="[^"]*"/, "");
+      if (off) open = open.replace(/^<article\b/, '<article data-status="hidden"');
+      var next = src.slice(0, rg[0]) + open + card.slice(card.indexOf(">") + 1) + src.slice(rg[1]);
+      var title = items.filter(function (i) { return i.slug === slug; })[0].title;
+      return commit([{ path: SRC, content: next }], (off ? "Admin: turunkan iklan " : "Admin: tampilkan lagi iklan ") + slug).then(function (sha) {
+        src = next; parseAll(); render();
+        afterCommit(sha, (off ? "Iklan \"" + title + "\" diturunkan." : "Iklan \"" + title + "\" tampil lagi."));
+      });
+    }).catch(fail).then(function () { btn.disabled = false; });
+  }
+
+  // ---------- Edit ----------
+  var editing = null;
+  function seoGet(slug) {
+    var re = new RegExp('"' + slug.replace(/[-]/g, "\\-") + '":\\s*\\{\\s*id: \\{ t: ("(?:[^"\\\\]|\\\\.)*"), d: ("(?:[^"\\\\]|\\\\.)*") \\}');
+    var m = seo.match(re);
+    return m ? { t: JSON.parse(m[1]), d: JSON.parse(m[2]), re: re } : null;
+  }
+  function rowsHtml(name, rows, a, b) {
+    return '<div data-rows="' + name + '">' + rows.map(function (r) {
+      return '<div class="grid2"><input placeholder="' + a + '" value="' + esc(r[0]) + '"><input placeholder="' + b + '" value="' + esc(r[1]) + '"><button type="button" class="x" data-del aria-label="Hapus baris">×</button></div>';
+    }).join("") + '</div><button type="button" class="btn ghost small" data-add="' + name + '" data-a="' + a + '" data-b="' + b + '">+ Tambah baris</button>';
+  }
+  function openEdit(slug) {
+    readFile(SRC).then(function (cur) {
+      src = cur; parseAll();
+      var rg = cardRange(src, slug); if (!rg) throw new Error("Iklan tidak ditemukan.");
+      var c = parseCard(src.slice(rg[0], rg[1]));
+      var s = seoGet(slug);
+      var lines = function (sel) { return $$(sel + " li", c).map(txt).join("\n"); };
+      var links = $$(".actions a", c);
+      var map = links.filter(function (a) { return /maps|goo\.gl/.test(a.href); })[0];
+      var drive = links.filter(function (a) { return /drive\.google/.test(a.href); })[0];
+      editing = { slug: slug, range: rg, seo: s };
+      $("#dlg-t").textContent = "Edit: " + txt($("h4", c));
+      $("#dlg-b").innerHTML =
+        '<label for="f-title">Judul iklan</label><input id="f-title" value="' + esc(txt($("h4", c))) + '">' +
+        '<label for="f-eb">Lokasi singkat (mis. Jl. Tulip · Ungasan)</label><input id="f-eb" value="' + esc(txt($(".card-top .eyebrow", c))) + '">' +
+        '<label for="f-desc">Deskripsi</label><textarea id="f-desc">' + esc(txt($(".desc", c))) + '</textarea>' +
+        ($(".card-top .badge", c) ? '<label for="f-badge">Label kecil (badge)</label><input id="f-badge" value="' + esc(txt($(".card-top .badge", c))) + '">' : "") +
+        '<fieldset><legend>Harga</legend>' + rowsHtml("price", $$(".price > div", c).map(function (d) { return [txt($("small", d)), txt($("b", d))]; }), "Keterangan (mis. Harga per m²)", "Nilai (mis. Rp6.500.000)") + '</fieldset>' +
+        '<fieldset><legend>Spesifikasi</legend>' + rowsHtml("spec", $$("dl.specs > div", c).map(function (d) { return [txt($("dt", d)), txt($("dd", d))]; }), "Nama (mis. Luas tanah)", "Isi (mis. 300 m²)") + '</fieldset>' +
+        '<label for="f-points">Keunggulan (satu per baris)</label><textarea id="f-points">' + esc(lines("ul.points")) + '</textarea>' +
+        '<label for="f-uses">Cocok untuk (satu per baris)</label><textarea id="f-uses">' + esc(lines("ul.uses")) + '</textarea>' +
+        (map ? '<label for="f-map">Link Google Maps</label><input id="f-map" type="url" value="' + esc(map.getAttribute("href")) + '">' : "") +
+        (drive ? '<label for="f-drive">Link folder foto (Google Drive)</label><input id="f-drive" type="url" value="' + esc(drive.getAttribute("href")) + '">' : "") +
+        (s ? '<fieldset><legend>Google (SEO, Bahasa Indonesia)</legend><label for="f-st">Judul di Google</label><input id="f-st" maxlength="90" value="' + esc(s.t) + '"><label for="f-sd">Deskripsi di Google</label><textarea id="f-sd" maxlength="200">' + esc(s.d) + '</textarea><p class="muted">Bila harga atau luas berubah, ubah juga di sini.</p></fieldset>' : "") +
+        '<p class="muted" style="margin-top:14px">Alamat link iklan tidak berubah, jadi jumlah dilihat & posisi di Google tetap.</p>';
+      $("#dlg").showModal();
+    }).catch(fail);
+  }
+  document.addEventListener("click", function (e) {
+    var add = e.target.closest("[data-add]");
+    if (add) {
+      var box = $('[data-rows="' + add.dataset.add + '"]');
+      box.insertAdjacentHTML("beforeend", '<div class="grid2"><input placeholder="' + add.dataset.a + '"><input placeholder="' + add.dataset.b + '"><button type="button" class="x" data-del aria-label="Hapus baris">×</button></div>');
+      return;
+    }
+    var del = e.target.closest("[data-del]");
+    if (del) { del.parentNode.remove(); return; }
+  });
+
+  function readRows(name) {
+    return $$('[data-rows="' + name + '"] .grid2', $("#dlg")).map(function (r) { var i = $$("input", r); return [i[0].value.trim(), i[1].value.trim()]; })
+      .filter(function (r) { return r[0] || r[1]; });
+  }
+  function setText(el, v) { if (el) el.textContent = v; }
+  function applyList(card, sel, lines) {
+    var cls = sel.split(".")[1], ul = $(sel, card);
+    var list = lines.split("\n").map(function (x) { return x.trim(); }).filter(Boolean);
+    if (!list.length) { if (ul) ul.remove(); return; }
+    if (ul && $$("li", ul).map(txt).join("\n") === list.join("\n")) return;
+    if (!ul) {
+      ul = document.createElement("ul"); ul.className = cls;
+      var ref = cls === "points" && $("dl.specs", card) ? $("dl.specs", card).nextSibling : $(".actions", card);
+      card.insertBefore(document.createTextNode("\n\n        "), ref);
+      card.insertBefore(ul, ref);
+    }
+    ul.innerHTML = list.map(function (x) { return "\n          <li>" + esc(x) + "</li>"; }).join("") + "\n        ";
+  }
+  function saveEdit() {
+    var ed = editing, btn = $("#save");
+    btn.disabled = true; toast("Menyimpan…", false, 0);
+    readFile(SRC).then(function (cur) {
+      src = cur;
+      var rg = cardRange(src, ed.slug); if (!rg) throw new Error("Iklan tidak ditemukan.");
+      var c = parseCard(src.slice(rg[0], rg[1]));
+      var a = $("h4 a", c); a.textContent = $("#f-title").value.trim() || a.textContent;
+      setText($(".card-top .eyebrow", c), $("#f-eb").value.trim());
+      setText($(".desc", c), $("#f-desc").value.trim());
+      if ($("#f-badge")) setText($(".card-top .badge", c), $("#f-badge").value.trim());
+      // Harga: pertahankan class baris (mis. "hl" = harga utama), baris baru meniru baris terakhir
+      var price = $(".price", c), old = price ? $$(":scope > div", price) : [], rows = readRows("price");
+      if (price && rows.length) {
+        price.innerHTML = rows.map(function (r, i) {
+          var cls = old[i] ? old[i].getAttribute("class") : (old.length ? old[old.length - 1].getAttribute("class") : null);
+          return "\n          <div" + (cls ? ' class="' + cls + '"' : "") + "><small>" + esc(r[0]) + "</small><b>" + esc(r[1]) + "</b></div>";
+        }).join("") + "\n        ";
+      }
+      var dl = $("dl.specs", c), specs = readRows("spec");
+      if (dl) dl.innerHTML = specs.map(function (r) { return "\n          <div><dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("") + "\n        ";
+      applyList(c, "ul.points", $("#f-points").value);
+      applyList(c, "ul.uses", $("#f-uses").value);
+      var links = $$(".actions a", c);
+      if ($("#f-map")) links.filter(function (x) { return /maps|goo\.gl/.test(x.getAttribute("href")); }).forEach(function (x) { x.setAttribute("href", $("#f-map").value.trim()); });
+      if ($("#f-drive")) links.filter(function (x) { return /drive\.google/.test(x.getAttribute("href")); }).forEach(function (x) { x.setAttribute("href", $("#f-drive").value.trim()); });
+      var next = src.slice(0, rg[0]) + c.outerHTML + src.slice(rg[1]);
+      var files = [{ path: SRC, content: next }];
+      var work = Promise.resolve();
+      if (ed.seo && $("#f-st")) {
+        work = readFile(SEO).then(function (s) {
+          seo = s; var m = seoGet(ed.slug);
+          if (m) {
+            var nt = $("#f-st").value.trim(), nd = $("#f-sd").value.trim();
+            seo = seo.replace(m.re, function (all) { return all.replace(JSON.stringify(m.t), JSON.stringify(nt)).replace(JSON.stringify(m.d), JSON.stringify(nd)); });
+            files.push({ path: SEO, content: seo });
+          }
+        });
+      }
+      return work.then(function () { return pending(ed.slug); }).then(function (p) {
+        files.push({ path: PEND, content: p });
+        return commit(files, "Admin: edit iklan " + ed.slug);
+      }).then(function (sha) {
+        src = next; parseAll(); render(); $("#dlg").close();
+        afterCommit(sha, "Perubahan tersimpan.");
+      });
+    }).catch(fail).then(function () { btn.disabled = false; });
+  }
+  $("#form").addEventListener("submit", function (e) {
+    if (e.submitter && e.submitter.value === "save") { e.preventDefault(); saveEdit(); }
+  });
+
+  function fail(e) {
+    console.error(e);
+    if (e.status === 401) { toast("Token tidak berlaku. Silakan masuk lagi.", true, 0); logout(); return; }
+    if (e.status === 403 || e.status === 404) { toast("Token tidak punya izin tulis ke repo baliarepro/baliarepro (Contents: Read and write).", true, 0); return; }
+    toast("Gagal: " + (e.message || e), true, 0);
+  }
+
+  // ---------- Event ----------
+  $("#list").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-act]"); if (!b) return;
+    var slug = b.closest(".item").dataset.slug, act = b.dataset.act;
+    var it = items.filter(function (i) { return i.slug === slug; })[0];
+    if (act === "hide" && confirm("Turunkan iklan \"" + it.title + "\"?\nIklan tidak tampil di website sampai Anda tampilkan lagi.")) setStatus(slug, true, b);
+    if (act === "show") setStatus(slug, false, b);
+    if (act === "edit") openEdit(slug);
+  });
+  $("#q").addEventListener("input", render);
+  $$(".seg button").forEach(function (b) { b.addEventListener("click", function () { filter = b.dataset.s; $$(".seg button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); render(); }); });
+
+  function logout() { token = ""; try { localStorage.removeItem("bap-admin-token"); } catch (e) {} $("#app").hidden = true; $("#login").hidden = false; $("#logout").hidden = true; }
+  $("#logout").addEventListener("click", logout);
+  function start() {
+    $("#login").hidden = true; $("#app").hidden = false; $("#logout").hidden = false;
+    load().catch(function (e) { fail(e); });
+  }
+  $("#go").addEventListener("click", function () {
+    var t = $("#tok").value.trim(); if (!t) return;
+    token = t; var b = $("#go"); b.disabled = true;
+    gh("").then(function (r) {
+      if (!r.permissions || !r.permissions.push) throw Object.assign(new Error("no push"), { status: 403 });
+      try { localStorage.setItem("bap-admin-token", t); } catch (e) {}
+      start();
+    }).catch(function (e) { token = ""; fail(e); }).then(function () { b.disabled = false; });
+  });
+  if (token) start(); else $("#login").hidden = false;
+})();
+</script>
+</body>
+</html>

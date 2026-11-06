@@ -1,0 +1,52 @@
+# Build otomatis website setelah ada perubahan file sumber (mis. dari halaman admin.html).
+# Menjalankan node tools/build-seo.js lalu meng-commit hasil build ke main dan memicu GitHub Pages.
+name: Build website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "listings.html"
+      - "inquiry.html"
+      - "i18n.js"
+      - "tools/**"
+      - "img/listing/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: build-website
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Pasang Playwright + Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - name: Build
+        run: node tools/build-seo.js
+      - name: Commit hasil build
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- . ':!node_modules'
+          if git diff --cached --quiet; then echo "Tidak ada perubahan"; exit 0; fi
+          git commit -m "Build otomatis setelah perubahan ${GITHUB_SHA::7}"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+      - name: Picu GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
