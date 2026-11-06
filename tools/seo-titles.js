@@ -103,6 +103,10 @@ module.exports = {
     id: { t: "Dijual Tanah Hook 300 m² di Jalan Tulip, Ungasan Bali", d: "Tanah hook (posisi sudut) 300 m² SHM, ITR kuning di Jl. Tulip, Ungasan, Kuta Selatan. Rp6,5 jt/m², total Rp1,95 M. Lingkungan villa. Info & survei via WhatsApp." },
     en: { t: "300 m² Corner Plot for Sale on Jalan Tulip, Ungasan Bali", d: "300 m² SHM corner plot, yellow (residential) zoning, on Jl. Tulip, Ungasan, South Kuta. IDR 6.5M/m², IDR 1.95B total. Villa neighbourhood. Ask on WhatsApp." },
     ru: { t: "Продажа углового участка 300 м² на Джалан Тулип, Унгасан, Бали", d: "Угловой участок 300 м², SHM, жилая (жёлтая) зона, Джл. Тулип, Унгасан, Южная Кута. 6,5 млн IDR/м², всего 1,95 млрд IDR. Район вилл. Пишите в WhatsApp." } },
+  "tanah-hook-2450-m2-dekat-hillstone-ungasan": {
+    id: { t: "Dijual Tanah Hook 2.450 m² Dekat Hillstone, Ungasan Bali", d: "Tanah hook 2.450 m² (2 SHM: 1.450 + 1.000 m²), ITR permukiman, hadap barat & selatan dekat Hillstone, Ungasan. Rp6,5 jt/m²; bisa ambil 1.000 m² saja. Tanya via WhatsApp." },
+    en: { t: "2,450 m² Corner Land for Sale near Hillstone, Ungasan Bali", d: "2,450 m² corner plot (2 SHM: 1,450 + 1,000 m²), residential zoning, facing west & south near Hillstone, Ungasan. IDR 6.5M/m²; 1,000 m² can be sold alone. Ask on WhatsApp." },
+    ru: { t: "Продажа углового участка 2 450 м² у Hillstone, Унгасан, Бали", d: "Угловой участок 2 450 м² (2 SHM: 1 450 + 1 000 м²), жилая зона, запад и юг, рядом с Hillstone, Унгасан. 6,5 млн IDR/м²; можно купить только 1 000 м². WhatsApp." } },
   "tanah-hook-430-m2-di-poros-jalan-pantai-melasti": {
     id: { t: "Dijual Tanah Hook 430 m² di Poros Jalan Pantai Melasti, Ungasan Bali", d: "Tanah hook 430 m² (2 SHM × 215 m²), ITR perumahan, hadap barat & utara di poros jalan menuju Pantai Melasti, Ungasan. Rp7,5 jt/m², total Rp3,225 M. Tanya via WhatsApp." },
     en: { t: "430 m² Corner Plot for Sale on the Melasti Beach Road, Ungasan Bali", d: "430 m² corner plot (2 SHM titles × 215 m²), residential zoning, facing west & north, on the main road to Melasti Beach, Ungasan. IDR 7.5M/m², IDR 3.225B total. Ask on WhatsApp." },
