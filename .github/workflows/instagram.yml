@@ -43,6 +43,7 @@ jobs:
       - name: Posting ke Instagram
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
         run: |
           MODE="new"
           if [ "${{ github.event_name }}" = "schedule" ]; then MODE="queue"; fi

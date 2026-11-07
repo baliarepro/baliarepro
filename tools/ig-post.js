@@ -11,7 +11,7 @@ const { parseCard } = require("./ig-images.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const BASE = "https://baliareproperty.com/";
-const API = "https://graph.instagram.com/v23.0/";
+let API = "https://graph.instagram.com/v23.0/"; // diganti ke graph.facebook.com bila token dari Login Terpadu/Facebook (token pengguna sistem)
 const STATE = path.join(ROOT, "tools/ig-state.json");
 const mode = (process.argv.find((a) => a.startsWith("--mode=")) || "--mode=new").slice(7);
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -149,8 +149,26 @@ async function main() {
   if (!process.env.IG_TOKEN) { console.log("Secret IG_TOKEN belum diatur — posting Instagram dilewati."); return; }
 
   let token = (state.token && dec(state.token)) || process.env.IG_TOKEN;
+  // Jenis token: Instagram Login (graph.instagram.com) atau Login Terpadu/Facebook (graph.facebook.com, token pengguna sistem tidak kedaluwarsa)
+  let igId = null, username = "";
+  try {
+    const me = await api("GET", "me", { fields: "user_id,username" }, token);
+    igId = me.user_id || me.id; username = me.username;
+  } catch (e) {
+    API = "https://graph.facebook.com/v23.0/";
+    if (process.env.IG_USER_ID) {
+      igId = process.env.IG_USER_ID;
+    } else {
+      const acc = await api("GET", "me/accounts", { fields: "name,instagram_business_account{id,username}", limit: "50" }, token);
+      const hit = (acc.data || []).find((p) => p.instagram_business_account);
+      if (!hit) throw new Error("Token Facebook tidak terhubung ke akun Instagram bisnis (tambahkan secret IG_USER_ID atau hubungkan akun IG ke Halaman).");
+      igId = hit.instagram_business_account.id;
+    }
+    username = (await api("GET", igId, { fields: "username" }, token)).username || "";
+  }
+  const isIgLogin = API.includes("graph.instagram.com");
   const age = state.tokenRefreshedAt ? Date.now() - Date.parse(state.tokenRefreshedAt) : Infinity;
-  if (age > 7 * 864e5) {
+  if (isIgLogin && age > 7 * 864e5) {
     try {
       const r = await (await fetch(`https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${encodeURIComponent(token)}`)).json();
       if (r.access_token) { token = r.access_token; state.token = enc(token); state.tokenRefreshedAt = new Date().toISOString(); console.log("Token Instagram diperpanjang."); save(); }
@@ -158,9 +176,7 @@ async function main() {
     } catch (e) { console.log("Refresh token gagal:", e.message); }
   }
 
-  const me = await api("GET", "me", { fields: "user_id,username" }, token);
-  const igId = me.user_id || me.id;
-  console.log("Akun Instagram: @" + me.username);
+  console.log("Akun Instagram: @" + username + (isIgLogin ? " (Instagram Login)" : " (Login Terpadu/Facebook)"));
 
   const SEO = require("./seo-titles.js");
   const all = listings();
