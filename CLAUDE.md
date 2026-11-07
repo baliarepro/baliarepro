@@ -51,6 +51,13 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - Butuh secret repo `IG_TOKEN` (token long-lived akun IG profesional @ pemilik, diatur pemilik di GitHub Settings → Secrets → Actions). Token diperpanjang otomatis tiap 7 hari dan hasilnya disimpan terenkripsi (AES-GCM, kunci dari secret) di `tools/ig-state.json`. Tanpa secret, workflow tidak melakukan apa-apa. `posted` mencatat id & permalink tiap post; `errors` mencatat kegagalan terakhir.
 - Iklan yang sudah diposting tidak diposting ulang walau diedit.
 
+## Instagram mingguan (berita / edukasi aturan)
+- `tools/ig-weekly.js` + `.github/workflows/instagram-weekly.yml`: setiap Senin ±16.07 WITA memposting 1 carousel (sampul + isi + slide ajakan WA, 1080×1350).
+- Ada berita di `tools/news-content.js` dengan `date` 7 hari terakhir yang belum diposting → "Berita Properti Bali Minggu Ini" (maks. 3 berita teratas). Tidak ada → 1 topik edukasi aturan properti dari `tools/ig-edu-content.js` (array `EDU`, diambil urut dari atas yang belum diposting; topik baru ditambah di AKHIR).
+- Slide berita memakai field opsional `ig` di tiap berita (`stat`, `statL`, `h`, `pts` 3 fakta, `arti`); tanpa `ig` dibuat otomatis dari isi. Isi slide/fakta hanya dari sumber yang dibaca, seperti aturan News.
+- Gambar dibuat di GitHub Actions ke `img/ig-weekly/<tanggal>/` (jangan generate & commit dari container — font fallback). Cek tampilan dari container: `node tools/ig-weekly.js preview <folder-scratch> [slug-edu]`.
+- Status di `tools/ig-weekly-state.json` (`news`, `edu` = slug yang sudah diposting; `posts`; `error`). Maks. 1 carousel per minggu. Bila topik `EDU` yang belum diposting tinggal <3, tambahkan topik baru (aturan properti terbaru: PBG/SLF, pajak, zonasi/KKPR, WNA, sewa/leasehold, izin villa, dll.).
+
 ## Jumlah dilihat per iklan (ikon mata)
 - `views.js` (dimuat di `listings.html` dan semua halaman detail listing lewat template di `tools/build-seo.js`; halaman detail punya `<body data-listing="<slug>">`). Menambah ikon mata + angka di baris eyebrow tiap kartu (`.card-top .eyebrow`); disembunyikan di PDF.
 - Penghitung gratis abacus.jasoncameron.dev, namespace `baliarepro.github.io`, kunci `v-<slug>` (gabungan ID/EN/RU). Dihitung 1x per sesi browser: buka halaman detail, atau kartu katalog terlihat ≥1 detik. Hanya domain asli yang menambah angka; angka 0 tidak ditampilkan.

@@ -1,10 +1,13 @@
 // Isi halaman News (berita properti Bali). Urut dari TERBARU. Berita baru ditambahkan di AWAL array.
 // Setiap berita: slug, date (tanggal terbit di website), sources [{t,u}], lalu id/en/ru: {tag, title, summary, body:[blok]}
 // Blok: {h} {p} {ul:[...]} {note}
+// ig (untuk carousel Instagram mingguan, Bahasa Indonesia, singkat): {stat: angka utama ≤9 karakter, statL: keterangan angka, h: judul slide ≤60 karakter,
+//    pts: [3 fakta ≤70 karakter], arti: 1 kalimat "artinya bagi Anda" ≤110 karakter}. Tanpa ig, slide dibuat otomatis dari judul & isi.
 const NEWS = [
   {
     slug: "investasi-bali-triwulan-3-2026",
     date: "2026-11-04",
+    ig: {"stat":"Rp30,8 T","statL":"realisasi investasi Bali s.d. triwulan III 2026","h":"Badung menyerap lebih dari separuh investasi Bali","pts":["Badung (termasuk Kuta Selatan) Rp18,22 triliun, terbesar di Bali","58,8% modal asing; Prancis, Rusia, Australia teratas","Perumahan & perkantoran jadi sektor favorit PMA: Rp8,49 triliun"],"arti":"Minat investor asing ke properti hunian di Badung masih kuat."},
     sources: [{ t: "Warta Bali Online – Investasi Prancis di Bali capai Rp2,33 triliun (3 Nov 2026)", u: "https://wartabalionline.com/2026/11/03/investasi-prancis-di-bali-capai-rp233-triliun-jadi-yang-terbesar-kalahkan-rusia-dan-australia/" }],
     id: { tag: "Investasi", title: "Investasi di Bali tembus Rp30,8 triliun hingga triwulan III 2026, Badung paling besar",
       summary: "Modal asing menyumbang hampir 59%. Prancis jadi negara investor terbesar, dan sektor perumahan-perkantoran menjadi tujuan utama modal asing.",
@@ -52,6 +55,7 @@ const NEWS = [
   {
     slug: "buva-rights-issue-uluwatu",
     date: "2026-11-04",
+    ig: {"stat":"Rp1,53 T","statL":"rights issue PT Bukit Uluwatu Villa Tbk (BUVA)","h":"Ratusan miliar mengalir ke proyek di Uluwatu","pts":["Rp426,3 miliar untuk resort baru di lahan ±3,9 ha Uluwatu","Rp390,3 miliar untuk infrastruktur Uluwatu Estate","Target rampung kuartal IV 2028–2029"],"arti":"Modal institusi masih masuk ke Uluwatu — kawasan sekitarnya ikut dilirik investor."},
     sources: [
       { t: "InvestorTrust – Emiten Hapsoro (BUVA) rancang rights issue Rp1,54 triliun (6 Okt 2026)", u: "https://investortrust.id/market/118452/emiten-hapsoro-buva-rancang-rights-issue-rp-1-54-triliun-dana-ditujukan-untuk-ini" },
       { t: "Kontan – Bukit Uluwatu (BUVA) rights issue Rp1,53 triliun, ada empat pembeli siaga (4 Agu 2026)", u: "https://investasi.kontan.co.id/news/bukit-uluwatu-buva-rights-issue-rp-153-triliun-ada-empat-pembeli-siaga" }
@@ -105,6 +109,7 @@ const NEWS = [
   {
     slug: "hotel-villa-dijual-asita-moratorium",
     date: "2026-11-04",
+    ig: {"stat":"244","statL":"hotel & villa dipasarkan dijual di Bali","h":"Pasar aset hotel aktif, dari Ubud sampai Pecatu","pts":["Resort ±200 kamar di Pecatu, Uluwatu: Rp535 miliar","Hotel bintang 5 Nusa Dua, 176 kamar: Rp500 miliar","ASITA Bali usul moratorium akomodasi baru"],"arti":"Peluang membeli bisnis yang sudah berjalan — cek izin, kinerja & status lahan dengan teliti."},
     sources: [{ t: "BaliNews.id – 244 hotel dan vila Bali masuk pasar jual-beli, ASITA desak moratorium akomodasi (21 Sep 2026)", u: "https://balinews.id/244-hotel-dan-vila-bali-masuk-pasar-jual-beli-asita-desak-moratorium-akomodasi/" }],
     id: { tag: "Jual beli", title: "244 hotel dan villa di Bali dipasarkan dijual, termasuk resort Rp535 miliar di Pecatu",
       summary: "Iklan jual hotel dan villa ramai di marketplace. ASITA Bali meminta pemerintah mempertimbangkan penghentian sementara pembangunan akomodasi baru.",
@@ -158,6 +163,7 @@ const NEWS = [
   {
     slug: "pipeline-hotel-mewah-jimbaran-uluwatu",
     date: "2026-11-04",
+    ig: {"stat":"Rp4,8 jt","statL":"tarif kamar rata-rata per malam, Jimbaran–Uluwatu","h":"Jimbaran–Uluwatu catat tarif hotel tertinggi di Bali","pts":["±1.700 kamar mewah baru masuk pasar hingga 2029 (Colliers)","Pipeline 5.641 kamar di 45 hotel (Horwath HTL)","Nusa Dua: okupansi tertinggi, 79,2%"],"arti":"Lahan zona pariwisata dengan view laut di Bukit tetap diburu developer resort & villa."},
     sources: [
       { t: "Real Estate Asia – Bali to see around 1,700 new luxury hotel rooms until 2029 (21 Jul 2026)", u: "https://realestateasia.com/commercial-hotel/news/bali-see-around-1700-new-luxury-hotel-rooms-until-2029" },
       { t: "Horwath HTL – Bali Hotel & Branded Residences 2026 (Mar 2026)", u: "https://horwathhtl.com/publication/bali-hotel-branded-residences-2026/" }
@@ -217,6 +223,7 @@ const NEWS = [
   {
     slug: "raffles-residences-jimbaran",
     date: "2026-11-04",
+    ig: {"stat":"5,3 ha","statL":"lahan tepi laut Raffles Residences, Jimbaran","h":"28 hunian mewah bermerek Raffles di Jimbaran","pts":["Dikembangkan Accor & Kajima Development","Dikelola Raffles Hotels & Resorts (grup Accor)","Dibuka bertahap mulai kuartal II 2026"],"arti":"Branded residences menandakan Jimbaran & Bukit barat masuk radar investor kelas atas."},
     sources: [{ t: "HOTELS Magazine – Raffles Residences Bali set to open in 2026 (4 Des 2025)", u: "https://hotelsmag.com/news/raffles-residences-bali/" }],
     id: { tag: "Developer", title: "Raffles Residences Bali: 28 hunian mewah di lahan 5,3 hektare Jimbaran",
       summary: "Accor dan Kajima menghadirkan branded residences di samping Raffles Bali, dibuka bertahap mulai kuartal II 2026.",

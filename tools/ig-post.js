@@ -142,12 +142,8 @@ async function publish(l, igId, token, seo, tries) {
   return { id: pub.id, permalink, at: new Date().toISOString() };
 }
 
-async function main() {
-  const state = JSON.parse(fs.readFileSync(STATE, "utf8"));
-  state.posted = state.posted || {}; state.queue = state.queue || []; state.errors = state.errors || {};
-  const save = () => fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + "\n");
-  if (!process.env.IG_TOKEN) { console.log("Secret IG_TOKEN belum diatur — posting Instagram dilewati."); return; }
-
+// Hubungkan ke akun Instagram: pilih host API sesuai jenis token, perpanjang token Instagram Login bila perlu (save = simpan state).
+async function connect(state, save) {
   let token = (state.token && dec(state.token)) || process.env.IG_TOKEN;
   // Jenis token: Instagram Login (graph.instagram.com) atau Login Terpadu/Facebook (graph.facebook.com, token pengguna sistem tidak kedaluwarsa)
   let igId = null, username = "";
@@ -168,7 +164,7 @@ async function main() {
   }
   const isIgLogin = API.includes("graph.instagram.com");
   const age = state.tokenRefreshedAt ? Date.now() - Date.parse(state.tokenRefreshedAt) : Infinity;
-  if (isIgLogin && age > 7 * 864e5) {
+  if (save && isIgLogin && age > 7 * 864e5) {
     try {
       const r = await (await fetch(`https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=${encodeURIComponent(token)}`)).json();
       if (r.access_token) { token = r.access_token; state.token = enc(token); state.tokenRefreshedAt = new Date().toISOString(); console.log("Token Instagram diperpanjang."); save(); }
@@ -176,6 +172,16 @@ async function main() {
     } catch (e) { console.log("Refresh token gagal:", e.message); }
   }
 
+  return { igId, token, username, isIgLogin };
+}
+
+async function main() {
+  const state = JSON.parse(fs.readFileSync(STATE, "utf8"));
+  state.posted = state.posted || {}; state.queue = state.queue || []; state.errors = state.errors || {};
+  const save = () => fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + "\n");
+  if (!process.env.IG_TOKEN) { console.log("Secret IG_TOKEN belum diatur — posting Instagram dilewati."); return; }
+
+  const { igId, token, username, isIgLogin } = await connect(state, save);
   console.log("Akun Instagram: @" + username + (isIgLogin ? " (Instagram Login)" : " (Login Terpadu/Facebook)"));
 
   const SEO = require("./seo-titles.js");
@@ -200,5 +206,5 @@ async function main() {
   }
 }
 
-module.exports = { listings, caption };
+module.exports = { listings, caption, connect, api, ready, BASE };
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
