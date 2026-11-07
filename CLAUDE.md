@@ -58,6 +58,11 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - Gambar dibuat di GitHub Actions ke `img/ig-weekly/<tanggal>/` (jangan generate & commit dari container — font fallback). Cek tampilan dari container: `node tools/ig-weekly.js preview <folder-scratch> [slug-edu]`.
 - Status di `tools/ig-weekly-state.json` (`news`, `edu` = slug yang sudah diposting; `posts`; `error`). Maks. 1 carousel per minggu. Bila topik `EDU` yang belum diposting tinggal <3, tambahkan topik baru (aturan properti terbaru: PBG/SLF, pajak, zonasi/KKPR, WNA, sewa/leasehold, izin villa, dll.).
 
+## Threads otomatis (salinan dari Instagram)
+- `tools/threads-post.js` (Threads API, graph.threads.com) dijalankan setelah langkah posting di `instagram.yml` dan `instagram-weekly.yml`. Semua yang sudah tayang di IG (listing di `ig-state.json → posted`, carousel mingguan di `ig-weekly-state.json → posts`) diposting ulang ke Threads dengan gambar yang sama; maks. 2 per jalan, urut waktu tayang IG. Listing tersembunyi/terjual dilewati.
+- Caption ringkas ≤500 byte (judul, lokasi, harga utama, spesifikasi, link langsung yang bisa diklik, WA, 1 tag `#PropertiBali`).
+- Butuh secret `THREADS_TOKEN` (token long-lived Threads, use case "Access the Threads API" di aplikasi Meta yang sama; akun pemilik sebagai penguji). Tanpa secret: dilewati. Token diperpanjang otomatis tiap 7 hari (berlaku 60 hari), disimpan terenkripsi di `tools/threads-state.json` (`posted`, `weekly`, `errors`).
+
 ## Jumlah dilihat per iklan (ikon mata)
 - `views.js` (dimuat di `listings.html` dan semua halaman detail listing lewat template di `tools/build-seo.js`; halaman detail punya `<body data-listing="<slug>">`). Menambah ikon mata + angka di baris eyebrow tiap kartu (`.card-top .eyebrow`); disembunyikan di PDF.
 - Penghitung gratis abacus.jasoncameron.dev, namespace `baliarepro.github.io`, kunci `v-<slug>` (gabungan ID/EN/RU). Dihitung 1x per sesi browser: buka halaman detail, atau kartu katalog terlihat ≥1 detik. Hanya domain asli yang menambah angka; angka 0 tidak ditampilkan.
