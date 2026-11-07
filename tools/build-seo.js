@@ -397,6 +397,12 @@ ${copyScript}
     await pp.close();
   }
 
+  // ---------- Gambar carousel Instagram (hanya di GitHub Actions / IG_IMAGES=1, butuh font asli) ----------
+  if (process.env.GITHUB_ACTIONS || process.env.IG_IMAGES) {
+    const n = await require("./ig-images.js")({ browser, ROOT, cards: out.id.cards, photosOf, netRoute });
+    console.log("gambar Instagram dibuat ulang:", n);
+  }
+
   // ---------- Bali Property Guide (3 bahasa) ----------
   const GD = require("./guide.js");
   for (const L of LANGS) {
