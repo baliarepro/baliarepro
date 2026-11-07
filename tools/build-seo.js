@@ -250,10 +250,15 @@ main .cta-duo{margin-top:0}
       note: "Цены, наличие и характеристики могут измениться без предупреждения. Пожалуйста, уточняйте в Bali Are Property перед принятием решения. Напечатано с baliareproperty.com." } };
   const pdfIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>';
   // Foto listing: img/listing/<slug>/ (maks. 3 file jpg/jpeg/png/webp, urut nama file)
+  // Foto bertanda air (img/wm/) dibuat dari foto asli (img/listing/); semua halaman memakai versi bertanda air.
+  console.log("foto diberi watermark:", await require("./watermark.js")({ browser, ROOT }));
   const photosOf = (slug) => {
     const dir = path.join(ROOT, "img/listing", slug);
     if (!fs.existsSync(dir)) return [];
-    return fs.readdirSync(dir).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).sort().slice(0, 3).map((f) => "img/listing/" + slug + "/" + f);
+    return fs.readdirSync(dir).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).sort().slice(0, 3).map((f) => {
+      const wm = "img/wm/" + slug + "/" + f.replace(/\.(png|webp|jpeg)$/i, ".jpg");
+      return fs.existsSync(path.join(ROOT, wm)) ? wm : "img/listing/" + slug + "/" + f;
+    });
   };
   for (const L of LANGS) {
     for (const c of out[L].cards) {
