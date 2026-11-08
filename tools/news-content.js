@@ -5,6 +5,147 @@
 //    pts: [3 fakta ≤70 karakter], arti: 1 kalimat "artinya bagi Anda" ≤110 karakter}. Tanpa ig, slide dibuat otomatis dari judul & isi.
 const NEWS = [
   {
+    "slug": "trem-bandara-ngurah-rai-canggu",
+    "date": "2026-11-08",
+    "ig": {
+      "stat": "30 menit",
+      "statL": "target waktu tempuh trem Bandara Ngurah Rai–Canggu",
+      "h": "Trem listrik Bandara–Canggu disiapkan KAI",
+      "pts": [
+        "±12 km lewat Kuta, Legian, Seminyak; tiap 10 menit",
+        "Target groundbreaking Maret 2027, rute penuh 2029",
+        "Anggaran sekitar Rp2 triliun lebih (Dirut KAI)"
+      ],
+      "arti": "Akses Canggu–bandara bisa jauh lebih cepat, tapi rute & lokasi stasiun final masih dikaji."
+    },
+    "sources": [
+      {
+        "t": "Katadata – KAI bakal bangun kereta di Bali, rute Ngurah Rai sampai Canggu (5 Nov 2026)",
+        "u": "https://katadata.co.id/berita/industri/6aec6297e4e9d/kai-bakal-bangun-kereta-di-bali-rute-ngurah-rai-sampai-canggu"
+      },
+      {
+        "t": "ANTARA Bali – Pemprov Bali dan KAI kerja sama kembangkan trem berbasis baterai rute Bandara–Canggu (2 Sep 2026)",
+        "u": "https://bali.antaranews.com/berita/412671/pemprov-bali-dan-kai-kerja-sama-kembangkan-trem-berbasis-baterai-rute-bandara-canggu"
+      },
+      {
+        "t": "Investortrust – Menhub wanti-wanti proyek trem Bali: jangan cuma di atas kertas (15 Sep 2026)",
+        "u": "https://investortrust.id/business/116335/menhub-wanti-wanti-proyek-trem-bali-jangan-cuma-di-atas-kertas"
+      },
+      {
+        "t": "detikBali – Proyek trem Bali dimulai 2027 (6 Agu 2026)",
+        "u": "https://www.detik.com/bali/bisnis/d-8607144/proyek-trem-bali-dimulai-2027"
+      }
+    ],
+    "id": {
+      "tag": "Infrastruktur",
+      "title": "Trem listrik Bandara Ngurah Rai–Canggu disiapkan, anggaran sekitar Rp2 triliun",
+      "summary": "KAI menyiapkan trem listrik berbasis baterai sepanjang ±12 km dari bandara lewat Kuta, Legian, dan Seminyak ke Canggu. Groundbreaking ditargetkan Maret 2027.",
+      "body": [
+        {
+          "p": "PT Kereta Api Indonesia (KAI) menyiapkan layanan kereta di Bali dari Bandara I Gusti Ngurah Rai ke utara, melewati Kuta, Legian, dan Seminyak, dengan ujung di Canggu. Dalam konferensi pers di Istana Kepresidenan pada 5 November 2026, Direktur Utama KAI Bobby Rasyidin menyebut anggarannya sekitar Rp2 triliun lebih dan proyek akan dikerjakan langsung oleh KAI."
+        },
+        {
+          "p": "Sebelumnya, pada 1 September 2026 di Denpasar, Pemprov Bali, Pemkab Badung, dan KAI menandatangani nota kesepahaman untuk kajian dan koordinasi proyek ini."
+        },
+        {
+          "h": "Rencana yang sudah diumumkan"
+        },
+        {
+          "ul": [
+            "Moda: trem listrik berbasis baterai, tanpa kabel di atas, sepanjang sekitar 12 km.",
+            "Tahap 1: Ngurah Rai–Legian. Tahap 2: dilanjutkan ke Canggu.",
+            "Target: groundbreaking Maret 2027, segmen pertama beroperasi 2028, rute penuh 2029.",
+            "Waktu tempuh sekitar 30 menit, trem tiap 10 menit, hingga 60.000 penumpang per hari."
+          ]
+        },
+        {
+          "p": "Langkah berikutnya adalah kajian teknis, konsultasi publik, dan pelibatan desa adat. Menteri Perhubungan Dudy Purwagandhi mendukung rencana ini dan meminta proyek berjalan cepat, \"jangan di atas kertas saja\". Koridor Canggu–bandara saat ini kerap macet hingga hampir 15 km. Pemkab Badung juga berencana melebarkan jalan utama menjadi 24 meter."
+        },
+        {
+          "h": "Artinya bagi buyer dan pemilik lahan"
+        },
+        {
+          "p": "Bila terwujud, akses dari Canggu, Berawa, dan sekitarnya ke bandara akan jauh lebih mudah, dan properti di dekat koridor bisa makin diminati. Namun proyek masih tahap kajian, sementara rute detail dan lokasi stasiun belum ditetapkan. Jangan membeli hanya karena rencana ini. Pemilik lahan di tepi jalan utama sebaiknya ikut memantau rencana pelebaran jalan."
+        },
+        {
+          "note": "Ringkasan berita. Rencana dan jadwal proyek masih dapat berubah. Bukan nasihat investasi."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Infrastructure",
+      "title": "Battery tram planned from Ngurah Rai Airport to Canggu, budget around IDR 2 trillion",
+      "summary": "KAI is preparing a battery-powered electric tram of about 12 km from the airport through Kuta, Legian and Seminyak to Canggu. Groundbreaking is targeted for March 2027.",
+      "body": [
+        {
+          "p": "State railway company PT Kereta Api Indonesia (KAI) is preparing a rail service in Bali running north from I Gusti Ngurah Rai Airport through Kuta, Legian and Seminyak, ending in Canggu. At a press conference at the Presidential Palace on 5 November 2026, KAI President Director Bobby Rasyidin said the budget is a little over IDR 2 trillion and that KAI will build the project itself."
+        },
+        {
+          "p": "Earlier, on 1 September 2026 in Denpasar, the Bali Provincial Government, the Badung Regency Government and KAI signed a memorandum of understanding to study and coordinate the project."
+        },
+        {
+          "h": "What has been announced"
+        },
+        {
+          "ul": [
+            "Mode: a battery-powered electric tram without overhead wires, about 12 km long.",
+            "Phase 1: Ngurah Rai–Legian. Phase 2: extended to Canggu.",
+            "Targets: groundbreaking in March 2027, first segment operating in 2028, full route in 2029.",
+            "Travel time around 30 minutes, a tram every 10 minutes, up to 60,000 passengers per day."
+          ]
+        },
+        {
+          "p": "Next steps are technical studies, public consultation and the involvement of customary villages. Transport Minister Dudy Purwagandhi supports the plan and has asked for quick progress, saying it must not stay \"just on paper\". The Canggu–airport corridor is often jammed for almost 15 km. Badung Regency also plans to widen the main road to 24 metres."
+        },
+        {
+          "h": "What it means for buyers and landowners"
+        },
+        {
+          "p": "If it goes ahead, getting from Canggu, Berawa and nearby areas to the airport will become much easier, and property near the corridor could see stronger demand. However, the project is still at the study stage, and the detailed route and station locations have not been set. Do not buy on the strength of this plan alone. Owners of land along the main road should also keep an eye on the road-widening plan."
+        },
+        {
+          "note": "News summary. Project plans and timelines may change. Not investment advice."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Инфраструктура",
+      "title": "Трамвай на батареях от аэропорта Нгурах-Рай до Чангу: бюджет около 2 трлн рупий",
+      "summary": "KAI готовит электрический трамвай на батареях длиной около 12 км от аэропорта через Куту, Легиан и Семиньяк до Чангу. Начало строительства запланировано на март 2027 года.",
+      "body": [
+        {
+          "p": "Государственная железнодорожная компания PT Kereta Api Indonesia (KAI) готовит на Бали железнодорожное сообщение от аэропорта И Густи Нгурах-Рай на север через Куту, Легиан и Семиньяк с конечной точкой в Чангу. На пресс-конференции в Президентском дворце 5 ноября 2026 года президент-директор KAI Бобби Расьидин сообщил, что бюджет составит чуть более 2 трлн рупий и KAI будет строить проект самостоятельно."
+        },
+        {
+          "p": "Ранее, 1 сентября 2026 года в Денпасаре, правительство провинции Бали, администрация округа Бадунг и KAI подписали меморандум о взаимопонимании для изучения и координации проекта."
+        },
+        {
+          "h": "Что объявлено"
+        },
+        {
+          "ul": [
+            "Вид транспорта: электрический трамвай на батареях без контактной сети, длина около 12 км.",
+            "Этап 1: Нгурах-Рай – Легиан. Этап 2: продление до Чангу.",
+            "Сроки: начало строительства в марте 2027 года, первый участок в 2028 году, весь маршрут в 2029 году.",
+            "Время в пути около 30 минут, трамвай каждые 10 минут, до 60 000 пассажиров в день."
+          ]
+        },
+        {
+          "p": "Следующие шаги: технические исследования, общественные консультации и участие традиционных деревень. Министр транспорта Дуди Пурвагандхи поддерживает план и призывает двигаться быстро, «а не только на бумаге». Коридор Чангу – аэропорт часто стоит в пробке длиной почти 15 км. Округ Бадунг также планирует расширить главную дорогу до 24 метров."
+        },
+        {
+          "h": "Что это значит для покупателей и владельцев земли"
+        },
+        {
+          "p": "Если проект будет реализован, добираться из Чангу, Берава и окрестностей до аэропорта станет гораздо проще, а спрос на недвижимость рядом с коридором может вырасти. Однако проект пока на стадии исследований, точный маршрут и расположение станций ещё не определены. Не покупайте только из-за этого плана. Владельцам земли вдоль главной дороги стоит также следить за планом расширения дороги."
+        },
+        {
+          "note": "Обзор новостей. Планы и сроки проекта могут измениться. Не является инвестиционной рекомендацией."
+        }
+      ]
+    }
+  },
+  {
     slug: "investasi-bali-triwulan-3-2026",
     date: "2026-11-04",
     ig: {"stat":"Rp30,8 T","statL":"realisasi investasi Bali s.d. triwulan III 2026","h":"Badung menyerap lebih dari separuh investasi Bali","pts":["Badung (termasuk Kuta Selatan) Rp18,22 triliun, terbesar di Bali","58,8% modal asing; Prancis, Rusia, Australia teratas","Perumahan & perkantoran jadi sektor favorit PMA: Rp8,49 triliun"],"arti":"Minat investor asing ke properti hunian di Badung masih kuat."},
