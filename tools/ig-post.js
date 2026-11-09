@@ -42,30 +42,40 @@ function listings() {
 }
 
 // ---------- Caption ----------
+// Instagram membatasi 5 hashtag per posting (sejak Des 2025): jenis + area + 3 umum.
+const TYPE_TAG = { tanah: "#tanahbali", villa: "#villabali", rumah: "#rumahbali", komersial: "#investasibali" };
+// Urutan penting: kata yang lebih spesifik dicek lebih dulu. "Kuta Selatan/Utara" tidak boleh cocok ke #kutabali.
+const AREA_TAG = [["labuan sait", "#uluwatu"], ["ungasan", "#ungasan"], ["melasti", "#ungasan"], ["gwk", "#ungasan"], ["jimbaran", "#jimbaran"], ["balangan", "#jimbaran"],
+  ["pecatu", "#uluwatu"], ["uluwatu", "#uluwatu"], ["bingin", "#uluwatu"], ["pandawa", "#pandawa"], ["kutuh", "#pandawa"], ["nusa dua", "#nusadua"],
+  ["canggu", "#canggu"], ["berawa", "#canggu"], ["tibubeneng", "#canggu"], ["pererenan", "#canggu"], ["dalung", "#canggu"], ["kerobokan", "#kerobokan"],
+  ["seminyak", "#seminyak"], ["legian", "#seminyak"], ["dewi sri", "#kutabali"], ["bandara", "#kutabali"], ["ubud", "#ubud"], ["sangeh", "#ubud"],
+  ["singakerta", "#ubud"], ["lod tunduh", "#ubud"], ["ketewel", "#gianyar"], ["pering", "#gianyar"], ["sukawati", "#gianyar"], ["kaba-kaba", "#tabanan"],
+  ["tabanan", "#tabanan"], ["sanur", "#sanur"], ["denpasar", "#denpasar"]];
 function tags(l) {
-  const t = { tanah: ["#tanahdijual", "#tanahbali", "#balilandforsale", "#landforsale"], villa: ["#villadijual", "#villabali", "#balivillaforsale", "#villaforsale"],
-    rumah: ["#rumahdijual", "#rumahbali", "#houseforsale"], komersial: ["#investasibali", "#hotelforsale", "#guesthousebali"] }[l.type] || [];
-  const areas = { ungasan: "#ungasan", jimbaran: "#jimbaran", pecatu: "#pecatu", uluwatu: "#uluwatu", "labuan sait": "#uluwatu", balangan: "#balangan", pandawa: "#pandawa", kutuh: "#pandawa",
-    melasti: "#melasti", canggu: "#canggu", berawa: "#berawa", tibubeneng: "#canggu", pererenan: "#pererenan", kerobokan: "#kerobokan", dalung: "#dalung", kuta: "#kutabali",
-    ubud: "#ubud", singakerta: "#ubud", "lod tunduh": "#ubud", gianyar: "#gianyar", ketewel: "#ketewel", tabanan: "#tabanan", "kaba-kaba": "#tabanan", gwk: "#ungasan", "nusa dua": "#nusadua" };
-  const hay = (l.eyebrow + " " + l.title + " " + l.slug.replace(/-/g, " ")).toLowerCase();
-  const a = [...new Set(Object.keys(areas).filter((k) => hay.includes(k)).map((k) => areas[k]))];
-  return [...new Set([...t, ...a, "#baliproperty", "#balirealestate", "#propertibali", "#investasiproperti", "#baliinvestment", "#bukitbali", "#baliareproperty"])].slice(0, 25).join(" ");
+  const hay = (l.eyebrow + " " + l.title + " " + l.slug.replace(/-/g, " ")).toLowerCase().replace(/kuta (selatan|utara)/g, "");
+  const area = (AREA_TAG.find((a) => hay.includes(a[0])) || [, /\bkuta\b/.test(hay) ? "#kutabali" : "#bukitbali"])[1];
+  return [...new Set([TYPE_TAG[l.type] || "#propertibali", area, "#baliproperty", "#balirealestate", "#propertibali"])].slice(0, 5).join(" ");
 }
+// Baris pertama (±125 karakter yang tampil di feed sebelum "… selengkapnya"): judul + harga utama + fakta kunci.
 function caption(l, seo) {
   const d = parseCard(l.html);
+  const main = d.prices.find((p) => p.hl) || d.prices[d.prices.length - 1];
+  const short = l.title.replace(/kamar tidur/gi, "KT");
+  const pick = ["Luas tanah", "Luas bangunan", "Kamar tidur", "Sertifikat", "Legalitas", "Zonasi", "ITR / Zonasi", "ITR"];
+  const facts = pick.map((k) => d.specs.find((s) => s[0] === k)).filter(Boolean).slice(0, 3).map((s) =>
+    s[0] === "Kamar tidur" ? s[1] + " KT" : s[0] === "Luas bangunan" ? "bangunan " + s[1] : s[0] === "Luas tanah" ? "tanah " + s[1].replace(/ \(.*\)/, "") : s[1]);
   const lines = [];
-  lines.push(`🏝️ DIJUAL · ${l.title}`);
-  lines.push(`📍 ${l.eyebrow}, Bali`);
-  lines.push("");
+  lines.push(`🏝️ DIJUAL ${short}${main ? " · " + main.value + (/unit/i.test(main.label) ? "/unit" : "") : ""}`);
+  if (facts.length) lines.push(facts.join(" · "));
+  lines.push(`📍 ${l.eyebrow}, Bali`, "");
   if (d.prices.length) { d.prices.forEach((p) => lines.push(`💰 ${p.label}: ${p.value}`)); lines.push(""); }
   d.specs.slice(0, 8).forEach((s) => lines.push(`▫️ ${s[0]}: ${s[1]}`));
-  if (d.points.length) { lines.push(""); d.points.slice(0, 5).forEach((p) => lines.push(`✨ ${p}`)); }
+  if (d.points.length) { lines.push(""); d.points.slice(0, 4).forEach((p) => lines.push(`✨ ${p}`)); }
   lines.push("");
-  lines.push(`🔗 Detail, foto & PDF: ${BASE.replace("https://", "")}listing/${l.slug}.html (link di bio)`);
-  lines.push("📲 WhatsApp Bagoes: +62 812 868 080");
+  lines.push("📩 Mau jadwal viewing? DM kami atau WhatsApp Bagoes +62 812 868 080");
+  lines.push("🔗 Foto lengkap & PDF: baliareproperty.com (link di bio)");
   if (seo && seo.en) { lines.push(""); lines.push("🇬🇧 " + seo.en.d); }
-  if (seo && seo.ru) { lines.push(""); lines.push("🇷🇺 " + seo.ru.d); }
+  if (seo && seo.ru) lines.push("🇷🇺 " + seo.ru.d);
   lines.push("");
   lines.push(tags(l));
   let c = lines.join("\n");

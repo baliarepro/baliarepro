@@ -131,7 +131,8 @@ function slidesFor(sel, date) {
 }
 
 // ---------- Caption ----------
-const TAGS = "#baliproperty #propertibali #balirealestate #investasibali #beritaproperti #tanahbali #villabali #uluwatu #jimbaran #ungasan #pecatu #bukitbali #baliinvestment #baliareproperty";
+// Maks. 5 hashtag (batas Instagram sejak Des 2025)
+const TAGS = "#baliproperty #propertibali #balirealestate #investasibali #beritaproperti";
 function captionFor(sel, date) {
   const L = [];
   if (sel.kind === "news") {
@@ -154,7 +155,7 @@ function captionFor(sel, date) {
     L.push(e.note);
     L.push("", "🏡 Tanah & villa dijual di Bali: baliareproperty.com (link di bio)");
   }
-  L.push("📲 WhatsApp Bagoes: +62 812 868 080", "", TAGS);
+  L.push("📩 Ada pertanyaan soal properti di Bali? DM kami atau WhatsApp Bagoes +62 812 868 080", "", TAGS);
   const c = L.join("\n");
   return c.length > 2150 ? c.slice(0, 2150) : c;
 }
