@@ -114,37 +114,52 @@ async function post(uid, token, urls, text) {
   return { id: pub.id, permalink, at: new Date().toISOString() };
 }
 
+// --only=listings (default, dari instagram.yml) atau --only=weekly (dari instagram-weekly.yml).
+// Keduanya menulis file status berbeda agar dua workflow tidak bentrok saat commit.
+const ONLY = ((process.argv.find((a) => a.startsWith("--only=")) || "--only=listings").slice(7));
+const WSTATE = path.join(ROOT, "tools/threads-weekly-state.json");
+
 async function main() {
   const state = read("tools/threads-state.json", {});
-  state.posted = state.posted || {}; state.weekly = state.weekly || {}; state.errors = state.errors || {};
-  const save = () => fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + "\n");
+  state.posted = state.posted || {}; state.errors = state.errors || {};
+  const wstate = read("tools/threads-weekly-state.json", null) || { weekly: state.weekly || {}, errors: {} };
+  delete state.weekly;
+  const save = () => {
+    if (ONLY === "weekly") fs.writeFileSync(WSTATE, JSON.stringify(wstate, null, 2) + "\n");
+    else fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + "\n");
+  };
   if (!process.env.THREADS_TOKEN) { console.log("Secret THREADS_TOKEN belum diatur — posting Threads dilewati."); return; }
 
   let token = (state.token && dec(state.token)) || process.env.THREADS_TOKEN;
   const me = await api("GET", "me", { fields: "id,username" }, token);
   console.log("Akun Threads: @" + me.username);
-  // Perpanjang token tiap 7 hari (berlaku 60 hari sejak diperpanjang; token harus berumur ≥24 jam)
-  if (!state.tokenSeenAt) { state.tokenSeenAt = new Date().toISOString(); save(); }
-  const since = Date.parse(state.tokenRefreshedAt || state.tokenSeenAt);
-  if (Date.now() - since > 7 * 864e5) {
-    try {
-      const r = await (await fetch(`https://graph.threads.com/refresh_access_token?grant_type=th_refresh_token&access_token=${encodeURIComponent(token)}`)).json();
-      if (r.access_token) { token = r.access_token; state.token = enc(token); state.tokenRefreshedAt = new Date().toISOString(); console.log("Token Threads diperpanjang."); }
-      else console.log("Refresh token Threads dilewati:", (r.error && r.error.message) || "tanpa token");
-    } catch (e) { console.log("Refresh token Threads gagal:", e.message); }
-    save();
+  // Perpanjang token tiap 7 hari (berlaku 60 hari sejak diperpanjang; token harus berumur ≥24 jam). Hanya di mode listings.
+  if (ONLY !== "weekly") {
+    if (!state.tokenSeenAt) { state.tokenSeenAt = new Date().toISOString(); save(); }
+    const since = Date.parse(state.tokenRefreshedAt || state.tokenSeenAt);
+    if (Date.now() - since > 7 * 864e5) {
+      try {
+        const r = await (await fetch(`https://graph.threads.com/refresh_access_token?grant_type=th_refresh_token&access_token=${encodeURIComponent(token)}`)).json();
+        if (r.access_token) { token = r.access_token; state.token = enc(token); state.tokenRefreshedAt = new Date().toISOString(); console.log("Token Threads diperpanjang."); }
+        else console.log("Refresh token Threads dilewati:", (r.error && r.error.message) || "tanpa token");
+      } catch (e) { console.log("Refresh token Threads gagal:", e.message); }
+      save();
+    }
   }
 
   const todo = [];
   // Carousel mingguan dulu (lebih jarang & bergantung waktu)
-  const wk = read("tools/ig-weekly-state.json", {}).posts || {};
-  for (const date of Object.keys(wk).sort()) if (!state.weekly[date]) todo.push({ kind: "weekly", date, w: wk[date] });
+  if (ONLY === "weekly") {
+    const wk = read("tools/ig-weekly-state.json", {}).posts || {};
+    for (const date of Object.keys(wk).sort()) if (!wstate.weekly[date]) todo.push({ kind: "weekly", date, w: wk[date] });
+  } else {
   // Listing yang sudah tayang di Instagram, urut waktu posting IG
   const ig = read("tools/ig-state.json", {}).posted || {};
   const { listings } = require("./ig-post.js");
   const live = new Map(listings().filter((l) => !l.hidden && !l.sold).map((l) => [l.slug, l]));
   Object.entries(ig).sort((a, b) => (a[1].at || "").localeCompare(b[1].at || ""))
     .forEach(([slug]) => { if (!state.posted[slug] && live.has(slug)) todo.push({ kind: "listing", slug, l: live.get(slug) }); });
+  }
 
   if (!todo.length) { console.log("Tidak ada yang perlu diposting ke Threads."); return; }
   for (const t of todo.slice(0, MAX_PER_RUN)) {
@@ -163,12 +178,11 @@ async function main() {
         text = listingText(t.l);
       }
       const r = await post(me.id, token, urls, text);
-      if (t.kind === "weekly") state.weekly[t.date] = r; else state.posted[t.slug] = r;
-      delete state.errors[k];
+      if (t.kind === "weekly") { wstate.weekly[t.date] = r; delete wstate.errors[k]; } else { state.posted[t.slug] = r; delete state.errors[k]; }
       console.log(`✓ ${k} → ${r.permalink || r.id}`);
     } catch (e) {
       console.log(`✗ ${k}: ${e.message}`);
-      state.errors[k] = { msg: e.message.slice(0, 300), at: new Date().toISOString() };
+      (t.kind === "weekly" ? wstate : state).errors[k] = { msg: e.message.slice(0, 300), at: new Date().toISOString() };
     }
     save();
   }
