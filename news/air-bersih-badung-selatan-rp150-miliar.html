@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="id" data-static-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: catalog — header + kawasan filter chips, grouped by jenis properti then kawasan, each listing a brochure card; shared contact block at end */
+:root{
+  --bg:#F6F2EA; --surface:#FFFFFF; --ink:#1C2421; --muted:#59625D; --line:#E2DACB;
+  --sea:#123F36; --sea-soft:#E2EBE5; --sand:#946410; --sand-soft:#F6EAD0; --wa:#1A8D4A; --sold:#B3261E;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+
+header{padding-block:44px 20px}
+h1{font-size:clamp(34px,7vw,56px);font-weight:800;letter-spacing:-.02em;margin-top:12px}
+.lead{color:var(--muted);font-size:17px;max-width:58ch;margin:12px 0 0}
+
+.filters{display:grid;gap:14px;margin-top:22px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flabel{flex-basis:100%;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.chip.empty{opacity:.4}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:600 14px var(--body);cursor:pointer}
+.chip small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.chip:focus-visible,.btn:focus-visible{outline:3px solid var(--sand);outline-offset:3px}
+
+.type{padding-block:28px 8px;border-top:2px solid var(--ink);margin-top:20px}
+.type-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.type-head h2{font-size:30px;font-weight:800}
+.type-head span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+.area{padding-block:24px 8px}
+.area-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.area-head h3{font-size:22px;font-weight:700}
+.area-head p{margin:0;color:var(--muted);font-size:14px}
+article.card[data-status="hidden"]{display:none!important}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px;display:grid;gap:18px}
+.card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.card h4{font-family:var(--display);font-size:clamp(22px,4.5vw,28px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
+.card .desc{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--sea-soft);color:var(--sea);white-space:nowrap}
+.badge.sand{background:var(--sand-soft);color:var(--ink)}
+
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.price div{background:var(--surface);padding:14px 16px;min-width:0}
+.price small{display:block;font-size:12px;color:var(--muted)}
+.price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
+.price .hl b{color:var(--sea)}
+
+dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
+dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+dt{color:var(--muted);font-size:14px}
+dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;min-width:0}
+
+.plot{background:var(--bg);border-radius:12px;padding:12px;overflow-x:auto}
+.plot svg{display:block;width:100%;min-width:300px;height:auto}
+.plot p{font-size:12px;color:var(--muted);margin:6px 0 0}
+
+.card.sold{position:relative;overflow:hidden}
+.sold-stamp{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 16px;border:3px solid var(--sold);border-radius:10px;color:var(--sold);transform:rotate(-6deg);font-family:var(--display);line-height:1;text-align:center;white-space:nowrap}
+.sold-stamp b{font-size:26px;font-weight:800;letter-spacing:.08em}
+.sold-stamp small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.card.sold .price b{text-decoration:line-through;text-decoration-thickness:2px;opacity:.6}
+.card.sold .price .sold-note b{text-decoration:none;opacity:1;color:var(--sold)}
+.sold-stamp.plain{border-color:var(--muted);color:var(--muted);padding:10px 20px}
+.card.sold-plain .price .sold-note b{color:var(--muted)}
+.card.recommended{border:2px solid var(--sea)}
+.rec-tag{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;justify-self:start;background:var(--sea);color:var(--bg);border-radius:8px;padding:8px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.rec-tag svg{width:20px;height:20px;flex:none}
+.rec-tag .rt{display:flex;flex-direction:column;gap:2px}
+.rec-tag b{font-size:13px;white-space:nowrap}
+.rec-tag small{font-size:10px;opacity:.85;white-space:nowrap}
+ul.points{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;font-size:15px}
+ul.points li{position:relative;padding-left:20px;min-width:0}
+ul.points li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:2px;background:var(--sea)}
+@media (max-width:560px){ul.points{grid-template-columns:1fr}}
+ul.uses{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:500}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;border:0;cursor:pointer;font-family:var(--body)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn.primary{background:var(--sea);color:var(--bg)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+.btn:hover{filter:brightness(1.08)}
+
+.cta-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:22px}
+.cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 14px;padding:16px 18px;border-radius:16px;text-decoration:none;background:var(--sea);color:var(--bg)}
+.cta.owner{background:var(--sand-soft);color:var(--ink);border:1.5px solid var(--sand)}
+.cta small{grid-column:1;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.cta b{grid-column:1;font-family:var(--display);font-size:21px;line-height:1.15}
+.cta span{grid-column:1;font-size:14px;opacity:.85;line-height:1.4}
+.cta svg{grid-column:2;grid-row:1/3;width:22px;height:22px}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.cta{transition:filter .15s,transform .15s}.cta:hover{transform:translateY(-1px)}}
+
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.langs{display:flex;gap:10px;margin-left:auto}
+.lang-btn{display:block;width:42px;height:42px;padding:0;border:0;border-radius:50%;overflow:hidden;cursor:pointer;background:transparent;box-shadow:0 0 0 1px var(--line);opacity:.82}
+.lang-btn svg{display:block;width:100%;height:100%}
+.lang-btn:hover{opacity:1}
+.lang-btn[aria-pressed="true"],.lang-btn[aria-current="true"]{opacity:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--sea)}
+.lang-btn:focus-visible{outline:2px solid var(--sea);outline-offset:7px}
+@media (prefers-reduced-motion:no-preference){.lang-btn{transition:box-shadow .15s,opacity .15s}}
+
+.card h4 a{color:inherit;text-decoration:none}
+.card h4 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+a.home-link{text-decoration:none}
+a.home-link:hover{text-decoration:underline}
+.contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 22px;margin-block:36px 24px;display:grid;gap:14px}
+.contact h2{color:var(--bg);font-size:26px}
+.contact p{margin:0;opacity:.8}
+.phone{font-family:var(--mono);font-size:clamp(22px,5vw,28px);user-select:all;letter-spacing:.04em}
+.contact .btn.primary{background:var(--sand);color:#1C2421}
+.contact .btn.ghost{border-color:var(--bg);color:var(--bg)}
+footer{font-size:13px;color:var(--muted);padding-block:0 40px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+footer>span{min-width:0}
+.visits{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px}
+.visits svg{width:16px;height:16px;flex:none;color:var(--sea)}
+.visits b{font-variant-numeric:tabular-nums}
+
+@media (max-width:560px){
+  dl.specs{grid-template-columns:1fr}
+  .card{padding:18px}
+}
+@media (prefers-reduced-motion:no-preference){.btn,.chip{transition:filter .15s,background .15s}}
+</style>
+
+<title>Krisis air Badung Selatan: Rp150 miliar disiapkan, termasuk reservoir di Uluwatu–Pecatu | Bali Are Property</title>
+<!--seo-->
+<meta name="description" content="DPRD Badung menyetujui tambahan modal Rp150 miliar untuk PDAM Badung pada 2027–2029. Ada delapan proyek, dari pipa air baku Tukad Mati hingga reservoir 2.000 m³ di Uluwatu–Pecatu.">
+<link rel="canonical" href="https://baliareproperty.com/news/air-bersih-badung-selatan-rp150-miliar.html">
+<link rel="alternate" hreflang="id" href="https://baliareproperty.com/news/air-bersih-badung-selatan-rp150-miliar.html">
+<link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/news/air-bersih-badung-selatan-rp150-miliar.html">
+<link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/news/air-bersih-badung-selatan-rp150-miliar.html">
+<link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/news/air-bersih-badung-selatan-rp150-miliar.html">
+<link rel="icon" href="https://baliareproperty.com/favicon.ico" sizes="48x48">
+<link rel="icon" href="https://baliareproperty.com/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="https://baliareproperty.com/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="https://baliareproperty.com/apple-touch-icon.png">
+<link rel="manifest" href="https://baliareproperty.com/site.webmanifest">
+<meta name="theme-color" content="#123F36">
+<script src="/app.js" defer></script>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bali Are Property">
+<meta property="og:title" content="Krisis air Badung Selatan: Rp150 miliar disiapkan, termasuk reservoir di Uluwatu–Pecatu">
+<meta property="og:description" content="DPRD Badung menyetujui tambahan modal Rp150 miliar untuk PDAM Badung pada 2027–2029. Ada delapan proyek, dari pipa air baku Tukad Mati hingga reservoir 2.000 m³ di Uluwatu–Pecatu.">
+<meta property="og:url" content="https://baliareproperty.com/news/air-bersih-badung-selatan-rp150-miliar.html">
+<meta property="og:image" content="https://baliareproperty.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"RealEstateAgent","@id":"https://baliareproperty.com/#agent","name":"Bali Are Property","url":"https://baliareproperty.com/","telephone":"+62812868080","image":"https://baliareproperty.com/og.png","logo":"https://baliareproperty.com/logo.png","areaServed":{"@type":"Place","name":"Bali, Indonesia"},"address":{"@type":"PostalAddress","addressRegion":"Bali","addressCountry":"ID"}},{"@type":"NewsArticle","headline":"Krisis air Badung Selatan: Rp150 miliar disiapkan, termasuk reservoir di Uluwatu–Pecatu","description":"DPRD Badung menyetujui tambahan modal Rp150 miliar untuk PDAM Badung pada 2027–2029. Ada delapan proyek, dari pipa air baku Tukad Mati hingga reservoir 2.000 m³ di Uluwatu–Pecatu.","inLanguage":"id","url":"https://baliareproperty.com/news/air-bersih-badung-selatan-rp150-miliar.html","mainEntityOfPage":"https://baliareproperty.com/news/air-bersih-badung-selatan-rp150-miliar.html","datePublished":"2026-11-09","dateModified":"2026-11-09","image":"https://baliareproperty.com/og.png","author":{"@id":"https://baliareproperty.com/#agent"},"publisher":{"@id":"https://baliareproperty.com/#agent"},"isBasedOn":["https://balitribune.co.id/content/pdam-badung-bidik-tambahan-pasokan-air-300-liter-detik","https://lenteraesai.id/2026/10/23/dprd-badung-setujui-suntikan-modal-rp150-miliar-untuk-perumda-air-minum-tirta-mangutama/","https://jarrakposbali.com/pdi-perjuangan-badung-setujui-rapbd-2027-krisis-air-pecatu-jadi-sorotan/"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bali Are Property","item":"https://baliareproperty.com/"},{"@type":"ListItem","position":2,"name":"News","item":"https://baliareproperty.com/news.html"},{"@type":"ListItem","position":3,"name":"Krisis air Badung Selatan: Rp150 miliar disiapkan, termasuk reservoir di Uluwatu–Pecatu","item":"https://baliareproperty.com/news/air-bersih-badung-selatan-rp150-miliar.html"}]}]}</script>
+<!--/seo-->
+<style>
+/* Homepage: hero lebar, lalu bagian-bagian bertumpuk; memakai token warna & font yang sama dengan halaman listing */
+.wrap.home{max-width:1040px}
+.home-top{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-block:22px 0}
+.home-top nav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-left:auto}
+.home-top nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.home-top nav a:hover{color:var(--sea)}
+.home-top .langs{margin-left:0}
+.hero{padding-block:56px 40px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(38px,7.2vw,72px);font-weight:800;letter-spacing:-.025em;line-height:1.02}
+.hero .lead{font-size:clamp(17px,2.2vw,20px);max-width:52ch;margin:0}
+.hero .actions{margin-top:8px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1.5px solid var(--ink);margin-bottom:12px}
+.facts div{padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.facts div+div{border-left:1px solid var(--line)}
+.facts b{font-family:var(--display);font-size:clamp(20px,3vw,28px);line-height:1.1;color:var(--sea)}
+.facts span{font-size:14px;color:var(--muted)}
+.hsec{padding-block:44px 8px;display:grid;gap:22px}
+.hsec h2{font-size:clamp(26px,4vw,36px);font-weight:700;letter-spacing:-.01em}
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:22px 48px;align-items:start}
+.about .text{display:grid;gap:14px;max-width:64ch}
+.about .text p{margin:0}
+.about .text p:first-child{font-size:18px}
+.more-link{color:var(--sea);font-weight:600;text-decoration:none}
+.more-link:hover{text-decoration:underline}
+.spec{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.spec li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 18px 44px;position:relative;font-weight:600;line-height:1.35}
+.spec li::before{content:"";position:absolute;left:18px;top:24px;width:12px;height:12px;border-radius:3px;background:var(--sand);transform:rotate(45deg)}
+.cov{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cov article{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.cov h3{font-size:24px}
+.cov ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cov li{background:var(--sea-soft);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:500}
+.cov .more{font-size:14px;color:var(--muted);margin:0}
+.cov a{margin-top:auto;color:var(--sea);font-weight:600;text-decoration:none}
+.cov a:hover{text-decoration:underline}
+.note{color:var(--muted);margin:0;max-width:70ch}
+.feat-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.feat-head a{color:var(--sea);font-weight:600;text-decoration:none}
+.feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.feat a.fc{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.feat a.fc:hover{border-color:var(--sea)}
+.feat .fc .eyebrow{font-size:11px}
+.feat .fc h3{font-size:19px;line-height:1.2;font-weight:700}
+.feat .fc b{margin-top:auto;font-family:var(--display);font-size:20px;color:var(--sea);font-variant-numeric:tabular-nums}
+.band{background:var(--sea-soft);color:var(--ink);border-radius:20px;padding:32px 26px;margin-top:44px;display:grid;gap:18px}
+.band p{margin:0;font-family:var(--display);font-size:clamp(24px,3.8vw,34px);font-weight:700;line-height:1.15;max-width:28ch;text-wrap:balance}
+.band .cta-duo{margin-top:0}
+@media (max-width:760px){
+  .about{grid-template-columns:1fr}
+  .spec,.feat{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cov{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .spec,.feat{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+  .facts div+div{border-left:0;border-top:1px solid var(--line)}
+  .hero{padding-block:36px 28px}
+}
+</style>
+<style>
+.gd-hero{padding-block:56px 28px;display:grid;gap:14px;max-width:760px}
+.gd-hero h1{font-size:clamp(34px,6.4vw,60px);font-weight:800;letter-spacing:-.025em;line-height:1.04}
+.gd-hero p{margin:0;font-size:18px;color:var(--muted);max-width:60ch}
+.gd-sec{font-size:clamp(22px,3vw,28px);margin:28px 0 14px}
+.gd-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.gd-card{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;text-decoration:none;color:var(--ink)}
+.gd-card:hover{border-color:var(--sea)}
+.gd-card.first{grid-column:1/-1;background:var(--sea-soft);border-color:transparent}
+.gd-card.first h2{font-size:clamp(26px,3.6vw,34px)}
+.gd-card h2{font-size:clamp(20px,2.6vw,24px);line-height:1.2}
+.gd-card p{margin:0;color:var(--muted)}
+.gd-card .go{margin-top:auto;color:var(--sea);font-weight:600}
+.tag{display:inline-flex;align-self:flex-start;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+.art{max-width:720px;padding-block:28px 0;display:grid;gap:16px}
+.crumbs{font-size:14px;margin-top:20px}
+.crumbs a{color:var(--sea);font-weight:600;text-decoration:none}
+.art h1{font-size:clamp(30px,5.4vw,50px);font-weight:800;letter-spacing:-.02em;line-height:1.08}
+.art .meta{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
+.art .lead{font-size:19px;margin:0;color:var(--ink)}
+.art .body{display:grid;gap:14px;border-top:1.5px solid var(--ink);padding-top:22px;font-size:17px;line-height:1.7}
+.art .body h2{font-size:clamp(21px,2.8vw,26px);margin-top:14px}
+.art .body p{margin:0}
+.art .body ul{margin:0;padding-left:22px;display:grid;gap:8px}
+.art .body li::marker{color:var(--sand)}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;width:100%;font-size:15px;min-width:440px}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+.tbl th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.tbl td:nth-child(2){font-family:var(--display);font-weight:700;color:var(--sea);font-variant-numeric:tabular-nums}
+.tbl td:nth-child(3){font-variant-numeric:tabular-nums}
+.art .note{background:var(--sand-soft);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--ink)}
+.src{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:8px;font-size:14px}
+.src h2{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.src ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.src a{color:var(--sea);word-break:break-word}
+@media (max-width:760px){.gd-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap home">
+  <div class="home-top">
+    <a class="eyebrow home-link" href="../"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
+    <nav aria-label="Menu">
+      <a href="../about.html">Tentang kami</a>
+      <a href="../listings.html">Listing</a>
+      <a href="../news.html" aria-current="page">Berita</a>
+      <a href="../guide.html">Guide</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <div class="langs" role="group" aria-label="Pilih bahasa / Language">
+        <a class="lang-btn" data-lang="id" hreflang="id" href="air-bersih-badung-selatan-rp150-miliar.html" aria-label="Bahasa Indonesia" aria-current="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="18" fill="#CE1126"></rect><rect y="18" width="36" height="18" fill="#FFFFFF"></rect></svg></a>
+        <a class="lang-btn" data-lang="en" hreflang="en" href="../en/news/air-bersih-badung-selatan-rp150-miliar.html" aria-label="English" aria-current="false"><svg viewBox="15 0 30 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"></path></clipPath><rect width="60" height="30" fill="#012169"></rect><path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"></path><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"></path><path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"></path><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"></path></svg></a>
+        <a class="lang-btn" data-lang="ru" hreflang="ru" href="../ru/news/air-bersih-badung-selatan-rp150-miliar.html" aria-label="Русский" aria-current="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="12" fill="#FFFFFF"></rect><rect y="12" width="36" height="12" fill="#0039A6"></rect><rect y="24" width="36" height="12" fill="#D52B1E"></rect></svg></a>
+      </div>
+  </div>
+  <p class="crumbs"><a href="../news.html">← Semua berita</a></p>
+  <article class="art">
+    <span class="tag">Infrastruktur</span>
+    <h1>Krisis air Badung Selatan: Rp150 miliar disiapkan, termasuk reservoir di Uluwatu–Pecatu</h1>
+    <div class="meta">Diterbitkan 9 November 2026 · Bali Are Property</div>
+    <p class="lead">DPRD Badung menyetujui tambahan modal Rp150 miliar untuk PDAM Badung pada 2027–2029. Ada delapan proyek, dari pipa air baku Tukad Mati hingga reservoir 2.000 m³ di Uluwatu–Pecatu.</p>
+    <div class="body">
+      <p>Rapat paripurna DPRD Badung pada 23 Oktober 2026 menyetujui ranperda penyertaan modal tambahan Rp150 miliar untuk Perumda Air Minum Tirta Mangutama (PDAM Badung). Dana disalurkan bertahap pada 2027, 2028, dan 2029, dengan alokasi Rp37 miliar untuk 2027. Bila terealisasi penuh, total modal daerah di PDAM Badung menjadi sekitar Rp484 miliar.</p>
+      <p>Menurut Direktur PDAM Badung I Wayan Suyasa, kapasitas pasokan saat ini 1.082,83 liter per detik, sedangkan kebutuhan mencapai 2.198,25 liter per detik, sehingga kurang sekitar 1.115 liter per detik. Dalam rapat paripurna 5 November 2026, Fraksi PDI Perjuangan DPRD Badung menyoroti krisis air bersih di Ungasan, Pecatu, dan sekitarnya.</p>
+      <h2>Proyek utama yang direncanakan</h2>
+      <ul><li>Pipa air baku Tukad Mati–IPA Estuary (Rp37,02 miliar): tambahan hingga 300 liter per detik, terutama untuk Badung Selatan.</li><li>Reservoir Uluwatu–Pecatu 2.000 m³ dengan pipa 3.180 m (Rp27,30 miliar).</li><li>Reservoir Sawangan dan Nuansa Bukit, masing-masing 1.000 m³ (Rp10,81 miliar per proyek).</li><li>Penggantian pipa di Bypass Ngurah Rai Nusa Dua (Rp36,57 miliar) untuk mengurangi kebocoran.</li></ul>
+      <p>Target keseluruhan: kebocoran berkurang lebih dari 40 liter per detik dan lebih dari 15.000 sambungan pelanggan baru.</p>
+      <h2>Artinya bagi buyer dan investor</h2>
+      <p>Air masih menjadi titik lemah kawasan Bukit. Sebelum membeli tanah atau villa di Ungasan, Pecatu, Kutuh, atau Uluwatu, cek apakah ada sambungan PDAM, sumur bor berizin, atau tangki penampung, dan hitung biaya air truk saat kemarau. Proyek ini bisa memperbaiki pasokan secara bertahap, tetapi baru berjalan mulai 2027 dan masih harus melewati proses anggaran. Properti dengan sumber air yang andal tetap punya nilai lebih.</p>
+      <p class="note">Ringkasan berita. Rencana dan anggaran proyek masih dapat berubah. Bukan nasihat investasi.</p>
+    </div>
+    <section class="src"><h2>Sumber berita</h2><ol><li><a href="https://balitribune.co.id/content/pdam-badung-bidik-tambahan-pasokan-air-300-liter-detik" target="_blank" rel="noopener">Bali Tribune – PDAM Badung bidik tambahan pasokan air 300 liter per detik (26 Okt 2026)</a></li><li><a href="https://lenteraesai.id/2026/10/23/dprd-badung-setujui-suntikan-modal-rp150-miliar-untuk-perumda-air-minum-tirta-mangutama/" target="_blank" rel="noopener">LenteraEsai – DPRD Badung setujui suntikan modal Rp150 miliar untuk Perumda Air Minum Tirta Mangutama (23 Okt 2026)</a></li><li><a href="https://jarrakposbali.com/pdi-perjuangan-badung-setujui-rapbd-2027-krisis-air-pecatu-jadi-sorotan/" target="_blank" rel="noopener">Jarrak Pos Bali – PDI Perjuangan Badung setujui RAPBD 2027, krisis air Pecatu jadi sorotan (5 Nov 2026)</a></li></ol></section>
+  </article>
+  <section class="hsec" aria-labelledby="h-more">
+    <h2 id="h-more">Berita lainnya</h2>
+    <div class="feat">
+      <a class="fc" href="the-one-by-almal-nusa-dua-pbg.html"><span class="eyebrow">Proyek</span><h3>The One by Almal di Nusa Dua kantongi PBG, 154 unit hunian bermerek masuk fase konstruksi berikutnya</h3></a>
+      <a class="fc" href="wisman-bali-september-2026-okupansi-hotel.html"><span class="eyebrow">Pasar</span><h3>Wisman ke Bali turun 5,22% pada September 2026, okupansi hotel bintang tetap tertinggi nasional</h3></a>
+      <a class="fc" href="terowongan-gatsu-canggu-pinjaman-ditunda.html"><span class="eyebrow">Infrastruktur</span><h3>Badung tunda pinjaman Rp1,67 triliun, terowongan Gatsu Barat–Canggu ditargetkan mulai dibangun 2028</h3></a>
+    </div>
+  </section>
+  <div style="margin-top:36px"><div class="cta-duo">
+      <a class="cta" href="../inquiry.html#buyer"><b>Cari properti</b><span>Belum ketemu yang cocok? Isi kebutuhan Anda, kami carikan.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+      <a class="cta owner" href="../inquiry.html#owner"><b>Titip jual properti</b><span>Pasang tanah, villa, atau rumah Anda di listing kami.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </div></div>
+  <div id="kontak"><section class="contact" aria-labelledby="c-head">
+    <div class="eyebrow" style="color:var(--sand)">Info &amp; survey lokasi</div>
+    <h2 id="c-head">Bali Are Property</h2>
+    <div class="phone" id="phone" data-noi18n="">0812 868 080</div>
+    <div class="actions">
+      <a class="btn primary" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti." target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti.">Chat WhatsApp</a>
+      <button class="btn ghost" id="copy" type="button">Salin nomor</button>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" href="inquiry.html#buyer">Form cari properti</a>
+      <a class="btn ghost" href="inquiry.html#owner">Form titip jual</a>
+    </div>
+  </section></div>
+  <footer><span>© 2009–2026 Bali Are Property · Harga dapat berubah sewaktu-waktu. Sketsa hanya ilustrasi; data resmi mengikuti sertifikat.</span></footer>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var done=function(){btn.textContent='Nomor disalin';setTimeout(function(){btn.textContent='Salin nomor'},1800)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(document.getElementById('phone'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Nomor terpilih, tekan salin'};
+    try{navigator.clipboard.writeText('0812868080').then(done,sel)}catch(e){sel()}
+  });
+})();
+</script>
+<script src="../i18n.js"></script>
+</body>
+</html>
