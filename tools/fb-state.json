@@ -1,9 +1,15 @@
 {
-  "posted": {},
-  "errors": {
-    "setup": {
-      "msg": "Token tidak punya akses ke Facebook Page mana pun (izin pages_show_list/pages_manage_posts belum diberikan).",
-      "at": "2026-11-09T15:08:09.624Z"
+  "posted": {
+    "tanah-6000-m2-dekat-pantai-balangan": {
+      "id": "682981281566061_122200436984916210",
+      "permalink": "https://www.facebook.com/122200437038916210/posts/122200436984916210",
+      "at": "2026-11-09T16:52:08.526Z"
+    },
+    "tanah-ocean-view-2-x-650-m2-di-balangan": {
+      "id": "682981281566061_122200437350916210",
+      "permalink": "https://www.facebook.com/122200437038916210/posts/122200437350916210",
+      "at": "2026-11-09T16:52:15.101Z"
     }
-  }
+  },
+  "errors": {}
 }
