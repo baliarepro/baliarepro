@@ -85,6 +85,12 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
 .wa-card details summary{cursor:pointer;font-size:13px;color:var(--muted)}
 .wa-card pre{white-space:pre-wrap;font:13px/1.45 system-ui,sans-serif;background:var(--bg);border-radius:10px;padding:10px;margin:6px 0 0;max-height:260px;overflow:auto}
 .pill.new{background:#FBF0D6;color:var(--gold-ink)}
+.st{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:4px;border-left:5px solid var(--line)}
+.st.ok{border-left-color:#1A8D4A}.st.bad{border-left-color:var(--red)}.st.off{border-left-color:var(--gold)}
+.st h3{margin:0;font-size:15px}.st .err{color:var(--red);font-size:13px}
+.rem{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.rem p{margin:0;flex:1;font-size:15px}
+#st-dot{color:var(--red);font-size:20px;line-height:0}
 @media (max-width:520px){.grid2{grid-template-columns:1fr auto}.grid2 input:first-child{grid-column:1/-1}}
 </style>
 </head>
@@ -120,6 +126,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     <div class="tabs" role="tablist">
       <button role="tab" data-tab="ads" aria-selected="true">Iklan</button>
       <button role="tab" data-tab="wa" aria-selected="false">Bagikan ke Grup WA</button>
+      <button role="tab" data-tab="st" aria-selected="false">Status <span id="st-dot" hidden>•</span></button>
     </div>
     <div id="tab-ads">
     <div class="tools">
@@ -133,6 +140,12 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     <p class="muted" id="summary"></p>
     <div class="list" id="list"></div>
     <div class="note">Iklan <b>baru</b> dan perubahan <b>status Terjual</b> tetap lewat chat dengan Claude, supaya 3 bahasa &amp; SEO langsung lengkap. Teks yang diedit di sini langsung tampil di versi Indonesia; versi English/Русский dan judul Google ikut dirapikan oleh Claude.</div>
+    </div>
+    <div id="tab-st" hidden>
+      <p class="muted">Kondisi posting otomatis (Instagram, Threads, Facebook) dan hal yang perlu Bapak kerjakan. Data diambil dari GitHub saat tab ini dibuka.</p>
+      <div class="list" id="stlist"></div>
+      <h2>Pengingat untuk Bapak</h2>
+      <div class="list" id="remlist"></div>
     </div>
     <div id="tab-wa" hidden>
       <p class="muted">Tekan tombol grup → WhatsApp terbuka dengan pesan siap kirim → pilih grup itu → Kirim. Tombol berubah jadi ✓ supaya tidak dobel. Link otomatis tampil dengan foto.</p>
@@ -562,12 +575,61 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   });
   $("#wq").addEventListener("input", renderWa);
   $$("[data-w]").forEach(function (b) { b.addEventListener("click", function () { wfilter = b.dataset.w; $$("[data-w]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); renderWa(); }); });
+  // ---------- Status otomasi & pengingat ----------
+  var REM = "pengingat.json", rem = { items: [] };
+  function rj(p) { return readFile(p).then(function (t) { return JSON.parse(t); }).catch(function () { return {}; }); }
+  function lastOf(o) { var v = Object.keys(o || {}).map(function (k) { return { key: k, at: o[k].at, permalink: o[k].permalink }; }).filter(function (x) { return x.at; }); v.sort(function (a, b) { return b.at < a.at ? -1 : 1; }); return v[0] || null; }
+  function fmt(at) { try { return new Date(at).toLocaleString("id-ID", { timeZone: "Asia/Makassar", dateStyle: "medium", timeStyle: "short" }) + " WITA"; } catch (e) { return at; } }
+  function loadStatus() {
+    var files = ["tools/ig-state.json", "tools/ig-weekly-state.json", "tools/threads-state.json", "tools/threads-weekly-state.json", "tools/fb-state.json", "tools/fb-weekly-state.json", REM];
+    return Promise.all(files.map(rj)).then(function (r) {
+      var ig = r[0], igw = r[1], th = r[2], thw = r[3], fb = r[4], fbw = r[5]; rem = r[6].items ? r[6] : { items: [] };
+      var q = (ig.queue || []).length, now = Date.now(), H = 3600e3, bad = 0;
+      var fbOff = !Object.keys(fb.posted || {}).length && !Object.keys(fbw.posted || {}).length;
+      var ch = [
+        ["Instagram · listing", ig.posted, ig.errors, q ? 30 : 0, q + " listing lama di antrean (3 per hari)"],
+        ["Instagram · berita mingguan", igw.posts, igw.error ? { terakhir: igw.error } : {}, 8 * 24, "Tiap Senin ±16.07 WITA"],
+        ["Threads · listing", th.posted, th.errors, q ? 30 : 0, ""],
+        ["Threads · berita mingguan", thw.weekly, thw.errors, 8 * 24, ""],
+        ["Facebook Page · listing", fb.posted, fb.errors, fbOff ? 0 : q ? 30 : 0, fbOff ? "Belum aktif, lihat pengingat" : ""],
+        ["Facebook Page · berita mingguan", fbw.posted, fbw.errors, fbOff ? 0 : 8 * 24, ""]
+      ];
+      $("#stlist").innerHTML = ch.map(function (c, i) {
+        var last = lastOf(c[1]), errs = Object.keys(c[2] || {}).map(function (k) { return k + ": " + (c[2][k].msg || ""); });
+        var age = last ? (now - Date.parse(last.at)) / H : Infinity;
+        var cls = (i >= 4 && fbOff) ? "off" : (errs.length || (c[3] && age > c[3])) ? "bad" : "ok";
+        if (cls === "bad") bad++;
+        return '<div class="st ' + cls + '"><h3>' + (cls === "ok" ? "✅ " : cls === "off" ? "⏸️ " : "⚠️ ") + esc(c[0]) + '</h3>' +
+          '<div class="muted">' + Object.keys(c[1] || {}).length + ' posting · terakhir: ' + (last ? (last.permalink ? '<a target="_blank" rel="noopener" href="' + esc(last.permalink) + '">' + fmt(last.at) + '</a>' : fmt(last.at)) : "belum ada") + (c[4] ? " · " + esc(c[4]) : "") + '</div>' +
+          errs.map(function (e) { return '<div class="err">' + esc(e) + '</div>'; }).join("") +
+          (cls === "bad" && !errs.length ? '<div class="err">Tidak ada posting baru lebih lama dari jadwal. Kabari Claude.</div>' : "") + '</div>';
+      }).join("");
+      renderRem();
+      $("#st-dot").hidden = !(bad || rem.items.some(function (x) { return !x.done; }));
+    });
+  }
+  function renderRem() {
+    var open = rem.items.filter(function (x) { return !x.done; });
+    $("#remlist").innerHTML = open.map(function (x) {
+      return '<div class="rem" data-id="' + esc(x.id) + '"><p>' + esc(x.text) + '</p><button class="btn ghost small" data-done>Selesai</button></div>';
+    }).join("") || '<p class="muted">Tidak ada pengingat. 👍</p>';
+  }
+  $("#remlist").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-done]"); if (!b) return;
+    var id = b.closest(".rem").dataset.id; b.disabled = true;
+    readFile(REM).then(function (t) { return JSON.parse(t); }).catch(function () { return rem; }).then(function (cur) {
+      (cur.items || []).forEach(function (x) { if (x.id === id) { x.done = new Date().toISOString(); } });
+      rem = cur;
+      return commit([{ path: REM, content: JSON.stringify(cur, null, 2) + "\n" }], "Admin: pengingat selesai " + id);
+    }).then(function () { renderRem(); toast("Ditandai selesai."); }).catch(fail).then(function () { b.disabled = false; });
+  });
   $$(".tabs button").forEach(function (b) {
     b.addEventListener("click", function () {
-      var wa = b.dataset.tab === "wa";
+      var t = b.dataset.tab;
       $$(".tabs button").forEach(function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
-      $("#tab-ads").hidden = wa; $("#tab-wa").hidden = !wa;
-      if (wa) { $("#walist").innerHTML = '<p class="muted">Memuat…</p>'; Promise.all([loadNews(), loadShared()]).then(renderWa); }
+      $("#tab-ads").hidden = t !== "ads"; $("#tab-wa").hidden = t !== "wa"; $("#tab-st").hidden = t !== "st";
+      if (t === "wa") { $("#walist").innerHTML = '<p class="muted">Memuat…</p>'; Promise.all([loadNews(), loadShared()]).then(renderWa); }
+      if (t === "st") { $("#stlist").innerHTML = '<p class="muted">Memuat…</p>'; loadStatus().catch(fail); }
     });
   });
 
@@ -576,6 +638,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   function start() {
     $("#login").hidden = true; $("#app").hidden = false; $("#logout").hidden = false;
     load().catch(function (e) { fail(e); });
+    setTimeout(function () { loadStatus().catch(function () {}); }, 1500);
   }
   $("#go").addEventListener("click", function () {
     var t = $("#tok").value.trim(); if (!t) return;

@@ -27,8 +27,18 @@ async function api(method, p, params, token) {
 
 // Cari Page + Page access token
 async function page() {
-  if (process.env.FB_PAGE_TOKEN) {
-    const t = process.env.FB_PAGE_TOKEN;
+  const t = process.env.FB_PAGE_TOKEN;
+  if (t) {
+    // FB_PAGE_TOKEN boleh token Page, atau token pengguna/pengguna sistem yang punya akses ke Page
+    let acc = null;
+    try { acc = await api("GET", "me/accounts", { fields: "id,name,access_token,instagram_business_account", limit: "50" }, t); } catch (e) {}
+    const list = (acc && acc.data) || [];
+    if (list.length) {
+      const hit = (process.env.FB_PAGE_ID && list.find((p) => p.id === process.env.FB_PAGE_ID))
+        || list.find((p) => p.instagram_business_account && p.instagram_business_account.id === process.env.IG_USER_ID)
+        || list.find((p) => p.instagram_business_account) || list[0];
+      return { id: hit.id, token: hit.access_token || t, name: hit.name };
+    }
     if (process.env.FB_PAGE_ID) return { id: process.env.FB_PAGE_ID, token: t, name: "" };
     const me = await api("GET", "me", { fields: "id,name" }, t); // token Page → "me" adalah Page itu sendiri
     return { id: me.id, token: t, name: me.name };

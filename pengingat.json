@@ -1,0 +1,13 @@
+{
+  "items": [
+    { "id": "ig-caption-lama", "text": "Edit caption 10 posting IG lama ke format baru (halaman \"Edit Caption Instagram\" di chat Claude: salin → buka posting → ⋯ Edit → tempel).", "added": "2026-11-09" },
+    { "id": "ig-link-bio", "text": "Pastikan link di bio Instagram @bali.are mengarah ke baliareproperty.com (semua caption IG menyebut \"link di bio\").", "added": "2026-11-09" },
+    { "id": "fb-page", "text": "Aktifkan posting otomatis Facebook Page: beri akses Page ke token Meta (izin pages_show_list, pages_read_engagement, pages_manage_posts), lalu simpan token sebagai secret GitHub FB_PAGE_TOKEN. Minta Claude memandu.", "added": "2026-11-09" },
+    { "id": "gbp", "text": "Buat/klaim Google Business Profile \"Bali Are Property\" di business.google.com (teks profil sudah disiapkan Claude), lalu verifikasi.", "added": "2026-11-09" },
+    { "id": "lokasi-sangeh", "text": "Konfirmasi lokasi villa view sawah \"dekat Ubud\": masuk Sangeh/Abiansemal (Badung) atau Gianyar? Kabari Claude bila perlu dipindah.", "added": "2026-11-09" },
+    { "id": "foto-hd", "text": "Kirim foto asli resolusi tinggi (bukan dari WhatsApp) untuk villa 2 KT Ungasan dan villa view sawah Sangeh, bila ada.", "added": "2026-11-09" },
+    { "id": "gsc-indexing", "text": "Search Console → URL inspection → Request indexing untuk 2 villa baru (Ungasan 2 KT & view sawah dekat Ubud). Akhir November kirim screenshot menu Performance & Pages ke Claude.", "added": "2026-11-09" },
+    { "id": "portal", "text": "Hubungi Rumah123 / Lamudi / 99.co soal bulk upload / XML feed (draf pesan sudah dibuat Claude). Kirim jawabannya ke Claude.", "added": "2026-11-09" },
+    { "id": "tiktok", "text": "Putuskan TikTok: A (full otomatis, perlu review TikTok) atau B (dikirim ke draft, Bapak tinggal pilih lagu & posting).", "added": "2026-11-09" }
+  ]
+}
