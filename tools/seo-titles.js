@@ -36,9 +36,9 @@ module.exports = {
     en: { t: "1.5-Hectare Land for Sale on Jalan Pura Mesuka, Ungasan Bali", d: "15,000 m² SHM plot with residential zoning on Jl. Pura Mesuka, Ungasan, South Kuta. IDR 5.5M/m² (neg.), IDR 82.5B total. Ideal for a housing project. Ask on WhatsApp." },
     ru: { t: "Продажа участка 1,5 га на Джалан Пура Месука, Унгасан, Бали", d: "Участок 15 000 м², SHM, жилая зона, Джл. Пура Месука, Унгасан, Южная Кута. 5,5 млн IDR/м² (торг), всего 82,5 млрд IDR. Под жилой проект. Пишите в WhatsApp." } },
   "tanah-1620-m2-di-jalan-dewi-sri-area-nakula": {
-    id: { t: "Dijual Tanah 1.620 m² Zona Campuran di Jalan Dewi Sri, Kuta Bali", d: "Tanah 16,2 are SHM, zonasi campuran (mixed-use) di Jl. Dewi Sri area Nakula, Kuta. Rp19 jt/m², total Rp30,78 M. Lokasi komersial strategis. Tanya via WhatsApp." },
-    en: { t: "1,620 m² Mixed-Use Land for Sale on Jalan Dewi Sri, Kuta Bali", d: "16.2-are SHM plot with mixed-use zoning on Jl. Dewi Sri, Nakula area, Kuta. IDR 19M/m², IDR 30.78B total. Strategic commercial location. Ask on WhatsApp." },
-    ru: { t: "Продажа участка 1 620 м² (смешанная зона) на Деви Шри, Кута, Бали", d: "Участок 16,2 аре, SHM, смешанная зона, Джл. Деви Шри (район Накула), Кута. 19 млн IDR/м², всего 30,78 млрд IDR. Коммерческая локация. Пишите в WhatsApp." } },
+    id: { t: "Dijual Tanah 1.620 m² Zona Campuran di Jalan Dewi Sri, Kuta Bali", d: "Tanah 16,2 are SHM, zonasi campuran (mixed-use) di Jl. Dewi Sri area Nakula, Kuta. Rp18 jt/m² (Rp1,8 M/are), total Rp29,16 M. Lokasi komersial strategis. Tanya via WhatsApp." },
+    en: { t: "1,620 m² Mixed-Use Land for Sale on Jalan Dewi Sri, Kuta Bali", d: "16.2-are SHM plot with mixed-use zoning on Jl. Dewi Sri, Nakula area, Kuta. IDR 18M/m² (1.8B/are), 29.16B total. Strategic commercial location. Ask on WhatsApp." },
+    ru: { t: "Продажа участка 1 620 м² (смешанная зона) на Деви Шри, Кута, Бали", d: "Участок 16,2 аре, SHM, смешанная зона, Джл. Деви Шри (район Накула), Кута. 18 млн IDR/м² (1,8 млрд/ар), всего 29,16 млрд IDR. Коммерческая локация. Пишите в WhatsApp." } },
   "tanah-197-m2-di-kompleks-airis-ungasan": {
     id: { t: "Terjual: Tanah 197 m² di Kompleks Airis, Ungasan Bali", d: "Tanah 197 m² SHM, ITR hunian di kompleks Airis, Ungasan — sudah terjual. Cari kavling serupa di Ungasan? Hubungi Bali Are Property via WhatsApp." },
     en: { t: "Sold: 197 m² Land in the Airis Estate, Ungasan Bali", d: "197 m² SHM residential plot in the Airis estate, Ungasan — now sold. Looking for a similar plot in Ungasan? Contact Bali Are Property on WhatsApp." },
