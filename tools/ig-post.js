@@ -63,7 +63,8 @@ function caption(l, seo) {
   const short = l.title.replace(/kamar tidur/gi, "KT");
   const pick = ["Luas tanah", "Luas bangunan", "Kamar tidur", "Sertifikat", "Legalitas", "Zonasi", "ITR / Zonasi", "ITR"];
   const facts = pick.map((k) => d.specs.find((s) => s[0] === k)).filter(Boolean).slice(0, 3).map((s) =>
-    s[0] === "Kamar tidur" ? s[1] + " KT" : s[0] === "Luas bangunan" ? "bangunan " + s[1] : s[0] === "Luas tanah" ? "tanah " + s[1].replace(/ \(.*\)/, "") : s[1]);
+    s[0] === "Kamar tidur" ? s[1] + " KT" : s[0] === "Luas bangunan" ? "bangunan " + s[1] : s[0] === "Luas tanah" ? "tanah " + s[1].replace(/ \(.*\)/, "") :
+    /^(ITR|Zonasi|ITR \/ Zonasi)$/.test(s[0]) ? "ITR " + s[1] : s[1]);
   const lines = [];
   lines.push(`🏝️ DIJUAL ${short}${main ? " · " + main.value + (/unit/i.test(main.label) ? "/unit" : "") : ""}`);
   if (facts.length) lines.push(facts.join(" · "));
