@@ -1,1 +1,21 @@
-{ "news": [], "edu": [], "posts": {} }
+{
+  "news": [
+    "air-bersih-badung-selatan-rp150-miliar",
+    "the-one-by-almal-nusa-dua-pbg",
+    "wisman-bali-september-2026-okupansi-hotel"
+  ],
+  "edu": [],
+  "posts": {
+    "2026-11-09": {
+      "kind": "news",
+      "items": [
+        "air-bersih-badung-selatan-rp150-miliar",
+        "the-one-by-almal-nusa-dua-pbg",
+        "wisman-bali-september-2026-okupansi-hotel"
+      ],
+      "id": "18140868394661140",
+      "permalink": "https://www.instagram.com/p/Dfg-tvsIWWo/",
+      "at": "2026-11-09T09:11:46.774Z"
+    }
+  }
+}
