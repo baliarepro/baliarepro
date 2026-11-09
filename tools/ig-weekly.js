@@ -133,16 +133,19 @@ function slidesFor(sel, date) {
 // ---------- Caption ----------
 // Maks. 5 hashtag (batas Instagram sejak Des 2025)
 const TAGS = "#baliproperty #propertibali #balirealestate #investasibali #beritaproperti";
-function captionFor(sel, date) {
+// Batas caption Instagram 2.200 karakter: bila terlalu panjang, ringkasan berita lalu judul EN/RU dibuang (tidak dipotong di tengah kalimat).
+function captionFor(sel, date, lvl = 0) {
   const L = [];
   if (sel.kind === "news") {
     L.push(`📰 Berita Properti Bali Minggu Ini · Edisi ${tglIndo(date)}`, "", "Ringkasan untuk calon buyer & investor:", "");
     const num = ["1️⃣", "2️⃣", "3️⃣"];
-    sel.items.forEach((n, i) => { L.push(`${num[i]} ${n.id.title}. ${n.id.summary}`); L.push(""); });
+    sel.items.forEach((n, i) => { L.push(lvl ? `${num[i]} ${n.id.title}` : `${num[i]} ${n.id.title}. ${n.id.summary}`); L.push(""); });
     const s0 = newsSlide(sel.items[0]);
     L.push(`💡 ${s0.arti}`, "");
-    L.push("🇬🇧 Bali property news this week: " + sel.items.map((n) => n.en.title).join(" · "));
-    L.push("🇷🇺 Новости недвижимости Бали за неделю: " + sel.items.map((n) => n.ru.title).join(" · "), "");
+    if (lvl < 2) {
+      L.push("🇬🇧 Bali property news this week: " + sel.items.map((n) => n.en.title).join(" · "));
+      L.push("🇷🇺 Новости недвижимости Бали за неделю: " + sel.items.map((n) => n.ru.title).join(" · "), "");
+    }
     L.push("🔗 Baca lengkap: baliareproperty.com/news.html (link di bio)");
     L.push("Sumber: " + [...new Set(sel.items.flatMap((n) => n.sources.map((s) => s.t.split(" – ")[0].trim())))].join(", ") + ".");
     L.push("Ringkasan berita, bukan nasihat investasi.");
@@ -157,6 +160,7 @@ function captionFor(sel, date) {
   }
   L.push("📩 Ada pertanyaan soal properti di Bali? DM kami atau WhatsApp Bagoes +62 812 868 080", "", TAGS);
   const c = L.join("\n");
+  if (c.length > 2150 && lvl < 2 && sel.kind === "news") return captionFor(sel, date, lvl + 1);
   return c.length > 2150 ? c.slice(0, 2150) : c;
 }
 
