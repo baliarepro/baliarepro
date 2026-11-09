@@ -736,7 +736,26 @@
     ["Ungasan, Kuta Selatan", "Ungasan, South Kuta", "Унгасан, Южная Кута"],
     ["Private swimming pool di setiap unit", "Private swimming pool in every unit", "Частный бассейн в каждом юните"],
     ["Sertifikat SHM", "SHM (freehold) certificate", "Сертификат SHM (полная собственность)"],
-    ["Tersedia 3 unit dengan harga sama per unit", "3 units available at the same price per unit", "Доступно 3 юнита по одинаковой цене"]
+    ["Tersedia 3 unit dengan harga sama per unit", "3 units available at the same price per unit", "Доступно 3 юнита по одинаковой цене"],
+    // ---------- Villa 3 KT view sawah, infinity pool, Sangeh dekat Ubud ----------
+    ["Abiansemal", "Abiansemal", "Абиансемал"],
+    ["Sangeh · dekat Ubud", "Sangeh · near Ubud", "Сангех · рядом с Убудом"],
+    ["Villa 3 kamar tidur view sawah dengan infinity pool dekat Ubud", "3-bedroom rice field view villa with infinity pool near Ubud", "Вилла с 3 спальнями, видом на рисовые поля и инфинити-бассейном рядом с Убудом"],
+    ["Villa baru siap huni, dikelilingi hamparan sawah, dengan infinity pool menghadap sawah. Di belakang villa ada Air Terjun Beji, tempat melukat tradisional. Tenang, privat, dan asri.", "A brand-new, move-in-ready villa surrounded by rice fields, with an infinity pool overlooking the paddies. Behind the villa is Beji Waterfall, a traditional melukat purification site. Peaceful, private and picturesque.", "Новая вилла, готовая к заселению, среди рисовых полей, с инфинити-бассейном с видом на поля. За виллой находится водопад Беджи — традиционное место очищения мелукат. Тихо, уединённо и живописно."],
+    ["Siap huni", "Move-in ready", "Готова к заселению"],
+    ["Freehold", "Freehold", "Freehold (собственность)"],
+    ["Leasehold 30 tahun", "Leasehold 30 years", "Аренда (leasehold) 30 лет"],
+    ["Infinity pool, view sawah", "Infinity pool, rice field view", "Инфинити-бассейн, вид на рисовые поля"],
+    ["1 mobil + 5 motor", "1 car + 5 motorbikes", "1 авто + 5 мотобайков"],
+    ["PBG & SLF, izin Pondok Wisata", "PBG & SLF, Pondok Wisata (villa rental) permit", "PBG и SLF, лицензия Pondok Wisata (аренда виллы)"],
+    ["Fully furnished, siap huni", "Fully furnished, move-in ready", "Полностью меблирована, готова к заселению"],
+    ["Master bedroom ensuite dengan bathtub jacuzzi", "Ensuite master bedroom with jacuzzi bathtub", "Главная спальня с ванной комнатой и джакузи"],
+    ["Ruang keluarga tertutup dengan home theater", "Enclosed living room with home theater", "Закрытая гостиная с домашним кинотеатром"],
+    ["Dapur lengkap, meja makan, ruang kerja", "Equipped kitchen, dining table, work space", "Оборудованная кухня, обеденный стол, рабочее место"],
+    ["Area gym dengan view, area laundry dengan mesin cuci", "Gym area with a view, laundry area with washing machine", "Зона спортзала с видом, прачечная со стиральной машиной"],
+    ["±150 m dari jalan utama", "±150 m from the main road", "±150 м от главной дороги"],
+    ["±5 menit ke Sangeh Monkey Forest, ±15 menit ke Jl. Raya Sayan Ubud", "±5 min to Sangeh Monkey Forest, ±15 min to Jl. Raya Sayan, Ubud", "±5 мин до леса обезьян Сангех, ±15 мин до Jl. Raya Sayan, Убуд"],
+    ["±19 menit ke Green School Sibang Kaja", "±19 min to Green School, Sibang Kaja", "±19 мин до Green School, Сибанг-Каджа"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
