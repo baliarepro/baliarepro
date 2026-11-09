@@ -35,7 +35,8 @@
     {
       "id": "gsc-indexing",
       "text": "Search Console → URL inspection → Request indexing untuk 2 villa baru (Ungasan 2 KT & view sawah dekat Ubud). Akhir November kirim screenshot menu Performance & Pages ke Claude.",
-      "added": "2026-11-09"
+      "added": "2026-11-09",
+      "done": "2026-11-10"
     },
     {
       "id": "portal",
@@ -46,6 +47,11 @@
       "id": "tiktok",
       "text": "Putuskan TikTok: A (full otomatis, perlu review TikTok) atau B (dikirim ke draft, Bapak tinggal pilih lagu & posting).",
       "added": "2026-11-09"
+    },
+    {
+      "id": "gsc-laporan",
+      "text": "Akhir November: kirim screenshot Search Console menu Performance & Pages ke Claude untuk dibaca (kata kunci & listing yang paling banyak dicari).",
+      "added": "2026-11-10"
     }
   ]
 }
