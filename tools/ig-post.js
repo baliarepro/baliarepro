@@ -48,7 +48,7 @@ const TYPE_TAG = { tanah: "#tanahbali", villa: "#villabali", rumah: "#rumahbali"
 const AREA_TAG = [["labuan sait", "#uluwatu"], ["ungasan", "#ungasan"], ["melasti", "#ungasan"], ["gwk", "#ungasan"], ["jimbaran", "#jimbaran"], ["balangan", "#jimbaran"],
   ["pecatu", "#uluwatu"], ["uluwatu", "#uluwatu"], ["bingin", "#uluwatu"], ["pandawa", "#pandawa"], ["kutuh", "#pandawa"], ["nusa dua", "#nusadua"],
   ["canggu", "#canggu"], ["berawa", "#canggu"], ["tibubeneng", "#canggu"], ["pererenan", "#canggu"], ["dalung", "#canggu"], ["kerobokan", "#kerobokan"],
-  ["seminyak", "#seminyak"], ["legian", "#seminyak"], ["dewi sri", "#kutabali"], ["bandara", "#kutabali"], ["ubud", "#ubud"], ["sangeh", "#ubud"],
+  ["seminyak", "#seminyak"], ["legian", "#seminyak"], ["dewi sri", "#kutabali"], ["bandara", "#kutabali"], ["ubud", "#ubud"], ["sangeh", "#ubud"], ["blahkiuh", "#ubud"], ["abiansemal", "#ubud"],
   ["singakerta", "#ubud"], ["lod tunduh", "#ubud"], ["ketewel", "#gianyar"], ["pering", "#gianyar"], ["sukawati", "#gianyar"], ["kaba-kaba", "#tabanan"],
   ["tabanan", "#tabanan"], ["sanur", "#sanur"], ["denpasar", "#denpasar"]];
 function tags(l) {

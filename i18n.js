@@ -737,9 +737,9 @@
     ["Private swimming pool di setiap unit", "Private swimming pool in every unit", "Частный бассейн в каждом юните"],
     ["Sertifikat SHM", "SHM (freehold) certificate", "Сертификат SHM (полная собственность)"],
     ["Tersedia 3 unit dengan harga sama per unit", "3 units available at the same price per unit", "Доступно 3 юнита по одинаковой цене"],
-    // ---------- Villa 3 KT view sawah, infinity pool, Sangeh dekat Ubud ----------
+    // ---------- Villa 3 KT view sawah, infinity pool, Blahkiuh (Abiansemal) dekat Ubud ----------
     ["Abiansemal", "Abiansemal", "Абиансемал"],
-    ["Sangeh · dekat Ubud", "Sangeh · near Ubud", "Сангех · рядом с Убудом"],
+    ["Blahkiuh, Abiansemal · dekat Ubud", "Blahkiuh, Abiansemal · near Ubud", "Блахкиух, Абиансемал · рядом с Убудом"],
     ["Villa 3 kamar tidur view sawah dengan infinity pool dekat Ubud", "3-bedroom rice field view villa with infinity pool near Ubud", "Вилла с 3 спальнями, видом на рисовые поля и инфинити-бассейном рядом с Убудом"],
     ["Villa baru siap huni, dikelilingi hamparan sawah, dengan infinity pool menghadap sawah. Di belakang villa ada Air Terjun Beji, tempat melukat tradisional. Tenang, privat, dan asri.", "A brand-new, move-in-ready villa surrounded by rice fields, with an infinity pool overlooking the paddies. Behind the villa is Beji Waterfall, a traditional melukat purification site. Peaceful, private and picturesque.", "Новая вилла, готовая к заселению, среди рисовых полей, с инфинити-бассейном с видом на поля. За виллой находится водопад Беджи — традиционное место очищения мелукат. Тихо, уединённо и живописно."],
     ["Siap huni", "Move-in ready", "Готова к заселению"],
