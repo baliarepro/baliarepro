@@ -723,7 +723,20 @@
     ["Nomor terpilih, tekan salin", "Number selected, press copy", "Номер выделен, нажмите «Копировать»"],
     ["Detail listing", "Listing details", "Подробнее"],
     ["Listing lainnya di area ini", "More listings in this area", "Другие объекты в этом районе"],
-    ["Land, villas and houses for sale in Bali", "Land, villas and houses for sale in Bali", "Земля, виллы и дома на Бали"]
+    ["Land, villas and houses for sale in Bali", "Land, villas and houses for sale in Bali", "Земля, виллы и дома на Бали"],
+    // ---------- Villa 2 KT private pool & rooftop, Ungasan (3 unit) ----------
+    ["Ungasan · Kuta Selatan", "Ungasan · South Kuta", "Унгасан · Южная Кута"],
+    ["Villa 2 kamar tidur dengan private pool dan rooftop di Ungasan", "2-bedroom villa with private pool and rooftop in Ungasan", "Вилла с 2 спальнями, частным бассейном и руфтопом в Унгасане"],
+    ["Villa 2 kamar tidur dengan private pool dan rooftop di Ungasan, Kuta Selatan. Tersedia 3 unit. Cocok untuk hunian pribadi maupun investasi di pasar properti wisata Bali yang terus berkembang.", "A 2-bedroom villa with a private pool and rooftop in Ungasan, South Kuta. 3 units available. Suitable as a private residence or as an investment in Bali's growing tourism property market.", "Вилла с 2 спальнями, частным бассейном и руфтопом в Унгасане, Южная Кута. Доступно 3 юнита. Подходит для собственного проживания или для инвестиций в растущий рынок туристической недвижимости Бали."],
+    ["Tersedia 3 unit", "3 units available", "Доступно 3 юнита"],
+    ["Harga per unit", "Price per unit", "Цена за юнит"],
+    ["Private", "Private", "Частный"],
+    ["Unit tersedia", "Units available", "Доступно юнитов"],
+    ["3 unit", "3 units", "3 юнита"],
+    ["Ungasan, Kuta Selatan", "Ungasan, South Kuta", "Унгасан, Южная Кута"],
+    ["Private swimming pool di setiap unit", "Private swimming pool in every unit", "Частный бассейн в каждом юните"],
+    ["Sertifikat SHM", "SHM (freehold) certificate", "Сертификат SHM (полная собственность)"],
+    ["Tersedia 3 unit dengan harga sama per unit", "3 units available at the same price per unit", "Доступно 3 юнита по одинаковой цене"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)

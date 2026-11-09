@@ -135,6 +135,10 @@ module.exports = {
     id: { t: "Dijual Villa 3 Lantai dengan Pool & Jacuzzi di Ungasan, Bali", d: "Villa 3 lantai, 2+1 kamar tidur, kolam renang & jacuzzi, tanah 238 m², bangunan 150 m², SHM & IMB di perumahan kecil Ungasan. Harga Rp3 M. Info via WhatsApp." },
     en: { t: "3-Storey Villa with Pool & Jacuzzi for Sale in Ungasan, Bali", d: "3-storey villa, 2+1 bedrooms, pool and jacuzzi, 238 m² land, 150 m² built, SHM & IMB, in a small Ungasan residential estate. IDR 3B. Ask on WhatsApp." },
     ru: { t: "Продажа 3-этажной виллы с бассейном и джакузи, Унгасан, Бали", d: "Трёхэтажная вилла: 2+1 спальни, бассейн и джакузи, участок 238 м², 150 м², SHM и IMB, небольшой посёлок в Унгасане. 3 млрд IDR. Пишите в WhatsApp." } },
+  "villa-2-kamar-tidur-dengan-private-pool-dan-rooftop-di-ungasan": {
+    id: { t: "Dijual Villa 2 Kamar Tidur, Private Pool & Rooftop di Ungasan, Bali", d: "Villa 2 kamar tidur dengan private pool & rooftop, tanah 165 m², bangunan 105 m², SHM, Ungasan Kuta Selatan. Tersedia 3 unit, Rp3,5 M/unit. Info via WhatsApp." },
+    en: { t: "2-Bedroom Villa with Private Pool & Rooftop for Sale in Ungasan, Bali", d: "2-bedroom villa with private pool and rooftop, 165 m² land, 105 m² built, SHM title, Ungasan, South Kuta. 3 units available, IDR 3.5B each. Ask on WhatsApp." },
+    ru: { t: "Продажа виллы с 2 спальнями, бассейном и руфтопом, Унгасан, Бали", d: "Вилла с 2 спальнями, частным бассейном и руфтопом, участок 165 м², 105 м², SHM, Унгасан, Южная Кута. 3 юнита, 3,5 млрд IDR за юнит. Пишите в WhatsApp." } },
   "villa-baru-3-lantai-ocean-view-nusa-penida-di-ketewel": {
     id: { t: "Dijual Villa Baru 3 Lantai View Laut Nusa Penida di Ketewel, Bali", d: "Villa baru 3 lantai, 3 kamar tidur, private pool, view laut & Nusa Penida dekat Pantai Pabean, Ketewel, Gianyar. Tanah 200 m², bangunan 250 m². Rp6,9 M (nego)." },
     en: { t: "New 3-Storey Ocean-View Villa for Sale in Ketewel, Bali", d: "New 3-storey villa, 3 bedrooms, private pool, ocean and Nusa Penida views near Pabean Beach, Ketewel, Gianyar. 200 m² land, 250 m² built. IDR 6.9B (negotiable)." },
