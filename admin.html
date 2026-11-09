@@ -70,6 +70,21 @@ ol li{margin:6px 0}
 code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14px}
 .note{background:#FBF4E4;border:1px solid #EAD9AE;color:#5B4510;border-radius:12px;padding:10px 12px;font-size:14px;margin-top:12px}
 @media (prefers-color-scheme:dark){.note{background:#2A2414;border-color:#4A3D1E;color:#E9D6A6}}
+.tabs{display:flex;gap:6px;margin:0 0 12px;border-bottom:1.5px solid var(--line)}
+.tabs button{border:0;background:transparent;color:var(--muted);padding:10px 12px;font:700 15px system-ui,sans-serif;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1.5px}
+.tabs button[aria-selected="true"]{color:var(--green);border-bottom-color:var(--gold)}
+.wa-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:8px}
+.wa-card.news{border-color:var(--gold)}
+.wa-top{display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:center}
+.wa-top .thumb{width:56px;height:56px}
+.wa-top h3{font-size:15px;margin:0;line-height:1.3}
+.wa-groups{display:flex;flex-wrap:wrap;gap:6px}
+.gbtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--wa);background:var(--wa);color:#fff;border-radius:999px;padding:7px 12px;font:700 13px system-ui,sans-serif;cursor:pointer}
+.gbtn.done{background:transparent;color:var(--wa)}
+.gbtn.other{background:transparent;color:var(--ink);border-color:var(--line)}
+.wa-card details summary{cursor:pointer;font-size:13px;color:var(--muted)}
+.wa-card pre{white-space:pre-wrap;font:13px/1.45 system-ui,sans-serif;background:var(--bg);border-radius:10px;padding:10px;margin:6px 0 0;max-height:260px;overflow:auto}
+.pill.new{background:#FBF0D6;color:var(--gold-ink)}
 @media (max-width:520px){.grid2{grid-template-columns:1fr auto}.grid2 input:first-child{grid-column:1/-1}}
 </style>
 </head>
@@ -102,6 +117,11 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
 
   <!-- Daftar iklan -->
   <section id="app" hidden>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="ads" aria-selected="true">Iklan</button>
+      <button role="tab" data-tab="wa" aria-selected="false">Bagikan ke Grup WA</button>
+    </div>
+    <div id="tab-ads">
     <div class="tools">
       <input id="q" type="search" placeholder="Cari judul atau lokasi…">
       <div class="seg" role="group" aria-label="Filter status">
@@ -113,6 +133,19 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     <p class="muted" id="summary"></p>
     <div class="list" id="list"></div>
     <div class="note">Iklan <b>baru</b> dan perubahan <b>status Terjual</b> tetap lewat chat dengan Claude, supaya 3 bahasa &amp; SEO langsung lengkap. Teks yang diedit di sini langsung tampil di versi Indonesia; versi English/Русский dan judul Google ikut dirapikan oleh Claude.</div>
+    </div>
+    <div id="tab-wa" hidden>
+      <p class="muted">Tekan tombol grup → WhatsApp terbuka dengan pesan siap kirim → pilih grup itu → Kirim. Tombol berubah jadi ✓ supaya tidak dobel. Link otomatis tampil dengan foto.</p>
+      <div class="tools">
+        <input id="wq" type="search" placeholder="Cari judul atau lokasi…">
+        <div class="seg" role="group" aria-label="Filter kiriman">
+          <button data-w="todo" aria-pressed="true">Belum dikirim</button>
+          <button data-w="all" aria-pressed="false">Semua</button>
+        </div>
+      </div>
+      <div class="list" id="walist"></div>
+      <div class="note">Grup <b>Announcements</b> menjangkau anggota semua grup komunitas. Kirim ke sana untuk berita mingguan atau listing unggulan.</div>
+    </div>
   </section>
 </div>
 
@@ -192,7 +225,10 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       return { slug: slug, title: txt($("h4", c)), eyebrow: txt($(".eyebrow", c)),
         type: sec ? txt($("h2", sec)) : "", area: area ? txt($(".area-head h3", area)) : "",
         off: c.getAttribute("data-status") === "hidden", sold: c.classList.contains("sold"),
-        price: txt($(".price .hl b", c) || $(".price b", c)) };
+        price: txt($(".price .hl b", c) || $(".price b", c)),
+        prices: $$(".price > div", c).map(function (d) { return [txt($("small", d)), txt($("b", d))]; }),
+        specs: $$("dl.specs > div", c).map(function (d) { return [txt($("dt", d)), txt($("dd", d))]; }),
+        points: $$("ul.points li", c).map(txt) };
     }).filter(Boolean);
   }
 
@@ -420,6 +456,120 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   });
   $("#q").addEventListener("input", render);
   $$(".seg button").forEach(function (b) { b.addEventListener("click", function () { filter = b.dataset.s; $$(".seg button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); render(); }); });
+
+  // ---------- Bagikan ke Grup WA ----------
+  var SHARED = "wa-shared.json", BASE = "https://baliareproperty.com/";
+  var GROUPS = [
+    ["SOUTH KUTA", /ungasan|jimbaran|pecatu|uluwatu|labuan sait|balangan|pandawa|kutuh|nusa dua|benoa|bali cliff|melasti|gwk|bingin|blimbingsari|kutaselatan/],
+    ["NORTH KUTA", /canggu|berawa|pererenan|tibubeneng|kerobokan|umalas|padonan|dalung|kutautara/],
+    ["KUTA", /\bkuta\b|legian|seminyak|dewi sri|tuban|bandara/],
+    ["GIANYAR", /ubud|gianyar|singakerta|lod tunduh|ketewel|sukawati|blahbatuh|pering|tegallalang/],
+    ["TABANAN", /tabanan|kediri|kaba-kaba|kedungu|nyanyi|pasut/],
+    ["DENPASAR", /denpasar|sanur|renon/],
+    ["BADUNG OTHER AREA", /mengwi|abiansemal|petang|badung/],
+    ["SINGARAJA", /singaraja|lovina|buleleng/],
+    ["JEMBRANA", /jembrana|negara|medewi/]
+  ];
+  var sent = {}, wfilter = "todo", news = null, saveT = null;
+  try { sent = JSON.parse(localStorage.getItem("bap-wa-sent") || "{}"); } catch (e) {}
+  function groupsFor(it) {
+    // "Kuta Selatan/Utara" dijadikan satu kata supaya tidak ikut cocok ke grup KUTA
+    var hay = (it.eyebrow + " " + it.area + " " + it.title).toLowerCase().replace(/kuta selatan/g, "kutaselatan").replace(/kuta utara/g, "kutautara");
+    var g = GROUPS.filter(function (x) { return x[1].test(hay); }).map(function (x) { return x[0]; });
+    return g.length ? g.slice(0, 2) : ["BADUNG OTHER AREA"];
+  }
+  function listingMsg(it) {
+    var L = ["🏝️ *DIJUAL – " + it.title + "*", "📍 " + it.eyebrow + ", Bali", ""];
+    it.prices.forEach(function (p) { L.push("💰 " + p[0] + ": *" + p[1] + "*"); });
+    if (it.prices.length) L.push("");
+    it.specs.slice(0, 6).forEach(function (p) { L.push("▫️ " + p[0] + ": " + p[1]); });
+    if (it.points.length) { L.push(""); it.points.slice(0, 3).forEach(function (p) { L.push("✨ " + p); }); }
+    L.push("", "🔗 Detail, foto & PDF:", BASE + "listing/" + it.slug + ".html", "", "📲 Bagoes – Bali Are Property", "WA: wa.me/62812868080");
+    return L.join("\n");
+  }
+  var BLN = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+  function newsMsg(list) {
+    var d = list[0].date.split("-");
+    var L = ["📰 *Berita Properti Bali Minggu Ini*", "_Edisi " + (+d[2]) + " " + BLN[+d[1] - 1] + " " + d[0] + "_", ""];
+    var num = ["1️⃣", "2️⃣", "3️⃣"];
+    list.forEach(function (n, i) { L.push(num[i] + " *" + n.id.title + "*", n.id.summary, BASE + "news/" + n.slug + ".html", ""); });
+    L.push("Baca semua: " + BASE + "news.html", "_Ringkasan berita, bukan nasihat investasi._", "", "📲 Bagoes – Bali Are Property", "WA: wa.me/62812868080");
+    return L.join("\n");
+  }
+  function loadNews() {
+    if (news) return Promise.resolve(news);
+    return readFile("tools/news-content.js").then(function (t) {
+      var m = { exports: {} }; new Function("module", "exports", t)(m, m.exports);
+      var all = (m.exports.NEWS || []), top = all[0] ? all[0].date : "";
+      var since = new Date(Date.parse(top) - 7 * 864e5).toISOString().slice(0, 10);
+      news = all.filter(function (n) { return n.date >= since; }).slice(0, 3);
+      return news;
+    }).catch(function () { news = []; return news; });
+  }
+  function loadShared() {
+    return readFile(SHARED).then(function (t) {
+      var r = JSON.parse(t);
+      Object.keys(r).forEach(function (k) { sent[k] = sent[k] || {}; Object.keys(r[k]).forEach(function (g) { if (!sent[k][g]) sent[k][g] = r[k][g]; }); });
+    }).catch(function () {});
+  }
+  function mark(key, g) {
+    sent[key] = sent[key] || {}; sent[key][g] = new Date().toISOString();
+    try { localStorage.setItem("bap-wa-sent", JSON.stringify(sent)); } catch (e) {}
+    clearTimeout(saveT);
+    saveT = setTimeout(function () { commit([{ path: SHARED, content: JSON.stringify(sent, null, 1) + "\n" }], "Admin: catat kiriman grup WA").catch(function (e) { console.warn(e); }); }, 5000);
+  }
+  function card(key, title, sub, img, groups, msg, isNews) {
+    var s = sent[key] || {}, any = Object.keys(s).length;
+    var btn = function (g) { return '<button class="gbtn' + (s[g] ? " done" : "") + '" data-g="' + esc(g) + '">' + (s[g] ? "✓ " : "") + esc(g) + '</button>'; };
+    return '<div class="wa-card' + (isNews ? " news" : "") + '" data-key="' + esc(key) + '">' +
+      '<div class="wa-top">' + (img ? '<img class="thumb" loading="lazy" alt="" src="' + img + '" onerror="this.style.visibility=\'hidden\'">' : '<div class="thumb" style="display:grid;place-items:center;font-size:26px">📰</div>') +
+      '<div><h3>' + esc(title) + '</h3><div class="meta"><span>' + esc(sub) + '</span>' + (any ? "" : '<span class="pill new">Belum dikirim</span>') + '</div></div></div>' +
+      '<div class="wa-groups">' + groups.map(btn).join("") + btn("Announcements") + '<button class="gbtn other" data-g="">Grup lain…</button><button class="gbtn other" data-copy="1">Salin pesan</button></div>' +
+      '<details><summary>Lihat pesan</summary><pre>' + esc(msg) + '</pre></details></div>';
+  }
+  var msgs = {};
+  function renderWa() {
+    var q = $("#wq").value.toLowerCase().trim(), out = [];
+    msgs = {};
+    if (news && news.length) {
+      var nk = "news:" + news[0].date, nm = newsMsg(news);
+      msgs[nk] = nm;
+      if (!(wfilter === "todo" && sent[nk] && Object.keys(sent[nk]).length) && (!q || "berita news".indexOf(q) >= 0 || news.some(function (n) { return n.id.title.toLowerCase().indexOf(q) >= 0; })))
+        out.push(card(nk, "Berita Properti Bali Minggu Ini", news.length + " berita · Edisi " + (function (d) { return (+d[2]) + " " + BLN[+d[1] - 1] + " " + d[0]; })(news[0].date.split("-")), "", ["SOUTH KUTA", "NORTH KUTA"], nm, true));
+    }
+    items.filter(function (it) { return !it.off && !it.sold; }).forEach(function (it) {
+      if (wfilter === "todo" && sent[it.slug] && Object.keys(sent[it.slug]).length) return;
+      if (q && (it.title + " " + it.eyebrow + " " + it.area).toLowerCase().indexOf(q) < 0) return;
+      var m = listingMsg(it); msgs[it.slug] = m;
+      out.push(card(it.slug, it.title, it.eyebrow + " · " + it.price, "/img/listing/" + it.slug + "/1.jpg", groupsFor(it), m));
+    });
+    $("#walist").innerHTML = out.join("") || '<p class="muted">Semua sudah dikirim. 👍 Pilih "Semua" untuk mengirim ulang.</p>';
+  }
+  $("#walist").addEventListener("click", function (e) {
+    var b = e.target.closest(".gbtn"); if (!b) return;
+    var key = b.closest(".wa-card").dataset.key, m = msgs[key];
+    if (b.dataset.copy) {
+      (navigator.clipboard ? navigator.clipboard.writeText(m) : Promise.reject()).then(function () { toast("Pesan disalin. Tempel di grup WhatsApp."); }, function () { toast("Gagal menyalin. Buka 'Lihat pesan' lalu salin manual.", true); });
+      return;
+    }
+    var g = b.dataset.g;
+    window.open("https://wa.me/?text=" + encodeURIComponent(m), "_blank");
+    if (g) {
+      mark(key, g); b.classList.add("done"); b.textContent = "✓ " + g;
+      toast("Pilih grup " + g + " di WhatsApp lalu tekan Kirim.");
+      var pill = b.closest(".wa-card").querySelector(".pill.new"); if (pill) pill.remove();
+    }
+  });
+  $("#wq").addEventListener("input", renderWa);
+  $$("[data-w]").forEach(function (b) { b.addEventListener("click", function () { wfilter = b.dataset.w; $$("[data-w]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); renderWa(); }); });
+  $$(".tabs button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var wa = b.dataset.tab === "wa";
+      $$(".tabs button").forEach(function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
+      $("#tab-ads").hidden = wa; $("#tab-wa").hidden = !wa;
+      if (wa) { $("#walist").innerHTML = '<p class="muted">Memuat…</p>'; Promise.all([loadNews(), loadShared()]).then(renderWa); }
+    });
+  });
 
   function logout() { token = ""; try { localStorage.removeItem("bap-admin-token"); } catch (e) {} $("#app").hidden = true; $("#login").hidden = false; $("#logout").hidden = true; }
   $("#logout").addEventListener("click", logout);
