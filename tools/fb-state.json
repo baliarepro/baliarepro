@@ -3,7 +3,7 @@
   "errors": {
     "setup": {
       "msg": "Token tidak punya akses ke Facebook Page mana pun (izin pages_show_list/pages_manage_posts belum diberikan).",
-      "at": "2026-11-09T14:47:59.709Z"
+      "at": "2026-11-09T14:49:07.336Z"
     }
   }
 }
