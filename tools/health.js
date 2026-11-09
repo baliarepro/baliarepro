@@ -21,7 +21,7 @@ function check(now = Date.now()) {
     const last = lastOf(posted), errs = Object.entries(errors || {}).map(([k, e]) => ({ key: k, ...e }));
     const age = last ? (now - Date.parse(last.at)) / H : Infinity;
     let ok = errs.length === 0;
-    if (opts.maxAgeH && age > opts.maxAgeH) ok = false;
+    if (opts.maxAgeH && last && age > opts.maxAgeH) ok = false; // belum pernah posting = menunggu jadwal pertama
     if (opts.off) ok = null; // belum diaktifkan
     ch.push({ name, count: Object.keys(posted || {}).length, last, ageH: age, errors: errs, ok, note: opts.note || "" });
   };

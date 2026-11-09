@@ -597,7 +597,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       $("#stlist").innerHTML = ch.map(function (c, i) {
         var last = lastOf(c[1]), errs = Object.keys(c[2] || {}).map(function (k) { return k + ": " + (c[2][k].msg || ""); });
         var age = last ? (now - Date.parse(last.at)) / H : Infinity;
-        var cls = (i >= 4 && fbOff) ? "off" : (errs.length || (c[3] && age > c[3])) ? "bad" : "ok";
+        var cls = (i >= 4 && fbOff) ? "off" : (errs.length || (c[3] && last && age > c[3])) ? "bad" : "ok";
         if (cls === "bad") bad++;
         return '<div class="st ' + cls + '"><h3>' + (cls === "ok" ? "✅ " : cls === "off" ? "⏸️ " : "⚠️ ") + esc(c[0]) + '</h3>' +
           '<div class="muted">' + Object.keys(c[1] || {}).length + ' posting · terakhir: ' + (last ? (last.permalink ? '<a target="_blank" rel="noopener" href="' + esc(last.permalink) + '">' + fmt(last.at) + '</a>' : fmt(last.at)) : "belum ada") + (c[4] ? " · " + esc(c[4]) : "") + '</div>' +
