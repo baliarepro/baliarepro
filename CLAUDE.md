@@ -66,7 +66,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 
 ## Facebook Page otomatis (salinan dari Instagram)
 - `tools/fb-post.js` dijalankan setelah Threads di `instagram.yml` (listing, status `tools/fb-state.json`) dan `instagram-weekly.yml` (`--only=weekly`, status `tools/fb-weekly-state.json`). Posting multi-foto (gambar IG yang sama), caption = caption IG dengan link langsung (link di Facebook bisa diklik). Maks. 2 per jalan, urut waktu tayang IG.
-- Token: secret `FB_PAGE_TOKEN` (token Page, atau token pengguna sistem yang punya akses Page; opsional `FB_PAGE_ID`), atau turunan `IG_TOKEN` lewat `me/accounts`. Butuh izin `pages_show_list`, `pages_read_engagement`, `pages_manage_posts`. Per 9 Nov 2026 belum aktif: token IG belum punya akses Page (`errors.setup`).
+- Token: secret `FB_PAGE_TOKEN` (token Page, atau token pengguna sistem yang punya akses Page; opsional `FB_PAGE_ID`), atau turunan `IG_TOKEN` lewat `me/accounts`. Butuh izin `pages_show_list`, `pages_read_engagement`, `pages_manage_posts`. Aktif sejak 10 Nov 2026 dengan `FB_PAGE_TOKEN` = token pengguna sistem **Bali Are Poster** (portofolio Bali Are Pro; akses penuh ke Halaman "Bali Are" ID 682981281566061 dan aplikasi "Bali Are Property Poster"; tidak kedaluwarsa).
 
 ## Status otomasi & pengingat pemilik
 - Tab **Status** di `admin.html`: kondisi IG/Threads/Facebook (listing & mingguan), posting terakhir, error, antrean; plus daftar **pengingat** dari `pengingat.json` (root, di luar `tools/` agar tidak memicu build) dengan tombol "Selesai" (commit `done`).
