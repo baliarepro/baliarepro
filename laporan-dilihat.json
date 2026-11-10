@@ -1,0 +1,440 @@
+{
+  "updated": "2026-11-10T12:24:16.690Z",
+  "report": {
+    "date": "2026-11-10",
+    "since": null,
+    "totalViews": 181,
+    "weekViews": null,
+    "top": [
+      {
+        "slug": "tanah-6000-m2-dekat-pantai-balangan",
+        "title": "Tanah 6.000 m² dekat Pantai Balangan",
+        "total": 17,
+        "week": null
+      },
+      {
+        "slug": "tanah-ocean-view-2-x-650-m2-di-balangan",
+        "title": "Tanah ocean view 2 × 650 m² di Balangan",
+        "total": 17,
+        "week": null
+      },
+      {
+        "slug": "tanah-hook-430-m2-di-poros-jalan-pantai-melasti",
+        "title": "Tanah hook 430 m² di poros jalan menuju Pantai Melasti",
+        "total": 17,
+        "week": null
+      },
+      {
+        "slug": "tanah-hook-2450-m2-dekat-hillstone-ungasan",
+        "title": "Tanah hook 2.450 m² dekat Hillstone, Ungasan",
+        "total": 17,
+        "week": null
+      },
+      {
+        "slug": "tanah-15-ha-di-jalan-pura-mesuka",
+        "title": "Tanah 1,5 ha di Jalan Pura Mesuka",
+        "total": 15,
+        "week": null
+      }
+    ],
+    "quiet": [
+      {
+        "slug": "tanah-2802-m2-view-sawah-di-singakerta",
+        "title": "Tanah 2.802 m² view sawah di Singakerta",
+        "total": 0
+      },
+      {
+        "slug": "tanah-tebing-1236-m2-view-sungai-dan-hutan-di-lod-tunduh",
+        "title": "Tanah tebing 1.236 m² view sungai dan hutan di Lod Tunduh",
+        "total": 0
+      },
+      {
+        "slug": "estate-3-villa-ocean-view-di-bukit-labuan-sait",
+        "title": "Estate 3 villa ocean view di bukit Labuan Sait",
+        "total": 0
+      },
+      {
+        "slug": "villa-modern-3-kamar-tidur-dekat-gwk-type-1",
+        "title": "Villa modern 3 kamar tidur dekat GWK (Type 1)",
+        "total": 0
+      },
+      {
+        "slug": "villa-modern-3-kamar-tidur-dekat-gwk-type-2",
+        "title": "Villa modern 3 kamar tidur dekat GWK (Type 2)",
+        "total": 0
+      },
+      {
+        "slug": "villa-3-kamar-tidur-dengan-rooftop-view-laut-di-ungasan",
+        "title": "Villa 3 kamar tidur dengan rooftop view laut di Ungasan",
+        "total": 0
+      },
+      {
+        "slug": "villa-3-lantai-dengan-pool-dan-jacuzzi-di-ungasan",
+        "title": "Villa 3 lantai dengan pool dan jacuzzi di Ungasan",
+        "total": 0
+      },
+      {
+        "slug": "villa-baru-3-lantai-ocean-view-nusa-penida-di-ketewel",
+        "title": "Villa baru 3 lantai ocean view Nusa Penida di Ketewel",
+        "total": 0
+      },
+      {
+        "slug": "properti-hospitality-20-are-dengan-18-kamar-di-tibubeneng",
+        "title": "Properti hospitality 20 are dengan 18 kamar di Tibubeneng",
+        "total": 0
+      },
+      {
+        "slug": "rumah-5-kamar-tidur-dekat-bandara-ngurah-rai",
+        "title": "Rumah 5 kamar tidur dekat Bandara Ngurah Rai",
+        "total": 0
+      },
+      {
+        "slug": "rumah-modern-victorian-2-lantai-di-dalung-tegal-jaya",
+        "title": "Rumah modern Victorian 2 lantai di Dalung Tegal Jaya",
+        "total": 0
+      }
+    ],
+    "rows": [
+      {
+        "slug": "tanah-6000-m2-dekat-pantai-balangan",
+        "title": "Tanah 6.000 m² dekat Pantai Balangan",
+        "eyebrow": "Balangan · Jimbaran",
+        "total": 17,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-ocean-view-2-x-650-m2-di-balangan",
+        "title": "Tanah ocean view 2 × 650 m² di Balangan",
+        "eyebrow": "Balangan · Jimbaran",
+        "total": 17,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-hook-300-m2-di-jalan-tulip",
+        "title": "Tanah hook 300 m² di Jalan Tulip",
+        "eyebrow": "Jl. Tulip · Ungasan",
+        "total": 13,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-hook-430-m2-di-poros-jalan-pantai-melasti",
+        "title": "Tanah hook 430 m² di poros jalan menuju Pantai Melasti",
+        "eyebrow": "Jl. Pura Masuka · Ungasan",
+        "total": 17,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-hook-2450-m2-dekat-hillstone-ungasan",
+        "title": "Tanah hook 2.450 m² dekat Hillstone, Ungasan",
+        "eyebrow": "Dekat Hillstone · Ungasan",
+        "total": 17,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-15-ha-di-jalan-pura-mesuka",
+        "title": "Tanah 1,5 ha di Jalan Pura Mesuka",
+        "eyebrow": "Jl. Pura Mesuka · Ungasan",
+        "total": 15,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-7000-m2-di-kawasan-villa-toyaning-ungasan",
+        "title": "Tanah 7.000 m² di kawasan villa Toyaning, Ungasan",
+        "eyebrow": "Toyaning · Ungasan",
+        "total": 3,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-400-m2-di-kawasan-bali-cliff",
+        "title": "Tanah 400 m² di kawasan Bali Cliff",
+        "eyebrow": "Bali Cliff · Ungasan",
+        "total": 11,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-830-m2-siap-bangun-di-central-ungasan",
+        "title": "Tanah 830 m² siap bangun di Central Ungasan",
+        "eyebrow": "Central Ungasan · Ungasan",
+        "total": 11,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-1000-m2-di-kawasan-pantai-melasti",
+        "title": "Tanah 1.000 m² di kawasan Pantai Melasti",
+        "eyebrow": "Pantai Melasti · Ungasan",
+        "total": 6,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-1990-m2-dekat-pantai-melasti-di-jalan-karma-kandara",
+        "title": "Tanah 1.990 m² dekat Pantai Melasti di Jalan Karma Kandara",
+        "eyebrow": "Jl. Karma Kandara · Ungasan",
+        "total": 11,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-5300-m2-zona-pariwisata-dekat-pantai-pandawa",
+        "title": "Tanah 5.300 m² zona pariwisata dekat Pantai Pandawa",
+        "eyebrow": "Pandawa · Kutuh",
+        "total": 5,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-550-m2-dekat-pantai-tanah-barak-pandawa",
+        "title": "Tanah 550 m² dekat Pantai Tanah Barak, Pandawa",
+        "eyebrow": "Pantai Tanah Barak · Kutuh",
+        "total": 6,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-ocean-view-3000-m2-posisi-hook-di-pandawa",
+        "title": "Tanah ocean view 3.000 m² posisi hook di Pandawa",
+        "eyebrow": "Cangkringan · Pandawa",
+        "total": 3,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-395-m2-gandeng-di-labuan-sait",
+        "title": "Tanah 395 m² gandeng di Labuan Sait",
+        "eyebrow": "Labuan Sait · Pecatu",
+        "total": 3,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-9025-m2-di-kawasan-villa-mewah-labuan-sait",
+        "title": "Tanah 9.025 m² di kawasan villa mewah Labuan Sait",
+        "eyebrow": "Labuan Sait · Pecatu",
+        "total": 3,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-215-m2-di-kompleks-villa-labuan-sait",
+        "title": "Tanah 215 m² di kompleks villa Labuan Sait",
+        "eyebrow": "Labuan Sait · Pecatu",
+        "total": 3,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-1620-m2-di-jalan-dewi-sri-area-nakula",
+        "title": "Tanah 1.620 m² di Jalan Dewi Sri, area Nakula",
+        "eyebrow": "Jl. Dewi Sri · Kuta",
+        "total": 7,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-350-m2-di-jalan-utama-canggu",
+        "title": "Tanah 350 m² di jalan utama Canggu",
+        "eyebrow": "Jl. Umah Buluh · Canggu",
+        "total": 1,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-2802-m2-view-sawah-di-singakerta",
+        "title": "Tanah 2.802 m² view sawah di Singakerta",
+        "eyebrow": "Singakerta · Ubud",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-tebing-1236-m2-view-sungai-dan-hutan-di-lod-tunduh",
+        "title": "Tanah tebing 1.236 m² view sungai dan hutan di Lod Tunduh",
+        "eyebrow": "Lod Tunduh · Ubud",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "tanah-450-m2-di-lingkungan-villa-kaba-kaba",
+        "title": "Tanah 450 m² di lingkungan villa Kaba-Kaba",
+        "eyebrow": "Kaba-Kaba · Kediri",
+        "total": 3,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-mewah-4-kamar-tidur-di-jalan-goa-gong",
+        "title": "Villa mewah 4 kamar tidur di Jalan Goa Gong",
+        "eyebrow": "Jl. Goa Gong · Jimbaran",
+        "total": 1,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "estate-3-villa-ocean-view-di-bukit-labuan-sait",
+        "title": "Estate 3 villa ocean view di bukit Labuan Sait",
+        "eyebrow": "Labuan Sait · Pecatu",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-modern-3-kamar-tidur-dekat-gwk-type-1",
+        "title": "Villa modern 3 kamar tidur dekat GWK (Type 1)",
+        "eyebrow": "GWK · Ungasan",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-modern-3-kamar-tidur-dekat-gwk-type-2",
+        "title": "Villa modern 3 kamar tidur dekat GWK (Type 2)",
+        "eyebrow": "GWK · Ungasan",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-3-kamar-tidur-dengan-rooftop-view-laut-di-ungasan",
+        "title": "Villa 3 kamar tidur dengan rooftop view laut di Ungasan",
+        "eyebrow": "Dekat Pantai Melasti · Ungasan",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-3-lantai-dengan-pool-dan-jacuzzi-di-ungasan",
+        "title": "Villa 3 lantai dengan pool dan jacuzzi di Ungasan",
+        "eyebrow": "Perumahan kecil · Ungasan",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-2-kamar-tidur-dengan-private-pool-dan-rooftop-di-ungasan",
+        "title": "Villa 2 kamar tidur dengan private pool dan rooftop di Ungasan",
+        "eyebrow": "Ungasan · Kuta Selatan",
+        "total": 6,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-2-kamar-tidur-dengan-indoor-heated-pool-di-dewi-sri",
+        "title": "Villa 2 kamar tidur dengan indoor heated pool di Dewi Sri",
+        "eyebrow": "Dewi Sri · Kuta",
+        "total": 1,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-modern-3-kamar-tidur-di-berawa",
+        "title": "Villa modern 3 kamar tidur di Berawa",
+        "eyebrow": "Berawa · Tibubeneng",
+        "total": null,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud",
+        "title": "Villa 3 kamar tidur view sawah dengan infinity pool dekat Ubud",
+        "eyebrow": "Blahkiuh, Abiansemal · dekat Ubud",
+        "total": null,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "villa-baru-3-lantai-ocean-view-nusa-penida-di-ketewel",
+        "title": "Villa baru 3 lantai ocean view Nusa Penida di Ketewel",
+        "eyebrow": "Pantai Pabean · Ketewel",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "properti-hospitality-20-are-dengan-18-kamar-di-tibubeneng",
+        "title": "Properti hospitality 20 are dengan 18 kamar di Tibubeneng",
+        "eyebrow": "Tibubeneng · Canggu",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "rumah-5-kamar-tidur-dekat-bandara-ngurah-rai",
+        "title": "Rumah 5 kamar tidur dekat Bandara Ngurah Rai",
+        "eyebrow": "Dekat Bandara Ngurah Rai · Kuta",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "rumah-modern-victorian-2-lantai-di-dalung-tegal-jaya",
+        "title": "Rumah modern Victorian 2 lantai di Dalung Tegal Jaya",
+        "eyebrow": "Dalung Tegal Jaya · Kuta Utara",
+        "total": 0,
+        "week": null,
+        "isNew": false
+      },
+      {
+        "slug": "rumah-2-kamar-tidur-di-perumahan-one-gate-pering",
+        "title": "Rumah 2 kamar tidur di perumahan one gate Pering",
+        "eyebrow": "Pering · Blahbatuh",
+        "total": 1,
+        "week": null,
+        "isNew": false
+      }
+    ]
+  },
+  "snapshots": [
+    {
+      "date": "2026-11-10",
+      "counts": {
+        "tanah-6000-m2-dekat-pantai-balangan": 17,
+        "tanah-ocean-view-2-x-650-m2-di-balangan": 17,
+        "tanah-hook-300-m2-di-jalan-tulip": 13,
+        "tanah-hook-430-m2-di-poros-jalan-pantai-melasti": 17,
+        "tanah-hook-2450-m2-dekat-hillstone-ungasan": 17,
+        "tanah-15-ha-di-jalan-pura-mesuka": 15,
+        "tanah-7000-m2-di-kawasan-villa-toyaning-ungasan": 3,
+        "tanah-400-m2-di-kawasan-bali-cliff": 11,
+        "tanah-830-m2-siap-bangun-di-central-ungasan": 11,
+        "tanah-1000-m2-di-kawasan-pantai-melasti": 6,
+        "tanah-1990-m2-dekat-pantai-melasti-di-jalan-karma-kandara": 11,
+        "tanah-5300-m2-zona-pariwisata-dekat-pantai-pandawa": 5,
+        "tanah-550-m2-dekat-pantai-tanah-barak-pandawa": 6,
+        "tanah-ocean-view-3000-m2-posisi-hook-di-pandawa": 3,
+        "tanah-395-m2-gandeng-di-labuan-sait": 3,
+        "tanah-9025-m2-di-kawasan-villa-mewah-labuan-sait": 3,
+        "tanah-215-m2-di-kompleks-villa-labuan-sait": 3,
+        "tanah-1620-m2-di-jalan-dewi-sri-area-nakula": 7,
+        "tanah-350-m2-di-jalan-utama-canggu": 1,
+        "tanah-2802-m2-view-sawah-di-singakerta": 0,
+        "tanah-tebing-1236-m2-view-sungai-dan-hutan-di-lod-tunduh": 0,
+        "tanah-450-m2-di-lingkungan-villa-kaba-kaba": 3,
+        "villa-mewah-4-kamar-tidur-di-jalan-goa-gong": 1,
+        "estate-3-villa-ocean-view-di-bukit-labuan-sait": 0,
+        "villa-modern-3-kamar-tidur-dekat-gwk-type-1": 0,
+        "villa-modern-3-kamar-tidur-dekat-gwk-type-2": 0,
+        "villa-3-kamar-tidur-dengan-rooftop-view-laut-di-ungasan": 0,
+        "villa-3-lantai-dengan-pool-dan-jacuzzi-di-ungasan": 0,
+        "villa-2-kamar-tidur-dengan-private-pool-dan-rooftop-di-ungasan": 6,
+        "villa-2-kamar-tidur-dengan-indoor-heated-pool-di-dewi-sri": 1,
+        "villa-modern-3-kamar-tidur-di-berawa": null,
+        "villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud": null,
+        "villa-baru-3-lantai-ocean-view-nusa-penida-di-ketewel": 0,
+        "properti-hospitality-20-are-dengan-18-kamar-di-tibubeneng": 0,
+        "rumah-5-kamar-tidur-dekat-bandara-ngurah-rai": 0,
+        "rumah-modern-victorian-2-lantai-di-dalung-tegal-jaya": 0,
+        "rumah-2-kamar-tidur-di-perumahan-one-gate-pering": 1
+      }
+    }
+  ]
+}
