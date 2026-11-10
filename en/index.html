@@ -64,6 +64,8 @@ article.card[data-status="hidden"]{display:none!important}
 .price small{display:block;font-size:12px;color:var(--muted)}
 .price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
 .price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 12px;margin:2px 0 0;font-weight:600}.quick a{color:var(--sea)}.quick span{color:var(--muted)}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
 
 dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
 dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
@@ -287,16 +289,24 @@ footer>span{min-width:0}
         <h3>South Kuta</h3>
         <ul><li>Ungasan</li><li>Jimbaran</li><li>Pecatu</li><li>Uluwatu</li><li>Kutuh</li><li>Pandawa</li><li>Balangan</li></ul>
         <p class="more">and surrounding areas</p>
-        <a href="listings.html#kuta-selatan">See South Kuta listings →</a>
+        <a href="area/kuta-selatan.html">See South Kuta listings →</a>
       </article>
       <article>
         <h3>North Kuta</h3>
         <ul><li>Canggu</li><li>Berawa</li><li>Pererenan</li><li>Tibubeneng</li><li>Kerobokan</li></ul>
         <p class="more">and surrounding areas</p>
-        <a href="listings.html#kuta-utara">See North Kuta listings →</a>
+        <a href="area/kuta-utara.html">See North Kuta listings →</a>
       </article>
     </div>
     <p class="note">We also assist with property opportunities in other areas of Bali, depending on availability and client requirements.</p>
+  </section>
+
+  <section class="hsec" aria-labelledby="h-tools">
+    <div class="feat-head"><h2 id="h-tools">Search &amp; calculate</h2></div>
+    <div class="feat">
+      <a class="fc" href="area/"><span class="eyebrow">By area</span><h3>Find property by area</h3><span style="color:var(--muted);font-size:14px">Ungasan, Jimbaran, Pecatu–Uluwatu, Pandawa, Canggu, Kuta, Ubud, Gianyar.</span></a>
+      <a class="fc" href="kalkulator.html"><span class="eyebrow">Calculator</span><h3>Estimate buying costs</h3><span style="color:var(--muted);font-size:14px">BPHTB transfer tax, PPAT/notary fee, developer VAT and long-term lease costs.</span></a>
+    </div>
   </section>
 
   <section class="hsec" aria-labelledby="h-feat">

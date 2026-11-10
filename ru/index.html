@@ -64,6 +64,8 @@ article.card[data-status="hidden"]{display:none!important}
 .price small{display:block;font-size:12px;color:var(--muted)}
 .price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
 .price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 12px;margin:2px 0 0;font-weight:600}.quick a{color:var(--sea)}.quick span{color:var(--muted)}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
 
 dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
 dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
@@ -287,16 +289,24 @@ footer>span{min-width:0}
         <h3>Южная Кута</h3>
         <ul><li>Унгасан</li><li>Джимбаран</li><li>Пекату</li><li>Улувату</li><li>Кутух</li><li>Пандава</li><li>Баланган</li></ul>
         <p class="more">и окрестности</p>
-        <a href="listings.html#kuta-selatan">Объекты в Южной Куте →</a>
+        <a href="area/kuta-selatan.html">Объекты в Южной Куте →</a>
       </article>
       <article>
         <h3>Северная Кута</h3>
         <ul><li>Чангу</li><li>Берава</li><li>Перененан</li><li>Тибубененг</li><li>Керобокан</li></ul>
         <p class="more">и окрестности</p>
-        <a href="listings.html#kuta-utara">Объекты в Северной Куте →</a>
+        <a href="area/kuta-utara.html">Объекты в Северной Куте →</a>
       </article>
     </div>
     <p class="note">Мы также помогаем с объектами в других районах Бали — в зависимости от наличия и запросов клиента.</p>
+  </section>
+
+  <section class="hsec" aria-labelledby="h-tools">
+    <div class="feat-head"><h2 id="h-tools">Поиск и расчёт</h2></div>
+    <div class="feat">
+      <a class="fc" href="area/"><span class="eyebrow">По районам</span><h3>Недвижимость по районам</h3><span style="color:var(--muted);font-size:14px">Унгасан, Джимбаран, Пекату–Улувату, Пандава, Чангу, Кута, Убуд, Гианьяр.</span></a>
+      <a class="fc" href="kalkulator.html"><span class="eyebrow">Калькулятор</span><h3>Рассчитать расходы на покупку</h3><span style="color:var(--muted);font-size:14px">Налог BPHTB, услуги PPAT/нотариуса, НДС застройщика и расходы на лизхолд.</span></a>
+    </div>
   </section>
 
   <section class="hsec" aria-labelledby="h-feat">

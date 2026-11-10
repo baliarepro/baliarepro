@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="id" data-static-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: catalog — header + kawasan filter chips, grouped by jenis properti then kawasan, each listing a brochure card; shared contact block at end */
+:root{
+  --bg:#F6F2EA; --surface:#FFFFFF; --ink:#1C2421; --muted:#59625D; --line:#E2DACB;
+  --sea:#123F36; --sea-soft:#E2EBE5; --sand:#946410; --sand-soft:#F6EAD0; --wa:#1A8D4A; --sold:#B3261E;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+
+header{padding-block:44px 20px}
+h1{font-size:clamp(34px,7vw,56px);font-weight:800;letter-spacing:-.02em;margin-top:12px}
+.lead{color:var(--muted);font-size:17px;max-width:58ch;margin:12px 0 0}
+
+.filters{display:grid;gap:14px;margin-top:22px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flabel{flex-basis:100%;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.chip.empty{opacity:.4}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:600 14px var(--body);cursor:pointer}
+.chip small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.chip:focus-visible,.btn:focus-visible{outline:3px solid var(--sand);outline-offset:3px}
+
+.type{padding-block:28px 8px;border-top:2px solid var(--ink);margin-top:20px}
+.type-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.type-head h2{font-size:30px;font-weight:800}
+.type-head span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+.area{padding-block:24px 8px}
+.area-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.area-head h3{font-size:22px;font-weight:700}
+.area-head p{margin:0;color:var(--muted);font-size:14px}
+article.card[data-status="hidden"]{display:none!important}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px;display:grid;gap:18px}
+.card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.card h4{font-family:var(--display);font-size:clamp(22px,4.5vw,28px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
+.card .desc{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--sea-soft);color:var(--sea);white-space:nowrap}
+.badge.sand{background:var(--sand-soft);color:var(--ink)}
+
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.price div{background:var(--surface);padding:14px 16px;min-width:0}
+.price small{display:block;font-size:12px;color:var(--muted)}
+.price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
+.price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 12px;margin:2px 0 0;font-weight:600}.quick a{color:var(--sea)}.quick span{color:var(--muted)}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
+
+dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
+dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+dt{color:var(--muted);font-size:14px}
+dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;min-width:0}
+
+.plot{background:var(--bg);border-radius:12px;padding:12px;overflow-x:auto}
+.plot svg{display:block;width:100%;min-width:300px;height:auto}
+.plot p{font-size:12px;color:var(--muted);margin:6px 0 0}
+
+.card.sold{position:relative;overflow:hidden}
+.sold-stamp{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 16px;border:3px solid var(--sold);border-radius:10px;color:var(--sold);transform:rotate(-6deg);font-family:var(--display);line-height:1;text-align:center;white-space:nowrap}
+.sold-stamp b{font-size:26px;font-weight:800;letter-spacing:.08em}
+.sold-stamp small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.card.sold .price b{text-decoration:line-through;text-decoration-thickness:2px;opacity:.6}
+.card.sold .price .sold-note b{text-decoration:none;opacity:1;color:var(--sold)}
+.sold-stamp.plain{border-color:var(--muted);color:var(--muted);padding:10px 20px}
+.card.sold-plain .price .sold-note b{color:var(--muted)}
+.card.recommended{border:2px solid var(--sea)}
+.rec-tag{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;justify-self:start;background:var(--sea);color:var(--bg);border-radius:8px;padding:8px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.rec-tag svg{width:20px;height:20px;flex:none}
+.rec-tag .rt{display:flex;flex-direction:column;gap:2px}
+.rec-tag b{font-size:13px;white-space:nowrap}
+.rec-tag small{font-size:10px;opacity:.85;white-space:nowrap}
+ul.points{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;font-size:15px}
+ul.points li{position:relative;padding-left:20px;min-width:0}
+ul.points li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:2px;background:var(--sea)}
+@media (max-width:560px){ul.points{grid-template-columns:1fr}}
+ul.uses{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:500}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;border:0;cursor:pointer;font-family:var(--body)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn.primary{background:var(--sea);color:var(--bg)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+.btn:hover{filter:brightness(1.08)}
+
+.cta-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:22px}
+.cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 14px;padding:16px 18px;border-radius:16px;text-decoration:none;background:var(--sea);color:var(--bg)}
+.cta.owner{background:var(--sand-soft);color:var(--ink);border:1.5px solid var(--sand)}
+.cta small{grid-column:1;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.cta b{grid-column:1;font-family:var(--display);font-size:21px;line-height:1.15}
+.cta span{grid-column:1;font-size:14px;opacity:.85;line-height:1.4}
+.cta svg{grid-column:2;grid-row:1/3;width:22px;height:22px}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.cta{transition:filter .15s,transform .15s}.cta:hover{transform:translateY(-1px)}}
+
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.langs{display:flex;gap:10px;margin-left:auto}
+.lang-btn{display:block;width:42px;height:42px;padding:0;border:0;border-radius:50%;overflow:hidden;cursor:pointer;background:transparent;box-shadow:0 0 0 1px var(--line);opacity:.82}
+.lang-btn svg{display:block;width:100%;height:100%}
+.lang-btn:hover{opacity:1}
+.lang-btn[aria-pressed="true"],.lang-btn[aria-current="true"]{opacity:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--sea)}
+.lang-btn:focus-visible{outline:2px solid var(--sea);outline-offset:7px}
+@media (prefers-reduced-motion:no-preference){.lang-btn{transition:box-shadow .15s,opacity .15s}}
+
+.card h4 a{color:inherit;text-decoration:none}
+.card h4 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+a.home-link{text-decoration:none}
+a.home-link:hover{text-decoration:underline}
+.contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 22px;margin-block:36px 24px;display:grid;gap:14px}
+.contact h2{color:var(--bg);font-size:26px}
+.contact p{margin:0;opacity:.8}
+.phone{font-family:var(--mono);font-size:clamp(22px,5vw,28px);user-select:all;letter-spacing:.04em}
+.contact .btn.primary{background:var(--sand);color:#1C2421}
+.contact .btn.ghost{border-color:var(--bg);color:var(--bg)}
+footer{font-size:13px;color:var(--muted);padding-block:0 40px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+footer>span{min-width:0}
+.visits{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px}
+.visits svg{width:16px;height:16px;flex:none;color:var(--sea)}
+.visits b{font-variant-numeric:tabular-nums}
+
+@media (max-width:560px){
+  dl.specs{grid-template-columns:1fr}
+  .card{padding:18px}
+}
+@media (prefers-reduced-motion:no-preference){.btn,.chip{transition:filter .15s,background .15s}}
+</style>
+
+<title>Tanah &amp; Villa Dijual di Ungasan, Bali | Bali Are Property</title>
+<!--seo-->
+<meta name="description" content="Ungasan berada di tengah Bukit, Kuta Selatan: dekat Pantai Melasti, Karma Kandara, GWK, dan deretan beach club di tebing selatan. 14 listing tersedia, tanya via WhatsApp.">
+<link rel="canonical" href="https://baliareproperty.com/area/ungasan.html">
+<link rel="alternate" hreflang="id" href="https://baliareproperty.com/area/ungasan.html">
+<link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/area/ungasan.html">
+<link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/area/ungasan.html">
+<link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/area/ungasan.html">
+<link rel="icon" href="https://baliareproperty.com/favicon.ico" sizes="48x48">
+<link rel="icon" href="https://baliareproperty.com/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="https://baliareproperty.com/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="https://baliareproperty.com/apple-touch-icon.png">
+<link rel="manifest" href="https://baliareproperty.com/site.webmanifest">
+<meta name="theme-color" content="#123F36">
+<script src="/app.js" defer></script>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bali Are Property">
+<meta property="og:title" content="Tanah &amp; Villa Dijual di Ungasan, Bali">
+<meta property="og:description" content="Ungasan berada di tengah Bukit, Kuta Selatan: dekat Pantai Melasti, Karma Kandara, GWK, dan deretan beach club di tebing selatan. 14 listing tersedia, tanya via WhatsApp.">
+<meta property="og:url" content="https://baliareproperty.com/area/ungasan.html">
+<meta property="og:image" content="https://baliareproperty.com/img/wm/tanah-hook-300-m2-di-jalan-tulip/1.jpg">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"RealEstateAgent","@id":"https://baliareproperty.com/#agent","name":"Bali Are Property","url":"https://baliareproperty.com/","telephone":"+62812868080","image":"https://baliareproperty.com/og.png","logo":"https://baliareproperty.com/logo.png","areaServed":{"@type":"Place","name":"Bali, Indonesia"},"address":{"@type":"PostalAddress","addressRegion":"Bali","addressCountry":"ID"}},{"@type":"CollectionPage","name":"Tanah & Villa Dijual di Ungasan, Bali","description":"Ungasan berada di tengah Bukit, Kuta Selatan: dekat Pantai Melasti, Karma Kandara, GWK, dan deretan beach club di tebing selatan. 14 listing tersedia, tanya via WhatsApp.","url":"https://baliareproperty.com/area/ungasan.html","inLanguage":"id","about":{"@type":"Place","name":"Ungasan, Bali, Indonesia"},"mainEntity":{"@type":"ItemList","numberOfItems":14,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://baliareproperty.com/listing/tanah-hook-300-m2-di-jalan-tulip.html","name":"Tanah hook 300 m² di Jalan Tulip"},{"@type":"ListItem","position":2,"url":"https://baliareproperty.com/listing/tanah-hook-430-m2-di-poros-jalan-pantai-melasti.html","name":"Tanah hook 430 m² di poros jalan menuju Pantai Melasti"},{"@type":"ListItem","position":3,"url":"https://baliareproperty.com/listing/tanah-hook-2450-m2-dekat-hillstone-ungasan.html","name":"Tanah hook 2.450 m² dekat Hillstone, Ungasan"},{"@type":"ListItem","position":4,"url":"https://baliareproperty.com/listing/tanah-15-ha-di-jalan-pura-mesuka.html","name":"Tanah 1,5 ha di Jalan Pura Mesuka"},{"@type":"ListItem","position":5,"url":"https://baliareproperty.com/listing/tanah-7000-m2-di-kawasan-villa-toyaning-ungasan.html","name":"Tanah 7.000 m² di kawasan villa Toyaning, Ungasan"},{"@type":"ListItem","position":6,"url":"https://baliareproperty.com/listing/tanah-400-m2-di-kawasan-bali-cliff.html","name":"Tanah 400 m² di kawasan Bali Cliff"},{"@type":"ListItem","position":7,"url":"https://baliareproperty.com/listing/tanah-830-m2-siap-bangun-di-central-ungasan.html","name":"Tanah 830 m² siap bangun di Central Ungasan"},{"@type":"ListItem","position":8,"url":"https://baliareproperty.com/listing/tanah-1000-m2-di-kawasan-pantai-melasti.html","name":"Tanah 1.000 m² di kawasan Pantai Melasti"},{"@type":"ListItem","position":9,"url":"https://baliareproperty.com/listing/tanah-1990-m2-dekat-pantai-melasti-di-jalan-karma-kandara.html","name":"Tanah 1.990 m² dekat Pantai Melasti di Jalan Karma Kandara"},{"@type":"ListItem","position":10,"url":"https://baliareproperty.com/listing/villa-modern-3-kamar-tidur-dekat-gwk-type-1.html","name":"Villa modern 3 kamar tidur dekat GWK (Type 1)"},{"@type":"ListItem","position":11,"url":"https://baliareproperty.com/listing/villa-modern-3-kamar-tidur-dekat-gwk-type-2.html","name":"Villa modern 3 kamar tidur dekat GWK (Type 2)"},{"@type":"ListItem","position":12,"url":"https://baliareproperty.com/listing/villa-3-kamar-tidur-dengan-rooftop-view-laut-di-ungasan.html","name":"Villa 3 kamar tidur dengan rooftop view laut di Ungasan"},{"@type":"ListItem","position":13,"url":"https://baliareproperty.com/listing/villa-3-lantai-dengan-pool-dan-jacuzzi-di-ungasan.html","name":"Villa 3 lantai dengan pool dan jacuzzi di Ungasan"},{"@type":"ListItem","position":14,"url":"https://baliareproperty.com/listing/villa-2-kamar-tidur-dengan-private-pool-dan-rooftop-di-ungasan.html","name":"Villa 2 kamar tidur dengan private pool dan rooftop di Ungasan"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bali Are Property","item":"https://baliareproperty.com/"},{"@type":"ListItem","position":2,"name":"Properti per area","item":"https://baliareproperty.com/area/"},{"@type":"ListItem","position":3,"name":"Ungasan","item":"https://baliareproperty.com/area/ungasan.html"}]}]}</script>
+<!--/seo-->
+<style>
+/* Homepage: hero lebar, lalu bagian-bagian bertumpuk; memakai token warna & font yang sama dengan halaman listing */
+.wrap.home{max-width:1040px}
+.home-top{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-block:22px 0}
+.home-top nav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-left:auto}
+.home-top nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.home-top nav a:hover{color:var(--sea)}
+.home-top .langs{margin-left:0}
+.hero{padding-block:56px 40px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(38px,7.2vw,72px);font-weight:800;letter-spacing:-.025em;line-height:1.02}
+.hero .lead{font-size:clamp(17px,2.2vw,20px);max-width:52ch;margin:0}
+.hero .actions{margin-top:8px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1.5px solid var(--ink);margin-bottom:12px}
+.facts div{padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.facts div+div{border-left:1px solid var(--line)}
+.facts b{font-family:var(--display);font-size:clamp(20px,3vw,28px);line-height:1.1;color:var(--sea)}
+.facts span{font-size:14px;color:var(--muted)}
+.hsec{padding-block:44px 8px;display:grid;gap:22px}
+.hsec h2{font-size:clamp(26px,4vw,36px);font-weight:700;letter-spacing:-.01em}
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:22px 48px;align-items:start}
+.about .text{display:grid;gap:14px;max-width:64ch}
+.about .text p{margin:0}
+.about .text p:first-child{font-size:18px}
+.more-link{color:var(--sea);font-weight:600;text-decoration:none}
+.more-link:hover{text-decoration:underline}
+.spec{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.spec li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 18px 44px;position:relative;font-weight:600;line-height:1.35}
+.spec li::before{content:"";position:absolute;left:18px;top:24px;width:12px;height:12px;border-radius:3px;background:var(--sand);transform:rotate(45deg)}
+.cov{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cov article{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.cov h3{font-size:24px}
+.cov ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cov li{background:var(--sea-soft);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:500}
+.cov .more{font-size:14px;color:var(--muted);margin:0}
+.cov a{margin-top:auto;color:var(--sea);font-weight:600;text-decoration:none}
+.cov a:hover{text-decoration:underline}
+.note{color:var(--muted);margin:0;max-width:70ch}
+.feat-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.feat-head a{color:var(--sea);font-weight:600;text-decoration:none}
+.feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.feat a.fc{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.feat a.fc:hover{border-color:var(--sea)}
+.feat .fc .eyebrow{font-size:11px}
+.feat .fc h3{font-size:19px;line-height:1.2;font-weight:700}
+.feat .fc b{margin-top:auto;font-family:var(--display);font-size:20px;color:var(--sea);font-variant-numeric:tabular-nums}
+.band{background:var(--sea-soft);color:var(--ink);border-radius:20px;padding:32px 26px;margin-top:44px;display:grid;gap:18px}
+.band p{margin:0;font-family:var(--display);font-size:clamp(24px,3.8vw,34px);font-weight:700;line-height:1.15;max-width:28ch;text-wrap:balance}
+.band .cta-duo{margin-top:0}
+@media (max-width:760px){
+  .about{grid-template-columns:1fr}
+  .spec,.feat{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cov{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .spec,.feat{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+  .facts div+div{border-left:0;border-top:1px solid var(--line)}
+  .hero{padding-block:36px 28px}
+}
+</style>
+<style>
+.ar-hero{padding-block:48px 8px;display:grid;gap:14px}
+.ar-hero h1{font-size:clamp(32px,6vw,56px);font-weight:800;letter-spacing:-.025em;line-height:1.05;text-wrap:balance}
+.ar-hero .lead{max-width:68ch;font-size:18px;margin:0;color:var(--ink)}
+.ar-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.ar-stats span{background:var(--sea-soft);color:var(--sea);border-radius:999px;padding:7px 14px;font-weight:600;font-size:14px}
+.ar-stats span small{font-weight:500;color:var(--muted);margin-left:6px}
+.ar-type{padding-top:26px}
+.ar-type>h2{font-size:clamp(22px,3.4vw,28px);border-bottom:1.5px solid var(--ink);padding-bottom:10px}
+.ar-type>h2 small{font-family:var(--mono);font-size:13px;color:var(--muted);font-weight:500;margin-left:10px}
+.ar-links{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.ar-links a{display:inline-block;border:1.5px solid var(--line);border-radius:999px;padding:8px 16px;text-decoration:none;color:var(--ink);font-weight:600;background:var(--surface)}
+.ar-links a:hover{border-color:var(--sea);color:var(--sea)}
+.ar-links a small{color:var(--muted);font-weight:500;margin-left:6px}
+.ar-other{padding-top:40px;display:grid;gap:14px}
+.ar-other h2{font-size:22px}
+.ar-hub{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:10px}
+.ar-hub a{display:grid;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.ar-hub a:hover{border-color:var(--sea)}
+.ar-hub h2{font-size:22px}
+.ar-hub p{margin:0;color:var(--muted);font-size:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ar-hub b{color:var(--sea);font-size:14px}
+.ask{background:var(--sea-soft);border-radius:20px;padding:28px 24px;margin-top:40px;display:grid;gap:10px}
+.ask h2{font-size:clamp(22px,3.4vw,30px)}
+.ask p{margin:0;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap home">
+  <div class="home-top">
+    <a class="eyebrow home-link" href="../"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
+    <nav aria-label="Menu">
+      <a href="../about.html">Tentang kami</a>
+      <a href="../listings.html">Listing</a>
+      <a href="../news.html">Berita</a>
+      <a href="../guide.html">Guide</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <div class="langs" role="group" aria-label="Pilih bahasa / Language">
+        <a class="lang-btn" data-lang="id" hreflang="id" href="ungasan.html" aria-label="Bahasa Indonesia" aria-current="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="18" fill="#CE1126"></rect><rect y="18" width="36" height="18" fill="#FFFFFF"></rect></svg></a>
+        <a class="lang-btn" data-lang="en" hreflang="en" href="../en/area/ungasan.html" aria-label="English" aria-current="false"><svg viewBox="15 0 30 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"></path></clipPath><rect width="60" height="30" fill="#012169"></rect><path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"></path><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"></path><path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"></path><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"></path></svg></a>
+        <a class="lang-btn" data-lang="ru" hreflang="ru" href="../ru/area/ungasan.html" aria-label="Русский" aria-current="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="12" fill="#FFFFFF"></rect><rect y="12" width="36" height="12" fill="#0039A6"></rect><rect y="24" width="36" height="12" fill="#D52B1E"></rect></svg></a>
+      </div>
+  </div>
+
+  <header class="ar-hero">
+    <div class="eyebrow">Properti per area · Kuta Selatan, Badung</div>
+    <h1>Tanah &amp; Villa Dijual di Ungasan, Bali</h1>
+    <p class="lead">Ungasan berada di tengah Bukit, Kuta Selatan: dekat Pantai Melasti, Karma Kandara, GWK, dan deretan beach club di tebing selatan. Lingkungannya didominasi villa dan kompleks hunian, dengan banyak lahan berperuntukan permukiman. Cocok untuk villa pribadi, villa sewa, maupun pengembangan kompleks.</p>
+    <div class="ar-stats"><span>14 listing tersedia</span><span>Tanah · 9</span><span>Villa · 5</span><span>Mulai Rp1,95 Miliar</span><span>3 terjual</span></div>
+  </header>
+  <section class="ar-type" aria-label="Tanah">
+    <h2>Tanah<small>9</small></h2>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Jl. Tulip · Ungasan</div>
+            <h4 data-i18n-orig="Tanah hook 300 m² di Jalan Tulip"><a href="../listing/tanah-hook-300-m2-di-jalan-tulip.html">Tanah hook 300 m² di Jalan Tulip</a></h4>
+            <p class="desc">Posisi hook memberi keleluasaan untuk desain bangunan, akses, sirkulasi, dan area parkir. Berada di lingkungan villa kawasan Ungasan yang terus berkembang.</p>
+          </div>
+          <span class="badge sand">Posisi hook</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp6.500.000</b></div>
+          <div class="hl"><small>Total 300 m²</small><b>Rp1,95 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>300 m²</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>ITR</dt><dd>Kuning</dd></div>
+          <div><dt>Posisi</dt><dd>Hook</dd></div>
+          <div><dt>Akses</dt><dd>Strategis, mudah dijangkau</dd></div>
+          <div><dt>Lingkungan</dt><dd>Villa &amp; kawasan premium</dd></div>
+        </dl>
+
+        <div class="plot" role="img" aria-label="Sketsa: kavling hook 300 meter persegi di sudut dua jalan">
+          <svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="10" width="640" height="22" fill="var(--line)"></rect>
+            <line x1="0" y1="21" x2="640" y2="21" stroke="var(--surface)" stroke-width="2" stroke-dasharray="14 10"></line>
+            <text x="620" y="26" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--muted)">JALAN</text>
+            <rect x="200" y="10" width="22" height="180" fill="var(--line)"></rect>
+            <line x1="211" y1="32" x2="211" y2="190" stroke="var(--surface)" stroke-width="2" stroke-dasharray="14 10"></line>
+            <rect x="230" y="40" width="260" height="140" rx="3" fill="var(--sea-soft)" stroke="var(--sea)" stroke-width="2"></rect>
+            <path d="M230 40 L262 40 L230 72 Z" fill="var(--sand)"></path>
+            <text x="360" y="108" text-anchor="middle" font-family="Bricolage Grotesque, Arial, sans-serif" font-size="24" font-weight="700" fill="var(--sea)">300 m²</text>
+            <text x="360" y="132" text-anchor="middle" font-family="Figtree, Arial, sans-serif" font-size="13" fill="var(--muted)">SHM · ITR Kuning · Hook</text>
+          </svg>
+          <p>Sketsa ilustrasi posisi hook (dua sisi jalan), bukan gambar ukur.</p>
+        </div>
+
+        <ul class="uses"><li>Villa</li><li>Cafe</li><li>Guest house</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20hook%20300%20m%C2%B2%20Jl.%20Tulip%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20hook%20300%20m%C2%B2%20Jl.%20Tulip%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/VtKVw38etYh36WJz8?g_st=ac" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1myvcmpt1q8WRJgNcgUj6rgU7hgLVsIWh" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Jl. Pura Masuka · Ungasan</div>
+            <h4 data-i18n-orig="Tanah hook 430 m² di poros jalan menuju Pantai Melasti"><a href="../listing/tanah-hook-430-m2-di-poros-jalan-pantai-melasti.html">Tanah hook 430 m² di poros jalan menuju Pantai Melasti</a></h4>
+            <p class="desc">Dua bidang SHM bersebelahan (2 × 215 m²) dengan posisi hook di poros jalan utama menuju Pantai Melasti, Ungasan. Akses dan visibilitas baik, di lingkungan villa dan akomodasi wisata yang berkembang pesat.</p>
+          </div>
+          <span class="badge sand">Posisi hook</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp7.500.000</b></div>
+          <div><small>Per are</small><b>Rp750 jt</b></div>
+          <div class="hl"><small>Total 430 m²</small><b>Rp3,225 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>430 m² (4,3 are)</dd></div>
+          <div><dt>Sertifikat</dt><dd>2 SHM (masing-masing 215 m²)</dd></div>
+          <div><dt>ITR</dt><dd>Perumahan</dd></div>
+          <div><dt>Posisi</dt><dd>Hook</dd></div>
+          <div><dt>Hadap</dt><dd>Barat &amp; Utara</dd></div>
+          <div><dt>Akses</dt><dd>Poros jalan utama menuju Pantai Melasti</dd></div>
+        </dl>
+
+        <div class="plot" role="img" aria-label="Sketsa: kavling hook 430 meter persegi (2 SHM) di sudut dua jalan">
+          <svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="10" width="640" height="22" fill="var(--line)"></rect>
+            <line x1="0" y1="21" x2="640" y2="21" stroke="var(--surface)" stroke-width="2" stroke-dasharray="14 10"></line>
+            <text x="620" y="26" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--muted)">JALAN</text>
+            <rect x="200" y="10" width="22" height="180" fill="var(--line)"></rect>
+            <line x1="211" y1="32" x2="211" y2="190" stroke="var(--surface)" stroke-width="2" stroke-dasharray="14 10"></line>
+            <rect x="230" y="40" width="300" height="140" rx="3" fill="var(--sea-soft)" stroke="var(--sea)" stroke-width="2"></rect>
+            <line x1="380" y1="40" x2="380" y2="180" stroke="var(--sea)" stroke-width="1.5" stroke-dasharray="6 5"></line>
+            <path d="M230 40 L262 40 L230 72 Z" fill="var(--sand)"></path>
+            <text x="380" y="108" text-anchor="middle" font-family="Bricolage Grotesque, Arial, sans-serif" font-size="24" font-weight="700" fill="var(--sea)">430 m²</text>
+            <text x="380" y="132" text-anchor="middle" font-family="Figtree, Arial, sans-serif" font-size="13" fill="var(--muted)">2 SHM · ITR Perumahan · Hook</text>
+          </svg>
+          <p>Sketsa ilustrasi posisi hook (dua sisi jalan), bukan gambar ukur.</p>
+        </div>
+
+        <ul class="points">
+          <li>Di poros jalan utama menuju Pantai Melasti</li>
+          <li>Posisi hook: akses dan visibilitas lebih baik</li>
+          <li>Lingkungan villa dan akomodasi wisata yang berkembang pesat</li>
+          <li>Beberapa menit ke Pantai Melasti, Karma Kandara, dan beach club di Ungasan</li>
+        </ul>
+
+        <ul class="uses"><li>Villa</li><li>Guest house</li><li>Investasi jangka panjang</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20hook%20430%20m%C2%B2%20poros%20jalan%20Pantai%20Melasti%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20hook%20430%20m%C2%B2%20poros%20jalan%20Pantai%20Melasti%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/eZua4ygbw5Cbt2Nu6" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1m49zNFFTxH7C3RLxHsUnSOVBGDORXAxN" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Dekat Hillstone · Ungasan</div>
+            <h4 data-i18n-orig="Tanah hook 2.450 m² dekat Hillstone, Ungasan"><a href="../listing/tanah-hook-2450-m2-dekat-hillstone-ungasan.html">Tanah hook 2.450 m² dekat Hillstone, Ungasan</a></h4>
+            <p class="desc">Dua bidang SHM bersebelahan (1.450 m² + 1.000 m²) dengan posisi hook menghadap barat dan selatan, di kawasan Ungasan dekat Hillstone. Bisa dibeli bidang 1.000 m² saja atau keduanya sekaligus.</p>
+          </div>
+          <span class="badge sand">Posisi hook</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m² (Rp650 jt/are)</small><b>Rp6.500.000</b></div>
+          <div><small>Bidang 1.000 m² saja</small><b>Rp6,5 Miliar</b></div>
+          <div class="hl"><small>Total 2.450 m²</small><b>Rp15,925 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>2.450 m² (24,5 are)</dd></div>
+          <div><dt>Sertifikat</dt><dd>2 SHM (1.450 m² + 1.000 m²)</dd></div>
+          <div><dt>Dimensi</dt><dd>±42 × 63 m</dd></div>
+          <div><dt>Posisi</dt><dd>Hook</dd></div>
+          <div><dt>Hadap</dt><dd>Barat &amp; Selatan</dd></div>
+          <div><dt>ITR</dt><dd>Permukiman</dd></div>
+          <div><dt>Pilihan beli</dt><dd>1.000 m² saja atau keduanya</dd></div>
+          <div><dt>Lokasi</dt><dd>Dekat Hillstone, Ungasan</dd></div>
+        </dl>
+
+        <ul class="uses"><li>Villa</li><li>Perumahan</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20hook%202.450%20m%C2%B2%20dekat%20Hillstone%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20hook%202.450%20m%C2%B2%20dekat%20Hillstone%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/ngrakTdfFHkrpHZ28" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1qmV5x1xCALKhNnwKx_yVK2JUoWrfva2u" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Jl. Pura Mesuka · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 1,5 ha di Jalan Pura Mesuka"><a href="../listing/tanah-15-ha-di-jalan-pura-mesuka.html">Tanah 1,5 ha di Jalan Pura Mesuka</a></h4>
+            <p class="desc">Lahan luas di lingkungan villa Ungasan, Kuta Selatan. Cocok dipecah menjadi tanah kavling atau dikembangkan menjadi kawasan hunian.</p>
+          </div>
+          <span class="badge">Skala besar</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m² (nego)</small><b>Rp5.500.000</b></div>
+          <div class="hl"><small>Total 15.000 m²</small><b>Rp82,5 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>1,5 ha (15.000 m²)</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>ITR</dt><dd>Perumahan</dd></div>
+          <div><dt>Lingkungan</dt><dd>Villa</dd></div>
+          <div><dt>Harga</dt><dd>Nego</dd></div>
+          <div><dt>Lokasi</dt><dd>Jl. Pura Mesuka, Ungasan</dd></div>
+        </dl>
+
+        <ul class="uses"><li>Tanah kavling</li><li>Perumahan</li><li>Kompleks villa</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%201%2C5%20ha%20Jl.%20Pura%20Mesuka%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%201%2C5%20ha%20Jl.%20Pura%20Mesuka%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/zWwvQVub9YugZ5Yr5" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/13nC37hs6Oy_SD1z0_h0AGu18Yypmvi4-" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Toyaning · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 7.000 m² di kawasan villa Toyaning, Ungasan"><a href="../listing/tanah-7000-m2-di-kawasan-villa-toyaning-ungasan.html">Tanah 7.000 m² di kawasan villa Toyaning, Ungasan</a></h4>
+            <p class="desc">Lahan 70 are bersertifikat SHM dengan ITR permukiman di lingkungan villa Toyaning, Ungasan, Kuta Selatan. Menghadap timur dengan kontur menurun landai.</p>
+          </div>
+          <span class="badge">Skala besar</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp5.750.000</b></div>
+          <div><small>Per are</small><b>Rp575 jt</b></div>
+          <div class="hl"><small>Total 7.000 m²</small><b>Rp40,25 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>7.000 m² (70 are)</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>ITR</dt><dd>Permukiman</dd></div>
+          <div><dt>Hadap</dt><dd>Timur</dd></div>
+          <div><dt>Kontur</dt><dd>Menurun landai</dd></div>
+          <div><dt>Lingkungan</dt><dd>Kawasan villa</dd></div>
+          <div><dt>Lokasi</dt><dd>Toyaning, Ungasan</dd></div>
+        </dl>
+
+        <ul class="points">
+          <li>Luas 70 are, leluasa untuk dikembangkan menjadi beberapa villa atau kompleks hunian</li>
+          <li>Peruntukan permukiman (ITR) dengan sertifikat SHM</li>
+          <li>Berada di lingkungan villa kawasan Ungasan, Kuta Selatan</li>
+        </ul>
+
+        <ul class="uses"><li>Kawasan villa</li><li>Kompleks hunian</li><li>Investasi jangka panjang</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%207.000%20m%C2%B2%20Toyaning%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%207.000%20m%C2%B2%20Toyaning%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/L987BbeKGURioicb7" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1Y4lmDW6fFThwdb7eWjOPxkphpuwCNT0z" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Bali Cliff · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 400 m² di kawasan Bali Cliff"><a href="../listing/tanah-400-m2-di-kawasan-bali-cliff.html">Tanah 400 m² di kawasan Bali Cliff</a></h4>
+            <p class="desc">Tanah peruntukan perumahan dengan lebar depan 23 meter dan akses mobil. Ideal untuk hunian pribadi maupun aset investasi di Ungasan.</p>
+          </div>
+          <span class="badge sand">Muka lebar 23 m</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp7.000.000</b></div>
+          <div class="hl"><small>Total 400 m²</small><b>Rp2,8 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>400 m²</dd></div>
+          <div><dt>Lebar depan</dt><dd>23 m</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>ITR</dt><dd>Perumahan</dd></div>
+          <div><dt>Hadap</dt><dd>Utara</dd></div>
+          <div><dt>Akses</dt><dd>Jalan mobil</dd></div>
+        </dl>
+
+        <div class="plot" role="img" aria-label="Sketsa: bidang 400 meter persegi dengan lebar depan 23 meter menghadap utara ke jalan">
+          <svg viewBox="0 0 640 190" xmlns="http://www.w3.org/2000/svg">
+            <text x="600" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--sea)">U</text>
+            <path d="M600 30 L594 46 L600 42 L606 46 Z" fill="var(--sea)"></path>
+            <rect x="0" y="54" width="640" height="22" fill="var(--line)"></rect>
+            <line x1="0" y1="65" x2="640" y2="65" stroke="var(--surface)" stroke-width="2" stroke-dasharray="14 10"></line>
+            <text x="20" y="70" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--muted)">JALAN MOBIL</text>
+            <rect x="170" y="84" width="300" height="80" rx="3" fill="var(--sea-soft)" stroke="var(--sea)" stroke-width="2"></rect>
+            <text x="320" y="120" text-anchor="middle" font-family="Bricolage Grotesque, Arial, sans-serif" font-size="22" font-weight="700" fill="var(--sea)">400 m²</text>
+            <text x="320" y="142" text-anchor="middle" font-family="Figtree, Arial, sans-serif" font-size="13" fill="var(--muted)">SHM · ITR Perumahan</text>
+            <text x="320" y="182" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">lebar depan 23 m</text>
+          </svg>
+          <p>Sketsa ilustrasi, bukan gambar ukur.</p>
+        </div>
+
+        <ul class="uses"><li>Rumah tinggal</li><li>Villa pribadi</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20400%20m%C2%B2%20Bali%20Cliff%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20400%20m%C2%B2%20Bali%20Cliff%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/Mpe6caf18qRyxTtd8?g_st=ac" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1llwX2L35jcNze3wykZ7T1NZttQhgPt7y" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Central Ungasan · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 830 m² siap bangun di Central Ungasan"><a href="../listing/tanah-830-m2-siap-bangun-di-central-ungasan.html">Tanah 830 m² siap bangun di Central Ungasan</a></h4>
+            <p class="desc">Tanah datar sudah ditembok keliling di lingkungan villa mewah, dekat Nirmala Supermarket dan GWK. Listrik PLN, air PDAM, dan Wi-Fi sudah tersedia.</p>
+          </div>
+          <span class="badge">Siap bangun</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp6.000.000</b></div>
+          <div class="hl"><small>Total 830 m²</small><b>Rp4,98 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>830 m² (8,3 are)</dd></div>
+          <div><dt>Lebar depan</dt><dd>28 m</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>RDTR</dt><dd>Zona kuning</dd></div>
+          <div><dt>Kontur</dt><dd>Datar, siap bangun</dd></div>
+          <div><dt>Hadap</dt><dd>Barat</dd></div>
+          <div><dt>Akses jalan</dt><dd>Lebar 6 m</dd></div>
+          <div><dt>Utilitas</dt><dd>PLN, PDAM, Wi-Fi</dd></div>
+          <div><dt>Kondisi</dt><dd>Tembok keliling</dd></div>
+          <div><dt>Dekat</dt><dd>Nirmala, GWK</dd></div>
+        </dl>
+
+        <div class="plot" role="img" aria-label="Sketsa: bidang 830 meter persegi dengan lebar depan 28 meter, berpagar tembok, menghadap barat ke jalan 6 meter">
+          <svg viewBox="0 0 640 210" xmlns="http://www.w3.org/2000/svg">
+            <rect x="60" y="0" width="26" height="210" fill="var(--line)"></rect>
+            <line x1="73" y1="0" x2="73" y2="210" stroke="var(--surface)" stroke-width="2" stroke-dasharray="14 10"></line>
+            <text x="40" y="105" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--muted)" transform="rotate(-90 40 105)">JALAN 6 M</text>
+            <rect x="96" y="20" width="250" height="170" rx="3" fill="var(--sea-soft)" stroke="var(--sea)" stroke-width="5"></rect>
+            <text x="221" y="98" text-anchor="middle" font-family="Bricolage Grotesque, Arial, sans-serif" font-size="24" font-weight="700" fill="var(--sea)">830 m²</text>
+            <text x="221" y="122" text-anchor="middle" font-family="Figtree, Arial, sans-serif" font-size="13" fill="var(--muted)">Muka 28 m ke jalan · datar</text>
+            <text x="470" y="40" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--sea)">B ← hadap barat</text>
+          </svg>
+          <p>Sketsa ilustrasi, bukan gambar ukur. Garis tebal menandakan tembok keliling.</p>
+        </div>
+
+        <ul class="uses"><li>Villa pribadi</li><li>Villa rental</li><li>Investasi jangka panjang</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20830%20m%C2%B2%20Central%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%20830%20m%C2%B2%20Central%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/SoP9J5MdbgRLskWu8?g_st=ac" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1QCxHkTv1bBYZFjRFhd9HkDLlxO2VpjtE" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Pantai Melasti · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 1.000 m² di kawasan Pantai Melasti"><a href="../listing/tanah-1000-m2-di-kawasan-pantai-melasti.html">Tanah 1.000 m² di kawasan Pantai Melasti</a></h4>
+            <p class="desc">Lahan zona pariwisata di lingkungan hotel dan villa mewah kawasan Pantai Melasti. Cocok untuk villa eksklusif, boutique hotel, atau investasi jangka panjang.</p>
+          </div>
+          <span class="badge">Zona pariwisata</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp10.000.000</b></div>
+          <div class="hl"><small>Total 1.000 m²</small><b>Rp10 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>1.000 m² (10 are)</dd></div>
+          <div><dt>Lebar depan</dt><dd>18 m</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>ITR</dt><dd>Pariwisata</dd></div>
+          <div><dt>Hadap</dt><dd>Selatan</dd></div>
+          <div><dt>Akses</dt><dd>Jalan mobil</dd></div>
+          <div><dt>Lingkungan</dt><dd>Hotel dan villa mewah</dd></div>
+        </dl>
+
+        <ul class="uses"><li>Villa eksklusif</li><li>Boutique hotel</li><li>Investasi jangka panjang</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%201.000%20m%C2%B2%20dekat%20Pantai%20Melasti%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%201.000%20m%C2%B2%20dekat%20Pantai%20Melasti%2C%20Ungasan.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/9S18DAjwthESNayf7?g_st=ac" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1CEEjuODV-aJ0RpMmOSjlAwfQzK8I9wLr" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Jl. Karma Kandara · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 1.990 m² dekat Pantai Melasti di Jalan Karma Kandara"><a href="../listing/tanah-1990-m2-dekat-pantai-melasti-di-jalan-karma-kandara.html">Tanah 1.990 m² dekat Pantai Melasti di Jalan Karma Kandara</a></h4>
+            <p class="desc">Tanah datar zona pariwisata, ±3 menit ke Pantai Melasti, dikelilingi kompleks villa dan hotel eksklusif. Cocok untuk villa, boutique resort, atau akomodasi wisata.</p>
+          </div>
+          <span class="badge">±3 menit ke Melasti</span>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per are (Rp6,5 jt/m²)</small><b>Rp650 jt</b></div>
+          <div class="hl"><small>Total 1.990 m²</small><b>Rp12,935 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>1.990 m² (19,9 are)</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>Zona</dt><dd>Pariwisata</dd></div>
+          <div><dt>Kontur</dt><dd>Datar</dd></div>
+          <div><dt>Hadap</dt><dd>Barat</dd></div>
+          <div><dt>Akses</dt><dd>Jl. Karma Kandara</dd></div>
+          <div><dt>Ke Pantai Melasti</dt><dd>±3 menit</dd></div>
+          <div><dt>Lingkungan</dt><dd>Villa dan hotel</dd></div>
+        </dl>
+
+        <ul class="uses"><li>Villa</li><li>Boutique resort</li><li>Akomodasi wisata</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%201.990%20m%C2%B2%20Jl.%20Karma%20Kandara%20dekat%20Pantai%20Melasti.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%201.990%20m%C2%B2%20Jl.%20Karma%20Kandara%20dekat%20Pantai%20Melasti.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/QoUMDPcUeyUMECZ46?g_st=awb" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1XG5ENcotaQdySB9GJf0DypnpPomYUxV9" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+  </section>
+  <section class="ar-type" aria-label="Villa">
+    <h2>Villa<small>5</small></h2>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">GWK · Ungasan</div>
+            <h4 data-i18n-orig="Villa modern 3 kamar tidur dekat GWK (Type 1)"><a href="../listing/villa-modern-3-kamar-tidur-dekat-gwk-type-1.html">Villa modern 3 kamar tidur dekat GWK (Type 1)</a></h4>
+            <p class="desc">Villa modern di kawasan villa berkembang Uluwatu – GWK. Cocok untuk hunian pribadi maupun investasi villa rental atau Airbnb.</p>
+          </div>
+          <span class="badge">Siap disewakan</span>
+        </div>
+
+        <div class="price">
+          <div class="hl"><small>Harga</small><b>Rp3,5 Miliar</b></div>
+          <div><small>Estimasi sewa per malam</small><b>Rp2,8–3,2 jt</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>118 m²</dd></div>
+          <div><dt>Luas bangunan</dt><dd>132 m²</dd></div>
+          <div><dt>Kamar tidur</dt><dd>3</dd></div>
+          <div><dt>Kamar mandi</dt><dd>4</dd></div>
+          <div><dt>Kawasan</dt><dd>Uluwatu – GWK</dd></div>
+          <div><dt>Lokasi</dt><dd>Diberikan saat survei</dd></div>
+        </dl>
+
+        <ul class="points">
+          <li>Kawasan villa berkembang di Uluwatu</li>
+          <li>Cocok untuk villa rental / Airbnb</li>
+          <li>Dekat GWK, Melasti, Pandawa, dan beach club Uluwatu</li>
+          <li>Akses ke bandara relatif mudah</li>
+          <li>Nilai properti di Uluwatu terus naik</li>
+        </ul>
+
+        <ul class="uses"><li>Hunian pribadi</li><li>Villa rental / Airbnb</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%20modern%203%20KT%20dekat%20GWK%20%28Type%201%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20survei%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%20modern%203%20KT%20dekat%20GWK%20%28Type%201%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20survei%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1v_hC97etgmQBcbHk40ob5URjC4mpv_Zi" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">GWK · Ungasan</div>
+            <h4 data-i18n-orig="Villa modern 3 kamar tidur dekat GWK (Type 2)"><a href="../listing/villa-modern-3-kamar-tidur-dekat-gwk-type-2.html">Villa modern 3 kamar tidur dekat GWK (Type 2)</a></h4>
+            <p class="desc">Villa modern di kawasan villa berkembang Uluwatu – GWK. Cocok untuk hunian pribadi maupun investasi villa rental atau Airbnb.</p>
+          </div>
+          <span class="badge">Siap disewakan</span>
+        </div>
+
+        <div class="price">
+          <div class="hl"><small>Harga</small><b>Rp4,388 Miliar</b></div>
+          <div><small>Estimasi sewa per malam</small><b>Rp2,8–3,2 jt</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>118–139 m²</dd></div>
+          <div><dt>Luas bangunan</dt><dd>210 m²</dd></div>
+          <div><dt>Kamar tidur</dt><dd>3</dd></div>
+          <div><dt>Kamar mandi</dt><dd>3</dd></div>
+          <div><dt>Kawasan</dt><dd>Uluwatu – GWK</dd></div>
+          <div><dt>Lokasi</dt><dd>Diberikan saat survei</dd></div>
+        </dl>
+
+        <ul class="points">
+          <li>Kawasan villa berkembang di Uluwatu</li>
+          <li>Cocok untuk villa rental / Airbnb</li>
+          <li>Dekat GWK, Melasti, Pandawa, dan beach club Uluwatu</li>
+          <li>Akses ke Bandara Ngurah Rai relatif mudah</li>
+          <li>Nilai properti di Uluwatu terus naik</li>
+        </ul>
+
+        <ul class="uses"><li>Hunian pribadi</li><li>Villa rental / Airbnb</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%20modern%203%20KT%20dekat%20GWK%20%28Type%202%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20survei%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%20modern%203%20KT%20dekat%20GWK%20%28Type%202%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20survei%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/10r_-Dx0rvvay-6lBajGudQcvYLZE2CRi" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Dekat Pantai Melasti · Ungasan</div>
+            <h4 data-i18n-orig="Villa 3 kamar tidur dengan rooftop view laut di Ungasan"><a href="../listing/villa-3-kamar-tidur-dengan-rooftop-view-laut-di-ungasan.html">Villa 3 kamar tidur dengan rooftop view laut di Ungasan</a></h4>
+            <p class="desc">Villa modern fully furnished dengan private pool, rooftop berpemandangan lembah dan laut, serta ruang office dan mess staf. Legalitas lengkap dan terdaftar di Kementerian Pariwisata, siap untuk bisnis villa.</p>
+          </div>
+          <span class="badge sand">Jual / Sewa 25 th</span>
+        </div>
+
+        <div class="price">
+          <div class="hl"><small>Jual (nego)</small><b>Rp8,5 Miliar</b></div>
+          <div class="hl"><small>Sewa 25 tahun (nego)</small><b>Rp7 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>380 m²</dd></div>
+          <div><dt>Luas bangunan</dt><dd>235 m²</dd></div>
+          <div><dt>Office &amp; mess staf</dt><dd>50 m²</dd></div>
+          <div><dt>Kamar tidur</dt><dd>3 (AC, TV)</dd></div>
+          <div><dt>Kamar mandi</dt><dd>3 (bathtub) + 1 toilet tamu</dd></div>
+          <div><dt>Kolam renang</dt><dd>Private, 32 m²</dd></div>
+          <div><dt>Carport</dt><dd>3 mobil</dd></div>
+          <div><dt>Listrik</dt><dd>7.700 watt</dd></div>
+          <div><dt>Legalitas</dt><dd>SHM, PBG/SLF, izin villa</dd></div>
+          <div><dt>Kemenpar</dt><dd>Terdaftar</dd></div>
+          <div><dt>Ke Pantai Melasti</dt><dd>±5 menit</dd></div>
+          <div><dt>Ke Savaya</dt><dd>±9 menit</dd></div>
+        </dl>
+
+        <ul class="points">
+          <li>Fully furnished, total 4 unit AC</li>
+          <li>Ruang tamu luas dengan Smart TV, AC, kipas</li>
+          <li>Dapur lengkap</li>
+          <li>Rooftop dengan view lembah dan laut</li>
+          <li>Area mini sepak bola dan sepeda statis di lantai 2</li>
+          <li>Dekat pantai, kafe, dan pusat belanja</li>
+          <li>Lingkungan tenang, dekat jalan utama</li>
+        </ul>
+
+        <ul class="uses"><li>Bisnis villa rental</li><li>Hunian pribadi</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%203%20KT%20Ungasan%20dekat%20Melasti%20%28jual/sewa%2025%20tahun%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%203%20KT%20Ungasan%20dekat%20Melasti%20%28jual/sewa%2025%20tahun%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1pqBLbaoH_D5dcXDDdlPzgWZNvBY5G4Fn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Perumahan kecil · Ungasan</div>
+            <h4 data-i18n-orig="Villa 3 lantai dengan pool dan jacuzzi di Ungasan"><a href="../listing/villa-3-lantai-dengan-pool-dan-jacuzzi-di-ungasan.html">Villa 3 lantai dengan pool dan jacuzzi di Ungasan</a></h4>
+            <p class="desc">Villa berdiri sendiri, tidak menempel rumah lain, di perumahan kecil yang tenang. Kolam renang luas 10 × 5 m dan jacuzzi pribadi. Cocok untuk hunian maupun investasi.</p>
+          </div>
+          <span class="badge">Berdiri sendiri</span>
+        </div>
+
+        <div class="price">
+          <div class="hl"><small>Harga</small><b>Rp3 Miliar</b></div>
+          <div><small>Setara per m² tanah</small><b>±Rp12,6 jt</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>238 m² (10 × 23,8 m)</dd></div>
+          <div><dt>Luas bangunan</dt><dd>150 m²</dd></div>
+          <div><dt>Lantai</dt><dd>3</dd></div>
+          <div><dt>Kamar tidur</dt><dd>2 + 1</dd></div>
+          <div><dt>Kamar mandi</dt><dd>2 + 1</dd></div>
+          <div><dt>Kolam renang</dt><dd>Private, 10 × 5 m</dd></div>
+          <div><dt>Garasi</dt><dd>1 mobil</dd></div>
+          <div><dt>Hadap</dt><dd>Barat</dd></div>
+          <div><dt>Listrik</dt><dd>5.500 watt</dd></div>
+          <div><dt>Air</dt><dd>PDAM</dd></div>
+          <div><dt>Legalitas</dt><dd>SHM, IMB lengkap</dd></div>
+          <div><dt>Lokasi</dt><dd>Diberikan saat survei</dd></div>
+        </dl>
+
+        <ul class="points">
+          <li>Jacuzzi pribadi</li>
+          <li>Teras depan dan belakang, balkon</li>
+          <li>±10 menit ke Pepito Supermarket</li>
+          <li>±15 menit ke Pantai Pandawa</li>
+          <li>±15 menit ke Pantai Melasti</li>
+          <li>Lingkungan tenang dengan privasi lebih</li>
+        </ul>
+
+        <ul class="uses"><li>Hunian pribadi</li><li>Villa rental</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%203%20lantai%20dengan%20jacuzzi%20di%20Ungasan%20%28Rp3%20M%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%203%20lantai%20dengan%20jacuzzi%20di%20Ungasan%20%28Rp3%20M%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1A6SrvEMyDzKehVwO1Ayz0jnGROGrzPVd" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Ungasan · Kuta Selatan</div>
+            <h4 data-i18n-orig="Villa 2 kamar tidur dengan private pool dan rooftop di Ungasan"><a href="../listing/villa-2-kamar-tidur-dengan-private-pool-dan-rooftop-di-ungasan.html">Villa 2 kamar tidur dengan private pool dan rooftop di Ungasan</a></h4>
+            <p class="desc">Villa 2 kamar tidur dengan private pool dan rooftop di Ungasan, Kuta Selatan. Tersedia 3 unit. Cocok untuk hunian pribadi maupun investasi di pasar properti wisata Bali yang terus berkembang.</p>
+          </div>
+          <span class="badge">Tersedia 3 unit</span>
+        </div>
+
+        <div class="price">
+          <div class="hl"><small>Harga per unit</small><b>Rp3,5 Miliar</b></div>
+          <div><small>Setara per m² tanah</small><b>±Rp21,2 jt</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>165 m²</dd></div>
+          <div><dt>Luas bangunan</dt><dd>105 m²</dd></div>
+          <div><dt>Kamar tidur</dt><dd>2</dd></div>
+          <div><dt>Kolam renang</dt><dd>Private</dd></div>
+          <div><dt>Rooftop</dt><dd>Ada</dd></div>
+          <div><dt>Legalitas</dt><dd>SHM</dd></div>
+          <div><dt>Unit tersedia</dt><dd>3 unit</dd></div>
+          <div><dt>Lokasi</dt><dd>Ungasan, Kuta Selatan</dd></div>
+        </dl>
+
+        <ul class="points">
+          <li>Private swimming pool di setiap unit</li>
+          <li>Rooftop</li>
+          <li>Sertifikat SHM</li>
+          <li>Tersedia 3 unit dengan harga sama per unit</li>
+        </ul>
+
+        <ul class="uses"><li>Hunian pribadi</li><li>Villa rental</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%202%20KT%20private%20pool%20%26%20rooftop%20di%20Ungasan%20%28Rp3%2C5%20M%2Funit%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%202%20KT%20private%20pool%20%26%20rooftop%20di%20Ungasan%20%28Rp3%2C5%20M%2Funit%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1IdVQyMTC9ojkPwkztG1_DomEggdQRVjN" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+  </section>
+  <section class="ar-type" aria-label="Sudah terjual di area ini">
+    <h2>Sudah terjual di area ini<small>3</small></h2>
+    <article class="card sold sold-plain">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Karma Kandara · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 6.015 m² dekat Karma Kandara"><a href="../listing/tanah-6015-m2-dekat-karma-kandara.html">Tanah 6.015 m² dekat Karma Kandara</a></h4>
+            <p class="desc">Lahan zona pariwisata di sebelah proyek hotel dan dekat Pantai Melasti, dengan tiga akses jalan.</p>
+          </div>
+          <div class="sold-stamp plain" aria-label="Sold"><b>SOLD</b></div>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp7.500.000</b></div>
+          <div class="sold-note"><small>Status</small><b>Terjual</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>6.015 m²</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>ITR / Zonasi</dt><dd>Pariwisata</dd></div>
+          <div><dt>Akses</dt><dd>Tiga akses jalan</dd></div>
+          <div><dt>Sekitar</dt><dd>Sebelah proyek hotel</dd></div>
+          <div><dt>Pantai terdekat</dt><dd>Pantai Melasti</dd></div>
+        </dl>
+
+        <ul class="uses"><li>Hotel / resort</li><li>Kompleks villa</li><li>Investasi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20melihat%20listing%20Tanah%206.015%20m%C2%B2%20dekat%20Karma%20Kandara%2C%20Ungasan%20sudah%20SOLD.%20Apakah%20ada%20tanah%20serupa%20yang%20masih%20tersedia%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20melihat%20listing%20Tanah%206.015%20m%C2%B2%20dekat%20Karma%20Kandara%2C%20Ungasan%20sudah%20SOLD.%20Apakah%20ada%20tanah%20serupa%20yang%20masih%20tersedia%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Cari tanah serupa</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/xgttQSgHC5SQE2do8" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1fpmHJKpo9asj1-vG64TWkQisHMw9YXhB" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card sold sold-plain">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Kompleks Airis · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 200 m² di kompleks Airis Ungasan"><a href="../listing/tanah-200-m2-di-kompleks-airis-ungasan.html">Tanah 200 m² di kompleks Airis Ungasan</a></h4>
+            <p class="desc">Kavling kosong peruntukan hunian dengan dua akses jalan di depan dan belakang. Jalan lebar.</p>
+          </div>
+          <div class="sold-stamp plain" aria-label="Sold"><b>SOLD</b></div>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp7.500.000</b></div>
+          <div class="sold-note"><small>Status</small><b>Terjual</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>200 m²</dd></div>
+          <div><dt>Lebar depan</dt><dd>10 m</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>ITR</dt><dd>Hunian</dd></div>
+          <div><dt>Akses</dt><dd>Depan dan belakang</dd></div>
+          <div><dt>Jalan</dt><dd>Lebar</dd></div>
+        </dl>
+
+        <ul class="uses"><li>Rumah tinggal</li><li>Villa pribadi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20melihat%20listing%20Tanah%20200%20m%C2%B2%20kompleks%20Airis%20Ungasan%20sudah%20SOLD.%20Apakah%20ada%20tanah%20serupa%20yang%20masih%20tersedia%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20melihat%20listing%20Tanah%20200%20m%C2%B2%20kompleks%20Airis%20Ungasan%20sudah%20SOLD.%20Apakah%20ada%20tanah%20serupa%20yang%20masih%20tersedia%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Cari tanah serupa</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/ZB2Azb5M4Mnc5NBM9?g_st=ac" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/12AZ5x981DGrcZhr9DuavMiAg48lT0awX" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+    <article class="card sold sold-plain">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Kompleks Airis · Ungasan</div>
+            <h4 data-i18n-orig="Tanah 197 m² di kompleks Airis Ungasan"><a href="../listing/tanah-197-m2-di-kompleks-airis-ungasan.html">Tanah 197 m² di kompleks Airis Ungasan</a></h4>
+            <p class="desc">Kavling kosong peruntukan hunian dengan dua akses jalan di depan dan belakang. Jalan lebar.</p>
+          </div>
+          <div class="sold-stamp plain" aria-label="Sold"><b>SOLD</b></div>
+        </div>
+
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp8.000.000</b></div>
+          <div class="sold-note"><small>Status</small><b>Terjual</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>197 m²</dd></div>
+          <div><dt>Lebar depan</dt><dd>10 m</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>ITR</dt><dd>Hunian</dd></div>
+          <div><dt>Akses</dt><dd>Depan dan belakang</dd></div>
+          <div><dt>Jalan</dt><dd>Lebar</dd></div>
+        </dl>
+
+        <ul class="uses"><li>Rumah tinggal</li><li>Villa pribadi</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20melihat%20listing%20Tanah%20197%20m%C2%B2%20kompleks%20Airis%20Ungasan%20sudah%20SOLD.%20Apakah%20ada%20tanah%20serupa%20yang%20masih%20tersedia%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20melihat%20listing%20Tanah%20197%20m%C2%B2%20kompleks%20Airis%20Ungasan%20sudah%20SOLD.%20Apakah%20ada%20tanah%20serupa%20yang%20masih%20tersedia%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Cari tanah serupa</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/ZB2Azb5M4Mnc5NBM9?g_st=ac" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/12AZ5x981DGrcZhr9DuavMiAg48lT0awX" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+        </div>
+      </article>
+  </section>
+  <section class="ask" aria-labelledby="h-ask">
+    <h2 id="h-ask">Cari properti di Ungasan?</h2>
+    <p>Belum menemukan yang cocok? Sebutkan budget dan kebutuhan Anda, kami carikan dari jaringan pemilik langsung.</p>
+    <div class="actions">
+      <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20mencari%20properti%20di%20area%20Ungasan." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"/></svg>Tanya via WhatsApp</a>
+      <a class="btn ghost" href="../inquiry.html#buyer">Isi form cari properti</a>
+    </div>
+  </section>
+  <section class="ar-other" aria-labelledby="h-other">
+    <h2 id="h-other">Area lain</h2>
+    <ul class="ar-links"><li><a href="../area/kuta-selatan.html">Kuta Selatan<small>24</small></a></li><li><a href="../area/jimbaran.html">Jimbaran &amp; Balangan<small>3</small></a></li><li><a href="../area/pecatu-uluwatu.html">Pecatu &amp; Uluwatu<small>4</small></a></li><li><a href="../area/pandawa-kutuh.html">Pandawa &amp; Kutuh<small>3</small></a></li><li><a href="../area/kuta-utara.html">Canggu &amp; Kuta Utara<small>4</small></a></li><li><a href="../area/kuta.html">Kuta<small>3</small></a></li><li><a href="../area/ubud.html">Ubud &amp; sekitarnya<small>3</small></a></li><li><a href="../area/gianyar.html">Gianyar<small>2</small></a></li></ul>
+    <p><a class="more-link" href="../listings.html">Lihat semua listing →</a></p>
+  </section>
+  <div id="kontak"><section class="contact" aria-labelledby="c-head">
+    <div class="eyebrow" style="color:var(--sand)">Info &amp; survey lokasi</div>
+    <h2 id="c-head">Bali Are Property</h2>
+    <div class="phone" id="phone" data-noi18n="">0812 868 080</div>
+    <div class="actions">
+      <a class="btn primary" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti." target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti.">Chat WhatsApp</a>
+      <button class="btn ghost" id="copy" type="button">Salin nomor</button>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" href="inquiry.html#buyer">Form cari properti</a>
+      <a class="btn ghost" href="inquiry.html#owner">Form titip jual</a>
+    </div>
+  </section></div>
+  <footer><span>© 2009–2026 Bali Are Property · Harga dapat berubah sewaktu-waktu. Sketsa hanya ilustrasi; data resmi mengikuti sertifikat.</span></footer>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var done=function(){btn.textContent='Nomor disalin';setTimeout(function(){btn.textContent='Salin nomor'},1800)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(document.getElementById('phone'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Nomor terpilih, tekan salin'};
+    try{navigator.clipboard.writeText('0812868080').then(done,sel)}catch(e){sel()}
+  });
+})();
+</script>
+<script src="/views.js" defer></script>
+<script src="../i18n.js"></script>
+</body>
+</html>

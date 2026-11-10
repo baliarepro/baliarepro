@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en" data-static-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: catalog — header + kawasan filter chips, grouped by jenis properti then kawasan, each listing a brochure card; shared contact block at end */
+:root{
+  --bg:#F6F2EA; --surface:#FFFFFF; --ink:#1C2421; --muted:#59625D; --line:#E2DACB;
+  --sea:#123F36; --sea-soft:#E2EBE5; --sand:#946410; --sand-soft:#F6EAD0; --wa:#1A8D4A; --sold:#B3261E;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+
+header{padding-block:44px 20px}
+h1{font-size:clamp(34px,7vw,56px);font-weight:800;letter-spacing:-.02em;margin-top:12px}
+.lead{color:var(--muted);font-size:17px;max-width:58ch;margin:12px 0 0}
+
+.filters{display:grid;gap:14px;margin-top:22px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flabel{flex-basis:100%;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.chip.empty{opacity:.4}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:600 14px var(--body);cursor:pointer}
+.chip small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.chip:focus-visible,.btn:focus-visible{outline:3px solid var(--sand);outline-offset:3px}
+
+.type{padding-block:28px 8px;border-top:2px solid var(--ink);margin-top:20px}
+.type-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.type-head h2{font-size:30px;font-weight:800}
+.type-head span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+.area{padding-block:24px 8px}
+.area-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.area-head h3{font-size:22px;font-weight:700}
+.area-head p{margin:0;color:var(--muted);font-size:14px}
+article.card[data-status="hidden"]{display:none!important}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px;display:grid;gap:18px}
+.card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.card h4{font-family:var(--display);font-size:clamp(22px,4.5vw,28px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
+.card .desc{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--sea-soft);color:var(--sea);white-space:nowrap}
+.badge.sand{background:var(--sand-soft);color:var(--ink)}
+
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.price div{background:var(--surface);padding:14px 16px;min-width:0}
+.price small{display:block;font-size:12px;color:var(--muted)}
+.price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
+.price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 12px;margin:2px 0 0;font-weight:600}.quick a{color:var(--sea)}.quick span{color:var(--muted)}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
+
+dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
+dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+dt{color:var(--muted);font-size:14px}
+dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;min-width:0}
+
+.plot{background:var(--bg);border-radius:12px;padding:12px;overflow-x:auto}
+.plot svg{display:block;width:100%;min-width:300px;height:auto}
+.plot p{font-size:12px;color:var(--muted);margin:6px 0 0}
+
+.card.sold{position:relative;overflow:hidden}
+.sold-stamp{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 16px;border:3px solid var(--sold);border-radius:10px;color:var(--sold);transform:rotate(-6deg);font-family:var(--display);line-height:1;text-align:center;white-space:nowrap}
+.sold-stamp b{font-size:26px;font-weight:800;letter-spacing:.08em}
+.sold-stamp small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.card.sold .price b{text-decoration:line-through;text-decoration-thickness:2px;opacity:.6}
+.card.sold .price .sold-note b{text-decoration:none;opacity:1;color:var(--sold)}
+.sold-stamp.plain{border-color:var(--muted);color:var(--muted);padding:10px 20px}
+.card.sold-plain .price .sold-note b{color:var(--muted)}
+.card.recommended{border:2px solid var(--sea)}
+.rec-tag{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;justify-self:start;background:var(--sea);color:var(--bg);border-radius:8px;padding:8px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.rec-tag svg{width:20px;height:20px;flex:none}
+.rec-tag .rt{display:flex;flex-direction:column;gap:2px}
+.rec-tag b{font-size:13px;white-space:nowrap}
+.rec-tag small{font-size:10px;opacity:.85;white-space:nowrap}
+ul.points{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;font-size:15px}
+ul.points li{position:relative;padding-left:20px;min-width:0}
+ul.points li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:2px;background:var(--sea)}
+@media (max-width:560px){ul.points{grid-template-columns:1fr}}
+ul.uses{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:500}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;border:0;cursor:pointer;font-family:var(--body)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn.primary{background:var(--sea);color:var(--bg)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+.btn:hover{filter:brightness(1.08)}
+
+.cta-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:22px}
+.cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 14px;padding:16px 18px;border-radius:16px;text-decoration:none;background:var(--sea);color:var(--bg)}
+.cta.owner{background:var(--sand-soft);color:var(--ink);border:1.5px solid var(--sand)}
+.cta small{grid-column:1;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.cta b{grid-column:1;font-family:var(--display);font-size:21px;line-height:1.15}
+.cta span{grid-column:1;font-size:14px;opacity:.85;line-height:1.4}
+.cta svg{grid-column:2;grid-row:1/3;width:22px;height:22px}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.cta{transition:filter .15s,transform .15s}.cta:hover{transform:translateY(-1px)}}
+
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.langs{display:flex;gap:10px;margin-left:auto}
+.lang-btn{display:block;width:42px;height:42px;padding:0;border:0;border-radius:50%;overflow:hidden;cursor:pointer;background:transparent;box-shadow:0 0 0 1px var(--line);opacity:.82}
+.lang-btn svg{display:block;width:100%;height:100%}
+.lang-btn:hover{opacity:1}
+.lang-btn[aria-pressed="true"],.lang-btn[aria-current="true"]{opacity:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--sea)}
+.lang-btn:focus-visible{outline:2px solid var(--sea);outline-offset:7px}
+@media (prefers-reduced-motion:no-preference){.lang-btn{transition:box-shadow .15s,opacity .15s}}
+
+.card h4 a{color:inherit;text-decoration:none}
+.card h4 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+a.home-link{text-decoration:none}
+a.home-link:hover{text-decoration:underline}
+.contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 22px;margin-block:36px 24px;display:grid;gap:14px}
+.contact h2{color:var(--bg);font-size:26px}
+.contact p{margin:0;opacity:.8}
+.phone{font-family:var(--mono);font-size:clamp(22px,5vw,28px);user-select:all;letter-spacing:.04em}
+.contact .btn.primary{background:var(--sand);color:#1C2421}
+.contact .btn.ghost{border-color:var(--bg);color:var(--bg)}
+footer{font-size:13px;color:var(--muted);padding-block:0 40px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+footer>span{min-width:0}
+.visits{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px}
+.visits svg{width:16px;height:16px;flex:none;color:var(--sea)}
+.visits b{font-variant-numeric:tabular-nums}
+
+@media (max-width:560px){
+  dl.specs{grid-template-columns:1fr}
+  .card{padding:18px}
+}
+@media (prefers-reduced-motion:no-preference){.btn,.chip{transition:filter .15s,background .15s}}
+</style>
+
+<title>Bali Property Purchase Cost Calculator (Taxes, Notary, Leasehold) | Bali Are Property</title>
+<!--seo-->
+<meta name="description" content="Estimate the cost of buying property in Bali: 5% BPHTB transfer tax, PPAT/notary fee, title transfer fee, developer VAT, 2.5% seller tax, and long-term leasehold costs.">
+<link rel="canonical" href="https://baliareproperty.com/en/kalkulator.html">
+<link rel="alternate" hreflang="id" href="https://baliareproperty.com/kalkulator.html">
+<link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/kalkulator.html">
+<link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/kalkulator.html">
+<link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/kalkulator.html">
+<link rel="icon" href="https://baliareproperty.com/favicon.ico" sizes="48x48">
+<link rel="icon" href="https://baliareproperty.com/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="https://baliareproperty.com/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="https://baliareproperty.com/apple-touch-icon.png">
+<link rel="manifest" href="https://baliareproperty.com/site.webmanifest">
+<meta name="theme-color" content="#123F36">
+<script src="/app.js" defer></script>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bali Are Property">
+<meta property="og:title" content="Bali Property Purchase Cost Calculator (Taxes, Notary, Leasehold) | Bali Are Property">
+<meta property="og:description" content="Estimate the cost of buying property in Bali: 5% BPHTB transfer tax, PPAT/notary fee, title transfer fee, developer VAT, 2.5% seller tax, and long-term leasehold costs.">
+<meta property="og:url" content="https://baliareproperty.com/en/kalkulator.html">
+<meta property="og:image" content="https://baliareproperty.com/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"RealEstateAgent","@id":"https://baliareproperty.com/#agent","name":"Bali Are Property","url":"https://baliareproperty.com/","telephone":"+62812868080","image":"https://baliareproperty.com/og.png","logo":"https://baliareproperty.com/logo.png","areaServed":{"@type":"Place","name":"Bali, Indonesia"},"address":{"@type":"PostalAddress","addressRegion":"Bali","addressCountry":"ID"}},{"@type":"WebApplication","name":"Bali Property Purchase Cost Calculator","description":"Estimate the cost of buying property in Bali: 5% BPHTB transfer tax, PPAT/notary fee, title transfer fee, developer VAT, 2.5% seller tax, and long-term leasehold costs.","url":"https://baliareproperty.com/en/kalkulator.html","inLanguage":"en","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":0,"priceCurrency":"IDR"},"publisher":{"@id":"https://baliareproperty.com/#agent"}}]}</script>
+<!--/seo-->
+<style>
+/* Homepage: hero lebar, lalu bagian-bagian bertumpuk; memakai token warna & font yang sama dengan halaman listing */
+.wrap.home{max-width:1040px}
+.home-top{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-block:22px 0}
+.home-top nav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-left:auto}
+.home-top nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.home-top nav a:hover{color:var(--sea)}
+.home-top .langs{margin-left:0}
+.hero{padding-block:56px 40px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(38px,7.2vw,72px);font-weight:800;letter-spacing:-.025em;line-height:1.02}
+.hero .lead{font-size:clamp(17px,2.2vw,20px);max-width:52ch;margin:0}
+.hero .actions{margin-top:8px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1.5px solid var(--ink);margin-bottom:12px}
+.facts div{padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.facts div+div{border-left:1px solid var(--line)}
+.facts b{font-family:var(--display);font-size:clamp(20px,3vw,28px);line-height:1.1;color:var(--sea)}
+.facts span{font-size:14px;color:var(--muted)}
+.hsec{padding-block:44px 8px;display:grid;gap:22px}
+.hsec h2{font-size:clamp(26px,4vw,36px);font-weight:700;letter-spacing:-.01em}
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:22px 48px;align-items:start}
+.about .text{display:grid;gap:14px;max-width:64ch}
+.about .text p{margin:0}
+.about .text p:first-child{font-size:18px}
+.more-link{color:var(--sea);font-weight:600;text-decoration:none}
+.more-link:hover{text-decoration:underline}
+.spec{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.spec li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 18px 44px;position:relative;font-weight:600;line-height:1.35}
+.spec li::before{content:"";position:absolute;left:18px;top:24px;width:12px;height:12px;border-radius:3px;background:var(--sand);transform:rotate(45deg)}
+.cov{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cov article{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.cov h3{font-size:24px}
+.cov ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cov li{background:var(--sea-soft);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:500}
+.cov .more{font-size:14px;color:var(--muted);margin:0}
+.cov a{margin-top:auto;color:var(--sea);font-weight:600;text-decoration:none}
+.cov a:hover{text-decoration:underline}
+.note{color:var(--muted);margin:0;max-width:70ch}
+.feat-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.feat-head a{color:var(--sea);font-weight:600;text-decoration:none}
+.feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.feat a.fc{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.feat a.fc:hover{border-color:var(--sea)}
+.feat .fc .eyebrow{font-size:11px}
+.feat .fc h3{font-size:19px;line-height:1.2;font-weight:700}
+.feat .fc b{margin-top:auto;font-family:var(--display);font-size:20px;color:var(--sea);font-variant-numeric:tabular-nums}
+.band{background:var(--sea-soft);color:var(--ink);border-radius:20px;padding:32px 26px;margin-top:44px;display:grid;gap:18px}
+.band p{margin:0;font-family:var(--display);font-size:clamp(24px,3.8vw,34px);font-weight:700;line-height:1.15;max-width:28ch;text-wrap:balance}
+.band .cta-duo{margin-top:0}
+@media (max-width:760px){
+  .about{grid-template-columns:1fr}
+  .spec,.feat{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cov{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .spec,.feat{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+  .facts div+div{border-left:0;border-top:1px solid var(--line)}
+  .hero{padding-block:36px 28px}
+}
+</style>
+<style>
+.kc-hero{padding-block:48px 18px;display:grid;gap:12px}
+.kc-hero h1{font-size:clamp(30px,5.6vw,52px);font-weight:800;letter-spacing:-.025em;line-height:1.05;text-wrap:balance}
+.kc-hero .lead{max-width:62ch;font-size:18px;margin:0}
+.kc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.kc{grid-template-columns:1fr}}
+.kc-box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;gap:16px}
+.kc-tabs{display:flex;gap:6px;background:var(--sea-soft);border-radius:999px;padding:4px}
+.kc-tabs button{flex:1;border:0;background:transparent;border-radius:999px;padding:10px 12px;font:inherit;font-weight:600;color:var(--sea);cursor:pointer}
+.kc-tabs button[aria-selected="true"]{background:var(--sea);color:#fff}
+.kc label{display:grid;gap:6px;font-weight:600;font-size:15px}
+.kc input[type=text]{font:inherit;font-size:18px;font-variant-numeric:tabular-nums;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
+.kc input[type=text]:focus{outline:2px solid var(--sea);outline-offset:1px}
+.kc .hint{font-weight:400;font-size:13px;color:var(--muted)}
+.kc .chk{display:flex;gap:10px;align-items:flex-start;font-weight:500}
+.kc .chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--sea)}
+.kc-res h2{font-size:20px;margin:0}
+.kc-res table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.kc-res td{padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.kc-res td:last-child{text-align:right;font-weight:600;white-space:nowrap;padding-left:12px}
+.kc-res tr.neg td:last-child{color:#1A8D4A}
+.kc-res tr.sum td{border-bottom:0;border-top:1.5px solid var(--ink);font-weight:800;font-size:17px;padding-top:12px}
+.kc-res tr.sum td:last-child{color:var(--sea);font-size:20px}
+.kc-res .fx{display:block;font-size:12px;font-weight:500;color:var(--muted)}
+.kc-res .sub{font-size:13px;color:var(--muted);display:block;font-weight:400}
+.kc-grand{background:var(--sea);color:#fff;border-radius:14px;padding:16px 18px;display:grid;gap:2px}
+.kc-grand small{opacity:.8}
+.kc-grand b{font-size:clamp(22px,4vw,28px);font-family:var(--display)}
+.kc-grand .fx{color:#D9E5DF;font-size:13px}
+.kc-wna{background:var(--sand-soft);border-radius:18px;padding:22px;margin-top:20px;display:grid;gap:8px}
+.kc-wna h2{font-size:20px}
+.kc-wna ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.kc-note{font-size:13px;color:var(--muted);margin-top:16px;max-width:80ch}
+.ask{background:var(--sea-soft);border-radius:20px;padding:28px 24px;margin-top:30px;display:grid;gap:10px}
+.ask h2{font-size:clamp(22px,3.4vw,30px)}
+.ask p{margin:0;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap home">
+  <div class="home-top">
+    <a class="eyebrow home-link" href="./"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
+    <nav aria-label="Menu">
+      <a href="about.html">About</a>
+      <a href="listings.html">Listings</a>
+      <a href="news.html">News</a>
+      <a href="guide.html">Guide</a>
+      <a href="faq.html">FAQ</a>
+      <a href="#kontak">Contact</a>
+    </nav>
+    <div class="langs" role="group" aria-label="Pilih bahasa / Language">
+        <a class="lang-btn" data-lang="id" hreflang="id" href="../kalkulator.html" aria-label="Bahasa Indonesia" aria-current="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="18" fill="#CE1126"></rect><rect y="18" width="36" height="18" fill="#FFFFFF"></rect></svg></a>
+        <a class="lang-btn" data-lang="en" hreflang="en" href="kalkulator.html" aria-label="English" aria-current="true"><svg viewBox="15 0 30 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"></path></clipPath><rect width="60" height="30" fill="#012169"></rect><path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"></path><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"></path><path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"></path><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"></path></svg></a>
+        <a class="lang-btn" data-lang="ru" hreflang="ru" href="../ru/kalkulator.html" aria-label="Русский" aria-current="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="12" fill="#FFFFFF"></rect><rect y="12" width="36" height="12" fill="#0039A6"></rect><rect y="24" width="36" height="12" fill="#D52B1E"></rect></svg></a>
+      </div>
+  </div>
+
+  <header class="kc-hero">
+    <div class="eyebrow">Buyer tool</div>
+    <h1>Bali Property Purchase Cost Calculator</h1>
+    <p class="lead">A quick estimate of the official taxes and fees when buying or leasing land, a villa or a house in Bali.</p>
+  </header>
+
+  <div class="kc" data-noi18n>
+    <form class="kc-box" id="kcf" onsubmit="return false">
+      <div class="kc-tabs" role="tablist">
+        <button type="button" role="tab" id="tb-buy" aria-selected="true">Buy (freehold transfer)</button>
+        <button type="button" role="tab" id="tb-lease" aria-selected="false">Long-term lease (leasehold)</button>
+      </div>
+      <div id="f-buy" style="display:grid;gap:16px">
+        <label>Transaction price (IDR)<input type="text" inputmode="numeric" id="price" value="5.000.000.000" autocomplete="off"></label>
+        <label>Tax-free threshold NPOPTKP (IDR)<input type="text" inputmode="numeric" id="npop" value="80.000.000" autocomplete="off"><span class="hint">Value exempt from BPHTB. At least IDR 80M under the regional tax law; confirm the local figure with your PPAT.</span></label>
+        <label>PPAT/notary fee (%)<input type="text" inputmode="decimal" id="ppat" value="1" autocomplete="off"><span class="hint">Maximum 1% of the transaction value (Government Regulation 24/2016). Often negotiable.</span></label>
+        <label class="chk"><input type="checkbox" id="dev"><span>New property from a developer (VAT applies)</span></label>
+        <label class="chk" id="dtp-row" hidden><input type="checkbox" id="dtp" checked><span>Ready house/villa ≤ IDR 5 billion: government VAT incentive (until 31 Dec 2026)</span></label>
+      </div>
+      <div id="f-lease" style="display:none;gap:16px">
+        <label>Total lease price (IDR)<input type="text" inputmode="numeric" id="lprice" value="2.500.000.000" autocomplete="off"></label>
+        <label>Lease term (years)<input type="text" inputmode="numeric" id="years" value="25" autocomplete="off"></label>
+        <label>Notary deed fee (%)<input type="text" inputmode="decimal" id="lnot" value="1" autocomplete="off"><span class="hint">No fixed tariff; use your notary's quote.</span></label>
+      </div>
+    </form>
+    <div class="kc-box kc-res" id="res" aria-live="polite"></div>
+  </div>
+
+  <section class="kc-wna" aria-labelledby="h-wna">
+    <h2 id="h-wna">Foreign buyer?</h2>
+    <ul><li>Foreigners cannot hold SHM (freehold) title. Common options: a long-term lease (leasehold), Hak Pakai (right of use) for a residence for eligible foreigners, or HGB held by a PT PMA company.</li><li>Leaseholds usually run 25–30 years with extension options written into the notarial deed.</li><li>We can recommend a notary/PPAT and advisers for the right structure.</li></ul>
+  </section>
+  <p class="kc-note">Estimate only, not tax or legal advice. Final figures are set by the PPAT/notary and the tax office based on the transaction value or the applicable NJOP. Excludes agent commission, title checks, annual land tax (PBB) and permits.</p>
+
+  <section class="ask" aria-labelledby="h-ask">
+    <h2 id="h-ask">Want a breakdown for a specific listing?</h2>
+    <p>Send us the listing or your budget and we'll prepare the numbers and recommend a notary.</p>
+    <div class="actions">
+      <a class="btn wa" href="https://wa.me/62812868080?text=Hello%20Pak%20Bagoes%2C%20I'd%20like%20advice%20on%20the%20costs%20of%20buying%20property%20in%20Bali." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"/></svg>Ask on WhatsApp</a>
+      <a class="btn ghost" href="listings.html">See listings</a>
+    </div>
+  </section>
+
+  <div id="kontak"><section class="contact" aria-labelledby="c-head">
+    <div class="eyebrow" style="color:var(--sand)">Info &amp; site visits</div>
+    <h2 id="c-head">Bali Are Property</h2>
+    <div class="phone" id="phone" data-noi18n="">0812 868 080</div>
+    <div class="actions">
+      <a class="btn primary" href="https://wa.me/62812868080?text=Hello%20Pak%20Bagoes%2C%20I'd%20like%20information%20about%20your%20property%20listings." target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti.">Chat on WhatsApp</a>
+      <button class="btn ghost" id="copy" type="button">Copy number</button>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" href="inquiry.html#buyer">Property request form</a>
+      <a class="btn ghost" href="inquiry.html#owner">Owner listing form</a>
+    </div>
+  </section></div>
+  <footer><span>© 2009–2026 Bali Are Property · Prices may change at any time. Sketches are illustrations only; official data follows the land certificate.</span></footer>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var done=function(){btn.textContent='Nomor disalin';setTimeout(function(){btn.textContent='Salin nomor'},1800)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(document.getElementById('phone'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Nomor terpilih, tekan salin'};
+    try{navigator.clipboard.writeText('0812868080').then(done,sel)}catch(e){sel()}
+  });
+})();
+(function(){
+  var T={"buyerH":"Buyer's costs","sellerH":"Seller's obligations (info)","leaseH":"Lease breakdown","bphtb":"BPHTB transfer tax (5%)","ppatFee":"PPAT/notary fee","pnbp":"Title transfer fee, PNBP (estimate)","ppn":"VAT 11%","ppnDtp":"VAT borne by the government","total":"Total buyer costs","ofPrice":"of price","grand":"Total to prepare (price + costs)","pph":"Seller's final income tax (2.5%)","pphNote":"Paid by the seller before the deed (AJB) is signed.","perYear":"Lease price per year","pphL":"Final tax on lease (10%)","pphLNote":"The lessor's obligation; if the lessee is a company, the lessee must withhold it.","lnotFee":"Notary deed (estimate)","ltotal":"Total to prepare (lessee)"};
+  var FX={"usd":18084,"eur":20263}, L="en", DTP_UNTIL="2026-12-31";
+  var $=function(id){return document.getElementById(id)};
+  var num=function(id){return parseFloat(($(id).value||"").replace(/[^0-9,.]/g,"").replace(/\.(?=\d{3}(\D|$))/g,"").replace(",","."))||0};
+  var grp=function(n){return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,".")};
+  var rp=function(n){return (n<0?"−":"")+"Rp"+grp(Math.abs(n))};
+  var fx=function(n){if(!FX||!n)return"";return '<span class="fx">≈ '+fmt(n/FX.usd,"US$")+(FX.eur?" · "+fmt(n/FX.eur,"€"):"")+"</span>"};
+  var fmt=function(v,s){var d=L==="ru"?",":".";if(v>=1e6)return s+(v/1e6).toFixed(v>=1e7?1:2).replace(/\.?0+$/,"").replace(".",d)+(L==="ru"?"\u00a0млн":"M");
+    var r=v>=1e4?Math.round(v/100)*100:Math.round(v);return s+String(r).replace(/\B(?=(\d{3})+(?!\d))/g,L==="ru"?"\u00a0":",")};
+  var row=function(k,v,sub,cls){return '<tr'+(cls?' class="'+cls+'"':'')+'><td>'+k+(sub?'<span class="sub">'+sub+'</span>':'')+'</td><td>'+rp(v)+fx(Math.abs(v))+'</td></tr>'};
+  var mode="buy";
+  function calc(){
+    var o="";
+    if(mode==="buy"){
+      var p=num("price"),np=num("npop"),pp=Math.min(num("ppat"),100)/100,dev=$("dev").checked;
+      $("dtp-row").hidden=!dev||p>5e9||new Date().toISOString().slice(0,10)>DTP_UNTIL;
+      var bphtb=Math.max(0,p-np)*0.05,ppat=p*pp,pnbp=p>0?p/1000+50000:0,ppn=dev?p*0.11:0;
+      var dtp=(dev&&!$("dtp-row").hidden&&$("dtp").checked)?Math.min(p,2e9)*0.11:0;
+      var tot=bphtb+ppat+pnbp+ppn-dtp;
+      o+='<h2>'+T.buyerH+'</h2><table>'+row(T.bphtb,bphtb)+row(T.ppatFee,ppat)+row(T.pnbp,pnbp)+(dev?row(T.ppn,ppn):"")+(dtp?row(T.ppnDtp,-dtp,"","neg"):"")
+        +row(T.total,tot,p?(tot/p*100).toFixed(1).replace(".",L==="en"?".":",")+"% "+T.ofPrice:"","sum")+'</table>';
+      o+='<div class="kc-grand"><small>'+T.grand+'</small><b>'+rp(p+tot)+'</b>'+fx(p+tot)+'</div>';
+      o+='<h2>'+T.sellerH+'</h2><table>'+row(T.pph,p*0.025,T.pphNote)+'</table>';
+    } else {
+      var lp=num("lprice"),y=Math.max(1,num("years")),ln=Math.min(num("lnot"),100)/100;
+      var nf=lp*ln;
+      o+='<h2>'+T.leaseH+'</h2><table>'+row(T.perYear,lp/y)+row(T.lnotFee,nf)+row(T.ltotal,lp+nf,"","sum")+'</table>';
+      o+='<h2>'+T.sellerH+'</h2><table>'+row(T.pphL,lp*0.1,T.pphLNote)+'</table>';
+    }
+    $("res").innerHTML=o;
+  }
+  function tab(m){mode=m;$("tb-buy").setAttribute("aria-selected",m==="buy");$("tb-lease").setAttribute("aria-selected",m!=="buy");
+    $("f-buy").style.display=m==="buy"?"grid":"none";$("f-lease").style.display=m==="buy"?"none":"grid";calc();}
+  $("tb-buy").onclick=function(){tab("buy")};$("tb-lease").onclick=function(){tab("lease")};
+  ["price","npop","lprice"].forEach(function(id){$(id).addEventListener("input",function(e){var el=e.target,v=el.value.replace(/\D/g,"");el.value=v?grp(+v):"";calc()})});
+  ["ppat","years","lnot"].forEach(function(id){$(id).addEventListener("input",calc)});
+  ["dev","dtp"].forEach(function(id){$(id).addEventListener("change",calc)});
+  var q=new URLSearchParams(location.search),h=parseInt(q.get("harga")||q.get("price")||"",10);
+  if(h>0)$("price").value=grp(h);
+  if(q.get("mode")==="lease")tab("lease");else calc();
+})();
+</script>
+<script src="../i18n.js"></script>
+</body>
+</html>

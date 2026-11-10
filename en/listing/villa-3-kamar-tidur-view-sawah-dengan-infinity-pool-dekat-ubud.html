@@ -64,6 +64,8 @@ article.card[data-status="hidden"]{display:none!important}
 .price small{display:block;font-size:12px;color:var(--muted)}
 .price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
 .price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 12px;margin:2px 0 0;font-weight:600}.quick a{color:var(--sea)}.quick span{color:var(--muted)}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
 
 dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
 dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
@@ -177,6 +179,7 @@ a.eyebrow{text-decoration:none}
 .back{align-self:flex-start;margin-top:12px;color:var(--sea);font-weight:600;text-decoration:none}
 .back:hover{text-decoration:underline}
 .crumb{color:var(--muted);font-size:14px;margin:0}
+.crumb a{color:var(--sea);font-weight:600}
 .card h1{font-family:var(--display);font-size:clamp(26px,5.5vw,34px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
 main{display:flex;flex-direction:column;gap:22px}
 main .cta-duo{margin-top:0}
@@ -243,7 +246,7 @@ main .cta-duo{margin-top:0}
   .print-foot .pf-note{grid-column:1/-1;font-size:6.5pt;color:var(--muted);border-top:.2mm dashed var(--line);padding-top:2mm}
 }
 </style>
-<style id="fit">@media print{main{zoom:0.861;margin:0 auto}}</style>
+<style id="fit">@media print{main{zoom:0.844;margin:0 auto}}</style>
 </head>
 <body data-listing="villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud">
 <div class="wrap">
@@ -257,7 +260,7 @@ main .cta-duo{margin-top:0}
       </div>
     </div>
     <a class="back" href="../listings.html">← See all listings</a>
-    <p class="crumb">Villa · Abiansemal area · Badung Regency · 1 listings</p>
+    <p class="crumb">Villa · <a href="../area/ubud.html">Ubud &amp; surroundings</a> · Badung Regency · 1 listings</p>
   </header>
   <main>
     <div class="print-only print-head"><div class="ph-brand"><svg viewBox="0 0 120 120" width="40" height="40" aria-hidden="true" class="ph-mark"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#fff"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg><div><b>Bali Are Property</b><span>Independent property agency · Bali · since 2009</span></div></div><div class="ph-contact"><b>WhatsApp +62 812 868 080</b><br>baliareproperty.com</div></div>
@@ -274,8 +277,8 @@ main .cta-duo{margin-top:0}
 
         <div class="gallery n3"><a href="../../img/wm/villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud/1.jpg" target="_blank" rel="noopener"><img src="../../img/wm/villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud/1.jpg" alt="Photo 1 – 3-bedroom rice field view villa with infinity pool near Ubud" loading="eager" decoding="async"></a><a href="../../img/wm/villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud/2.jpg" target="_blank" rel="noopener"><img src="../../img/wm/villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud/2.jpg" alt="Photo 2 – 3-bedroom rice field view villa with infinity pool near Ubud" loading="lazy" decoding="async"></a><a href="../../img/wm/villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud/3.jpg" target="_blank" rel="noopener"><img src="../../img/wm/villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud/3.jpg" alt="Photo 3 – 3-bedroom rice field view villa with infinity pool near Ubud" loading="lazy" decoding="async"></a></div>
         <div class="price">
-          <div class="hl"><small>Freehold</small><b>Rp5.9 billion</b></div>
-          <div class="hl"><small>Leasehold 30 years</small><b>Rp5.6 billion</b></div>
+          <div class="hl"><small>Freehold</small><b>Rp5.9 billion</b><span class="fx" data-noi18n="">≈ US$326,000 · €291,000</span></div>
+          <div class="hl"><small>Leasehold 30 years</small><b>Rp5.6 billion</b><span class="fx" data-noi18n="">≈ US$310,000 · €276,000</span></div>
         </div>
 
         <dl class="specs">
@@ -310,6 +313,7 @@ main .cta-duo{margin-top:0}
           <a class="btn wa" href="https://wa.me/62812868080?text=Hello%20Pak%20Bagoes%2C%20I'm%20interested%20in%20the%20listing%20%223-bedroom%20rice%20field%20view%20villa%20with%20infinity%20pool%20near%20Ubud%22.%20Could%20you%20send%20me%20more%20details%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Villa%203%20KT%20view%20sawah%20dengan%20infinity%20pool%20dekat%20Ubud%20%28Blahkiuh%2C%20Abiansemal%29.%20Boleh%20minta%20info%20detail%20dan%20jadwal%20viewing%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Ask on WhatsApp</a>
           <a class="btn ghost" href="https://drive.google.com/drive/folders/1xBOhclNS-e5VTxyHZ2-ztSmYwrCgadaZ" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>View photos</a>
           <button class="btn ghost pdf" type="button" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Download PDF</button>
+        <a class="btn ghost calc" href="../kalkulator.html?harga=5900000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>Estimate buying costs</a>
         </div>
       </article>
     <div class="print-only print-foot"><div><span class="pf-label">Info &amp; site visit</span><span class="pf-name">Bagoes</span> · WhatsApp <b>+62 812 868 080</b><br>wa.me/62812868080</div><div><span class="pf-label">View this listing online</span><a class="pf-link" href="https://baliareproperty.com/en/listing/villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud.html">baliareproperty.com/en/listing/villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud.html</a></div><p class="pf-note">Prices, availability and specifications may change without notice. Please confirm with Bali Are Property before making a decision. Printed from baliareproperty.com.</p></div>

@@ -90,6 +90,8 @@ article.card[data-status="hidden"]{display:none!important}
 .price small{display:block;font-size:12px;color:var(--muted)}
 .price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
 .price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 12px;margin:2px 0 0;font-weight:600}.quick a{color:var(--sea)}.quick span{color:var(--muted)}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
 
 dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
 dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
@@ -186,6 +188,7 @@ footer>span{min-width:0}
     </div>
     <h1>Объекты недвижимости</h1>
     <p class="lead">Земля, виллы, дома и коммерческая недвижимость на Бали, готовые к сделке. Сгруппированы по типу и району.</p>
+    <p class="quick"><a href="area/">Поиск по районам</a><span aria-hidden="true">·</span><a href="kalkulator.html">Калькулятор расходов</a></p>
     <div class="cta-duo">
       <a class="cta" href="inquiry.html#buyer"><b>Найти недвижимость</b><span>Не нашли подходящий вариант? Расскажите, что вам нужно, и мы подберём.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
       <a class="cta owner" href="inquiry.html#owner"><b>Продать недвижимость</b><span>Разместите вашу землю, виллу или дом в нашем каталоге.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
@@ -233,8 +236,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp7&nbsp;000&nbsp;000</b></div>
-          <div class="hl"><small>Итого 6&nbsp;000 м²</small><b>Rp42 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp7&nbsp;000&nbsp;000</b><span class="fx" data-noi18n="">≈ US$387 · €345</span></div>
+          <div class="hl"><small>Итого 6&nbsp;000 м²</small><b>Rp42 млрд</b><span class="fx" data-noi18n="">≈ US$2,32&nbsp;млн · €2,07&nbsp;млн</span></div>
         </div>
 
         <dl class="specs">
@@ -283,10 +286,10 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp14&nbsp;500&nbsp;000</b></div>
-          <div><small>За ар</small><b>Rp1,45 млрд</b></div>
-          <div><small>За участок · 650 м²</small><b>Rp9,425 млрд</b></div>
-          <div class="hl"><small>Два участка · 1&nbsp;300 м²</small><b>Rp18,85 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp14&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$802 · €716</span></div>
+          <div><small>За ар</small><b>Rp1,45 млрд</b><span class="fx" data-noi18n="">≈ US$80&nbsp;200 · €71&nbsp;600</span></div>
+          <div><small>За участок · 650 м²</small><b>Rp9,425 млрд</b><span class="fx" data-noi18n="">≈ US$521&nbsp;000 · €465&nbsp;000</span></div>
+          <div class="hl"><small>Два участка · 1&nbsp;300 м²</small><b>Rp18,85 млрд</b><span class="fx" data-noi18n="">≈ US$1,04&nbsp;млн · €930&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -340,8 +343,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp6&nbsp;500&nbsp;000</b></div>
-          <div class="hl"><small>Итого 300 м²</small><b>Rp1,95 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp6&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$359 · €321</span></div>
+          <div class="hl"><small>Итого 300 м²</small><b>Rp1,95 млрд</b><span class="fx" data-noi18n="">≈ US$108&nbsp;000 · €96&nbsp;200</span></div>
         </div>
 
         <dl class="specs">
@@ -388,9 +391,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp7&nbsp;500&nbsp;000</b></div>
-          <div><small>За ар</small><b>Rp750 млн</b></div>
-          <div class="hl"><small>Итого 430 м²</small><b>Rp3,225 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp7&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$415 · €370</span></div>
+          <div><small>За ар</small><b>Rp750 млн</b><span class="fx" data-noi18n="">≈ US$41&nbsp;500 · €37&nbsp;000</span></div>
+          <div class="hl"><small>Итого 430 м²</small><b>Rp3,225 млрд</b><span class="fx" data-noi18n="">≈ US$178&nbsp;000 · €159&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -445,9 +448,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м² (650 млн IDR/ар)</small><b>Rp6&nbsp;500&nbsp;000</b></div>
-          <div><small>Только участок 1 000 м²</small><b>Rp6,5 млрд</b></div>
-          <div class="hl"><small>Итого 2&nbsp;450 м²</small><b>Rp15,925 млрд</b></div>
+          <div><small>Цена за м² (650 млн IDR/ар)</small><b>Rp6&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$359 · €321</span></div>
+          <div><small>Только участок 1 000 м²</small><b>Rp6,5 млрд</b><span class="fx" data-noi18n="">≈ US$359&nbsp;000 · €321&nbsp;000</span></div>
+          <div class="hl"><small>Итого 2&nbsp;450 м²</small><b>Rp15,925 млрд</b><span class="fx" data-noi18n="">≈ US$881&nbsp;000 · €786&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -481,8 +484,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м² (торг)</small><b>Rp5&nbsp;500&nbsp;000</b></div>
-          <div class="hl"><small>Итого 15&nbsp;000 м²</small><b>Rp82,5 млрд</b></div>
+          <div><small>Цена за м² (торг)</small><b>Rp5&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$304 · €271</span></div>
+          <div class="hl"><small>Итого 15&nbsp;000 м²</small><b>Rp82,5 млрд</b><span class="fx" data-noi18n="">≈ US$4,56&nbsp;млн · €4,07&nbsp;млн</span></div>
         </div>
 
         <dl class="specs">
@@ -514,9 +517,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp5&nbsp;750&nbsp;000</b></div>
-          <div><small>За ар</small><b>Rp575 млн</b></div>
-          <div class="hl"><small>Итого 7&nbsp;000 м²</small><b>Rp40,25 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp5&nbsp;750&nbsp;000</b><span class="fx" data-noi18n="">≈ US$318 · €284</span></div>
+          <div><small>За ар</small><b>Rp575 млн</b><span class="fx" data-noi18n="">≈ US$31&nbsp;800 · €28&nbsp;400</span></div>
+          <div class="hl"><small>Итого 7&nbsp;000 м²</small><b>Rp40,25 млрд</b><span class="fx" data-noi18n="">≈ US$2,23&nbsp;млн · €1,99&nbsp;млн</span></div>
         </div>
 
         <dl class="specs">
@@ -555,8 +558,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp7&nbsp;000&nbsp;000</b></div>
-          <div class="hl"><small>Итого 400 м²</small><b>Rp2,8 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp7&nbsp;000&nbsp;000</b><span class="fx" data-noi18n="">≈ US$387 · €345</span></div>
+          <div class="hl"><small>Итого 400 м²</small><b>Rp2,8 млрд</b><span class="fx" data-noi18n="">≈ US$155&nbsp;000 · €138&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -603,8 +606,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp6&nbsp;000&nbsp;000</b></div>
-          <div class="hl"><small>Итого 830 м²</small><b>Rp4,98 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp6&nbsp;000&nbsp;000</b><span class="fx" data-noi18n="">≈ US$332 · €296</span></div>
+          <div class="hl"><small>Итого 830 м²</small><b>Rp4,98 млрд</b><span class="fx" data-noi18n="">≈ US$275&nbsp;000 · €246&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -653,8 +656,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp10&nbsp;000&nbsp;000</b></div>
-          <div class="hl"><small>Итого 1&nbsp;000 м²</small><b>Rp10 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp10&nbsp;000&nbsp;000</b><span class="fx" data-noi18n="">≈ US$553 · €494</span></div>
+          <div class="hl"><small>Итого 1&nbsp;000 м²</small><b>Rp10 млрд</b><span class="fx" data-noi18n="">≈ US$553&nbsp;000 · €494&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -687,8 +690,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за ар (Rp6,5 млн/м²)</small><b>Rp650 млн</b></div>
-          <div class="hl"><small>Итого 1&nbsp;990 м²</small><b>Rp12,935 млрд</b></div>
+          <div><small>Цена за ар (Rp6,5 млн/м²)</small><b>Rp650 млн</b><span class="fx" data-noi18n="">≈ US$35&nbsp;900 · €32&nbsp;100</span></div>
+          <div class="hl"><small>Итого 1&nbsp;990 м²</small><b>Rp12,935 млрд</b><span class="fx" data-noi18n="">≈ US$715&nbsp;000 · €638&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -821,8 +824,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp6&nbsp;500&nbsp;000</b></div>
-          <div class="hl"><small>Итого 5&nbsp;300 м²</small><b>Rp34,45 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp6&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$359 · €321</span></div>
+          <div class="hl"><small>Итого 5&nbsp;300 м²</small><b>Rp34,45 млрд</b><span class="fx" data-noi18n="">≈ US$1,9&nbsp;млн · €1,7&nbsp;млн</span></div>
         </div>
 
         <dl class="specs">
@@ -871,10 +874,10 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Продажа за м²</small><b>Rp9&nbsp;500&nbsp;000</b></div>
-          <div class="hl"><small>Итого продажа 550 м²</small><b>Rp5,225 млрд</b></div>
-          <div><small>Аренда за ар/год</small><b>Rp17 млн</b></div>
-          <div class="hl"><small>Аренда 5,5 ар/год</small><b>Rp93,5 млн</b></div>
+          <div><small>Продажа за м²</small><b>Rp9&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$525 · €469</span></div>
+          <div class="hl"><small>Итого продажа 550 м²</small><b>Rp5,225 млрд</b><span class="fx" data-noi18n="">≈ US$289&nbsp;000 · €258&nbsp;000</span></div>
+          <div><small>Аренда за ар/год</small><b>Rp17 млн</b><span class="fx" data-noi18n="">≈ US$940 · €839</span></div>
+          <div class="hl"><small>Аренда 5,5 ар/год</small><b>Rp93,5 млн</b><span class="fx" data-noi18n="">≈ US$5&nbsp;170 · €4&nbsp;610</span></div>
         </div>
 
         <dl class="specs">
@@ -907,8 +910,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м² (650 млн IDR/ар)</small><b>Rp6&nbsp;500&nbsp;000</b></div>
-          <div class="hl"><small>Итого 3&nbsp;000 м²</small><b>Rp19,5 млрд</b></div>
+          <div><small>Цена за м² (650 млн IDR/ар)</small><b>Rp6&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$359 · €321</span></div>
+          <div class="hl"><small>Итого 3&nbsp;000 м²</small><b>Rp19,5 млрд</b><span class="fx" data-noi18n="">≈ US$1,08&nbsp;млн · €962&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -944,10 +947,10 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp12&nbsp;500&nbsp;000</b></div>
-          <div><small>Участок A · 214 м²</small><b>Rp2,675 млрд</b></div>
-          <div><small>Участок B · 181 м²</small><b>Rp2,263 млрд</b></div>
-          <div class="hl"><small>Вместе · 395 м²</small><b>Rp4,938 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp12&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$691 · €617</span></div>
+          <div><small>Участок A · 214 м²</small><b>Rp2,675 млрд</b><span class="fx" data-noi18n="">≈ US$148&nbsp;000 · €132&nbsp;000</span></div>
+          <div><small>Участок B · 181 м²</small><b>Rp2,263 млрд</b><span class="fx" data-noi18n="">≈ US$125&nbsp;000 · €112&nbsp;000</span></div>
+          <div class="hl"><small>Вместе · 395 м²</small><b>Rp4,938 млрд</b><span class="fx" data-noi18n="">≈ US$273&nbsp;000 · €244&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -998,8 +1001,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp10&nbsp;000&nbsp;000</b></div>
-          <div class="hl"><small>Итого 9&nbsp;025 м²</small><b>Rp90,25 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp10&nbsp;000&nbsp;000</b><span class="fx" data-noi18n="">≈ US$553 · €494</span></div>
+          <div class="hl"><small>Итого 9&nbsp;025 м²</small><b>Rp90,25 млрд</b><span class="fx" data-noi18n="">≈ US$4,99&nbsp;млн · €4,45&nbsp;млн</span></div>
         </div>
 
         <dl class="specs">
@@ -1040,8 +1043,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp14&nbsp;500&nbsp;000</b></div>
-          <div class="hl"><small>Итого 215 м²</small><b>Rp3,12 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp14&nbsp;500&nbsp;000</b><span class="fx" data-noi18n="">≈ US$802 · €716</span></div>
+          <div class="hl"><small>Итого 215 м²</small><b>Rp3,12 млрд</b><span class="fx" data-noi18n="">≈ US$173&nbsp;000 · €154&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -1128,9 +1131,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp18&nbsp;000&nbsp;000</b></div>
-          <div><small>Цена за ар</small><b>Rp1,8 млрд</b></div>
-          <div class="hl"><small>Итого 1&nbsp;620 м²</small><b>Rp29,16 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp18&nbsp;000&nbsp;000</b><span class="fx" data-noi18n="">≈ US$995 · €888</span></div>
+          <div><small>Цена за ар</small><b>Rp1,8 млрд</b><span class="fx" data-noi18n="">≈ US$99&nbsp;500 · €88&nbsp;800</span></div>
+          <div class="hl"><small>Итого 1&nbsp;620 м²</small><b>Rp29,16 млрд</b><span class="fx" data-noi18n="">≈ US$1,61&nbsp;млн · €1,44&nbsp;млн</span></div>
         </div>
 
         <dl class="specs">
@@ -1167,8 +1170,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за ар (≈Rp21 млн/м²)</small><b>Rp2,1 млрд</b></div>
-          <div class="hl"><small>Итого 350 м² (торг)</small><b>Rp7,35 млрд</b></div>
+          <div><small>Цена за ар (≈Rp21 млн/м²)</small><b>Rp2,1 млрд</b><span class="fx" data-noi18n="">≈ US$116&nbsp;000 · €104&nbsp;000</span></div>
+          <div class="hl"><small>Итого 350 м² (торг)</small><b>Rp7,35 млрд</b><span class="fx" data-noi18n="">≈ US$406&nbsp;000 · €363&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -1207,8 +1210,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м² (Rp600 млн/ар)</small><b>Rp6&nbsp;000&nbsp;000</b></div>
-          <div class="hl"><small>Итого 2&nbsp;802 м²</small><b>Rp16,812 млрд</b></div>
+          <div><small>Цена за м² (Rp600 млн/ар)</small><b>Rp6&nbsp;000&nbsp;000</b><span class="fx" data-noi18n="">≈ US$332 · €296</span></div>
+          <div class="hl"><small>Итого 2&nbsp;802 м²</small><b>Rp16,812 млрд</b><span class="fx" data-noi18n="">≈ US$930&nbsp;000 · €830&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -1240,8 +1243,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м²</small><b>Rp6&nbsp;000&nbsp;000</b></div>
-          <div class="hl"><small>Итого 1&nbsp;236 м²</small><b>Rp7,416 млрд</b></div>
+          <div><small>Цена за м²</small><b>Rp6&nbsp;000&nbsp;000</b><span class="fx" data-noi18n="">≈ US$332 · €296</span></div>
+          <div class="hl"><small>Итого 1&nbsp;236 м²</small><b>Rp7,416 млрд</b><span class="fx" data-noi18n="">≈ US$410&nbsp;000 · €366&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -1284,8 +1287,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Цена за м² (Rp380 млн/ар)</small><b>Rp3&nbsp;800&nbsp;000</b></div>
-          <div class="hl"><small>Итого 450 м² (торг)</small><b>Rp1,71 млрд</b></div>
+          <div><small>Цена за м² (Rp380 млн/ар)</small><b>Rp3&nbsp;800&nbsp;000</b><span class="fx" data-noi18n="">≈ US$210 · €188</span></div>
+          <div class="hl"><small>Итого 450 м² (торг)</small><b>Rp1,71 млрд</b><span class="fx" data-noi18n="">≈ US$94&nbsp;600 · €84&nbsp;400</span></div>
         </div>
 
         <dl class="specs">
@@ -1327,8 +1330,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена</small><b>Rp45 млрд</b></div>
-          <div><small>В пересчёте на м² земли</small><b>±Rp18,3 млн</b></div>
+          <div class="hl"><small>Цена</small><b>Rp45 млрд</b><span class="fx" data-noi18n="">≈ US$2,49&nbsp;млн · €2,22&nbsp;млн</span></div>
+          <div><small>В пересчёте на м² земли</small><b>±Rp18,3 млн</b><span class="fx" data-noi18n="">≈ US$1&nbsp;010 · €903</span></div>
         </div>
 
         <dl class="specs">
@@ -1374,8 +1377,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена</small><b>Rp65 млрд</b></div>
-          <div><small>В пересчёте на м² земли</small><b>±Rp19,6 млн</b></div>
+          <div class="hl"><small>Цена</small><b>Rp65 млрд</b><span class="fx" data-noi18n="">≈ US$3,59&nbsp;млн · €3,21&nbsp;млн</span></div>
+          <div><small>В пересчёте на м² земли</small><b>±Rp19,6 млн</b><span class="fx" data-noi18n="">≈ US$1&nbsp;080 · €967</span></div>
         </div>
 
         <dl class="specs">
@@ -1426,8 +1429,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена</small><b>Rp3,5 млрд</b></div>
-          <div><small>Оценка аренды за ночь</small><b>Rp2,8–3,2 млн</b></div>
+          <div class="hl"><small>Цена</small><b>Rp3,5 млрд</b><span class="fx" data-noi18n="">≈ US$194&nbsp;000 · €173&nbsp;000</span></div>
+          <div><small>Оценка аренды за ночь</small><b>Rp2,8–3,2 млн</b><span class="fx" data-noi18n="">≈ US$0 · €0</span></div>
         </div>
 
         <dl class="specs">
@@ -1466,8 +1469,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена</small><b>Rp4,388 млрд</b></div>
-          <div><small>Оценка аренды за ночь</small><b>Rp2,8–3,2 млн</b></div>
+          <div class="hl"><small>Цена</small><b>Rp4,388 млрд</b><span class="fx" data-noi18n="">≈ US$243&nbsp;000 · €217&nbsp;000</span></div>
+          <div><small>Оценка аренды за ночь</small><b>Rp2,8–3,2 млн</b><span class="fx" data-noi18n="">≈ US$0 · €0</span></div>
         </div>
 
         <dl class="specs">
@@ -1506,8 +1509,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Продажа (торг)</small><b>Rp8,5 млрд</b></div>
-          <div class="hl"><small>Аренда 25 лет (торг)</small><b>Rp7 млрд</b></div>
+          <div class="hl"><small>Продажа (торг)</small><b>Rp8,5 млрд</b><span class="fx" data-noi18n="">≈ US$470&nbsp;000 · €419&nbsp;000</span></div>
+          <div class="hl"><small>Аренда 25 лет (торг)</small><b>Rp7 млрд</b><span class="fx" data-noi18n="">≈ US$387&nbsp;000 · €345&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -1554,8 +1557,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена</small><b>Rp3 млрд</b></div>
-          <div><small>В пересчёте на м² земли</small><b>±Rp12,6 млн</b></div>
+          <div class="hl"><small>Цена</small><b>Rp3 млрд</b><span class="fx" data-noi18n="">≈ US$166&nbsp;000 · €148&nbsp;000</span></div>
+          <div><small>В пересчёте на м² земли</small><b>±Rp12,6 млн</b><span class="fx" data-noi18n="">≈ US$697 · €622</span></div>
         </div>
 
         <dl class="specs">
@@ -1601,8 +1604,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена за юнит</small><b>Rp3,5 млрд</b></div>
-          <div><small>В пересчёте на м² земли</small><b>±Rp21,2 млн</b></div>
+          <div class="hl"><small>Цена за юнит</small><b>Rp3,5 млрд</b><span class="fx" data-noi18n="">≈ US$194&nbsp;000 · €173&nbsp;000</span></div>
+          <div><small>В пересчёте на м² земли</small><b>±Rp21,2 млн</b><span class="fx" data-noi18n="">≈ US$1&nbsp;170 · €1&nbsp;050</span></div>
         </div>
 
         <dl class="specs">
@@ -1647,8 +1650,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена (торг)</small><b>Rp5 млрд</b></div>
-          <div><small>В пересчёте на м² земли</small><b>±Rp50 млн</b></div>
+          <div class="hl"><small>Цена (торг)</small><b>Rp5 млрд</b><span class="fx" data-noi18n="">≈ US$276&nbsp;000 · €247&nbsp;000</span></div>
+          <div><small>В пересчёте на м² земли</small><b>±Rp50 млн</b><span class="fx" data-noi18n="">≈ US$2&nbsp;760 · €2&nbsp;470</span></div>
         </div>
 
         <dl class="specs">
@@ -1696,8 +1699,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Freehold / SHM (торг)</small><b>Rp6,9 млрд</b></div>
-          <div class="hl"><small>Аренда на 25 лет (торг)</small><b>Rp6,7 млрд</b></div>
+          <div class="hl"><small>Freehold / SHM (торг)</small><b>Rp6,9 млрд</b><span class="fx" data-noi18n="">≈ US$382&nbsp;000 · €341&nbsp;000</span></div>
+          <div class="hl"><small>Аренда на 25 лет (торг)</small><b>Rp6,7 млрд</b><span class="fx" data-noi18n="">≈ US$370&nbsp;000 · €331&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -1749,8 +1752,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Freehold (собственность)</small><b>Rp5,9 млрд</b></div>
-          <div class="hl"><small>Аренда (leasehold) 30 лет</small><b>Rp5,6 млрд</b></div>
+          <div class="hl"><small>Freehold (собственность)</small><b>Rp5,9 млрд</b><span class="fx" data-noi18n="">≈ US$326&nbsp;000 · €291&nbsp;000</span></div>
+          <div class="hl"><small>Аренда (leasehold) 30 лет</small><b>Rp5,6 млрд</b><span class="fx" data-noi18n="">≈ US$310&nbsp;000 · €276&nbsp;000</span></div>
         </div>
 
         <dl class="specs">
@@ -1802,8 +1805,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена (торг)</small><b>Rp6,9 млрд</b></div>
-          <div><small>В пересчёте на м² земли</small><b>±Rp34,5 млн</b></div>
+          <div class="hl"><small>Цена (торг)</small><b>Rp6,9 млрд</b><span class="fx" data-noi18n="">≈ US$382&nbsp;000 · €341&nbsp;000</span></div>
+          <div><small>В пересчёте на м² земли</small><b>±Rp34,5 млн</b><span class="fx" data-noi18n="">≈ US$1&nbsp;910 · €1&nbsp;700</span></div>
         </div>
 
         <dl class="specs">
@@ -1861,7 +1864,7 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена</small><b>Rp12,9 млрд</b></div>
+          <div class="hl"><small>Цена</small><b>Rp12,9 млрд</b><span class="fx" data-noi18n="">≈ US$713&nbsp;000 · €637&nbsp;000</span></div>
           <div><small>Вместимость</small><b>18 номеров · 46 мест</b></div>
         </div>
 
@@ -1917,8 +1920,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена (торг)</small><b>Rp6,5 млрд</b></div>
-          <div><small>В пересчёте на м² земли</small><b>±Rp16,25 млн</b></div>
+          <div class="hl"><small>Цена (торг)</small><b>Rp6,5 млрд</b><span class="fx" data-noi18n="">≈ US$359&nbsp;000 · €321&nbsp;000</span></div>
+          <div><small>В пересчёте на м² земли</small><b>±Rp16,25 млн</b><span class="fx" data-noi18n="">≈ US$899 · €802</span></div>
         </div>
 
         <dl class="specs">
@@ -1956,9 +1959,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Freehold / SHM (торг)</small><b>Rp3 млрд</b></div>
-          <div><small>Аренда на 15 лет</small><b>Rp1,85 млрд</b></div>
-          <div><small>Аренда на 20 лет</small><b>Rp2,2 млрд</b></div>
+          <div class="hl"><small>Freehold / SHM (торг)</small><b>Rp3 млрд</b><span class="fx" data-noi18n="">≈ US$166&nbsp;000 · €148&nbsp;000</span></div>
+          <div><small>Аренда на 15 лет</small><b>Rp1,85 млрд</b><span class="fx" data-noi18n="">≈ US$102&nbsp;000 · €91&nbsp;300</span></div>
+          <div><small>Аренда на 20 лет</small><b>Rp2,2 млрд</b><span class="fx" data-noi18n="">≈ US$122&nbsp;000 · €109&nbsp;000</span></div>
           <div><small>Налог на аренду</small><b>Пополам 50:50</b></div>
         </div>
 
@@ -2007,7 +2010,7 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Цена (торг)</small><b>Rp1,2 млрд</b></div>
+          <div class="hl"><small>Цена (торг)</small><b>Rp1,2 млрд</b><span class="fx" data-noi18n="">≈ US$66&nbsp;400 · €59&nbsp;200</span></div>
           <div><small>Долгосрочная аренда</small><b>Возможна, цена по запросу</b></div>
         </div>
 

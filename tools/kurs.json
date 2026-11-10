@@ -1,7 +1,7 @@
 {
-  "usd": 18128,
-  "eur": null,
-  "date": "2026-11-06",
-  "updated": "2026-11-06T09:00:00.000Z",
-  "source": "Kurs awal Rp18.128/US$ (berita 6 Nov 2026); diperbarui otomatis di GitHub Actions"
+  "usd": 18084,
+  "eur": 20263,
+  "date": "2026-11-10",
+  "updated": "2026-11-10T12:23:55.043Z",
+  "source": "open.er-api.com (ExchangeRate-API)"
 }

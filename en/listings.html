@@ -90,6 +90,8 @@ article.card[data-status="hidden"]{display:none!important}
 .price small{display:block;font-size:12px;color:var(--muted)}
 .price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
 .price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 12px;margin:2px 0 0;font-weight:600}.quick a{color:var(--sea)}.quick span{color:var(--muted)}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
 
 dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
 dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
@@ -186,6 +188,7 @@ footer>span{min-width:0}
     </div>
     <h1>Property Listings</h1>
     <p class="lead">Land, villas, houses and commercial property ready to buy in Bali. Grouped by property type and area.</p>
+    <p class="quick"><a href="area/">Search by area</a><span aria-hidden="true">·</span><a href="kalkulator.html">Buying cost calculator</a></p>
     <div class="cta-duo">
       <a class="cta" href="inquiry.html#buyer"><b>Find a property</b><span>Can't find the right one? Tell us what you need and we'll search for you.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
       <a class="cta owner" href="inquiry.html#owner"><b>List your property</b><span>Put your land, villa or house on our listings.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
@@ -233,8 +236,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp7,000,000</b></div>
-          <div class="hl"><small>Total 6,000 m²</small><b>Rp42 billion</b></div>
+          <div><small>Price per m²</small><b>Rp7,000,000</b><span class="fx" data-noi18n="">≈ US$387 · €345</span></div>
+          <div class="hl"><small>Total 6,000 m²</small><b>Rp42 billion</b><span class="fx" data-noi18n="">≈ US$2.32M · €2.07M</span></div>
         </div>
 
         <dl class="specs">
@@ -283,10 +286,10 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp14,500,000</b></div>
-          <div><small>Per are</small><b>Rp1.45B</b></div>
-          <div><small>Per plot · 650 m²</small><b>Rp9.425B</b></div>
-          <div class="hl"><small>Both plots · 1,300 m²</small><b>Rp18.85B</b></div>
+          <div><small>Price per m²</small><b>Rp14,500,000</b><span class="fx" data-noi18n="">≈ US$802 · €716</span></div>
+          <div><small>Per are</small><b>Rp1.45B</b><span class="fx" data-noi18n="">≈ US$80,200 · €71,600</span></div>
+          <div><small>Per plot · 650 m²</small><b>Rp9.425B</b><span class="fx" data-noi18n="">≈ US$521,000 · €465,000</span></div>
+          <div class="hl"><small>Both plots · 1,300 m²</small><b>Rp18.85B</b><span class="fx" data-noi18n="">≈ US$1.04M · €930,000</span></div>
         </div>
 
         <dl class="specs">
@@ -340,8 +343,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp6,500,000</b></div>
-          <div class="hl"><small>Total 300 m²</small><b>Rp1.95 billion</b></div>
+          <div><small>Price per m²</small><b>Rp6,500,000</b><span class="fx" data-noi18n="">≈ US$359 · €321</span></div>
+          <div class="hl"><small>Total 300 m²</small><b>Rp1.95 billion</b><span class="fx" data-noi18n="">≈ US$108,000 · €96,200</span></div>
         </div>
 
         <dl class="specs">
@@ -388,9 +391,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp7,500,000</b></div>
-          <div><small>Per are</small><b>Rp750 million</b></div>
-          <div class="hl"><small>Total 430 m²</small><b>Rp3.225 billion</b></div>
+          <div><small>Price per m²</small><b>Rp7,500,000</b><span class="fx" data-noi18n="">≈ US$415 · €370</span></div>
+          <div><small>Per are</small><b>Rp750 million</b><span class="fx" data-noi18n="">≈ US$41,500 · €37,000</span></div>
+          <div class="hl"><small>Total 430 m²</small><b>Rp3.225 billion</b><span class="fx" data-noi18n="">≈ US$178,000 · €159,000</span></div>
         </div>
 
         <dl class="specs">
@@ -445,9 +448,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m² (IDR 650 million/are)</small><b>Rp6,500,000</b></div>
-          <div><small>1,000 m² plot only</small><b>Rp6.5 billion</b></div>
-          <div class="hl"><small>Total 2,450 m²</small><b>Rp15.925 billion</b></div>
+          <div><small>Price per m² (IDR 650 million/are)</small><b>Rp6,500,000</b><span class="fx" data-noi18n="">≈ US$359 · €321</span></div>
+          <div><small>1,000 m² plot only</small><b>Rp6.5 billion</b><span class="fx" data-noi18n="">≈ US$359,000 · €321,000</span></div>
+          <div class="hl"><small>Total 2,450 m²</small><b>Rp15.925 billion</b><span class="fx" data-noi18n="">≈ US$881,000 · €786,000</span></div>
         </div>
 
         <dl class="specs">
@@ -481,8 +484,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m² (negotiable)</small><b>Rp5,500,000</b></div>
-          <div class="hl"><small>Total 15,000 m²</small><b>Rp82.5 billion</b></div>
+          <div><small>Price per m² (negotiable)</small><b>Rp5,500,000</b><span class="fx" data-noi18n="">≈ US$304 · €271</span></div>
+          <div class="hl"><small>Total 15,000 m²</small><b>Rp82.5 billion</b><span class="fx" data-noi18n="">≈ US$4.56M · €4.07M</span></div>
         </div>
 
         <dl class="specs">
@@ -514,9 +517,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp5,750,000</b></div>
-          <div><small>Per are</small><b>Rp575 million</b></div>
-          <div class="hl"><small>Total 7,000 m²</small><b>Rp40.25 billion</b></div>
+          <div><small>Price per m²</small><b>Rp5,750,000</b><span class="fx" data-noi18n="">≈ US$318 · €284</span></div>
+          <div><small>Per are</small><b>Rp575 million</b><span class="fx" data-noi18n="">≈ US$31,800 · €28,400</span></div>
+          <div class="hl"><small>Total 7,000 m²</small><b>Rp40.25 billion</b><span class="fx" data-noi18n="">≈ US$2.23M · €1.99M</span></div>
         </div>
 
         <dl class="specs">
@@ -555,8 +558,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp7,000,000</b></div>
-          <div class="hl"><small>Total 400 m²</small><b>Rp2.8 billion</b></div>
+          <div><small>Price per m²</small><b>Rp7,000,000</b><span class="fx" data-noi18n="">≈ US$387 · €345</span></div>
+          <div class="hl"><small>Total 400 m²</small><b>Rp2.8 billion</b><span class="fx" data-noi18n="">≈ US$155,000 · €138,000</span></div>
         </div>
 
         <dl class="specs">
@@ -603,8 +606,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp6,000,000</b></div>
-          <div class="hl"><small>Total 830 m²</small><b>Rp4.98 billion</b></div>
+          <div><small>Price per m²</small><b>Rp6,000,000</b><span class="fx" data-noi18n="">≈ US$332 · €296</span></div>
+          <div class="hl"><small>Total 830 m²</small><b>Rp4.98 billion</b><span class="fx" data-noi18n="">≈ US$275,000 · €246,000</span></div>
         </div>
 
         <dl class="specs">
@@ -653,8 +656,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp10,000,000</b></div>
-          <div class="hl"><small>Total 1,000 m²</small><b>Rp10 billion</b></div>
+          <div><small>Price per m²</small><b>Rp10,000,000</b><span class="fx" data-noi18n="">≈ US$553 · €494</span></div>
+          <div class="hl"><small>Total 1,000 m²</small><b>Rp10 billion</b><span class="fx" data-noi18n="">≈ US$553,000 · €494,000</span></div>
         </div>
 
         <dl class="specs">
@@ -687,8 +690,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per are (Rp6.5 million/m²)</small><b>Rp650 million</b></div>
-          <div class="hl"><small>Total 1,990 m²</small><b>Rp12.935 billion</b></div>
+          <div><small>Price per are (Rp6.5 million/m²)</small><b>Rp650 million</b><span class="fx" data-noi18n="">≈ US$35,900 · €32,100</span></div>
+          <div class="hl"><small>Total 1,990 m²</small><b>Rp12.935 billion</b><span class="fx" data-noi18n="">≈ US$715,000 · €638,000</span></div>
         </div>
 
         <dl class="specs">
@@ -821,8 +824,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp6,500,000</b></div>
-          <div class="hl"><small>Total 5,300 m²</small><b>Rp34.45 billion</b></div>
+          <div><small>Price per m²</small><b>Rp6,500,000</b><span class="fx" data-noi18n="">≈ US$359 · €321</span></div>
+          <div class="hl"><small>Total 5,300 m²</small><b>Rp34.45 billion</b><span class="fx" data-noi18n="">≈ US$1.9M · €1.7M</span></div>
         </div>
 
         <dl class="specs">
@@ -871,10 +874,10 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Sale price per m²</small><b>Rp9,500,000</b></div>
-          <div class="hl"><small>Total sale 550 m²</small><b>Rp5.225B</b></div>
-          <div><small>Lease per are/year</small><b>Rp17 million</b></div>
-          <div class="hl"><small>Lease 5.5 are/year</small><b>Rp93.5 million</b></div>
+          <div><small>Sale price per m²</small><b>Rp9,500,000</b><span class="fx" data-noi18n="">≈ US$525 · €469</span></div>
+          <div class="hl"><small>Total sale 550 m²</small><b>Rp5.225B</b><span class="fx" data-noi18n="">≈ US$289,000 · €258,000</span></div>
+          <div><small>Lease per are/year</small><b>Rp17 million</b><span class="fx" data-noi18n="">≈ US$940 · €839</span></div>
+          <div class="hl"><small>Lease 5.5 are/year</small><b>Rp93.5 million</b><span class="fx" data-noi18n="">≈ US$5,170 · €4,610</span></div>
         </div>
 
         <dl class="specs">
@@ -907,8 +910,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m² (IDR 650 million/are)</small><b>Rp6,500,000</b></div>
-          <div class="hl"><small>Total 3,000 m²</small><b>Rp19.5 billion</b></div>
+          <div><small>Price per m² (IDR 650 million/are)</small><b>Rp6,500,000</b><span class="fx" data-noi18n="">≈ US$359 · €321</span></div>
+          <div class="hl"><small>Total 3,000 m²</small><b>Rp19.5 billion</b><span class="fx" data-noi18n="">≈ US$1.08M · €962,000</span></div>
         </div>
 
         <dl class="specs">
@@ -944,10 +947,10 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp12,500,000</b></div>
-          <div><small>Plot A · 214 m²</small><b>Rp2.675B</b></div>
-          <div><small>Plot B · 181 m²</small><b>Rp2.263B</b></div>
-          <div class="hl"><small>Combined · 395 m²</small><b>Rp4.938B</b></div>
+          <div><small>Price per m²</small><b>Rp12,500,000</b><span class="fx" data-noi18n="">≈ US$691 · €617</span></div>
+          <div><small>Plot A · 214 m²</small><b>Rp2.675B</b><span class="fx" data-noi18n="">≈ US$148,000 · €132,000</span></div>
+          <div><small>Plot B · 181 m²</small><b>Rp2.263B</b><span class="fx" data-noi18n="">≈ US$125,000 · €112,000</span></div>
+          <div class="hl"><small>Combined · 395 m²</small><b>Rp4.938B</b><span class="fx" data-noi18n="">≈ US$273,000 · €244,000</span></div>
         </div>
 
         <dl class="specs">
@@ -998,8 +1001,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp10,000,000</b></div>
-          <div class="hl"><small>Total 9,025 m²</small><b>Rp90.25 billion</b></div>
+          <div><small>Price per m²</small><b>Rp10,000,000</b><span class="fx" data-noi18n="">≈ US$553 · €494</span></div>
+          <div class="hl"><small>Total 9,025 m²</small><b>Rp90.25 billion</b><span class="fx" data-noi18n="">≈ US$4.99M · €4.45M</span></div>
         </div>
 
         <dl class="specs">
@@ -1040,8 +1043,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp14,500,000</b></div>
-          <div class="hl"><small>Total 215 m²</small><b>Rp3.12 billion</b></div>
+          <div><small>Price per m²</small><b>Rp14,500,000</b><span class="fx" data-noi18n="">≈ US$802 · €716</span></div>
+          <div class="hl"><small>Total 215 m²</small><b>Rp3.12 billion</b><span class="fx" data-noi18n="">≈ US$173,000 · €154,000</span></div>
         </div>
 
         <dl class="specs">
@@ -1128,9 +1131,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp18,000,000</b></div>
-          <div><small>Price per are</small><b>Rp1.8 billion</b></div>
-          <div class="hl"><small>Total 1,620 m²</small><b>Rp29.16 billion</b></div>
+          <div><small>Price per m²</small><b>Rp18,000,000</b><span class="fx" data-noi18n="">≈ US$995 · €888</span></div>
+          <div><small>Price per are</small><b>Rp1.8 billion</b><span class="fx" data-noi18n="">≈ US$99,500 · €88,800</span></div>
+          <div class="hl"><small>Total 1,620 m²</small><b>Rp29.16 billion</b><span class="fx" data-noi18n="">≈ US$1.61M · €1.44M</span></div>
         </div>
 
         <dl class="specs">
@@ -1167,8 +1170,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per are (≈Rp21 million/m²)</small><b>Rp2.1 billion</b></div>
-          <div class="hl"><small>Total 350 m² (negotiable)</small><b>Rp7.35 billion</b></div>
+          <div><small>Price per are (≈Rp21 million/m²)</small><b>Rp2.1 billion</b><span class="fx" data-noi18n="">≈ US$116,000 · €104,000</span></div>
+          <div class="hl"><small>Total 350 m² (negotiable)</small><b>Rp7.35 billion</b><span class="fx" data-noi18n="">≈ US$406,000 · €363,000</span></div>
         </div>
 
         <dl class="specs">
@@ -1207,8 +1210,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m² (Rp600 million/are)</small><b>Rp6,000,000</b></div>
-          <div class="hl"><small>Total 2,802 m²</small><b>Rp16.812 billion</b></div>
+          <div><small>Price per m² (Rp600 million/are)</small><b>Rp6,000,000</b><span class="fx" data-noi18n="">≈ US$332 · €296</span></div>
+          <div class="hl"><small>Total 2,802 m²</small><b>Rp16.812 billion</b><span class="fx" data-noi18n="">≈ US$930,000 · €830,000</span></div>
         </div>
 
         <dl class="specs">
@@ -1240,8 +1243,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m²</small><b>Rp6,000,000</b></div>
-          <div class="hl"><small>Total 1,236 m²</small><b>Rp7.416 billion</b></div>
+          <div><small>Price per m²</small><b>Rp6,000,000</b><span class="fx" data-noi18n="">≈ US$332 · €296</span></div>
+          <div class="hl"><small>Total 1,236 m²</small><b>Rp7.416 billion</b><span class="fx" data-noi18n="">≈ US$410,000 · €366,000</span></div>
         </div>
 
         <dl class="specs">
@@ -1284,8 +1287,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div><small>Price per m² (Rp380 million/are)</small><b>Rp3,800,000</b></div>
-          <div class="hl"><small>Total 450 m² (negotiable)</small><b>Rp1.71 billion</b></div>
+          <div><small>Price per m² (Rp380 million/are)</small><b>Rp3,800,000</b><span class="fx" data-noi18n="">≈ US$210 · €188</span></div>
+          <div class="hl"><small>Total 450 m² (negotiable)</small><b>Rp1.71 billion</b><span class="fx" data-noi18n="">≈ US$94,600 · €84,400</span></div>
         </div>
 
         <dl class="specs">
@@ -1327,8 +1330,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price</small><b>Rp45 billion</b></div>
-          <div><small>Equivalent per m² of land</small><b>±Rp18.3 million</b></div>
+          <div class="hl"><small>Price</small><b>Rp45 billion</b><span class="fx" data-noi18n="">≈ US$2.49M · €2.22M</span></div>
+          <div><small>Equivalent per m² of land</small><b>±Rp18.3 million</b><span class="fx" data-noi18n="">≈ US$1,010 · €903</span></div>
         </div>
 
         <dl class="specs">
@@ -1374,8 +1377,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price</small><b>Rp65 billion</b></div>
-          <div><small>Equivalent per m² of land</small><b>±Rp19.6 million</b></div>
+          <div class="hl"><small>Price</small><b>Rp65 billion</b><span class="fx" data-noi18n="">≈ US$3.59M · €3.21M</span></div>
+          <div><small>Equivalent per m² of land</small><b>±Rp19.6 million</b><span class="fx" data-noi18n="">≈ US$1,080 · €967</span></div>
         </div>
 
         <dl class="specs">
@@ -1426,8 +1429,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price</small><b>Rp3.5 billion</b></div>
-          <div><small>Estimated rent per night</small><b>Rp2.8–3.2 million</b></div>
+          <div class="hl"><small>Price</small><b>Rp3.5 billion</b><span class="fx" data-noi18n="">≈ US$194,000 · €173,000</span></div>
+          <div><small>Estimated rent per night</small><b>Rp2.8–3.2 million</b><span class="fx" data-noi18n="">≈ US$0 · €0</span></div>
         </div>
 
         <dl class="specs">
@@ -1466,8 +1469,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price</small><b>Rp4.388 billion</b></div>
-          <div><small>Estimated rent per night</small><b>Rp2.8–3.2 million</b></div>
+          <div class="hl"><small>Price</small><b>Rp4.388 billion</b><span class="fx" data-noi18n="">≈ US$243,000 · €217,000</span></div>
+          <div><small>Estimated rent per night</small><b>Rp2.8–3.2 million</b><span class="fx" data-noi18n="">≈ US$0 · €0</span></div>
         </div>
 
         <dl class="specs">
@@ -1506,8 +1509,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Sale (negotiable)</small><b>Rp8.5 billion</b></div>
-          <div class="hl"><small>25-year lease (negotiable)</small><b>Rp7 billion</b></div>
+          <div class="hl"><small>Sale (negotiable)</small><b>Rp8.5 billion</b><span class="fx" data-noi18n="">≈ US$470,000 · €419,000</span></div>
+          <div class="hl"><small>25-year lease (negotiable)</small><b>Rp7 billion</b><span class="fx" data-noi18n="">≈ US$387,000 · €345,000</span></div>
         </div>
 
         <dl class="specs">
@@ -1554,8 +1557,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price</small><b>Rp3 billion</b></div>
-          <div><small>Equivalent per m² of land</small><b>±Rp12.6 million</b></div>
+          <div class="hl"><small>Price</small><b>Rp3 billion</b><span class="fx" data-noi18n="">≈ US$166,000 · €148,000</span></div>
+          <div><small>Equivalent per m² of land</small><b>±Rp12.6 million</b><span class="fx" data-noi18n="">≈ US$697 · €622</span></div>
         </div>
 
         <dl class="specs">
@@ -1601,8 +1604,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price per unit</small><b>Rp3.5 billion</b></div>
-          <div><small>Equivalent per m² of land</small><b>±Rp21.2 million</b></div>
+          <div class="hl"><small>Price per unit</small><b>Rp3.5 billion</b><span class="fx" data-noi18n="">≈ US$194,000 · €173,000</span></div>
+          <div><small>Equivalent per m² of land</small><b>±Rp21.2 million</b><span class="fx" data-noi18n="">≈ US$1,170 · €1,050</span></div>
         </div>
 
         <dl class="specs">
@@ -1647,8 +1650,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price (negotiable)</small><b>Rp5 billion</b></div>
-          <div><small>Equivalent per m² of land</small><b>±Rp50 million</b></div>
+          <div class="hl"><small>Price (negotiable)</small><b>Rp5 billion</b><span class="fx" data-noi18n="">≈ US$276,000 · €247,000</span></div>
+          <div><small>Equivalent per m² of land</small><b>±Rp50 million</b><span class="fx" data-noi18n="">≈ US$2,760 · €2,470</span></div>
         </div>
 
         <dl class="specs">
@@ -1696,8 +1699,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Freehold / SHM (negotiable)</small><b>Rp6.9 billion</b></div>
-          <div class="hl"><small>25-year leasehold (negotiable)</small><b>Rp6.7 billion</b></div>
+          <div class="hl"><small>Freehold / SHM (negotiable)</small><b>Rp6.9 billion</b><span class="fx" data-noi18n="">≈ US$382,000 · €341,000</span></div>
+          <div class="hl"><small>25-year leasehold (negotiable)</small><b>Rp6.7 billion</b><span class="fx" data-noi18n="">≈ US$370,000 · €331,000</span></div>
         </div>
 
         <dl class="specs">
@@ -1749,8 +1752,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Freehold</small><b>Rp5.9 billion</b></div>
-          <div class="hl"><small>Leasehold 30 years</small><b>Rp5.6 billion</b></div>
+          <div class="hl"><small>Freehold</small><b>Rp5.9 billion</b><span class="fx" data-noi18n="">≈ US$326,000 · €291,000</span></div>
+          <div class="hl"><small>Leasehold 30 years</small><b>Rp5.6 billion</b><span class="fx" data-noi18n="">≈ US$310,000 · €276,000</span></div>
         </div>
 
         <dl class="specs">
@@ -1802,8 +1805,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price (negotiable)</small><b>Rp6.9 billion</b></div>
-          <div><small>Equivalent per m² of land</small><b>±Rp34.5 million</b></div>
+          <div class="hl"><small>Price (negotiable)</small><b>Rp6.9 billion</b><span class="fx" data-noi18n="">≈ US$382,000 · €341,000</span></div>
+          <div><small>Equivalent per m² of land</small><b>±Rp34.5 million</b><span class="fx" data-noi18n="">≈ US$1,910 · €1,700</span></div>
         </div>
 
         <dl class="specs">
@@ -1861,7 +1864,7 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price</small><b>Rp12.9 billion</b></div>
+          <div class="hl"><small>Price</small><b>Rp12.9 billion</b><span class="fx" data-noi18n="">≈ US$713,000 · €637,000</span></div>
           <div><small>Capacity</small><b>18 rooms · 46 beds</b></div>
         </div>
 
@@ -1917,8 +1920,8 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price (negotiable)</small><b>Rp6.5 billion</b></div>
-          <div><small>Equivalent per m² of land</small><b>±Rp16.25 million</b></div>
+          <div class="hl"><small>Price (negotiable)</small><b>Rp6.5 billion</b><span class="fx" data-noi18n="">≈ US$359,000 · €321,000</span></div>
+          <div><small>Equivalent per m² of land</small><b>±Rp16.25 million</b><span class="fx" data-noi18n="">≈ US$899 · €802</span></div>
         </div>
 
         <dl class="specs">
@@ -1956,9 +1959,9 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Freehold / SHM (negotiable)</small><b>Rp3 billion</b></div>
-          <div><small>15-year leasehold</small><b>Rp1.85 billion</b></div>
-          <div><small>20-year leasehold</small><b>Rp2.2 billion</b></div>
+          <div class="hl"><small>Freehold / SHM (negotiable)</small><b>Rp3 billion</b><span class="fx" data-noi18n="">≈ US$166,000 · €148,000</span></div>
+          <div><small>15-year leasehold</small><b>Rp1.85 billion</b><span class="fx" data-noi18n="">≈ US$102,000 · €91,300</span></div>
+          <div><small>20-year leasehold</small><b>Rp2.2 billion</b><span class="fx" data-noi18n="">≈ US$122,000 · €109,000</span></div>
           <div><small>Lease tax</small><b>Split 50:50</b></div>
         </div>
 
@@ -2007,7 +2010,7 @@ footer>span{min-width:0}
         </div>
 
         <div class="price">
-          <div class="hl"><small>Price (negotiable)</small><b>Rp1.2 billion</b></div>
+          <div class="hl"><small>Price (negotiable)</small><b>Rp1.2 billion</b><span class="fx" data-noi18n="">≈ US$66,400 · €59,200</span></div>
           <div><small>Long-term lease</small><b>Available, ask for price</b></div>
         </div>
 
