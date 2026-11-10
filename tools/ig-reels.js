@@ -74,7 +74,9 @@ function frames(l, d, photos) {
   return out;
 }
 
-async function render(l, dir) {
+// Musik latar: file mp3/m4a bebas royalti di audio/reels/ (dipakai bergantian). Kosong = audio senyap.
+const TRACKS = () => { const d = path.join(ROOT, "audio/reels"); return fs.existsSync(d) ? fs.readdirSync(d).filter((f) => /\.(mp3|m4a|aac|wav)$/i.test(f)).sort().map((f) => path.join(d, f)) : []; };
+async function render(l, dir, trackIdx = 0) {
   const { chromium } = require("playwright");
   const photos = photosOf(l.slug);
   if (photos.length < 2) throw new Error("foto kurang dari 2");
@@ -99,7 +101,10 @@ async function render(l, dir) {
   const total = D.reduce((a, b) => a + b, 0) - X * (D.length - 1);
   const args = ["-y"];
   pngs.forEach((p) => args.push("-i", p));
-  args.push("-f", "lavfi", "-t", String(total), "-i", "anullsrc=r=44100:cl=stereo");
+  const tracks = TRACKS(), track = tracks.length ? tracks[trackIdx % tracks.length] : null;
+  if (track) args.push("-stream_loop", "-1", "-i", track);
+  else args.push("-f", "lavfi", "-t", String(total), "-i", "anullsrc=r=44100:cl=stereo");
+  const afx = track ? `;[${pngs.length}:a]atrim=0:${total},asetpts=N/SR/TB,afade=t=in:d=0.6,afade=t=out:st=${(total - 1.8).toFixed(2)}:d=1.8,volume=0.85,aresample=44100[aud]` : "";
   const parts = pngs.map((_, i) => {
     const n = Math.round(D[i] * FPS), last = i === pngs.length - 1;
     const z = last ? "1" : `1+0.07*on/${n}`; // zoom pelan 1 → 1,07 (penutup diam)
@@ -112,11 +117,11 @@ async function render(l, dir) {
     prev = "x" + i;
   }
   const outFile = path.join(dir, l.slug + ".mp4");
-  args.push("-filter_complex", parts.join(";") + chain, "-map", `[${prev}]`, "-map", `${pngs.length}:a`,
+  args.push("-filter_complex", parts.join(";") + chain + afx, "-map", `[${prev}]`, "-map", track ? "[aud]" : `${pngs.length}:a`,
     "-c:v", "libx264", "-profile:v", "high", "-preset", "medium", "-crf", "21", "-pix_fmt", "yuv420p", "-r", String(FPS),
     "-c:a", "aac", "-b:a", "128k", "-shortest", "-movflags", "+faststart", outFile);
   execFileSync("ffmpeg", args, { stdio: ["ignore", "ignore", "pipe"] });
-  return { file: outFile, seconds: total, frames: pngs };
+  return { file: outFile, seconds: total, frames: pngs, track: track ? path.basename(track) : null };
 }
 
 async function upload(file, cap, ig) {
@@ -163,12 +168,12 @@ async function main() {
   console.log("Akun Instagram: @" + username + " · Reel untuk " + l.slug);
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "reel-"));
   try {
-    const v = await render(l, dir);
+    const v = await render(l, dir, Object.keys(state.posted).length);
     console.log("video", v.seconds + " dtk,", (fs.statSync(v.file).size / 1e6).toFixed(1) + " MB");
     const SEO = require("./seo-titles.js");
     const cap = IG.caption(l, SEO[l.slug]).replace(/^🏝️ /, "🎥 ");
     const r = await upload(v.file, cap, { igId, token, api: IG.api, ready: IG.ready });
-    state.posted[l.slug] = r; delete state.errors[l.slug];
+    state.posted[l.slug] = { ...r, music: v.track }; delete state.errors[l.slug];
     console.log(`✓ Reel ${l.slug} → ${r.permalink || r.id}`);
   } catch (e) {
     console.log(`✗ ${l.slug}: ${e.message}`);
