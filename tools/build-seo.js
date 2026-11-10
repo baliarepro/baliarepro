@@ -7,6 +7,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const SEOT = require("./seo-titles.js");
+const { kurs: getKurs, fxLine } = require("./kurs.js");
 // Di GitHub Actions font Google boleh dimuat (ukuran PDF & gambar og lebih akurat); di tempat lain semua jaringan diblokir.
 const netRoute = (r) => (process.env.GITHUB_ACTIONS && /^https:\/\/fonts\.(googleapis|gstatic)\.com\//.test(r.request().url()) ? r.continue() : r.abort());
 const BASE = "https://baliareproperty.com/";
@@ -92,13 +93,25 @@ function parseRp(t) {
   // Versi runtime sementara untuk diterjemahkan oleh i18n.js di browser
   const tmp = ".build-tmp.html";
   write(tmp, srcIndex.replace(' data-static-lang="id"', "").replace(/(<script>\n\(function\(\)\{\n  var box=document.getElementById\('visits'\))/, "<script type=\"text/plain\">\n(function(){\n  var box=document.getElementById('visits')"));
+  const KURS = await getKurs();
   const browser = await chromium.launch();
   const page = await browser.newPage();
   await page.route(/^https?:/, (r) => r.abort());
   const out = {};
+  let fxVals = null; // per kartu: teks "≈ US$… · €…" untuk tiap angka harga (hanya EN/RU)
   for (const L of LANGS) {
     await page.goto("file://" + path.join(ROOT, tmp) + "?lang=" + L);
     await page.waitForFunction(() => window.BAP_I18N);
+    if (L !== "id" && fxVals) await page.evaluate((vals) => {
+      [...document.querySelectorAll("article.card")].forEach((c, i) => {
+        if (c.classList.contains("sold")) return;
+        [...c.querySelectorAll(".price > div > b")].forEach((b, j) => {
+          const t = (vals[i] || [])[j];
+          if (!t) return;
+          const s = document.createElement("span"); s.className = "fx"; s.setAttribute("data-noi18n", ""); s.textContent = t; b.after(s);
+        });
+      });
+    }, fxVals[L]);
     out[L] = await page.evaluate((L) => {
       const T = (s) => window.BAP_I18N.tr(s, L);
       const cards = [...document.querySelectorAll("article.card")].map((c) => {
@@ -116,6 +129,8 @@ function parseRp(t) {
           areaSub: area.querySelector(".area-head p").textContent.trim(),
           rec: c.classList.contains("recommended"),
           sold: c.classList.contains("sold") || /SOLD/.test(c.innerHTML), priceText: pb ? pb.textContent : "",
+          typeKey: sec.dataset.type, areaKey: area.dataset.area, cardHtml: c.outerHTML,
+          priceBs: [...c.querySelectorAll(".price > div > b")].map((b) => b.textContent),
           specs: [...c.querySelectorAll("dl.specs > div")].map((d) => [(d.querySelector("dt") || {}).textContent, (d.querySelector("dd") || {}).textContent].map((x) => (x || "").replace(/\s+/g, " ").trim())).filter((x) => x[0] && x[1]),
           html: clone.outerHTML };
       });
@@ -126,11 +141,19 @@ function parseRp(t) {
         cta: document.querySelector(".cta-duo").outerHTML, contact: document.querySelector("section.contact").outerHTML,
         footer: document.querySelector("footer > span").textContent };
     }, L);
+    if (L === "id" && KURS) fxVals = Object.fromEntries(["en", "ru"].map((k) => [k, out.id.cards.map((c) => c.priceBs.map((t) => fxLine(parseRp(t), KURS, k)))]));
   }
   fs.unlinkSync(path.join(ROOT, tmp));
 
   const idCards = out.id.cards;
   const prices = Object.fromEntries(idCards.map((c) => [c.slug, parseRp(c.priceText)]));
+  // Halaman per area: keanggotaan dihitung dari kartu Indonesia, lalu dipetakan ke kartu tiap bahasa
+  const AR = require("./area.js");
+  const idAreas = AR.areaList(idCards.map((c) => ({ ...c, total: prices[c.slug] })));
+  const areasFor = (L) => idAreas.map((a) => ({ ...a, cards: a.cards.map((c) => ({ ...out[L].cards.find((x) => x.slug === c.slug), total: prices[c.slug] })) }));
+  const areaOf = (slug) => idAreas.filter((a) => a.cards.some((c) => c.slug === slug)).pop(); // paling spesifik
+  const CALC_BTN = { id: "Hitung biaya beli", en: "Estimate buying costs", ru: "Рассчитать расходы" };
+  const calcIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>';
 
   // ---------- Halaman utama (3 bahasa) ----------
   for (const L of LANGS) {
@@ -173,6 +196,7 @@ a.eyebrow{text-decoration:none}
 .back{align-self:flex-start;margin-top:12px;color:var(--sea);font-weight:600;text-decoration:none}
 .back:hover{text-decoration:underline}
 .crumb{color:var(--muted);font-size:14px;margin:0}
+.crumb a{color:var(--sea);font-weight:600}
 .card h1{font-family:var(--display);font-size:clamp(26px,5.5vw,34px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
 main{display:flex;flex-direction:column;gap:22px}
 main .cta-duo{margin-top:0}
@@ -289,7 +313,8 @@ main .cta-duo{margin-top:0}
         `<a href="${rel(file, p)}" target="_blank" rel="noopener"><img src="${rel(file, p)}" alt="${esc(PHOTOS[L] + " " + (i + 1) + " – " + c.title)}" loading="${i ? "lazy" : "eager"}" decoding="async"></a>`).join("") + `</div>\n        ` : "";
       const cardHtml = c.html
         .replace('<div class="price"', gallery + '<div class="price"')
-        .replace(/(<div class="actions">[\s\S]*?)(<\/div>\s*<\/article>\s*)$/, `$1  <button class="btn ghost pdf" type="button" onclick="window.print()">${pdfIcon}${esc(PDF[L])}</button>\n        $2`);
+        .replace(/(<div class="actions">[\s\S]*?)(<\/div>\s*<\/article>\s*)$/, `$1  <button class="btn ghost pdf" type="button" onclick="window.print()">${pdfIcon}${esc(PDF[L])}</button>\n        ${!c.sold && prices[c.slug] ? `<a class="btn ghost calc" href="${rel(file, langDir(L) + "kalkulator.html")}?harga=${prices[c.slug]}">${calcIcon}${esc(CALC_BTN[L])}</a>\n        ` : ""}$2`);
+      const ar = areaOf(c.slug);
       let html = `<!doctype html>
 <html lang="${L}" data-static-lang="${L}">
 <head>${head}<title>${esc(pageTitle)}</title>
@@ -304,7 +329,7 @@ ${pageCss}
       ${flags}
     </div>
     <a class="back" href="${list}">${esc(out[L].back)}</a>
-    <p class="crumb">${esc(c.type)} · ${esc(c.areaTitle)} · ${esc(c.areaSub)}</p>
+    <p class="crumb">${esc(c.type)} · ${ar ? `<a href="${rel(file, langDir(L) + "area/" + ar.slug + ".html")}">${esc(ar.name[L])}</a>` : esc(c.areaTitle)} · ${esc(c.areaSub)}</p>
   </header>
   <main>
     <div class="print-only print-head"><div class="ph-brand"><svg viewBox="0 0 120 120" width="40" height="40" aria-hidden="true" class="ph-mark"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#fff"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg><div><b>Bali Are Property</b><span>${esc(PT[L].tag)}</span></div></div><div class="ph-contact"><b>WhatsApp +62 812 868 080</b><br>baliareproperty.com</div></div>
@@ -329,6 +354,59 @@ ${copyScript}
       html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "listing/" + c.slug + ".html")])), L);
       write(file, html);
     }
+  }
+
+  // ---------- Halaman per area + daftar area (3 bahasa) ----------
+  for (const L of LANGS) {
+    const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
+    const list = areasFor(L);
+    const common = { L, head, esc, flags, contact: out[L].contact, footer: out[L].footer, copyScript, kurs: KURS };
+    {
+      const file = langDir(L) + "area/index.html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "area/")]));
+      const t = AR.L10N[L];
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT, { "@type": "CollectionPage", name: t.hubTitle, url: alts[L], inLanguage: L,
+        hasPart: list.map((a) => ({ "@type": "CollectionPage", name: a.title[L], url: url(L, "area/" + a.slug + ".html") })) }] };
+      let html = AR.renderAreaHub({ ...common, list, root: rel(file, langDir(L)), i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc: t.hubDesc, ogTitle: t.hubTitle, jsonld }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "area/")])), L);
+      write(file, html);
+    }
+    for (const a of list) {
+      const file = langDir(L) + "area/" + a.slug + ".html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "area/" + a.slug + ".html")]));
+      const avail = a.cards.filter((c) => !c.sold);
+      const desc = (a.intro[L].split(/(?<=\.)\s/)[0] + " " + { id: avail.length + " listing tersedia, tanya via WhatsApp.", en: avail.length + " listings available, ask on WhatsApp.", ru: avail.length + " объектов в продаже, пишите в WhatsApp." }[L]).slice(0, 300);
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
+        { "@type": "CollectionPage", name: a.title[L], description: desc, url: alts[L], inLanguage: L,
+          about: { "@type": "Place", name: a.name.en + ", Bali, Indonesia" },
+          mainEntity: { "@type": "ItemList", numberOfItems: avail.length, itemListElement: avail.map((c, i) => ({ "@type": "ListItem", position: i + 1, url: url(L, "listing/" + c.slug + ".html"), name: c.title })) } },
+        { "@type": "BreadcrumbList", itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Bali Are Property", item: url(L, "") },
+          { "@type": "ListItem", position: 2, name: AR.L10N[L].eyebrow, item: url(L, "area/") },
+          { "@type": "ListItem", position: 3, name: a.name[L], item: alts[L] }] }] };
+      const ogImg = avail.map((c) => photosOf(c.slug)[0]).find(Boolean);
+      let html = AR.renderArea({ ...common, area: a, list, root: rel(file, langDir(L)), i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc, ogTitle: a.title[L], jsonld, image: ogImg ? BASE + ogImg : "" }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "area/" + a.slug + ".html")])), L);
+      write(file, html);
+    }
+  }
+
+  // ---------- Kalkulator biaya beli (3 bahasa) ----------
+  const KC = require("./calc.js");
+  for (const L of LANGS) {
+    const file = langDir(L) + "kalkulator.html";
+    const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "kalkulator.html")]));
+    const c = KC.C[L];
+    const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
+      { "@type": "WebApplication", name: c.h1, description: c.desc, url: alts[L], inLanguage: L, applicationCategory: "FinanceApplication", operatingSystem: "Any",
+        offers: { "@type": "Offer", price: 0, priceCurrency: "IDR" }, publisher: { "@id": BASE + "#agent" } }] };
+    const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
+    let html = KC.renderCalc({ L, head, esc, flags, contact: out[L].contact, footer: out[L].footer, copyScript, kurs: KURS, i18nSrc: rel(file, "i18n.js"),
+      seoBlock: seo({ L, pageUrl: alts[L], alts, desc: c.desc, ogTitle: c.title, jsonld }) });
+    html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "kalkulator.html")])), L);
+    write(file, html);
   }
 
   // ---------- Iklan diturunkan (data-status="hidden" di listings.html, diatur dari admin.html) ----------
@@ -529,7 +607,7 @@ ${copyScript}
 
   // ---------- Sitemap & robots ----------
   const today = new Date().toISOString().slice(0, 10);
-  const pages = ["", "about.html", "faq.html", "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", ...idCards.map((c) => "listing/" + c.slug + ".html")];
+  const pages = ["", "about.html", "faq.html", "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", "kalkulator.html", "area/", ...idAreas.map((a) => "area/" + a.slug + ".html"), ...idCards.map((c) => "listing/" + c.slug + ".html")];
   const urls = pages.flatMap((p) => LANGS.map((L) => `  <url>
     <loc>${url(L, p)}</loc>
     <lastmod>${today}</lastmod>
@@ -564,6 +642,8 @@ ${urls.join("\n")}
 - [Daftar listing (ID)](${url("id", "listings.html")})
 - [About](${url("en", "about.html")}) · [FAQ](${url("en", "faq.html")}) · [Bali Property Guide](${url("en", "guide.html")}) · [Bali property news](${url("en", "news.html")})
 - [Inquiry form](${url("en", "inquiry.html")}): find a property or list yours for sale
+- [Property by area](${url("en", "area/")}): ${idAreas.map((a) => `[${a.name.en}](${url("en", "area/" + a.slug + ".html")})`).join(" · ")}
+- [Buying cost calculator](${url("en", "kalkulator.html")}): estimate BPHTB transfer tax, notary/PPAT fee, VAT and leasehold costs in Bali
 
 ## Listings (English)
 

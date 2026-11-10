@@ -31,11 +31,14 @@ function check(now = Date.now()) {
   add("Threads (listing)", th.posted, th.errors, { maxAgeH: queue ? 30 : 0 });
   add("Threads (berita mingguan)", thw.weekly, thw.errors, { maxAgeH: 8 * 24 });
   const fbOff = !Object.keys(fb.posted || {}).length && !Object.keys(fbw.posted || {}).length;
+  const rl = read("tools/reels-state.json", {});
+  add("Instagram Reels (1 per hari)", rl.posted, rl.errors, { maxAgeH: Object.keys(rl.posted || {}).length ? 50 : 0 });
   add("Facebook Page (listing)", fb.posted, fb.errors, { maxAgeH: fbOff ? 0 : queue ? 30 : 0, off: fbOff });
   add("Facebook Page (berita mingguan)", fbw.posted, fbw.errors, { maxAgeH: fbOff ? 0 : 8 * 24, off: fbOff });
   const reminders = (read("pengingat.json", { items: [] }).items || []).filter((r) => !r.done);
   const pend = Object.keys(read("tools/perlu-terjemahan.json", {}));
-  return { channels: ch, reminders, pendingTranslations: pend, queue };
+  const views = read("laporan-dilihat.json", null);
+  return { channels: ch, reminders, pendingTranslations: pend, queue, views };
 }
 
 function report(d) {
@@ -49,6 +52,11 @@ function report(d) {
     if (c.ok === false && !c.errors.length) L.push("   ⚠️ Tidak ada posting baru lebih lama dari jadwal. Cek token/secret atau workflow GitHub Actions.");
   }
   if (d.pendingTranslations.length) L.push("", "⚠️ Iklan diedit di admin, terjemahan EN/RU belum dirapikan: " + d.pendingTranslations.join(", "));
+  if (d.views && d.views.report) {
+    const age = (Date.now() - Date.parse(d.views.updated)) / 864e5;
+    L.push("", require("./views-report.js").text(d.views));
+    if (age > 8) L.push("⚠️ Laporan dilihat belum diperbarui lebih dari 8 hari (cek workflow \"Laporan dilihat\").");
+  }
   if (d.reminders.length) {
     L.push("", "PENGINGAT UNTUK BAGOES");
     d.reminders.forEach((r, i) => L.push(`${i + 1}. ${r.text}`));

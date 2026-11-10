@@ -1,0 +1,54 @@
+# Reels Instagram otomatis dari foto listing (tools/ig-reels.js): 1 Reel per hari ±19.07 WITA.
+# Video dibuat di sini (Playwright + ffmpeg) lalu diunggah langsung ke Instagram; tidak disimpan di repo.
+# Butuh secret IG_TOKEN (+ IG_USER_ID) yang sama dengan posting carousel. Status di tools/reels-state.json.
+name: Instagram Reels
+
+on:
+  schedule:
+    - cron: "7 11 * * *"
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Slug listing tertentu (kosong = otomatis pilih berikutnya)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Pasang Playwright, Chromium, ffmpeg
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+          which ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+      - name: Buat & posting Reel
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: |
+          if [ -n "${{ inputs.slug }}" ]; then node tools/ig-reels.js post --slug=${{ inputs.slug }}; else node tools/ig-reels.js post; fi
+      - name: Simpan status
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/reels-state.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Reels: perbarui status posting"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done

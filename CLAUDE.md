@@ -43,7 +43,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - Turunkan = atribut `data-status="hidden"` pada `<article>` di `listings.html`. Kartu itu disembunyikan di katalog (skrip katalog menghapusnya + CSS cadangan), tidak masuk sitemap/llms.txt/ItemList, dan halaman detailnya diganti halaman "Iklan ini sedang tidak ditampilkan" (noindex). Tampilkan lagi = atribut dihapus. Slug/URL tidak pernah berubah.
 - Edit: judul, lokasi, deskripsi, badge, baris harga, spesifikasi, keunggulan, cocok untuk, link Maps/Drive, judul & deskripsi SEO (ID). Teks EN/RU TIDAK ikut berubah otomatis: slug yang diedit dicatat di `tools/perlu-terjemahan.json`. **Setiap kali bekerja di repo ini, cek file itu**: untuk tiap slug, tambahkan/ubah terjemahan EN/RU di `i18n.js` dan judul/deskripsi SEO EN/RU di `tools/seo-titles.js` sesuai kartu ID terbaru, lalu hapus slug dari file (sisakan `{}`), build, push.
 - Tab **"Bagikan ke Grup WA"** di `admin.html` (semi-otomatis; WhatsApp tidak punya API resmi untuk posting ke grup komunitas yang ada): untuk tiap listing tampil & belum terjual, plus "Berita Properti Bali Minggu Ini" (berita ≤7 hari dari berita terbaru, maks. 3), admin membuat pesan WA siap kirim (judul, lokasi, harga, spesifikasi, keunggulan, link, WA). Tombol grup (saran dari lokasi: SOUTH KUTA, NORTH KUTA, KUTA, GIANYAR, TABANAN, DENPASAR, BADUNG OTHER AREA, SINGARAJA, JEMBRANA + Announcements) membuka `wa.me/?text=…`; pemilik memilih grup di WhatsApp. Riwayat kiriman disimpan di localStorage + `wa-shared.json` di root (commit tertunda 5 detik; sengaja di luar `tools/` agar tidak memicu build). Pemetaan area→grup di array `GROUPS` di `admin.html`.
-- `.github/workflows/build.yml` menjalankan `node tools/build-seo.js` otomatis di GitHub Actions setiap ada push yang mengubah file sumber, lalu meng-commit hasil build dan memicu GitHub Pages. Tetap boleh build lokal seperti biasa (hasilnya sama).
+- `.github/workflows/build.yml` menjalankan `node tools/build-seo.js` otomatis di GitHub Actions setiap ada push yang mengubah file sumber (dan tiap Senin untuk kurs), lalu meng-commit hasil build dan memicu GitHub Pages. Tetap boleh build lokal seperti biasa (hasilnya sama).
 
 ## Instagram otomatis (carousel)
 - `tools/ig-images.js`: build (HANYA di GitHub Actions atau `IG_IMAGES=1`, karena butuh font asli) membuat `img/ig/<slug>/1.jpg` (slide desain 1080×1350 berlogo: foto utama, judul, harga, spesifikasi, kontak) + `2–4.jpg` (foto listing dipotong 4:5) untuk setiap listing yang tampil & belum terjual. Dibuat ulang hanya bila isi/foto berubah (hash di `meta.json`). Jangan generate & commit `img/ig/` dari container (font fallback).
@@ -106,3 +106,20 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - Identitas commit: `git config user.name Claude && git config user.email noreply@anthropic.com`.
 - Pesan commit dalam Bahasa Indonesia, diakhiri baris atribusi sesi bila diminta oleh sistem.
 - Repo ini kadang perlu `git -c safe.directory=*` saat dijalankan di container.
+
+## Halaman per area (SEO)
+- Dibuat build dari `tools/area-content.js` (daftar area 3 bahasa: nama, judul, intro) + tampilan `tools/area.js`: `area/<slug>.html` (+ `en/`, `ru/`) dan daftar `area/index.html`. Listing masuk otomatis bila `data-area` kartu ada di `areas` atau eyebrow cocok regex `eyebrow`; halaman dibuat bila ≥2 listing tersedia. Area baru = tambah objek di `AREAS`.
+- Crumb di halaman listing menaut ke area paling spesifik; homepage (blok cakupan & "Cari & hitung") dan katalog (baris `.quick`) menaut ke `area/` dan kalkulator. Masuk sitemap & llms.txt.
+
+## Kalkulator biaya beli
+- `tools/calc.js` → `kalkulator.html` (+ `en/`, `ru/`). Mode beli: BPHTB 5% × (harga − NPOPTKP, default Rp80 jt), honor PPAT (default 1%, maks. 1%), PNBP balik nama ≈ harga/1000 + Rp50.000, PPN 11% developer + PPN DTP (≤ Rp5 M, 100% atas Rp2 M pertama, s.d. `PPN_DTP_UNTIL` = 2026-12-31 — perbarui bila PMK perpanjangan terbit), PPh penjual 2,5%. Mode leasehold: per tahun, akta notaris (%), PPh sewa 10%. `?harga=` mengisi harga; halaman listing punya tombol "Hitung biaya beli" (listing belum terjual).
+- Dasar tarif dicatat di komentar atas `calc.js`; cek ulang bila aturan pajak berubah.
+
+## Harga USD/EUR (EN/RU)
+- `tools/kurs.js`: di GitHub Actions kurs diambil dari open.er-api.com bila data >20 jam, disimpan di `tools/kurs.json`. Build menambah `<span class="fx">≈ US$… · €…</span>` di bawah setiap angka harga (kecuali kartu terjual) di halaman EN/RU, kartu area, dan kalkulator. Versi Indonesia tanpa kurs. Build terjadwal tiap Senin (cron di `build.yml`) supaya kurs segar.
+
+## Instagram Reels otomatis
+- `tools/ig-reels.js` + `.github/workflows/reels.yml`: 1 Reel per hari ±19.07 WITA. Video 1080×1920 ±13 dtk (pembuka foto 1 + judul + harga, foto 2–3 + spesifikasi, penutup ajakan survei + WA), dari foto `img/wm/<slug>/` (minimal 2 foto), Playwright + ffmpeg, diunggah langsung (unggahan resumable) — video tidak disimpan di repo. Caption = caption carousel dengan 🎥. Urutan: listing yang carousel IG-nya paling lama tayang. Status `tools/reels-state.json`. Uji tampilan dari container: `node tools/ig-reels.js render <slug> <folder-scratch>` (font fallback). Manual: Actions → "Instagram Reels" → isi slug.
+
+## Laporan dilihat mingguan
+- `tools/views-report.js` + `.github/workflows/views-report.yml` (Senin ±07.17 WITA): ambil angka abacus `v-<slug>` tiap listing tampil, simpan snapshot & laporan di `laporan-dilihat.json` (root): top 5 kenaikan 7 hari, total, daftar listing sepi. Tampil di tab Status admin ("Listing terpopuler") dan di `node tools/health.js`.

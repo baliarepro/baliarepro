@@ -141,6 +141,11 @@ const CSS = `<style>
 }
 </style>`;
 
+const TOOLS = {
+  id: { h: "Cari & hitung", items: [["area/", "Per area", "Cari properti per area", "Ungasan, Jimbaran, Pecatu–Uluwatu, Pandawa, Canggu, Kuta, Ubud, Gianyar."], ["kalkulator.html", "Kalkulator", "Hitung biaya beli properti", "Perkiraan BPHTB, honor PPAT/notaris, PPN developer, dan biaya sewa jangka panjang."]] },
+  en: { h: "Search & calculate", items: [["area/", "By area", "Find property by area", "Ungasan, Jimbaran, Pecatu–Uluwatu, Pandawa, Canggu, Kuta, Ubud, Gianyar."], ["kalkulator.html", "Calculator", "Estimate buying costs", "BPHTB transfer tax, PPAT/notary fee, developer VAT and long-term lease costs."]] },
+  ru: { h: "Поиск и расчёт", items: [["area/", "По районам", "Недвижимость по районам", "Унгасан, Джимбаран, Пекату–Улувату, Пандава, Чангу, Кута, Убуд, Гианьяр."], ["kalkulator.html", "Калькулятор", "Рассчитать расходы на покупку", "Налог BPHTB, услуги PPAT/нотариуса, НДС застройщика и расходы на лизхолд."]] }
+};
 function renderHome({ news = [], newsLabels = {}, guide = [], guideLabels = {}, L, head, seoBlock, flags, cards, cta, contact, footer, visitsScript, copyScript, i18nSrc, esc }) {
   const t = T[L];
   const featured = [...cards.filter((c) => !c.sold && c.rec), ...cards.filter((c) => !c.sold && !c.rec)].slice(0, 3);
@@ -199,10 +204,17 @@ ${CSS}
         <h3>${esc(c.name)}</h3>
         <ul>${c.places.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>
         <p class="more">${esc(c.more)}</p>
-        <a href="listings.html#${c.anchor}">${esc(c.link)} →</a>
+        <a href="area/${c.anchor}.html">${esc(c.link)} →</a>
       </article>`).join("\n      ")}
     </div>
     <p class="note">${esc(t.covNote)}</p>
+  </section>
+
+  <section class="hsec" aria-labelledby="h-tools">
+    <div class="feat-head"><h2 id="h-tools">${esc(TOOLS[L].h)}</h2></div>
+    <div class="feat">
+      ${TOOLS[L].items.map((g) => `<a class="fc" href="${g[0]}"><span class="eyebrow">${esc(g[1])}</span><h3>${esc(g[2])}</h3><span style="color:var(--muted);font-size:14px">${esc(g[3])}</span></a>`).join("\n      ")}
+    </div>
   </section>
 
   <section class="hsec" aria-labelledby="h-feat">

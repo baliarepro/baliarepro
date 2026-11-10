@@ -12,6 +12,8 @@ on:
       - "tools/**"
       - "img/listing/**"
   workflow_dispatch:
+  schedule:
+    - cron: "17 22 * * 0" # Senin ±06.17 WITA: perbarui kurs USD/EUR
 
 permissions:
   contents: write

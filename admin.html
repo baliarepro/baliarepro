@@ -146,6 +146,8 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       <div class="list" id="stlist"></div>
       <h2>Pengingat untuk Bapak</h2>
       <div class="list" id="remlist"></div>
+      <h2 style="margin-top:22px">Listing terpopuler</h2>
+      <div class="list" id="poplist"><p class="muted">Laporan dibuat tiap Senin pagi.</p></div>
     </div>
     <div id="tab-wa" hidden>
       <p class="muted">Tekan tombol grup → WhatsApp terbuka dengan pesan siap kirim → pilih grup itu → Kirim. Tombol berubah jadi ✓ supaya tidak dobel. Link otomatis tampil dengan foto.</p>
@@ -581,7 +583,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   function lastOf(o) { var v = Object.keys(o || {}).map(function (k) { return { key: k, at: o[k].at, permalink: o[k].permalink }; }).filter(function (x) { return x.at; }); v.sort(function (a, b) { return b.at < a.at ? -1 : 1; }); return v[0] || null; }
   function fmt(at) { try { return new Date(at).toLocaleString("id-ID", { timeZone: "Asia/Makassar", dateStyle: "medium", timeStyle: "short" }) + " WITA"; } catch (e) { return at; } }
   function loadStatus() {
-    var files = ["tools/ig-state.json", "tools/ig-weekly-state.json", "tools/threads-state.json", "tools/threads-weekly-state.json", "tools/fb-state.json", "tools/fb-weekly-state.json", REM];
+    var files = ["tools/ig-state.json", "tools/ig-weekly-state.json", "tools/threads-state.json", "tools/threads-weekly-state.json", "tools/fb-state.json", "tools/fb-weekly-state.json", REM, "tools/reels-state.json", "laporan-dilihat.json"];
     return Promise.all(files.map(rj)).then(function (r) {
       var ig = r[0], igw = r[1], th = r[2], thw = r[3], fb = r[4], fbw = r[5]; rem = r[6].items ? r[6] : { items: [] };
       var q = (ig.queue || []).length, now = Date.now(), H = 3600e3, bad = 0;
@@ -591,22 +593,31 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
         ["Instagram · berita mingguan", igw.posts, igw.error ? { terakhir: igw.error } : {}, 8 * 24, "Tiap Senin ±16.07 WITA"],
         ["Threads · listing", th.posted, th.errors, q ? 30 : 0, ""],
         ["Threads · berita mingguan", thw.weekly, thw.errors, 8 * 24, ""],
+        ["Instagram · Reels", r[7].posted, r[7].errors, Object.keys(r[7].posted || {}).length ? 50 : 0, "1 Reel per hari ±19.07 WITA"],
         ["Facebook Page · listing", fb.posted, fb.errors, fbOff ? 0 : q ? 30 : 0, fbOff ? "Belum aktif, lihat pengingat" : ""],
         ["Facebook Page · berita mingguan", fbw.posted, fbw.errors, fbOff ? 0 : 8 * 24, ""]
       ];
       $("#stlist").innerHTML = ch.map(function (c, i) {
         var last = lastOf(c[1]), errs = Object.keys(c[2] || {}).map(function (k) { return k + ": " + (c[2][k].msg || ""); });
         var age = last ? (now - Date.parse(last.at)) / H : Infinity;
-        var cls = (i >= 4 && fbOff) ? "off" : (errs.length || (c[3] && last && age > c[3])) ? "bad" : "ok";
+        var cls = (i >= 5 && fbOff) ? "off" : (errs.length || (c[3] && last && age > c[3])) ? "bad" : "ok";
         if (cls === "bad") bad++;
         return '<div class="st ' + cls + '"><h3>' + (cls === "ok" ? "✅ " : cls === "off" ? "⏸️ " : "⚠️ ") + esc(c[0]) + '</h3>' +
           '<div class="muted">' + Object.keys(c[1] || {}).length + ' posting · terakhir: ' + (last ? (last.permalink ? '<a target="_blank" rel="noopener" href="' + esc(last.permalink) + '">' + fmt(last.at) + '</a>' : fmt(last.at)) : "belum ada") + (c[4] ? " · " + esc(c[4]) : "") + '</div>' +
           errs.map(function (e) { return '<div class="err">' + esc(e) + '</div>'; }).join("") +
           (cls === "bad" && !errs.length ? '<div class="err">Tidak ada posting baru lebih lama dari jadwal. Kabari Claude.</div>' : "") + '</div>';
       }).join("");
+      renderPop(r[8]);
       renderRem();
       $("#st-dot").hidden = !(bad || rem.items.some(function (x) { return !x.done; }));
     });
+  }
+  function renderPop(v) {
+    var r = v && v.report; if (!r) return;
+    var head = '<p class="muted">' + (r.since ? "7 hari terakhir (" + esc(r.since) + " → " + esc(r.date) + ") · " + r.weekViews + " kali dilihat" : "Total sejak awal (per " + esc(r.date) + ") · kenaikan mingguan mulai Senin depan") + ' · total ' + r.totalViews + '</p>';
+    var top = r.top.map(function (x, i) { return '<div class="st ok"><h3>' + (i + 1) + '. ' + esc(x.title) + '</h3><div class="muted">' + (r.since ? "+" + x.week + " minggu ini · " : "") + x.total + ' total · <a target="_blank" rel="noopener" href="listing/' + esc(x.slug) + '.html">buka</a></div></div>'; }).join("");
+    var quiet = r.quiet.length ? '<div class="st bad"><h3>Sepi (' + r.quiet.length + ')</h3><div class="muted">' + r.quiet.map(function (x) { return esc(x.title); }).join(" · ") + '</div></div>' : "";
+    $("#poplist").innerHTML = head + top + quiet;
   }
   function renderRem() {
     var open = rem.items.filter(function (x) { return !x.done; });

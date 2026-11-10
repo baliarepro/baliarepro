@@ -91,6 +91,8 @@ article.card[data-status="hidden"]{display:none!important}
 .price small{display:block;font-size:12px;color:var(--muted)}
 .price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
 .price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 12px;margin:2px 0 0;font-weight:600}.quick a{color:var(--sea)}.quick span{color:var(--muted)}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
 
 dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
 dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
@@ -187,6 +189,7 @@ footer>span{min-width:0}
     </div>
     <h1>Listing Properti</h1>
     <p class="lead">Tanah, villa, rumah, dan properti komersial siap transaksi di Bali. Dikelompokkan per jenis properti dan area.</p>
+    <p class="quick"><a href="area/">Cari per area</a><span aria-hidden="true">·</span><a href="kalkulator.html">Kalkulator biaya beli</a></p>
     <div class="cta-duo">
       <a class="cta" href="inquiry.html#buyer"><b>Cari properti</b><span>Belum ketemu yang cocok? Isi kebutuhan Anda, kami carikan.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       <a class="cta owner" href="inquiry.html#owner"><b>Titip jual properti</b><span>Pasang tanah, villa, atau rumah Anda di listing kami.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
