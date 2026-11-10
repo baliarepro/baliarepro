@@ -31,6 +31,10 @@ module.exports = {
     id: { t: "Terjual: Tanah 1.000 m² Ocean View di Blimbingsari, Pecatu Bali", d: "Tanah 1.000 m² ocean view, SHM, zona pariwisata di Blimbingsari, Pecatu — sudah terjual. Cari tanah serupa di Kuta Selatan? Hubungi Bali Are Property via WhatsApp." },
     en: { t: "Sold: 1,000 m² Ocean-View Land in Blimbingsari, Pecatu Bali", d: "1,000 m² ocean-view SHM plot with tourism zoning in Blimbingsari, Pecatu — now sold. Looking for similar land in South Kuta? Contact Bali Are Property on WhatsApp." },
     ru: { t: "Продано: участок 1 000 м² с видом на океан, Блимбингсари, Пекату", d: "Участок 1 000 м² с видом на океан, SHM, туристическая зона, Блимбингсари (Пекату) — продан. Ищете похожий в Южной Куте? Пишите Bali Are Property в WhatsApp." } },
+  "tanah-7000-m2-di-kawasan-villa-toyaning-ungasan": {
+    id: { t: "Dijual Tanah 7.000 m² ITR Permukiman di Toyaning, Ungasan Bali", d: "Tanah 70 are SHM, ITR permukiman di kawasan villa Toyaning, Ungasan, Kuta Selatan. Hadap timur. Rp5,75 jt/m², total Rp40,25 M. Cocok untuk kompleks villa. Info via WhatsApp." },
+    en: { t: "7,000 m² Residential Land for Sale in Toyaning, Ungasan Bali", d: "70-are SHM plot, residential zoning, in the Toyaning villa area, Ungasan, South Kuta. East-facing. IDR 5.75M/m², 40.25B total. Ideal for a villa complex. Ask on WhatsApp." },
+    ru: { t: "Продажа участка 7 000 м² (жилая зона) в Тоянинг, Унгасан, Бали", d: "Участок 70 аре, SHM, жилая зона, район вилл Тоянинг, Унгасан, Южная Кута. На восток. 5,75 млн IDR/м², всего 40,25 млрд IDR. Под комплекс вилл. Пишите в WhatsApp." } },
   "tanah-15-ha-di-jalan-pura-mesuka": {
     id: { t: "Dijual Tanah 1,5 Hektar di Jalan Pura Mesuka, Ungasan Bali", d: "Tanah 15.000 m² SHM, ITR perumahan di Jl. Pura Mesuka, Ungasan, Kuta Selatan. Rp5,5 jt/m² (nego), total Rp82,5 M. Cocok untuk proyek perumahan. Info via WhatsApp." },
     en: { t: "1.5-Hectare Land for Sale on Jalan Pura Mesuka, Ungasan Bali", d: "15,000 m² SHM plot with residential zoning on Jl. Pura Mesuka, Ungasan, South Kuta. IDR 5.5M/m² (neg.), IDR 82.5B total. Ideal for a housing project. Ask on WhatsApp." },

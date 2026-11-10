@@ -755,7 +755,19 @@
     ["Area gym dengan view, area laundry dengan mesin cuci", "Gym area with a view, laundry area with washing machine", "Зона спортзала с видом, прачечная со стиральной машиной"],
     ["±150 m dari jalan utama", "±150 m from the main road", "±150 м от главной дороги"],
     ["±5 menit ke Sangeh Monkey Forest, ±15 menit ke Jl. Raya Sayan Ubud", "±5 min to Sangeh Monkey Forest, ±15 min to Jl. Raya Sayan, Ubud", "±5 мин до леса обезьян Сангех, ±15 мин до Jl. Raya Sayan, Убуд"],
-    ["±19 menit ke Green School Sibang Kaja", "±19 min to Green School, Sibang Kaja", "±19 мин до Green School, Сибанг-Каджа"]
+    ["±19 menit ke Green School Sibang Kaja", "±19 min to Green School, Sibang Kaja", "±19 мин до Green School, Сибанг-Каджа"],
+    // ---------- Tanah 7.000 m² Toyaning, Ungasan ----------
+    ["Toyaning · Ungasan", "Toyaning · Ungasan", "Тоянинг · Унгасан"],
+    ["Tanah 7.000 m² di kawasan villa Toyaning, Ungasan", "7,000 m² land in the Toyaning villa area, Ungasan", "Участок 7 000 м² в районе вилл Тоянинг, Унгасан"],
+    ["Lahan 70 are bersertifikat SHM dengan ITR permukiman di lingkungan villa Toyaning, Ungasan, Kuta Selatan. Menghadap timur dengan kontur menurun landai.", "A 70-are SHM-certified plot with residential zoning (ITR) in the Toyaning villa neighbourhood, Ungasan, South Kuta. East-facing with a gentle downward slope.", "Участок 70 аре с сертификатом SHM и жилым зонированием (ITR) в районе вилл Тоянинг, Унгасан, Южная Кута. Ориентация на восток, пологий спуск."],
+    ["7.000 m² (70 are)", "7,000 m² (70 are)", "7 000 м² (70 аре)"],
+    ["Menurun landai", "Gentle downward slope", "Пологий спуск"],
+    ["Kawasan villa", "Villa area", "Район вилл"],
+    ["Toyaning, Ungasan", "Toyaning, Ungasan", "Тоянинг, Унгасан"],
+    ["Luas 70 are, leluasa untuk dikembangkan menjadi beberapa villa atau kompleks hunian", "70 are of land, ample room to develop several villas or a residential complex", "70 аре — достаточно места для нескольких вилл или жилого комплекса"],
+    ["Peruntukan permukiman (ITR) dengan sertifikat SHM", "Residential zoning (ITR) with SHM freehold certificate", "Жилое зонирование (ITR), сертификат собственности SHM"],
+    ["Berada di lingkungan villa kawasan Ungasan, Kuta Selatan", "Located in a villa neighbourhood of Ungasan, South Kuta", "Расположен в районе вилл Унгасана, Южная Кута"],
+    ["Kompleks hunian", "Residential complex", "Жилой комплекс"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
