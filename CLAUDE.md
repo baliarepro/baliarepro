@@ -61,7 +61,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 
 ## Threads otomatis (salinan dari Instagram)
 - `tools/threads-post.js` (Threads API, graph.threads.com) dijalankan setelah langkah posting di `instagram.yml` dan `instagram-weekly.yml`. Semua yang sudah tayang di IG (listing di `ig-state.json → posted`, carousel mingguan di `ig-weekly-state.json → posts`) diposting ulang ke Threads dengan gambar yang sama (listing → `tools/threads-state.json`; mingguan `--only=weekly` → `tools/threads-weekly-state.json`); maks. 2 per jalan, urut waktu tayang IG. Listing tersembunyi/terjual dilewati.
-- Caption ringkas ≤500 byte (judul, lokasi, harga utama, spesifikasi, link langsung yang bisa diklik, WA, 1 tag `#PropertiBali`).
+- Caption ringkas ≤500 byte (judul, lokasi, harga utama, spesifikasi, link langsung yang bisa diklik, WA, tanpa hashtag di teks). Topik Threads lewat parameter `topic_tag` (1 per posting): villa & berita/edukasi mingguan → "Bali", tanah/rumah/komersial → "Real Estate" (permintaan pemilik 11 Nov 2026; sebelumnya #PropertiBali). Fungsi `topicFor` di `threads-post.js`.
 - Butuh secret `THREADS_TOKEN` (token long-lived Threads, use case "Access the Threads API" di aplikasi Meta yang sama; akun pemilik sebagai penguji). Tanpa secret: dilewati. Token diperpanjang otomatis tiap 7 hari (berlaku 60 hari), disimpan terenkripsi di `tools/threads-state.json` (`posted`, `weekly`, `errors`).
 
 ## Facebook Page otomatis (salinan dari Instagram)

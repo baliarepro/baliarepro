@@ -31,6 +31,11 @@ function fit(head, body, tail) {
   return t;
 }
 
+// ---------- Topik Threads (1 per posting, lewat parameter topic_tag) ----------
+// Sejak 11 Nov 2026 atas permintaan pemilik: topik luas "Bali" / "Real Estate" (sebelumnya #PropertiBali).
+// Villa → Bali (pembaca ekspat & gaya hidup); tanah, rumah, komersial → Real Estate; berita & edukasi mingguan → Bali.
+const topicFor = (t) => (t.kind === "weekly" ? "Bali" : t.l && t.l.type === "villa" ? "Bali" : "Real Estate");
+
 // ---------- Caption ----------
 function listingText(l) {
   const d = parseCard(l.html);
@@ -42,7 +47,7 @@ function listingText(l) {
   if (main) body.push(`💰 ${main.label}: ${main.value}`);
   if (specs.length) body.push(specs.map((s) => `${s[0]}: ${s[1]}`).join(" · "));
   d.points.slice(0, 2).forEach((p) => body.push(`✓ ${p}`));
-  const tail = `\nDetail, foto & PDF: ${BASE}listing/${l.slug}.html\nWA Bagoes: +62 812 868 080\n#PropertiBali`;
+  const tail = `\nDetail, foto & PDF: ${BASE}listing/${l.slug}.html\nWA Bagoes: +62 812 868 080`;
   return fit(head, body, tail);
 }
 
@@ -52,7 +57,7 @@ function weeklyText(date, w) {
     const items = w.items.map((s) => NEWS.find((n) => n.slug === s)).filter(Boolean);
     const head = `📰 Berita Properti Bali Minggu Ini · ${tglIndo(date)}`;
     const body = items.map((n, i) => `${i + 1}. ${n.id.title}`);
-    const tail = `\nBaca lengkap: ${BASE}news.html\nRingkasan berita, bukan nasihat investasi.\n#PropertiBali`;
+    const tail = `\nBaca lengkap: ${BASE}news.html\nRingkasan berita, bukan nasihat investasi.`;
     return fit(head, body, tail);
   }
   const { EDU } = require("./ig-edu-content.js");
@@ -60,7 +65,7 @@ function weeklyText(date, w) {
   if (!e) return `Aturan properti di Bali\n${BASE}`;
   const head = `📘 ${e.title}`;
   const body = e.slides.map((s) => `• ${s.h}: ${s.pts[0]}`);
-  const tail = `\n${e.note}\nTanah & villa dijual di Bali: ${BASE}\nWA: +62 812 868 080\n#PropertiBali`;
+  const tail = `\n${e.note}\nTanah & villa dijual di Bali: ${BASE}\nWA: +62 812 868 080`;
   return fit(head, body, tail);
 }
 
@@ -97,15 +102,23 @@ async function ready(id, token) {
   throw new Error("Container " + id + " belum siap");
 }
 
-async function post(uid, token, urls, text) {
+async function post(uid, token, urls, text, topic) {
+  try { return await postOnce(uid, token, urls, text, topic); }
+  catch (e) { // bila topik dengan spasi ditolak, coba tanpa spasi
+    if (topic && /\s/.test(topic) && /topic/i.test(e.message)) return postOnce(uid, token, urls, text, topic.replace(/\s+/g, ""));
+    throw e;
+  }
+}
+async function postOnce(uid, token, urls, text, topic) {
+  const tt = topic ? { topic_tag: topic } : {};
   let creation;
   if (urls.length === 1) {
-    creation = (await api("POST", uid + "/threads", { media_type: "IMAGE", image_url: urls[0], text }, token)).id;
+    creation = (await api("POST", uid + "/threads", { media_type: "IMAGE", image_url: urls[0], text, ...tt }, token)).id;
   } else {
     const kids = [];
     for (const u of urls.slice(0, 20)) kids.push((await api("POST", uid + "/threads", { media_type: "IMAGE", image_url: u, is_carousel_item: "true" }, token)).id);
     for (const k of kids) await ready(k, token);
-    creation = (await api("POST", uid + "/threads", { media_type: "CAROUSEL", children: kids.join(","), text }, token)).id;
+    creation = (await api("POST", uid + "/threads", { media_type: "CAROUSEL", children: kids.join(","), text, ...tt }, token)).id;
   }
   await ready(creation, token);
   const pub = await api("POST", uid + "/threads_publish", { creation_id: creation }, token);
@@ -177,7 +190,8 @@ async function main() {
         urls = Array.from({ length: meta.images || 1 }, (_, i) => `${BASE}img/ig/${t.slug}/${i + 1}.jpg`);
         text = listingText(t.l);
       }
-      const r = await post(me.id, token, urls, text);
+      const r = await post(me.id, token, urls, text, topicFor(t));
+      r.topic = topicFor(t);
       if (t.kind === "weekly") { wstate.weekly[t.date] = r; delete wstate.errors[k]; } else { state.posted[t.slug] = r; delete state.errors[k]; }
       console.log(`✓ ${k} → ${r.permalink || r.id}`);
     } catch (e) {
