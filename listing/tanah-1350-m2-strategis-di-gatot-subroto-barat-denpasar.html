@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="id" data-static-lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: catalog — header + kawasan filter chips, grouped by jenis properti then kawasan, each listing a brochure card; shared contact block at end */
+:root{
+  --bg:#F6F2EA; --surface:#FFFFFF; --ink:#1C2421; --muted:#59625D; --line:#E2DACB;
+  --sea:#123F36; --sea-soft:#E2EBE5; --sand:#946410; --sand-soft:#F6EAD0; --wa:#1A8D4A; --sold:#B3261E;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+
+header{padding-block:44px 20px}
+h1{font-size:clamp(34px,7vw,56px);font-weight:800;letter-spacing:-.02em;margin-top:12px}
+.lead{color:var(--muted);font-size:17px;max-width:58ch;margin:12px 0 0}
+
+.filters{display:grid;gap:14px;margin-top:22px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flabel{flex-basis:100%;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.chip.empty{opacity:.4}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:600 14px var(--body);cursor:pointer}
+.chip small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.chip:focus-visible,.btn:focus-visible{outline:3px solid var(--sand);outline-offset:3px}
+
+.type{padding-block:28px 8px;border-top:2px solid var(--ink);margin-top:20px}
+.type-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.type-head h2{font-size:30px;font-weight:800}
+.type-head span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+.area{padding-block:24px 8px}
+.area-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.area-head h3{font-size:22px;font-weight:700}
+.area-head p{margin:0;color:var(--muted);font-size:14px}
+article.card[data-status="hidden"]{display:none!important}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px;display:grid;gap:18px}
+.card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.card h4{font-family:var(--display);font-size:clamp(22px,4.5vw,28px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
+.card .desc{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--sea-soft);color:var(--sea);white-space:nowrap}
+.badge.sand{background:var(--sand-soft);color:var(--ink)}
+
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.price div{background:var(--surface);padding:14px 16px;min-width:0}
+.price small{display:block;font-size:12px;color:var(--muted)}
+.price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
+.price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}.quick a{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--sea);background:var(--sea-soft);color:var(--sea);font-weight:700;font-size:15px;text-decoration:none;transition:transform .15s,filter .15s}.quick a:hover{filter:brightness(1.08);transform:translateY(-1px)}.quick svg{width:18px;height:18px;flex:none}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
+
+dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
+dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+dt{color:var(--muted);font-size:14px}
+dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;min-width:0}
+
+.plot{background:var(--bg);border-radius:12px;padding:12px;overflow-x:auto}
+.plot svg{display:block;width:100%;min-width:300px;height:auto}
+.plot p{font-size:12px;color:var(--muted);margin:6px 0 0}
+
+.card.sold{position:relative;overflow:hidden}
+.sold-stamp{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 16px;border:3px solid var(--sold);border-radius:10px;color:var(--sold);transform:rotate(-6deg);font-family:var(--display);line-height:1;text-align:center;white-space:nowrap}
+.sold-stamp b{font-size:26px;font-weight:800;letter-spacing:.08em}
+.sold-stamp small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.card.sold .price b{text-decoration:line-through;text-decoration-thickness:2px;opacity:.6}
+.card.sold .price .sold-note b{text-decoration:none;opacity:1;color:var(--sold)}
+.sold-stamp.plain{border-color:var(--muted);color:var(--muted);padding:10px 20px}
+.card.sold-plain .price .sold-note b{color:var(--muted)}
+.card.recommended{border:2px solid var(--sea)}
+.rec-tag{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;justify-self:start;background:var(--sea);color:var(--bg);border-radius:8px;padding:8px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.rec-tag svg{width:20px;height:20px;flex:none}
+.rec-tag .rt{display:flex;flex-direction:column;gap:2px}
+.rec-tag b{font-size:13px;white-space:nowrap}
+.rec-tag small{font-size:10px;opacity:.85;white-space:nowrap}
+ul.points{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;font-size:15px}
+ul.points li{position:relative;padding-left:20px;min-width:0}
+ul.points li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:2px;background:var(--sea)}
+@media (max-width:560px){ul.points{grid-template-columns:1fr}}
+ul.uses{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:500}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;border:0;cursor:pointer;font-family:var(--body)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn.primary{background:var(--sea);color:var(--bg)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+.btn:hover{filter:brightness(1.08)}
+
+.cta-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:22px}
+.cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 14px;padding:16px 18px;border-radius:16px;text-decoration:none;background:var(--sea);color:var(--bg)}
+.cta.owner{background:var(--sand-soft);color:var(--ink);border:1.5px solid var(--sand)}
+.cta small{grid-column:1;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.cta b{grid-column:1;font-family:var(--display);font-size:21px;line-height:1.15}
+.cta span{grid-column:1;font-size:14px;opacity:.85;line-height:1.4}
+.cta svg{grid-column:2;grid-row:1/3;width:22px;height:22px}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.cta{transition:filter .15s,transform .15s}.cta:hover{transform:translateY(-1px)}}
+
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.langs{display:flex;gap:10px;margin-left:auto}
+.lang-btn{display:block;width:42px;height:42px;padding:0;border:0;border-radius:50%;overflow:hidden;cursor:pointer;background:transparent;box-shadow:0 0 0 1px var(--line);opacity:.82}
+.lang-btn svg{display:block;width:100%;height:100%}
+.lang-btn:hover{opacity:1}
+.lang-btn[aria-pressed="true"],.lang-btn[aria-current="true"]{opacity:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--sea)}
+.lang-btn:focus-visible{outline:2px solid var(--sea);outline-offset:7px}
+@media (prefers-reduced-motion:no-preference){.lang-btn{transition:box-shadow .15s,opacity .15s}}
+
+.card h4 a{color:inherit;text-decoration:none}
+.card h4 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+a.home-link{text-decoration:none}
+a.home-link:hover{text-decoration:underline}
+.contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 22px;margin-block:36px 24px;display:grid;gap:14px}
+.contact h2{color:var(--bg);font-size:26px}
+.contact p{margin:0;opacity:.8}
+.phone{font-family:var(--mono);font-size:clamp(22px,5vw,28px);user-select:all;letter-spacing:.04em}
+.contact .btn.primary{background:var(--sand);color:#1C2421}
+.contact .btn.ghost{border-color:var(--bg);color:var(--bg)}
+footer{font-size:13px;color:var(--muted);padding-block:0 40px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+footer>span{min-width:0}
+.visits{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px}
+.visits svg{width:16px;height:16px;flex:none;color:var(--sea)}
+.visits b{font-variant-numeric:tabular-nums}
+
+@media (max-width:560px){
+  dl.specs{grid-template-columns:1fr}
+  .card{padding:18px}
+}
+@media (prefers-reduced-motion:no-preference){.btn,.chip{transition:filter .15s,background .15s}}
+</style>
+
+<title>Dijual Tanah 1.350 m² Strategis di Gatot Subroto Barat, Denpasar Bali</title>
+<!--seo-->
+<meta name="description" content="Tanah 13,5 are SHM, lebar depan 38 m, di belakang Mixue &amp; sebelah Hotel Neo Gatsu Barat, Denpasar. Rp12,5 jt/m², total Rp16,875 M (nego). Cocok untuk usaha. Info via WhatsApp.">
+<link rel="canonical" href="https://baliareproperty.com/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html">
+<link rel="alternate" hreflang="id" href="https://baliareproperty.com/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html">
+<link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html">
+<link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html">
+<link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html">
+<link rel="icon" href="https://baliareproperty.com/favicon.ico" sizes="48x48">
+<link rel="icon" href="https://baliareproperty.com/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="https://baliareproperty.com/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="https://baliareproperty.com/apple-touch-icon.png">
+<link rel="manifest" href="https://baliareproperty.com/site.webmanifest">
+<meta name="theme-color" content="#123F36">
+<script src="/app.js" defer></script>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bali Are Property">
+<meta property="og:title" content="Dijual Tanah 1.350 m² Strategis di Gatot Subroto Barat, Denpasar Bali">
+<meta property="og:description" content="Tanah 13,5 are SHM, lebar depan 38 m, di belakang Mixue &amp; sebelah Hotel Neo Gatsu Barat, Denpasar. Rp12,5 jt/m², total Rp16,875 M (nego). Cocok untuk usaha. Info via WhatsApp.">
+<meta property="og:url" content="https://baliareproperty.com/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html">
+<meta property="og:image" content="https://baliareproperty.com/img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/1.jpg">
+<meta property="og:locale" content="id_ID">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"RealEstateAgent","@id":"https://baliareproperty.com/#agent","name":"Bali Are Property","url":"https://baliareproperty.com/","telephone":"+62812868080","image":"https://baliareproperty.com/og.png","logo":"https://baliareproperty.com/logo.png","areaServed":{"@type":"Place","name":"Bali, Indonesia"},"address":{"@type":"PostalAddress","addressRegion":"Bali","addressCountry":"ID"}},{"@type":"RealEstateListing","name":"Tanah strategis 1.350 m² di Gatot Subroto Barat, Denpasar","description":"Tanah 13,5 are SHM, lebar depan 38 m, di belakang Mixue & sebelah Hotel Neo Gatsu Barat, Denpasar. Rp12,5 jt/m², total Rp16,875 M (nego). Cocok untuk usaha. Info via WhatsApp.","url":"https://baliareproperty.com/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html","inLanguage":"id","image":["https://baliareproperty.com/img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/1.jpg","https://baliareproperty.com/img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/2.jpg","https://baliareproperty.com/img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/3.jpg"],"contentLocation":{"@type":"Place","name":"Gatsu Barat, Denpasar, Bali, Indonesia","address":{"@type":"PostalAddress","streetAddress":"Gatsu Barat","addressLocality":"Denpasar","addressRegion":"Bali","addressCountry":"ID"}},"additionalProperty":[{"@type":"PropertyValue","name":"Luas tanah","value":"1.350 m² (13,5 are)"},{"@type":"PropertyValue","name":"Lebar depan","value":"38 m"},{"@type":"PropertyValue","name":"Sertifikat","value":"SHM"},{"@type":"PropertyValue","name":"Hadap","value":"Selatan"},{"@type":"PropertyValue","name":"Akses","value":"Jalan belakang lebar, paving"},{"@type":"PropertyValue","name":"Kondisi","value":"Perlu urug, siap bangun"},{"@type":"PropertyValue","name":"Lokasi","value":"Gatot Subroto Barat, Denpasar"}],"offers":{"@type":"Offer","priceCurrency":"IDR","availability":"https://schema.org/InStock","seller":{"@id":"https://baliareproperty.com/#agent"},"price":16875000000}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bali Are Property","item":"https://baliareproperty.com/"},{"@type":"ListItem","position":2,"name":"Tanah, Villa & Rumah Dijual di Bali – Daftar Listing | Bali Are Property","item":"https://baliareproperty.com/listings.html"},{"@type":"ListItem","position":3,"name":"Tanah strategis 1.350 m² di Gatot Subroto Barat, Denpasar","item":"https://baliareproperty.com/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html"}]}]}</script>
+<!--/seo-->
+<style>
+.lp-head{display:flex;flex-direction:column;gap:6px;padding-block:28px 18px}
+a.eyebrow{text-decoration:none}
+.back{align-self:flex-start;margin-top:12px;color:var(--sea);font-weight:600;text-decoration:none}
+.back:hover{text-decoration:underline}
+.crumb{color:var(--muted);font-size:14px;margin:0}
+.crumb a{color:var(--sea);font-weight:600}
+.card h1{font-family:var(--display);font-size:clamp(26px,5.5vw,34px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
+main{display:flex;flex-direction:column;gap:22px}
+main .cta-duo{margin-top:0}
+.gallery{display:grid;grid-template-columns:2fr 1fr;grid-auto-rows:1fr;gap:8px;margin:0}
+.gallery a{display:block;border-radius:12px;overflow:hidden;background:var(--line)}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:4/3}
+.gallery a:first-child{grid-row:span 2}
+.gallery a:first-child img{aspect-ratio:auto}
+.gallery.n1{grid-template-columns:1fr}.gallery.n1 a:first-child{grid-row:auto}.gallery.n1 a:first-child img{aspect-ratio:16/9}
+.gallery.n2{grid-template-columns:1fr 1fr}.gallery.n2 a:first-child{grid-row:auto}.gallery.n2 a:first-child img{aspect-ratio:4/3}
+@media (max-width:560px){.gallery{grid-template-columns:1fr 1fr;grid-auto-rows:auto}.gallery a:first-child{grid-column:1/-1;grid-row:auto}.gallery a:first-child img{aspect-ratio:16/10}.gallery.n2 a:first-child{grid-column:auto}}
+.print-only{display:none}
+@media print{
+  html:root{--bg:#F6F2EA !important;--surface:#FFFFFF !important;--ink:#1C2421 !important;--muted:#59625D !important;--line:#E2DACB !important;--sea:#123F36 !important;--sea-soft:#E2EBE5 !important;--sand:#946410 !important;--sand-soft:#F6EAD0 !important;--sold:#B3261E !important;color-scheme:light}
+  @page{size:A4 portrait;margin:10mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{background:#fff !important;color:var(--ink) !important;margin:0;padding:0}
+  .wrap{max-width:none;padding:0;margin:0}
+  .lp-head,.langs,main .cta-duo,section.contact,body>.wrap>footer,.actions,.back{display:none !important}
+  a{color:inherit;text-decoration:none}
+  main{width:auto;display:flex;flex-direction:column;gap:0;margin:0;box-sizing:border-box}
+  .print-only{display:block}
+  .print-head{display:flex;justify-content:space-between;align-items:center;gap:8mm;background:#123F36;color:#fff;padding:5mm 7mm;border-radius:2.5mm 2.5mm 0 0}
+  .print-head .ph-brand{display:flex;align-items:center;gap:3.5mm}
+  .print-head .ph-mark{width:11mm;height:11mm;flex:none}
+  .print-head .ph-brand b{display:block;font-family:var(--display);font-size:17pt;font-weight:800;letter-spacing:-.01em;line-height:1}
+  .print-head .ph-brand span{display:block;font-family:var(--mono);font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#C9D6D3;margin-top:1.6mm}
+  .print-head .ph-contact{text-align:right;font-size:8pt;line-height:1.45;color:#EDF0EA}
+  .print-head .ph-contact b{color:#fff;font-weight:600}
+  .print-band{height:1.6mm;background:var(--sand)}
+  .card{border:0 !important;border-radius:0;padding:5mm 1mm 0;margin:0;gap:3.4mm;box-shadow:none;background:#fff}
+  .card .card-top{gap:4mm}
+  .card .eyebrow{font-size:7pt}
+  .card h1{font-size:19pt;line-height:1.12;margin-top:1mm}
+  .card .desc{font-size:8.8pt;line-height:1.45;margin:1.5mm 0 0;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .badge{font-size:6.5pt;padding:1mm 2.4mm}
+  .rec-tag{font-size:6.5pt;padding:1.4mm 3mm}
+  .sold-stamp{transform:rotate(-6deg) scale(.8)}
+  .gallery{height:72mm;gap:2mm;grid-auto-rows:auto;break-inside:avoid}
+  .gallery.n3{grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr}
+  .gallery.n2{grid-template-columns:1fr 1fr;height:64mm}
+  .gallery a{border-radius:2.5mm}
+  .gallery img{aspect-ratio:auto !important;height:100% !important}
+  .price{border-radius:2.5mm;grid-template-columns:repeat(auto-fit,minmax(38mm,1fr))}
+  .price div{padding:2.2mm 3.2mm}
+  .price small{font-size:6.5pt;text-transform:uppercase;letter-spacing:.04em}
+  .price b{font-size:13pt}
+  dl.specs{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 6mm}
+  dl.specs div{padding:1.5mm 0;gap:3mm}
+  dl.specs dt{font-size:7.5pt}
+  dl.specs dd{font-size:8pt}
+  ul.points{font-size:8pt;gap:1.2mm 6mm;line-height:1.35}
+  ul.points li{padding-left:3.6mm}
+  ul.points li::before{width:1.5mm;height:1.5mm;left:0;top:.5em}
+  ul.uses{gap:1.6mm}
+  ul.uses li{font-size:7pt;padding:.8mm 2.6mm}
+  .plot{padding:2mm;border-radius:2.5mm;max-height:46mm;overflow:hidden;break-inside:avoid}
+  .plot svg{min-width:0;max-height:38mm;width:auto;max-width:100%;margin:0 auto}
+  .plot p{font-size:6.5pt;margin-top:1mm}
+  .print-foot{margin-top:5mm;display:grid;grid-template-columns:1.25fr 1fr;gap:4mm 10mm;align-items:end;padding:4mm 1mm 0;border-top:.4mm solid var(--line);font-size:8pt;line-height:1.45}
+  .print-foot .pf-label{display:block;font-family:var(--mono);font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--sea);margin-bottom:1mm}
+  .print-foot .pf-name{font-family:var(--display);font-size:12pt;font-weight:700}
+  .print-foot .pf-link{word-break:break-all;color:var(--sea)}
+  .print-foot .pf-note{grid-column:1/-1;font-size:6.5pt;color:var(--muted);border-top:.2mm dashed var(--line);padding-top:2mm}
+}
+</style>
+<style id="fit">@media print{main{zoom:0.939;margin:0 auto}}</style>
+</head>
+<body data-listing="tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar">
+<div class="wrap">
+  <header class="lp-head">
+    <div class="top-row">
+      <a class="eyebrow" href="../"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
+      <div class="langs" role="group" aria-label="Pilih bahasa / Language">
+        <a class="lang-btn" data-lang="id" hreflang="id" href="tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html" aria-label="Bahasa Indonesia" aria-current="true"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="18" fill="#CE1126"></rect><rect y="18" width="36" height="18" fill="#FFFFFF"></rect></svg></a>
+        <a class="lang-btn" data-lang="en" hreflang="en" href="../en/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html" aria-label="English" aria-current="false"><svg viewBox="15 0 30 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"></path></clipPath><rect width="60" height="30" fill="#012169"></rect><path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"></path><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"></path><path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"></path><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"></path></svg></a>
+        <a class="lang-btn" data-lang="ru" hreflang="ru" href="../ru/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html" aria-label="Русский" aria-current="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="12" fill="#FFFFFF"></rect><rect y="12" width="36" height="12" fill="#0039A6"></rect><rect y="24" width="36" height="12" fill="#D52B1E"></rect></svg></a>
+      </div>
+    </div>
+    <a class="back" href="../listings.html">← Lihat semua listing</a>
+    <p class="crumb">Tanah · Area Denpasar · Kota Denpasar · 1 listing</p>
+  </header>
+  <main>
+    <div class="print-only print-head"><div class="ph-brand"><svg viewBox="0 0 120 120" width="40" height="40" aria-hidden="true" class="ph-mark"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="#fff"/><circle cx="60" cy="44" r="7" fill="#D9A441"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D9A441" stroke-width="6" stroke-linecap="round"/></svg><div><b>Bali Are Property</b><span>Agen properti independen · Bali · sejak 2009</span></div></div><div class="ph-contact"><b>WhatsApp +62 812 868 080</b><br>baliareproperty.com</div></div>
+    <div class="print-only print-band"></div>
+    <article class="card">
+        <div class="card-top">
+          <div>
+            <div class="eyebrow">Gatsu Barat · Denpasar</div>
+            <h1>Tanah strategis 1.350 m² di Gatot Subroto Barat, Denpasar</h1>
+            <p class="desc">Lahan 13,5 are SHM dengan lebar depan 38 meter di pusat kota Denpasar, persis di belakang Mixue Gatsu Barat dan bersebelahan dengan Hotel Neo. Dikelilingi area komersial, kantor, ruko, dan kuliner.</p>
+          </div>
+          <span class="badge sand">Harga nego</span>
+        </div>
+
+        <div class="gallery n3"><a href="../img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/1.jpg" target="_blank" rel="noopener"><img src="../img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/1.jpg" alt="Foto 1 – Tanah strategis 1.350 m² di Gatot Subroto Barat, Denpasar" loading="eager" decoding="async"></a><a href="../img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/2.jpg" target="_blank" rel="noopener"><img src="../img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/2.jpg" alt="Foto 2 – Tanah strategis 1.350 m² di Gatot Subroto Barat, Denpasar" loading="lazy" decoding="async"></a><a href="../img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/3.jpg" target="_blank" rel="noopener"><img src="../img/wm/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar/3.jpg" alt="Foto 3 – Tanah strategis 1.350 m² di Gatot Subroto Barat, Denpasar" loading="lazy" decoding="async"></a></div>
+        <div class="price">
+          <div><small>Harga per m²</small><b>Rp12.500.000</b></div>
+          <div><small>Per are</small><b>Rp1,25 Miliar</b></div>
+          <div class="hl"><small>Total 1.350 m² (nego)</small><b>Rp16,875 Miliar</b></div>
+        </div>
+
+        <dl class="specs">
+          <div><dt>Luas tanah</dt><dd>1.350 m² (13,5 are)</dd></div>
+          <div><dt>Lebar depan</dt><dd>38 m</dd></div>
+          <div><dt>Sertifikat</dt><dd>SHM</dd></div>
+          <div><dt>Hadap</dt><dd>Selatan</dd></div>
+          <div><dt>Akses</dt><dd>Jalan belakang lebar, paving</dd></div>
+          <div><dt>Kondisi</dt><dd>Perlu urug, siap bangun</dd></div>
+          <div><dt>Lokasi</dt><dd>Gatot Subroto Barat, Denpasar</dd></div>
+        </dl>
+
+        <ul class="points">
+          <li>Di belakang Mixue Gatsu Barat dan bersebelahan dengan Hotel Neo Gatsu Barat</li>
+          <li>Di depan Resto Gang Djangkrik dan Gosha Gatsu</li>
+          <li>Dekat area komersial, kantor, ruko, dan kuliner di pusat kota Denpasar</li>
+        </ul>
+
+        <ul class="uses"><li>Usaha</li><li>Gudang</li><li>Kantor</li><li>Hunian modern</li></ul>
+
+        <div class="actions">
+          <a class="btn wa" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%201.350%20m%C2%B2%20Gatot%20Subroto%20Barat%2C%20Denpasar.%20Boleh%20minta%20info%20detailnya%3F" target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20tertarik%20dengan%20listing%20Tanah%201.350%20m%C2%B2%20Gatot%20Subroto%20Barat%2C%20Denpasar.%20Boleh%20minta%20info%20detailnya%3F"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg>Tanya via WhatsApp</a>
+          <a class="btn ghost" href="https://maps.app.goo.gl/i7UcYfBekg8KKDvg6" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>Lihat Lokasi</a>
+          <a class="btn ghost" href="https://drive.google.com/drive/folders/1yRtClFYXoA9OHTw75DC6fG7UAehHmpKQ" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.8"></circle><path d="M21 16l-5-5-8 8"></path></svg>Lihat Foto</a>
+          <button class="btn ghost pdf" type="button" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Download PDF</button>
+        <a class="btn ghost calc" href="../kalkulator.html?harga=16875000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>Hitung biaya beli</a>
+        </div>
+      </article>
+    <div class="print-only print-foot"><div><span class="pf-label">Info &amp; survei lokasi</span><span class="pf-name">Bagoes</span> · WhatsApp <b>+62 812 868 080</b><br>wa.me/62812868080</div><div><span class="pf-label">Lihat listing online</span><a class="pf-link" href="https://baliareproperty.com/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html">baliareproperty.com/listing/tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar.html</a></div><p class="pf-note">Harga, ketersediaan, dan spesifikasi dapat berubah sewaktu-waktu. Mohon konfirmasi ke Bali Are Property sebelum mengambil keputusan. Dicetak dari baliareproperty.com.</p></div>
+    <div class="cta-duo">
+      <a class="cta" href="../inquiry.html#buyer"><b>Cari properti</b><span>Belum ketemu yang cocok? Isi kebutuhan Anda, kami carikan.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+      <a class="cta owner" href="../inquiry.html#owner"><b>Titip jual properti</b><span>Pasang tanah, villa, atau rumah Anda di listing kami.</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </div>
+  </main>
+  <section class="contact" aria-labelledby="c-head">
+    <div class="eyebrow" style="color:var(--sand)">Info &amp; survey lokasi</div>
+    <h2 id="c-head">Bali Are Property</h2>
+    <div class="phone" id="phone" data-noi18n="">0812 868 080</div>
+    <div class="actions">
+      <a class="btn primary" href="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti." target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti.">Chat WhatsApp</a>
+      <button class="btn ghost" id="copy" type="button">Salin nomor</button>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" href="inquiry.html#buyer">Form cari properti</a>
+      <a class="btn ghost" href="inquiry.html#owner">Form titip jual</a>
+    </div>
+  </section>
+  <footer><span>Harga dapat berubah sewaktu-waktu. Sketsa hanya ilustrasi; data resmi mengikuti sertifikat.</span></footer>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var done=function(){btn.textContent='Nomor disalin';setTimeout(function(){btn.textContent='Salin nomor'},1800)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(document.getElementById('phone'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Nomor terpilih, tekan salin'};
+    try{navigator.clipboard.writeText('0812868080').then(done,sel)}catch(e){sel()}
+  });
+})();
+</script>
+<script src="/views.js" defer></script>
+<script src="../i18n.js"></script>
+</body>
+</html>
