@@ -805,7 +805,23 @@
     ["Air PDAM dan internet fiber optik", "Mains water (PDAM) and fibre-optic internet", "Центральное водоснабжение (PDAM) и оптоволоконный интернет"],
     ["Dekat Baywalk Jimbaran", "Close to Baywalk Jimbaran", "Рядом Baywalk Jimbaran"],
     ["Hunian keluarga", "Family home", "Семейный дом"],
-    ["Villa sewa", "Rental villa", "Вилла под аренду"]
+    ["Villa sewa", "Rental villa", "Вилла под аренду"],
+    // ---------- Tanah ocean view 805 m² Blimbingsari, Pecatu ----------
+    ["Jl. Blimbingsari · Pecatu", "Jl. Blimbingsari · Pecatu", "Джл. Блимбингсари · Пекату"],
+    ["Tanah ocean view 805 m² di cluster villa elite Blimbingsari, Pecatu", "805 m² ocean view land in an elite villa cluster, Blimbingsari, Pecatu", "Участок 805 м² с видом на океан в элитном кластере вилл, Блимбингсари, Пекату"],
+    ["Lahan 8,05 are SHM zona pariwisata di teras atas (lantai 2) dalam cluster villa elite, dengan pemandangan laut dan lebar depan 30 meter. Hanya beberapa menit ke Savaya, Sunday Beach Club, dan Karma Kandara.", "An 8.05-are SHM plot in the tourism zone on the upper terrace (second tier) of an elite villa cluster, with ocean views and a 30-metre frontage. Just minutes from Savaya, Sunday Beach Club and Karma Kandara.", "Участок 8,05 аре (SHM) в туристической зоне на верхней террасе (второй уровень) элитного кластера вилл, с видом на океан и фасадом 30 метров. Всего несколько минут до Savaya, Sunday Beach Club и Karma Kandara."],
+    ["Setara per m²", "Equivalent per m²", "В пересчёте на м²"],
+    ["Harga global 805 m²", "Total price 805 m²", "Общая цена 805 м²"],
+    ["805 m² (8,05 are)", "805 m² (8.05 are)", "805 м² (8,05 аре)"],
+    ["30 m", "30 m", "30 м"],
+    ["Jalan 4 m, paving", "4 m paved road", "Мощёная дорога 4 м"],
+    ["Teras atas (lantai 2) dalam cluster", "Upper terrace (second tier) within the cluster", "Верхняя терраса (второй уровень) в кластере"],
+    ["Laut", "Ocean", "Океан"],
+    ["Jl. Blimbingsari, Pecatu", "Jl. Blimbingsari, Pecatu", "Джл. Блимбингсари, Пекату"],
+    ["±3 menit ke Savaya Bali dan ±4 menit ke Argani Beach", "±3 min to Savaya Bali and ±4 min to Argani Beach", "±3 мин до Savaya Bali и ±4 мин до пляжа Argani"],
+    ["±5 menit ke Sunday Beach Club dan ±10 menit ke Karma Kandara Private Beach", "±5 min to Sunday Beach Club and ±10 min to Karma Kandara Private Beach", "±5 мин до Sunday Beach Club и ±10 мин до частного пляжа Karma Kandara"],
+    ["Berada di cluster villa elite yang tertata, akses jalan paving", "Within a well-planned elite villa cluster with paved road access", "В благоустроенном элитном кластере вилл, мощёная подъездная дорога"],
+    ["Zona pariwisata: cocok untuk villa pribadi maupun villa komersial", "Tourism zone: suitable for a private or a commercial villa", "Туристическая зона: подходит для личной или коммерческой виллы"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
