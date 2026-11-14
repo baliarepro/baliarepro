@@ -35,6 +35,10 @@ module.exports = {
     id: { t: "Dijual Tanah 7.000 m² ITR Permukiman di Toyaning, Ungasan Bali", d: "Tanah 70 are SHM, ITR permukiman di kawasan villa Toyaning, Ungasan, Kuta Selatan. Hadap timur. Rp5,75 jt/m², total Rp40,25 M. Cocok untuk kompleks villa. Info via WhatsApp." },
     en: { t: "7,000 m² Residential Land for Sale in Toyaning, Ungasan Bali", d: "70-are SHM plot, residential zoning, in the Toyaning villa area, Ungasan, South Kuta. East-facing. IDR 5.75M/m², 40.25B total. Ideal for a villa complex. Ask on WhatsApp." },
     ru: { t: "Продажа участка 7 000 м² (жилая зона) в Тоянинг, Унгасан, Бали", d: "Участок 70 аре, SHM, жилая зона, район вилл Тоянинг, Унгасан, Южная Кута. На восток. 5,75 млн IDR/м², всего 40,25 млрд IDR. Под комплекс вилл. Пишите в WhatsApp." } },
+  "tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar": {
+    id: { t: "Dijual Tanah 1.350 m² Strategis di Gatot Subroto Barat, Denpasar Bali", d: "Tanah 13,5 are SHM, lebar depan 38 m, di belakang Mixue & sebelah Hotel Neo Gatsu Barat, Denpasar. Rp12,5 jt/m², total Rp16,875 M (nego). Cocok untuk usaha. Info via WhatsApp." },
+    en: { t: "1,350 m² Prime Land for Sale on Gatot Subroto Barat, Denpasar Bali", d: "13.5-are SHM plot, 38 m frontage, behind Mixue and next to Hotel Neo, Gatsu Barat, Denpasar. IDR 12.5M/m², 16.875B total (neg.). Ideal for business. Ask on WhatsApp." },
+    ru: { t: "Продажа участка 1 350 м² на Гатот Суброто Барат, Денпасар, Бали", d: "Участок 13,5 аре, SHM, фасад 38 м, за Mixue и рядом с Hotel Neo, Гатсу-Барат, Денпасар. 12,5 млн IDR/м², всего 16,875 млрд IDR (торг). Под бизнес. Пишите в WhatsApp." } },
   "tanah-15-ha-di-jalan-pura-mesuka": {
     id: { t: "Dijual Tanah 1,5 Hektar di Jalan Pura Mesuka, Ungasan Bali", d: "Tanah 15.000 m² SHM, ITR perumahan di Jl. Pura Mesuka, Ungasan, Kuta Selatan. Rp5,5 jt/m² (nego), total Rp82,5 M. Cocok untuk proyek perumahan. Info via WhatsApp." },
     en: { t: "1.5-Hectare Land for Sale on Jalan Pura Mesuka, Ungasan Bali", d: "15,000 m² SHM plot with residential zoning on Jl. Pura Mesuka, Ungasan, South Kuta. IDR 5.5M/m² (neg.), IDR 82.5B total. Ideal for a housing project. Ask on WhatsApp." },

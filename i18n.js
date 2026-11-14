@@ -769,7 +769,23 @@
     ["Luas 70 are, leluasa untuk dikembangkan menjadi beberapa villa atau kompleks hunian", "70 are of land, ample room to develop several villas or a residential complex", "70 аре — достаточно места для нескольких вилл или жилого комплекса"],
     ["Peruntukan permukiman (ITR) dengan sertifikat SHM", "Residential zoning (ITR) with SHM freehold certificate", "Жилое зонирование (ITR), сертификат собственности SHM"],
     ["Berada di lingkungan villa kawasan Ungasan, Kuta Selatan", "Located in a villa neighbourhood of Ungasan, South Kuta", "Расположен в районе вилл Унгасана, Южная Кута"],
-    ["Kompleks hunian", "Residential complex", "Жилой комплекс"]
+    ["Kompleks hunian", "Residential complex", "Жилой комплекс"],
+    // ---------- Tanah 1.350 m² Gatot Subroto Barat, Denpasar ----------
+    ["Denpasar", "Denpasar", "Денпасар"],
+    ["Gatsu Barat · Denpasar", "Gatsu Barat · Denpasar", "Гатсу-Барат · Денпасар"],
+    ["Tanah strategis 1.350 m² di Gatot Subroto Barat, Denpasar", "Prime 1,350 m² land on Jalan Gatot Subroto Barat, Denpasar", "Участок 1 350 м² в отличной локации на Гатот Суброто Барат, Денпасар"],
+    ["Lahan 13,5 are SHM dengan lebar depan 38 meter di pusat kota Denpasar, persis di belakang Mixue Gatsu Barat dan bersebelahan dengan Hotel Neo. Dikelilingi area komersial, kantor, ruko, dan kuliner.", "A 13.5-are SHM plot with a 38-metre frontage in central Denpasar, right behind Mixue Gatsu Barat and next to Hotel Neo. Surrounded by commercial areas, offices, shophouses and restaurants.", "Участок 13,5 аре (SHM) с фасадом 38 метров в центре Денпасара, прямо за Mixue Gatsu Barat и рядом с Hotel Neo. Вокруг — коммерческие районы, офисы, магазины и рестораны."],
+    ["1.350 m² (13,5 are)", "1,350 m² (13.5 are)", "1 350 м² (13,5 аре)"],
+    ["38 m", "38 m", "38 м"],
+    ["Jalan belakang lebar, paving", "Wide paved rear road", "Широкая мощёная дорога сзади"],
+    ["Perlu urug, siap bangun", "Needs land filling, ready to build", "Требуется подсыпка, готов к строительству"],
+    ["Gatot Subroto Barat, Denpasar", "Gatot Subroto Barat, Denpasar", "Гатот Суброто Барат, Денпасар"],
+    ["Di belakang Mixue Gatsu Barat dan bersebelahan dengan Hotel Neo Gatsu Barat", "Behind Mixue Gatsu Barat and right next to Hotel Neo Gatsu Barat", "За Mixue Gatsu Barat и вплотную к Hotel Neo Gatsu Barat"],
+    ["Di depan Resto Gang Djangkrik dan Gosha Gatsu", "Opposite Gang Djangkrik restaurant and Gosha Gatsu", "Напротив ресторана Gang Djangkrik и Gosha Gatsu"],
+    ["Dekat area komersial, kantor, ruko, dan kuliner di pusat kota Denpasar", "Close to commercial areas, offices, shophouses and dining in central Denpasar", "Рядом коммерческие районы, офисы, магазины и рестораны в центре Денпасара"],
+    ["Gudang", "Warehouse", "Склад"],
+    ["Kantor", "Office", "Офис"],
+    ["Hunian modern", "Modern home", "Современное жильё"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
@@ -777,6 +793,7 @@
     [/^(\d+) listing · (\d+) area$/, "$1 listings · $2 areas", "Объектов: $1 · районов: $2"],
     [/^Area (.+)$/, "$1 area", "Район $1"],
     [/^Kabupaten (.+) · (\d+) listing$/, "$1 Regency · $2 listings", "Округ $1 · объектов: $2"],
+    [/^Kota (.+) · (\d+) listing$/, "$1 City · $2 listings", "Город $1 · объектов: $2"],
     [/^Total (.+) \(nego\)$/, "Total $1 (negotiable)", "Итого $1 (торг)"],
     [/^Total (.+)$/, "Total $1", "Итого $1"],
     [/^Per bidang · (.+)$/, "Per plot · $1", "За участок · $1"],
