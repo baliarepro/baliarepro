@@ -785,7 +785,27 @@
     ["Dekat area komersial, kantor, ruko, dan kuliner di pusat kota Denpasar", "Close to commercial areas, offices, shophouses and dining in central Denpasar", "Рядом коммерческие районы, офисы, магазины и рестораны в центре Денпасара"],
     ["Gudang", "Warehouse", "Склад"],
     ["Kantor", "Office", "Офис"],
-    ["Hunian modern", "Modern home", "Современное жильё"]
+    ["Hunian modern", "Modern home", "Современное жильё"],
+    // ---------- Villa 5 KT ocean view Jimbaran ----------
+    ["Jimbaran · Kuta Selatan", "Jimbaran · South Kuta", "Джимбаран · Южная Кута"],
+    ["Villa 5 kamar tidur ocean view dengan rooftop di Jimbaran", "5-bedroom ocean view villa with rooftop in Jimbaran", "Вилла с 5 спальнями, видом на океан и террасой на крыше в Джимбаране"],
+    ["Villa 2 lantai baru dibangun 2025 di atas tanah 450 m² SHM, dengan pemandangan laut, sunset, GWK, dan perbukitan. Dilengkapi kolam renang, rooftop, taman, dan carport, dekat Baywalk Jimbaran.", "A new two-storey villa built in 2025 on 450 m² of SHM freehold land, with views of the ocean, sunsets, GWK and the hills. Features a swimming pool, rooftop, garden and carport, close to Baywalk Jimbaran.", "Новая двухэтажная вилла 2025 года постройки на участке 450 м² (SHM) с видом на океан, закаты, GWK и холмы. Бассейн, терраса на крыше, сад и навес для авто; рядом Baywalk Jimbaran."],
+    ["Baru 2025", "New 2025", "Новая, 2025"],
+    ["Harga (freehold)", "Price (freehold)", "Цена (freehold)"],
+    ["2 lantai", "2 storeys", "2 этажа"],
+    ["5+", "5+", "5+"],
+    ["SHM (freehold)", "SHM (freehold)", "SHM (freehold)"],
+    ["PBG/IMB", "Building permit (PBG/IMB)", "Разрешение на строительство (PBG/IMB)"],
+    ["Tersedia", "Available", "Есть"],
+    ["Furnitur", "Furniture", "Мебель"],
+    ["Laut, sunset, GWK & bukit", "Ocean, sunset, GWK & hills", "Океан, закат, GWK и холмы"],
+    ["Jimbaran, Kuta Selatan", "Jimbaran, South Kuta", "Джимбаран, Южная Кута"],
+    ["Ocean view dan sunset view, plus pemandangan GWK dan perbukitan", "Ocean and sunset views, plus views of GWK and the hills", "Вид на океан и закаты, а также на GWK и холмы"],
+    ["Kolam renang, rooftop, taman, dan carport/garasi", "Swimming pool, rooftop, garden and carport/garage", "Бассейн, терраса на крыше, сад и навес/гараж"],
+    ["Air PDAM dan internet fiber optik", "Mains water (PDAM) and fibre-optic internet", "Центральное водоснабжение (PDAM) и оптоволоконный интернет"],
+    ["Dekat Baywalk Jimbaran", "Close to Baywalk Jimbaran", "Рядом Baywalk Jimbaran"],
+    ["Hunian keluarga", "Family home", "Семейный дом"],
+    ["Villa sewa", "Rental villa", "Вилла под аренду"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
