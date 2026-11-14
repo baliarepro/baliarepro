@@ -47,6 +47,10 @@ module.exports = {
     id: { t: "Dijual Tanah Ocean View 805 m² Zona Pariwisata di Pecatu, Bali", d: "Tanah 8,05 are SHM zona pariwisata di cluster villa elite Jl. Blimbingsari, Pecatu. Ocean view, lebar 30 m, 3 menit ke Savaya. Rp8,5 M global. Info via WhatsApp." },
     en: { t: "805 m² Ocean View Land for Sale in Tourism Zone, Pecatu Bali", d: "8.05-are SHM plot in the tourism zone, elite villa cluster on Jl. Blimbingsari, Pecatu. Ocean view, 30 m frontage, 3 min to Savaya. IDR 8.5B total. Ask on WhatsApp." },
     ru: { t: "Продажа участка 805 м² с видом на океан в Пекату, Бали", d: "Участок 8,05 аре, SHM, туристическая зона, элитный кластер вилл на Джл. Блимбингсари, Пекату. Вид на океан, фасад 30 м, 3 мин до Savaya. 8,5 млрд IDR. Пишите в WhatsApp." } },
+  "tanah-ocean-view-775-m2-di-cluster-villa-blimbingsari-pecatu": {
+    id: { t: "Dijual Tanah Ocean View 775 m² Zona Pariwisata di Pecatu, Bali", d: "Tanah 7,75 are SHM zona pariwisata di cluster villa elite Jl. Blimbingsari, Pecatu. Ocean view, lebar 29 m. Rp9 jt/m² (Rp900 jt/are), total Rp6,975 M. Info via WhatsApp." },
+    en: { t: "775 m² Ocean View Land for Sale in Tourism Zone, Pecatu Bali", d: "7.75-are SHM plot in the tourism zone, elite villa cluster on Jl. Blimbingsari, Pecatu. Ocean view, 29 m frontage. IDR 9M/m² (900M/are), 6.975B total. Ask on WhatsApp." },
+    ru: { t: "Продажа участка 775 м² с видом на океан в Пекату, Бали", d: "Участок 7,75 аре, SHM, туристическая зона, элитный кластер вилл на Джл. Блимбингсари, Пекату. Вид на океан, фасад 29 м. 9 млн IDR/м², всего 6,975 млрд IDR. Пишите в WhatsApp." } },
   "tanah-15-ha-di-jalan-pura-mesuka": {
     id: { t: "Dijual Tanah 1,5 Hektar di Jalan Pura Mesuka, Ungasan Bali", d: "Tanah 15.000 m² SHM, ITR perumahan di Jl. Pura Mesuka, Ungasan, Kuta Selatan. Rp5,5 jt/m² (nego), total Rp82,5 M. Cocok untuk proyek perumahan. Info via WhatsApp." },
     en: { t: "1.5-Hectare Land for Sale on Jalan Pura Mesuka, Ungasan Bali", d: "15,000 m² SHM plot with residential zoning on Jl. Pura Mesuka, Ungasan, South Kuta. IDR 5.5M/m² (neg.), IDR 82.5B total. Ideal for a housing project. Ask on WhatsApp." },

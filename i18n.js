@@ -821,7 +821,12 @@
     ["±3 menit ke Savaya Bali dan ±4 menit ke Argani Beach", "±3 min to Savaya Bali and ±4 min to Argani Beach", "±3 мин до Savaya Bali и ±4 мин до пляжа Argani"],
     ["±5 menit ke Sunday Beach Club dan ±10 menit ke Karma Kandara Private Beach", "±5 min to Sunday Beach Club and ±10 min to Karma Kandara Private Beach", "±5 мин до Sunday Beach Club и ±10 мин до частного пляжа Karma Kandara"],
     ["Berada di cluster villa elite yang tertata, akses jalan paving", "Within a well-planned elite villa cluster with paved road access", "В благоустроенном элитном кластере вилл, мощёная подъездная дорога"],
-    ["Zona pariwisata: cocok untuk villa pribadi maupun villa komersial", "Tourism zone: suitable for a private or a commercial villa", "Туристическая зона: подходит для личной или коммерческой виллы"]
+    ["Zona pariwisata: cocok untuk villa pribadi maupun villa komersial", "Tourism zone: suitable for a private or a commercial villa", "Туристическая зона: подходит для личной или коммерческой виллы"],
+    // ---------- Tanah ocean view 775 m² Blimbingsari, Pecatu ----------
+    ["Tanah ocean view 775 m² di cluster villa elite Blimbingsari, Pecatu", "775 m² ocean view land in an elite villa cluster, Blimbingsari, Pecatu", "Участок 775 м² с видом на океан в элитном кластере вилл, Блимбингсари, Пекату"],
+    ["Lahan 7,75 are SHM zona pariwisata di teras atas (lantai 2) dalam cluster villa elite, dengan pemandangan laut terbuka dan lebar depan 29 meter. Hanya beberapa menit ke Savaya, Sunday Beach Club, dan Karma Kandara.", "A 7.75-are SHM plot in the tourism zone on the upper terrace (second tier) of an elite villa cluster, with open ocean views and a 29-metre frontage. Just minutes from Savaya, Sunday Beach Club and Karma Kandara.", "Участок 7,75 аре (SHM) в туристической зоне на верхней террасе (второй уровень) элитного кластера вилл, с открытым видом на океан и фасадом 29 метров. Всего несколько минут до Savaya, Sunday Beach Club и Karma Kandara."],
+    ["775 m² (7,75 are)", "775 m² (7.75 are)", "775 м² (7,75 аре)"],
+    ["29 m", "29 m", "29 м"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
