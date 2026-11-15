@@ -51,6 +51,10 @@ module.exports = {
     id: { t: "Dijual Tanah Ocean View 775 m² Zona Pariwisata di Pecatu, Bali", d: "Tanah 7,75 are SHM zona pariwisata di cluster villa elite Jl. Blimbingsari, Pecatu. Ocean view, lebar 29 m. Rp9 jt/m² (Rp900 jt/are), total Rp6,975 M. Info via WhatsApp." },
     en: { t: "775 m² Ocean View Land for Sale in Tourism Zone, Pecatu Bali", d: "7.75-are SHM plot in the tourism zone, elite villa cluster on Jl. Blimbingsari, Pecatu. Ocean view, 29 m frontage. IDR 9M/m² (900M/are), 6.975B total. Ask on WhatsApp." },
     ru: { t: "Продажа участка 775 м² с видом на океан в Пекату, Бали", d: "Участок 7,75 аре, SHM, туристическая зона, элитный кластер вилл на Джл. Блимбингсари, Пекату. Вид на океан, фасад 29 м. 9 млн IDR/м², всего 6,975 млрд IDR. Пишите в WhatsApp." } },
+  "tanah-650-m2-di-kawasan-villa-toyaning-ungasan": {
+    id: { t: "Dijual Tanah 650 m² ITR Permukiman di Toyaning, Ungasan Bali", d: "Tanah 6,5 are SHM, ITR permukiman, lebar depan 23 m, di kawasan villa Toyaning dekat Pantai Melasti, Ungasan. Rp7 jt/m², total Rp4,55 M. Info via WhatsApp." },
+    en: { t: "650 m² Residential Land for Sale in Toyaning, Ungasan Bali", d: "6.5-are SHM plot, residential zoning, 23 m frontage, in the Toyaning villa area near Melasti Beach, Ungasan. IDR 7M/m², 4.55B total. Ask on WhatsApp." },
+    ru: { t: "Продажа участка 650 м² (жилая зона) в Тоянинг, Унгасан, Бали", d: "Участок 6,5 аре, SHM, жилая зона, фасад 23 м, район вилл Тоянинг рядом с пляжем Меласти, Унгасан. 7 млн IDR/м², всего 4,55 млрд IDR. Пишите в WhatsApp." } },
   "tanah-15-ha-di-jalan-pura-mesuka": {
     id: { t: "Dijual Tanah 1,5 Hektar di Jalan Pura Mesuka, Ungasan Bali", d: "Tanah 15.000 m² SHM, ITR perumahan di Jl. Pura Mesuka, Ungasan, Kuta Selatan. Rp5,5 jt/m² (nego), total Rp82,5 M. Cocok untuk proyek perumahan. Info via WhatsApp." },
     en: { t: "1.5-Hectare Land for Sale on Jalan Pura Mesuka, Ungasan Bali", d: "15,000 m² SHM plot with residential zoning on Jl. Pura Mesuka, Ungasan, South Kuta. IDR 5.5M/m² (neg.), IDR 82.5B total. Ideal for a housing project. Ask on WhatsApp." },

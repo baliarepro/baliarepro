@@ -826,7 +826,16 @@
     ["Tanah ocean view 775 m² di cluster villa elite Blimbingsari, Pecatu", "775 m² ocean view land in an elite villa cluster, Blimbingsari, Pecatu", "Участок 775 м² с видом на океан в элитном кластере вилл, Блимбингсари, Пекату"],
     ["Lahan 7,75 are SHM zona pariwisata di teras atas (lantai 2) dalam cluster villa elite, dengan pemandangan laut terbuka dan lebar depan 29 meter. Hanya beberapa menit ke Savaya, Sunday Beach Club, dan Karma Kandara.", "A 7.75-are SHM plot in the tourism zone on the upper terrace (second tier) of an elite villa cluster, with open ocean views and a 29-metre frontage. Just minutes from Savaya, Sunday Beach Club and Karma Kandara.", "Участок 7,75 аре (SHM) в туристической зоне на верхней террасе (второй уровень) элитного кластера вилл, с открытым видом на океан и фасадом 29 метров. Всего несколько минут до Savaya, Sunday Beach Club и Karma Kandara."],
     ["775 m² (7,75 are)", "775 m² (7.75 are)", "775 м² (7,75 аре)"],
-    ["29 m", "29 m", "29 м"]
+    ["29 m", "29 m", "29 м"],
+    // ---------- Tanah 650 m² Toyaning, Ungasan ----------
+    ["Tanah 650 m² di kawasan villa Toyaning, Ungasan", "650 m² land in the Toyaning villa area, Ungasan", "Участок 650 м² в районе вилл Тоянинг, Унгасан"],
+    ["Tanah 6,5 are SHM dengan ITR permukiman di lingkungan villa Toyaning, Ungasan, dan akses mudah ke Pantai Melasti. Lebar depan 23 meter, cocok untuk villa maupun investasi properti di Kuta Selatan.", "A 6.5-are SHM plot with residential zoning (ITR) in the Toyaning villa neighbourhood, Ungasan, with easy access to Melasti Beach. A 23-metre frontage, suitable for a villa or a property investment in South Kuta.", "Участок 6,5 аре (SHM) с жилым зонированием (ITR) в районе вилл Тоянинг, Унгасан, с удобным доступом к пляжу Меласти. Фасад 23 метра — подходит для виллы или инвестиций в Южной Куте."],
+    ["Dekat Pantai Melasti", "Near Melasti Beach", "Рядом пляж Меласти"],
+    ["650 m² (6,5 are)", "650 m² (6.5 are)", "650 м² (6,5 аре)"],
+    ["23 m", "23 m", "23 м"],
+    ["Ngantong (melebar di belakang)", "Pocket-shaped (wider at the rear)", "Расширяется к задней части участка"],
+    ["Akses mudah ke Pantai Melasti", "Easy access to Melasti Beach", "Удобный доступ к пляжу Меласти"],
+    ["Lingkungan villa di kawasan Toyaning, Ungasan, Kuta Selatan", "A villa neighbourhood in Toyaning, Ungasan, South Kuta", "Район вилл в Тоянинге, Унгасан, Южная Кута"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
