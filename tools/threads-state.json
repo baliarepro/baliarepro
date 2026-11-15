@@ -170,8 +170,20 @@
       "permalink": "https://www.threads.com/@bali.are/post/DfvjrUpmBz1",
       "at": "2026-11-15T01:04:07.648Z",
       "topic": "Bali"
+    },
+    "tanah-650-m2-di-kawasan-villa-toyaning-ungasan": {
+      "id": "18359932864173338",
+      "permalink": "https://www.threads.com/@bali.are/post/Dfv4Dhlldyc",
+      "at": "2026-11-15T04:02:12.012Z",
+      "topic": "Real Estate"
     }
   },
   "errors": {},
-  "tokenSeenAt": "2026-11-08T03:42:41.925Z"
+  "tokenSeenAt": "2026-11-08T03:42:41.925Z",
+  "token": {
+    "iv": "fibYapfZrdWEascp",
+    "tag": "LBKndFstmHG9GNRThxlUdA==",
+    "data": "mjaF9EyTkb7Sx9vu3SPjhGlAuwp0XMgd3jFwSYmBZFnjT45xAjvaNKVsKE5O93E9TpHRYdQ1x1mMLHovOwKe9AvuBO3/Xzhago6zvXLbIvSXsUBzuAQj1UZj20isSCCQTbphGKfoVg7Ccp1gmhLulbjEb99fKgJdt4L3dT8J5ub0TV+2kil0EPnliVWTWsTzOjxq7g5BBPhHlzb5NtTZhzY6etdPQh74D7XBmY7Xq7gzKLKisA6bhTw="
+  },
+  "tokenRefreshedAt": "2026-11-15T04:01:39.957Z"
 }
