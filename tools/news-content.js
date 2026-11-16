@@ -5,6 +5,576 @@
 //    pts: [3 fakta ≤70 karakter], arti: 1 kalimat "artinya bagi Anda" ≤110 karakter}. Tanpa ig, slide dibuat otomatis dari judul & isi.
 const NEWS = [
   {
+    "slug": "bus-listrik-trans-sarbagita-gwk-jimbaran",
+    "date": "2026-11-16",
+    "ig": {
+      "stat": "Gratis",
+      "statL": "1 tahun: bus listrik GOR Ngurah Rai–Jimbaran–GWK",
+      "h": "Bus listrik gratis Denpasar–Jimbaran–GWK mulai jalan",
+      "pts": [
+        "11 bus listrik (10 beroperasi, 1 cadangan), dioperasikan DAMRI",
+        "Lewat Dewa Ruci, Kedonganan, Jimbaran, kampus Unud, sampai GWK",
+        "Diluncurkan 9 Nov 2026, keberangkatan pertama 06.15 Wita"
+      ],
+      "arti": "Akses angkutan umum ke Jimbaran dan GWK membaik, nilai tambah bagi rumah, kos, dan villa dekat jalurnya."
+    },
+    "sources": [
+      {
+        "t": "ANTARA News Bali – Melaju tanpa emisi: gaya hidup baru anak muda Bali dengan bus listrik (9 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/418415/melaju-tanpa-emisi-gaya-hidup-baru-anak-muda-bali-dengan-bus-listrik"
+      },
+      {
+        "t": "Bali.live – Free electric buses now connect Denpasar and GWK (9 Nov 2026)",
+        "u": "https://bali.live/p/free-electric-buses-launched-between-denpasar-and-gwk"
+      },
+      {
+        "t": "What's New Indonesia – Bali launches free electric Trans Sarbagita bus service for one year (11 Nov 2026)",
+        "u": "https://whatsnewindonesia.com/bali/bali-launches-free-electric-trans-sarbagita-bus-service-for-one-year"
+      }
+    ],
+    "id": {
+      "tag": "Infrastruktur",
+      "title": "Bus listrik Trans Sarbagita gratis setahun: GOR Ngurah Rai–Jimbaran–GWK",
+      "summary": "Gubernur Bali Wayan Koster meluncurkan 11 bus listrik Trans Sarbagita pada 9 November 2026. Rute GOR Ngurah Rai–GWK melewati Kedonganan, Jimbaran, dan kampus Unud, gratis selama satu tahun uji coba.",
+      "body": [
+        {
+          "p": "Pemprov Bali mulai mengoperasikan bus listrik Trans Sarbagita pada 9 November 2026. Peluncuran dilakukan Gubernur Wayan Koster di area parkir utara GOR Ngurah Rai, Denpasar. Bus dioperasikan Perum DAMRI dan gratis selama masa uji coba satu tahun; penumpang tetap menempelkan kartu uang elektronik agar jumlah penumpang tercatat."
+        },
+        {
+          "h": "Fakta layanan"
+        },
+        {
+          "ul": [
+            "11 bus listrik buatan Hyundai dari kerja sama dengan Pemerintah Korea Selatan: 10 beroperasi setiap hari, 1 cadangan.",
+            "Rute GOR Ngurah Rai–GWK: Renon (Bajra Sandhi), Jalan Sudirman, Bypass Ngurah Rai, Simpang Dewa Ruci, Kelan, Kedonganan, Jimbaran, kampus Universitas Udayana, hingga GWK. Rute ini tidak masuk terminal bandara, pusat Kuta, atau Nusa Dua.",
+            "20 perjalanan per hari mulai pukul 06.15 Wita; tiap bus berkapasitas 20 kursi plus sekitar 10 penumpang berdiri.",
+            "Menurut ANTARA, nilai proyek sekitar Rp50 miliar: Rp45,6 miliar untuk bus dan Rp5 miliar untuk fasilitas pengisian daya. Biaya energi operasional disebut lebih hemat lebih dari 60% dibanding kendaraan BBM."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan investor"
+        },
+        {
+          "p": "Jimbaran dan kawasan GWK di gerbang Bukit kini terhubung angkutan umum gratis ke pusat Denpasar. Bagi pemilik rumah sewa, kos, dan villa di sekitar Kedonganan, Jimbaran, dan kampus Unud, jalur ini menambah daya tarik bagi penyewa pelajar dan pekerja. Dampaknya pada harga masih terbatas karena frekuensinya belum tinggi dan rutenya belum masuk Ungasan atau Nusa Dua, tetapi kedekatan dengan halte layak dicatat saat menilai lokasi. Bali Are Property (agen independen sejak 2009) akan memantau apakah rute ini diperpanjang setelah masa uji coba."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Infrastructure",
+      "title": "Free Trans Sarbagita electric buses for one year: GOR Ngurah Rai–Jimbaran–GWK",
+      "summary": "Bali Governor Wayan Koster launched 11 Trans Sarbagita electric buses on 9 November 2026. The GOR Ngurah Rai–GWK route passes Kedonganan, Jimbaran and the Udayana University campus and is free during a one-year trial.",
+      "body": [
+        {
+          "p": "The Bali provincial government began running Trans Sarbagita electric buses on 9 November 2026. Governor Wayan Koster launched the service at the northern car park of GOR Ngurah Rai in Denpasar. The buses are operated by state-owned Perum DAMRI and are free during the one-year trial; passengers still tap an e-money card so ridership can be counted."
+        },
+        {
+          "h": "Service facts"
+        },
+        {
+          "ul": [
+            "11 Hyundai electric buses from cooperation with the South Korean government: 10 run daily, 1 is a backup.",
+            "GOR Ngurah Rai–GWK route: Renon (Bajra Sandhi), Jalan Sudirman, the Ngurah Rai Bypass, Dewa Ruci junction, Kelan, Kedonganan, Jimbaran, the Udayana University campus and GWK. It does not enter the airport terminals, central Kuta or Nusa Dua.",
+            "20 trips a day from 06:15 WITA; each bus has 20 seats plus room for about 10 standing passengers.",
+            "According to ANTARA, the project is worth about IDR 50 billion: IDR 45.6 billion for the buses and IDR 5 billion for charging facilities. Operating energy costs are said to be more than 60% lower than for fuel vehicles."
+          ]
+        },
+        {
+          "h": "What it means for buyers and investors"
+        },
+        {
+          "p": "Jimbaran and the GWK area at the gateway to the Bukit are now linked to central Denpasar by free public transport. For owners of rental houses, boarding rooms (kos) and villas around Kedonganan, Jimbaran and the Udayana campus, the route adds appeal for student and worker tenants. The price impact is still limited because frequency is not yet high and the route does not reach Ungasan or Nusa Dua, but proximity to a stop is worth noting when assessing a location. Bali Are Property (an independent agency since 2009) will watch whether the route is extended after the trial."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Инфраструктура",
+      "title": "Бесплатные электробусы Trans Sarbagita на год: GOR Нгурах-Рай – Джимбаран – GWK",
+      "summary": "Губернатор Бали Ваян Костер 9 ноября 2026 года запустил 11 электробусов Trans Sarbagita. Маршрут GOR Нгурах-Рай – GWK проходит через Кедонганан, Джимбаран и кампус Университета Удаяна и бесплатен в течение годового тестового периода.",
+      "body": [
+        {
+          "p": "Правительство провинции Бали 9 ноября 2026 года запустило электробусы Trans Sarbagita. Губернатор Ваян Костер открыл движение на северной парковке GOR Нгурах-Рай в Денпасаре. Перевозчик — государственная компания Perum DAMRI; в течение годового тестового периода проезд бесплатный, но пассажиры прикладывают карту электронных денег, чтобы вести учёт."
+        },
+        {
+          "h": "Факты о маршруте"
+        },
+        {
+          "ul": [
+            "11 электробусов Hyundai, полученных в рамках сотрудничества с правительством Южной Кореи: 10 работают ежедневно, 1 резервный.",
+            "Маршрут GOR Нгурах-Рай – GWK: Ренон (Баджра Сандхи), улица Судирман, байпас Нгурах-Рай, развязка Дева Ручи, Келан, Кедонганан, Джимбаран, кампус Университета Удаяна и GWK. Терминалы аэропорта, центр Кута и Нуса-Дуа в маршрут не входят.",
+            "20 рейсов в день с 06:15 по местному времени; в каждом автобусе 20 сидячих мест и около 10 стоячих.",
+            "По данным ANTARA, стоимость проекта — около 50 млрд рупий: 45,6 млрд на автобусы и 5 млрд на зарядную инфраструктуру. Расходы на энергию, по оценке, более чем на 60% ниже, чем у машин на топливе."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и инвесторов"
+        },
+        {
+          "p": "Джимбаран и район GWK у въезда на Букит теперь связаны с центром Денпасара бесплатным общественным транспортом. Для владельцев сдаваемых домов, комнат (кос) и вилл в районе Кедонгана, Джимбарана и кампуса Удаяна маршрут повышает привлекательность для арендаторов-студентов и работников. Влияние на цены пока ограничено: частота рейсов невысока, а маршрут не доходит до Унгасана и Нуса-Дуа, но близость к остановке стоит учитывать при оценке локации. Bali Are Property (независимое агентство с 2009 года) будет следить, продлят ли маршрут после тестового периода."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "ekonomi-bali-triwulan-3-2026-bandara-oktober",
+    "date": "2026-11-16",
+    "ig": {
+      "stat": "5,85%",
+      "statL": "pertumbuhan ekonomi Bali triwulan III 2026",
+      "h": "Ekonomi Bali tumbuh 5,85%, bandara 19,7 juta penumpang",
+      "pts": [
+        "Sektor akomodasi & makan-minum tumbuh 6,23%",
+        "Oktober: 2,1 juta penumpang di Ngurah Rai, naik 2,5% dari September",
+        "BI Bali proyeksikan ekonomi Bali 2026 tumbuh 5,9%"
+      ],
+      "arti": "Permintaan wisata tetap kuat menjelang Nataru, kabar baik bagi pemilik villa sewa yang berizin."
+    },
+    "sources": [
+      {
+        "t": "ANTARA News Bali – BI: Konsumsi masyarakat jadi kontributor utama pertumbuhan ekonomi Bali di triwulan IV (9 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/418403/bi-konsumsi-masyarakat-jadi-kontributor-utama-pertumbuhan-ekonomi-bali-di-triwulan-iv"
+      },
+      {
+        "t": "ANTARA News Bali – Lalu lintas penumpang di Bandara Ngurah Rai pada Oktober naik 2,5 persen (13 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/418911/lalu-lintas-penumpang-di-bandara-ngurah-rai-pada-oktober-naik-25-persen"
+      }
+    ],
+    "id": {
+      "tag": "Data Pasar",
+      "title": "Ekonomi Bali tumbuh 5,85% di triwulan III 2026, Bandara Ngurah Rai layani 19,7 juta penumpang hingga Oktober",
+      "summary": "Bank Indonesia Bali mencatat ekonomi Bali tumbuh 5,85% pada triwulan III 2026, dengan sektor akomodasi dan makan-minum tumbuh 6,23%. Bandara Ngurah Rai melayani 2,1 juta penumpang pada Oktober, naik 2,5% dari September.",
+      "body": [
+        {
+          "p": "Menurut Kepala Perwakilan Bank Indonesia Provinsi Bali Achris Sarwani (ANTARA, 9 November 2026), ekonomi Bali tumbuh 5,85% pada triwulan III 2026, naik dari 5,78% pada triwulan sebelumnya. Sektor akomodasi dan makan-minum tumbuh 6,23% berkat kenaikan kunjungan wisatawan. Realisasi belanja proyek konstruksi APBN dan APBD mencapai Rp344 miliar, hampir dua kali lipat dari Rp186 miliar pada periode pembanding. BI memperkirakan pertumbuhan tetap tinggi di triwulan IV dan memproyeksikan ekonomi Bali 2026 tumbuh 5,9%."
+        },
+        {
+          "h": "Data Bandara Ngurah Rai"
+        },
+        {
+          "ul": [
+            "Oktober 2026: sekitar 2,1 juta pergerakan penumpang (1,3 juta internasional, 756.000 domestik), naik 2,5% dari September; pergerakan pesawat 12.900, naik 8,5%.",
+            "Januari–Oktober 2026: 19,7 juta penumpang, termasuk 12,7 juta penumpang internasional.",
+            "Rute internasional terpadat Januari–Oktober: Singapura 2,2 juta penumpang (18%), Kuala Lumpur 1,2 juta, Perth 1 juta, Melbourne 928.000, Sydney 734.000.",
+            "Rute baru: Starlux Taipei–Bali (mulai 1 Oktober) dan TransNusa Bali–Melbourne (mulai 19 Oktober)."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan investor"
+        },
+        {
+          "p": "Data ini menunjukkan permintaan wisata ke Bali tetap kuat menjelang musim Natal dan Tahun Baru, dan pemerintah juga menyiapkan diskon tiket transportasi senilai Rp883 miliar untuk periode itu. Bagi pemilik villa sewa harian, terutama yang izinnya lengkap, ini sinyal positif untuk okupansi akhir tahun. Bagi calon investor, pertumbuhan sektor akomodasi di atas pertumbuhan ekonomi Bali secara umum menegaskan bahwa properti wisata masih menjadi motor utama, tetapi pilih lokasi dan legalitas dengan cermat karena pasokan juga terus bertambah."
+        },
+        {
+          "note": "Ringkasan data resmi dari media. Bukan nasihat investasi."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Market Data",
+      "title": "Bali's economy grows 5.85% in Q3 2026, Ngurah Rai Airport handles 19.7 million passengers through October",
+      "summary": "Bank Indonesia's Bali office says the provincial economy grew 5.85% in Q3 2026, with accommodation and food & beverage up 6.23%. Ngurah Rai Airport handled 2.1 million passengers in October, up 2.5% from September.",
+      "body": [
+        {
+          "p": "According to Achris Sarwani, head of Bank Indonesia's Bali office (ANTARA, 9 November 2026), Bali's economy grew 5.85% in Q3 2026, up from 5.78% in the previous quarter. The accommodation and food & beverage sector grew 6.23% on higher tourist visits. Spending on construction projects funded by the state and regional budgets reached IDR 344 billion, almost double the IDR 186 billion in the comparison period. BI expects growth to stay high in Q4 and projects Bali's 2026 growth at 5.9%."
+        },
+        {
+          "h": "Ngurah Rai Airport data"
+        },
+        {
+          "ul": [
+            "October 2026: about 2.1 million passenger movements (1.3 million international, 756,000 domestic), up 2.5% from September; 12,900 aircraft movements, up 8.5%.",
+            "January–October 2026: 19.7 million passengers, including 12.7 million international passengers.",
+            "Busiest international routes January–October: Singapore 2.2 million passengers (18%), Kuala Lumpur 1.2 million, Perth 1 million, Melbourne 928,000, Sydney 734,000.",
+            "New routes: Starlux Taipei–Bali (from 1 October) and TransNusa Bali–Melbourne (from 19 October)."
+          ]
+        },
+        {
+          "h": "What it means for buyers and investors"
+        },
+        {
+          "p": "The data show tourist demand for Bali remains strong ahead of the Christmas and New Year season, and the government has also set aside IDR 883 billion in transport fare discounts for that period. For owners of daily-rental villas, especially those with complete permits, this is a positive signal for year-end occupancy. For prospective investors, accommodation growing faster than Bali's overall economy confirms that tourism property remains the main engine, but choose location and legal status carefully because supply keeps rising too."
+        },
+        {
+          "note": "Summary of official data reported in the media. Not investment advice."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Данные рынка",
+      "title": "Экономика Бали выросла на 5,85% в III квартале 2026 года, аэропорт Нгурах-Рай обслужил 19,7 млн пассажиров за январь–октябрь",
+      "summary": "По данным представительства Банка Индонезии на Бали, экономика провинции в III квартале 2026 года выросла на 5,85%, сектор размещения и общепита — на 6,23%. В октябре аэропорт Нгурах-Рай обслужил 2,1 млн пассажиров, на 2,5% больше, чем в сентябре.",
+      "body": [
+        {
+          "p": "Как сообщил глава представительства Банка Индонезии на Бали Ахрис Сарвани (ANTARA, 9 ноября 2026 года), экономика Бали в III квартале 2026 года выросла на 5,85% после 5,78% кварталом ранее. Сектор размещения и общепита вырос на 6,23% благодаря росту турпотока. Расходы на строительные проекты из государственного и регионального бюджетов составили 344 млрд рупий — почти вдвое больше, чем 186 млрд рупий в сравниваемом периоде. Банк ожидает, что рост останется высоким и в IV квартале, и прогнозирует рост экономики Бали за 2026 год на уровне 5,9%."
+        },
+        {
+          "h": "Данные аэропорта Нгурах-Рай"
+        },
+        {
+          "ul": [
+            "Октябрь 2026 года: около 2,1 млн пассажиров (1,3 млн международных, 756 000 внутренних), +2,5% к сентябрю; 12 900 самолётовылетов и посадок, +8,5%.",
+            "Январь–октябрь 2026 года: 19,7 млн пассажиров, в том числе 12,7 млн международных.",
+            "Самые загруженные международные направления за январь–октябрь: Сингапур — 2,2 млн пассажиров (18%), Куала-Лумпур — 1,2 млн, Перт — 1 млн, Мельбурн — 928 000, Сидней — 734 000.",
+            "Новые рейсы: Starlux Тайбэй–Бали (с 1 октября) и TransNusa Бали–Мельбурн (с 19 октября)."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и инвесторов"
+        },
+        {
+          "p": "Данные показывают, что туристический спрос на Бали остаётся высоким перед рождественским и новогодним сезоном; правительство также выделило 883 млрд рупий на скидки на транспорт в этот период. Для владельцев вилл посуточной аренды, особенно с полным пакетом разрешений, это позитивный сигнал для загрузки в конце года. Для потенциальных инвесторов то, что сектор размещения растёт быстрее экономики Бали в целом, подтверждает: туристическая недвижимость остаётся главным драйвером, но локацию и юридический статус нужно выбирать внимательно, так как предложение тоже растёт."
+        },
+        {
+          "note": "Обзор официальных данных по сообщениям СМИ. Не является инвестиционной рекомендацией."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "izin-akomodasi-zona-rawan-sempadan-pantai-2026",
+    "date": "2026-11-16",
+    "ig": {
+      "stat": "Sempadan",
+      "statL": "pantai & lereng rawan longsor jadi sorotan",
+      "h": "Izin bangunan di lereng & tepi pantai makin disorot",
+      "pts": [
+        "Bupati Badung evaluasi akomodasi wisata di daerah rawan bencana",
+        "DPRD Bali sidak Lovina: dermaga beton diduga langgar sempadan",
+        "Sanksi: henti kegiatan, cabut izin, hingga tutup sementara"
+      ],
+      "arti": "Beli lahan di tebing, lereng, atau tepi pantai? Cek KKPR, garis sempadan, dan risiko longsor sebelum DP."
+    },
+    "sources": [
+      {
+        "t": "ANTARA News Bali – Pemkab Badung evaluasi keamanan akomodasi wisata antisipasi longsor (2 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/417683/pemkab-badung-evaluasi-keamanan-akomodasi-wisata-antisipasi-longsor"
+      },
+      {
+        "t": "Bali Post – Sidak ke Buleleng, Supartha soroti sejumlah bangunan di sepanjang Pantai Lovina (13 Nov 2026)",
+        "u": "https://www.balipost.com/news/2026/11/13/596869/Sidak-ke-Buleleng,Supartha-Soroti...html"
+      }
+    ],
+    "id": {
+      "tag": "Regulasi",
+      "title": "Usai longsor di Pelaga dan sidak Pantai Lovina, izin bangunan di lereng dan tepi pantai makin disorot",
+      "summary": "Longsor yang menimpa unit glamping di Pelaga, Badung, membuat Bupati Badung mengevaluasi keamanan akomodasi wisata di daerah rawan bencana. Pada 13 November 2026, Komisi I DPRD Bali menyidak bangunan di Pantai Lovina yang diduga melanggar sempadan pantai.",
+      "body": [
+        {
+          "p": "Longsor di Pelaga Eco Park, Desa Pelaga, Badung, pada awal November 2026 menimbun satu unit tenda glamping. Bupati Badung I Wayan Adi Arnawa menyatakan Pemkab Badung akan mengevaluasi keamanan akomodasi wisata dan lingkungannya, terutama di daerah rawan bencana. Menurutnya, izin sudah diterbitkan dan diproses, tetapi kondisi lapangan tetap perlu ditinjau. Badung utara memang sedang dikembangkan untuk wisata alam dan agrowisata."
+        },
+        {
+          "h": "Sidak di Lovina"
+        },
+        {
+          "ul": [
+            "Pada 13 November 2026, Komisi I DPRD Bali, termasuk I Made Supartha (mantan Ketua Pansus TRAP), menyidak dua properti di Lovina, Buleleng: rumah pribadi yang diduga melewati batas lahan ke arah laut, dan Villa Baba Sunset dengan dermaga beton permanen yang diduga melanggar sempadan pantai.",
+            "Supartha menyebut banyak bangunan di pesisir Lovina belum berizin dan meminta Dinas PUPR, instansi pemberi PKKPR, dan Satpol PP lebih aktif turun ke lapangan.",
+            "Sanksi dalam perda mencakup penghentian kegiatan, evaluasi kegiatan, pencabutan izin, dan penutupan sementara.",
+            "Ia juga menyoroti pembangunan di daerah rawan bencana, dugaan bangunan di sawah Jatiluwih, serta pembelian lahan oleh investor di Munggu dan Pererenan."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan pemilik lahan"
+        },
+        {
+          "p": "Pengawasan terhadap bangunan di lereng, tebing, dan tepi pantai makin ketat, termasuk terhadap proyek yang izinnya sudah terbit. Ini relevan untuk kawasan seperti tebing Uluwatu, Ungasan, dan Pecatu. Sebelum membeli lahan atau villa, cek kesesuaian tata ruang (KKPR), garis sempadan pantai atau jurang, kajian kestabilan tanah, serta PBG dan SLF. Bali Are Property menyarankan memasukkan pemeriksaan ini sebelum membayar uang muka."
+        },
+        {
+          "note": "Informasi umum, bukan nasihat hukum. Konsultasikan dengan notaris/PPAT atau konsultan perizinan."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Regulation",
+      "title": "After the Pelaga landslide and a Lovina beach inspection, permits on slopes and beachfronts face more scrutiny",
+      "summary": "A landslide that buried a glamping unit in Pelaga, Badung, led Badung's regent to review the safety of tourist accommodation in disaster-prone areas. On 13 November 2026, Commission I of the Bali DPRD inspected buildings on Lovina Beach suspected of breaching the coastal setback.",
+      "body": [
+        {
+          "p": "A landslide at Pelaga Eco Park, Pelaga Village, Badung, in early November 2026 buried a glamping tent. Badung Regent I Wayan Adi Arnawa said the regency will evaluate the safety of tourist accommodation and its surroundings, especially in disaster-prone areas. He said permits had been issued and processed, but field conditions still need to be reviewed. North Badung is being developed for nature tourism and agrotourism."
+        },
+        {
+          "h": "Inspection in Lovina"
+        },
+        {
+          "ul": [
+            "On 13 November 2026, Commission I of the Bali DPRD, including I Made Supartha (former chair of the TRAP special committee), inspected two properties in Lovina, Buleleng: a private house suspected of extending beyond its plot toward the sea, and Villa Baba Sunset, whose permanent concrete pier may breach the coastal setback.",
+            "Supartha said many buildings along the Lovina coast lack permits and asked the public works office, the agency issuing PKKPR spatial approvals, and Satpol PP to carry out more active field checks.",
+            "Sanctions under regional regulations include halting activities, evaluating activities, revoking permits and temporary closure.",
+            "He also highlighted construction in disaster-prone areas, suspected building on Jatiluwih rice fields, and land purchases by investors in Munggu and Pererenan."
+          ]
+        },
+        {
+          "h": "What it means for buyers and landowners"
+        },
+        {
+          "p": "Oversight of buildings on slopes, cliffs and beachfronts is tightening, including for projects whose permits have already been issued. This matters for areas such as the Uluwatu, Ungasan and Pecatu clifftops. Before buying land or a villa, check spatial compliance (KKPR), the coastal or ravine setback line, a soil-stability assessment, and the PBG and SLF. Bali Are Property recommends doing these checks before paying a deposit."
+        },
+        {
+          "note": "General information, not legal advice. Consult a notary/PPAT or a licensing consultant."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Регулирование",
+      "title": "После оползня в Пелаге и проверки на пляже Ловина разрешения на склонах и у моря под пристальным вниманием",
+      "summary": "Оползень, засыпавший глэмпинг-палатку в Пелаге (Бадунг), заставил главу Бадунга проверить безопасность туристического жилья в опасных зонах. 13 ноября 2026 года Комиссия I парламента Бали проверила постройки на пляже Ловина, предположительно нарушающие прибрежную охранную зону.",
+      "body": [
+        {
+          "p": "В начале ноября 2026 года оползень в Pelaga Eco Park (деревня Пелага, Бадунг) засыпал глэмпинг-палатку. Глава округа Бадунг И Ваян Ади Арнава заявил, что власти проверят безопасность туристического жилья и его окружения, особенно в зонах риска стихийных бедствий. По его словам, разрешения были выданы и оформлены, но условия на месте всё равно нужно проверить. Север Бадунга развивается как зона природного и агротуризма."
+        },
+        {
+          "h": "Проверка в Ловине"
+        },
+        {
+          "ul": [
+            "13 ноября 2026 года Комиссия I парламента Бали, в том числе И Маде Супартха (бывший председатель специального комитета TRAP), проверила два объекта в Ловине (Булеленг): частный дом, предположительно выходящий за границы участка в сторону моря, и Villa Baba Sunset с постоянным бетонным причалом, который может нарушать прибрежную охранную зону.",
+            "Супартха отметил, что многие постройки на побережье Ловины не имеют разрешений, и призвал управление общественных работ, ведомство, выдающее согласования PKKPR, и Satpol PP активнее выезжать на места.",
+            "Санкции по региональным нормам: приостановка деятельности, её проверка, отзыв разрешения и временное закрытие.",
+            "Он также указал на строительство в опасных зонах, возможную застройку рисовых террас Джатилувих и покупку земли инвесторами в Мунггу и Перерене."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и владельцев земли"
+        },
+        {
+          "p": "Контроль за постройками на склонах, обрывах и у моря усиливается, в том числе за проектами с уже выданными разрешениями. Это важно для таких районов, как скалы Улувату, Унгасан и Печату. Перед покупкой земли или виллы проверьте соответствие зонированию (KKPR), линию отступа от берега или обрыва, оценку устойчивости грунта, а также PBG и SLF. Bali Are Property рекомендует проводить эти проверки до внесения задатка."
+        },
+        {
+          "note": "Общая информация, не юридическая консультация. Обратитесь к нотариусу/PPAT или консультанту по разрешениям."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "icon-21-denpasar-level-21-mall",
+    "date": "2026-11-16",
+    "ig": {
+      "stat": "Rp100 M+",
+      "statL": "investasi transformasi Level 21 Mall jadi ICON 21",
+      "h": "Level 21 Mall Denpasar berganti jadi ICON 21",
+      "pts": [
+        "Luas sewa bersih (NLA) naik sekitar 20%, okupansi tenant 100%",
+        "Digarap tim Retail First Indonesia, pengembang ICON Bali Sanur",
+        "Peluncuran resmi dijadwalkan 27 Februari 2027"
+      ],
+      "arti": "Investasi ritel baru di pusat Denpasar menambah daya tarik hunian dan ruko di sekitarnya."
+    },
+    "sources": [
+      {
+        "t": "ANTARA News Bali – Level 21 Mall bertransformasi menjadi ICON 21 Denpasar (11 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/418647/level-21-mall-bertransformasi-menjadi-icon-21-denpasar"
+      }
+    ],
+    "id": {
+      "tag": "Komersial",
+      "title": "Level 21 Mall Denpasar bertransformasi jadi ICON 21 dengan investasi lebih dari Rp100 miliar",
+      "summary": "Setelah sepuluh tahun beroperasi, Level 21 Mall di pusat Denpasar berganti nama menjadi ICON 21 Denpasar. Investasi transformasinya lebih dari Rp100 miliar, luas sewa bersih naik sekitar 20%, dan peluncuran resmi dijadwalkan 27 Februari 2027.",
+      "body": [
+        {
+          "p": "Level 21 Mall di pusat Denpasar bertransformasi menjadi ICON 21 Denpasar, dilaporkan ANTARA pada 11 November 2026. Transformasi ini bagian dari strategi Retail First Indonesia (RFI), yang sebelumnya mengembangkan ICON Bali di Sanur. Presiden Direktur ICON 21 Denpasar, Heru Nasution, memimpin proyek dengan nilai investasi lebih dari Rp100 miliar."
+        },
+        {
+          "h": "Fakta proyek"
+        },
+        {
+          "ul": [
+            "Luas sewa bersih (Net Leasable Area) naik sekitar 20%; okupansi tenant disebut sudah 100%.",
+            "Kapasitas parkir 840 kendaraan; kunjungan diproyeksikan naik 33%.",
+            "Desain baru oleh McKingley & Team Architect (perancang ICON Bali Sanur): fasad dengan elemen air, LED Tunnel, lantai marmer, dan lantai dua dengan plafon setinggi 7 meter.",
+            "Pengelola memetakan lebih dari 676.383 penduduk di area tangkapan, sekitar 400.000 wisatawan asing dan 550.000 wisatawan domestik, serta 39 kantor pemerintahan.",
+            "Peluncuran resmi (Unveiling) dijadwalkan 27 Februari 2027."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan investor"
+        },
+        {
+          "p": "Investasi ritel lebih dari Rp100 miliar di pusat Denpasar, setelah ICON Bali di Sanur, menunjukkan pengembang ritel masih yakin pada daya beli warga dan wisatawan di Denpasar. Bagi pemilik ruko, rumah sewa, dan kos di sekitar pusat kota, mal yang diperbarui biasanya menambah arus pengunjung dan daya tarik lingkungan. Bagi pembeli rumah tinggal di Denpasar, akses ke pusat belanja modern menjadi nilai tambah. Bali Are Property tetap menyarankan menilai harga berdasarkan data transaksi sekitar, bukan hanya rencana proyek."
+        },
+        {
+          "note": "Ringkasan pemberitaan media. Bukan nasihat investasi."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Commercial",
+      "title": "Denpasar's Level 21 Mall transforms into ICON 21 with an investment of over IDR 100 billion",
+      "summary": "After ten years in operation, Level 21 Mall in central Denpasar is being renamed ICON 21 Denpasar. The transformation costs over IDR 100 billion, net leasable area rises by about 20%, and the official launch is scheduled for 27 February 2027.",
+      "body": [
+        {
+          "p": "Level 21 Mall in central Denpasar is transforming into ICON 21 Denpasar, ANTARA reported on 11 November 2026. The transformation is part of the strategy of Retail First Indonesia (RFI), which previously developed ICON Bali in Sanur. ICON 21 Denpasar President Director Heru Nasution leads the project, with an investment of more than IDR 100 billion."
+        },
+        {
+          "h": "Project facts"
+        },
+        {
+          "ul": [
+            "Net leasable area increases by about 20%; tenant occupancy is said to have reached 100%.",
+            "Parking for 840 vehicles; visitor traffic is projected to grow 33%.",
+            "New design by McKingley & Team Architect (designer of ICON Bali Sanur): a facade with water elements, an LED Tunnel, marble flooring and a second floor with a 7-metre ceiling.",
+            "Management cites more than 676,383 residents in the catchment area, about 400,000 foreign and 550,000 domestic tourists, and 39 government offices.",
+            "The official Unveiling is scheduled for 27 February 2027."
+          ]
+        },
+        {
+          "h": "What it means for buyers and investors"
+        },
+        {
+          "p": "A retail investment of over IDR 100 billion in central Denpasar, following ICON Bali in Sanur, shows retail developers remain confident in the spending power of Denpasar residents and visitors. For owners of shophouses, rental houses and boarding rooms near the city centre, a refreshed mall usually brings more foot traffic and neighbourhood appeal. For home buyers in Denpasar, access to a modern shopping centre is an added benefit. Bali Are Property still recommends valuing property on nearby transaction data, not just on project plans."
+        },
+        {
+          "note": "Summary of media reports. Not investment advice."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Коммерческая",
+      "title": "Level 21 Mall в Денпасаре превращается в ICON 21: инвестиции более 100 млрд рупий",
+      "summary": "После десяти лет работы Level 21 Mall в центре Денпасара получает новое имя — ICON 21 Denpasar. Инвестиции в преобразование превышают 100 млрд рупий, арендопригодная площадь вырастет примерно на 20%, официальное открытие запланировано на 27 февраля 2027 года.",
+      "body": [
+        {
+          "p": "Level 21 Mall в центре Денпасара преобразуется в ICON 21 Denpasar, сообщило агентство ANTARA 11 ноября 2026 года. Преобразование — часть стратегии Retail First Indonesia (RFI), ранее построившей ICON Bali в Сануре. Проект возглавляет президент-директор ICON 21 Denpasar Херу Насутион; объём инвестиций — более 100 млрд рупий."
+        },
+        {
+          "h": "Факты о проекте"
+        },
+        {
+          "ul": [
+            "Арендопригодная площадь (NLA) увеличится примерно на 20%; заполняемость арендаторами, по данным управляющих, уже 100%.",
+            "Парковка на 840 машин; посещаемость, по прогнозу, вырастет на 33%.",
+            "Новый дизайн от McKingley & Team Architect (автора ICON Bali Sanur): фасад с водными элементами, LED-туннель, мраморные полы и второй этаж с потолками высотой 7 метров.",
+            "Управляющие называют зону охвата: более 676 383 жителей, около 400 000 иностранных и 550 000 внутренних туристов, 39 государственных учреждений.",
+            "Официальное открытие (Unveiling) запланировано на 27 февраля 2027 года."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и инвесторов"
+        },
+        {
+          "p": "Инвестиции в ритейл более 100 млрд рупий в центре Денпасара вслед за ICON Bali в Сануре показывают, что девелоперы торговой недвижимости по-прежнему уверены в покупательской способности жителей и гостей города. Для владельцев торговых помещений (ruko), сдаваемых домов и комнат рядом с центром обновлённый молл обычно означает больший поток людей и привлекательность района. Для покупателей жилья в Денпасаре доступ к современному торговому центру — дополнительное преимущество. Bali Are Property рекомендует оценивать объекты по данным о сделках поблизости, а не только по планам проектов."
+        },
+        {
+          "note": "Обзор публикаций СМИ. Не является инвестиционной рекомендацией."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "harga-properti-residensial-triwulan-3-2026-bi",
+    "date": "2026-11-16",
+    "ig": {
+      "stat": "0,58%",
+      "statL": "kenaikan harga rumah primer (yoy) triwulan III 2026",
+      "h": "Survei BI: harga rumah naik tipis, penjualan turun",
+      "pts": [
+        "Penjualan rumah primer turun 8,43% yoy, lebih dalam dari triwulan II",
+        "KPR dipakai pada 70,68% pembelian rumah primer",
+        "73,94% pembiayaan proyek berasal dari dana internal pengembang"
+      ],
+      "arti": "Pasar sedang tenang: pembeli punya ruang negosiasi lebih besar, terutama pada stok rumah baru."
+    },
+    "sources": [
+      {
+        "t": "Bank Indonesia – Survei Harga Properti Residensial Triwulan III 2026: Harga properti residensial tumbuh terbatas (6 Nov 2026)",
+        "u": "https://www.bi.go.id/id/publikasi/ruang-media/news-release/Pages/sp_2824426.aspx"
+      },
+      {
+        "t": "Bank Indonesia – Laporan Survei Harga Properti Residensial Triwulan III 2026 (PDF, Nov 2026)",
+        "u": "https://www.bi.go.id/id/publikasi/laporan/Documents/SHPR_Tw_III_2026.pdf"
+      },
+      {
+        "t": "Industry.co.id – Harga properti residensial kuartal III 2026 tumbuh 0,58%, penjualan rumah masih lesu (10 Nov 2026)",
+        "u": "https://www.industry.co.id/read/158965/harga-properti-residensial-kuartal-iii-2026-tumbuh-058-penjualan-rumah-masih-lesu"
+      }
+    ],
+    "id": {
+      "tag": "Data Pasar",
+      "title": "Survei BI triwulan III 2026: harga rumah baru naik 0,58%, penjualan turun 8,43%",
+      "summary": "Bank Indonesia mencatat Indeks Harga Properti Residensial di pasar primer naik 0,58% (yoy) pada triwulan III 2026, melambat dari 0,69%. Penjualan rumah primer turun 8,43% dan KPR tetap menjadi skema pembelian utama.",
+      "body": [
+        {
+          "p": "Bank Indonesia merilis Survei Harga Properti Residensial (SHPR) triwulan III 2026 pada 6 November 2026. Survei ini memantau rumah baru (pasar primer) di sejumlah kota besar, termasuk Denpasar. Hasilnya, Indeks Harga Properti Residensial naik 0,58% secara tahunan (yoy), sedikit melambat dari 0,69% pada triwulan II 2026."
+        },
+        {
+          "h": "Angka utama"
+        },
+        {
+          "ul": [
+            "Penjualan rumah di pasar primer turun 8,43% (yoy), lebih dalam dibanding kontraksi 2,36% pada triwulan II 2026; penurunan terjadi di semua tipe rumah.",
+            "Kredit Pemilikan Rumah (KPR) dipakai pada 70,68% total pembelian rumah primer.",
+            "Dari sisi pengembang, 73,94% kebutuhan pembiayaan proyek berasal dari dana internal."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan investor"
+        },
+        {
+          "p": "Harga rumah baru secara nasional hampir datar, sementara penjualan melemah. Kondisi seperti ini biasanya memberi pembeli ruang negosiasi lebih besar, terutama untuk stok rumah yang sudah jadi, dan pengembang cenderung menawarkan promo atau cicilan bertahap. Pasar Bali punya karakter sendiri karena banyak pembeli villa dan lahan membayar tunai dan dipengaruhi pariwisata, tetapi untuk rumah tinggal di Denpasar dan sekitarnya, tren nasional ini tetap relevan. Bali Are Property menyarankan membandingkan beberapa penawaran dan menghitung total biaya beli (pajak, notaris, BPHTB) sebelum memutuskan."
+        },
+        {
+          "note": "Ringkasan data Bank Indonesia. Bukan nasihat investasi."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Market Data",
+      "title": "BI survey for Q3 2026: new-home prices up 0.58%, sales down 8.43%",
+      "summary": "Bank Indonesia reports its Residential Property Price Index for the primary market rose 0.58% (yoy) in Q3 2026, slowing from 0.69%. Primary-market home sales fell 8.43%, and mortgages remain the main way to buy.",
+      "body": [
+        {
+          "p": "Bank Indonesia released its Residential Property Price Survey (SHPR) for Q3 2026 on 6 November 2026. The survey tracks new homes (the primary market) in a number of major cities, including Denpasar. The Residential Property Price Index rose 0.58% year-on-year, slightly slower than 0.69% in Q2 2026."
+        },
+        {
+          "h": "Key figures"
+        },
+        {
+          "ul": [
+            "Primary-market home sales fell 8.43% (yoy), deeper than the 2.36% contraction in Q2 2026; sales fell across all house types.",
+            "Mortgages (KPR) were used in 70.68% of all primary-market purchases.",
+            "On the developer side, 73.94% of project financing needs came from internal funds."
+          ]
+        },
+        {
+          "h": "What it means for buyers and investors"
+        },
+        {
+          "p": "Nationally, new-home prices are almost flat while sales are weakening. Conditions like these usually give buyers more room to negotiate, especially on completed stock, and developers tend to offer promotions or staged payments. Bali's market has its own character because many villa and land buyers pay cash and demand is driven by tourism, but for homes in and around Denpasar this national trend is still relevant. Bali Are Property recommends comparing several offers and calculating the total cost of buying (taxes, notary, BPHTB) before deciding."
+        },
+        {
+          "note": "Summary of Bank Indonesia data. Not investment advice."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Данные рынка",
+      "title": "Опрос Банка Индонезии за III квартал 2026 года: цены на новое жильё +0,58%, продажи −8,43%",
+      "summary": "По данным Банка Индонезии, индекс цен на жилую недвижимость на первичном рынке в III квартале 2026 года вырос на 0,58% (г/г) после 0,69%. Продажи на первичном рынке снизились на 8,43%, ипотека остаётся основным способом покупки.",
+      "body": [
+        {
+          "p": "Банк Индонезии 6 ноября 2026 года опубликовал Обзор цен на жилую недвижимость (SHPR) за III квартал 2026 года. Обзор отслеживает новое жильё (первичный рынок) в ряде крупных городов, включая Денпасар. Индекс цен на жилую недвижимость вырос на 0,58% в годовом выражении — чуть медленнее, чем 0,69% во II квартале 2026 года."
+        },
+        {
+          "h": "Ключевые цифры"
+        },
+        {
+          "ul": [
+            "Продажи на первичном рынке снизились на 8,43% (г/г) — сильнее, чем на 2,36% во II квартале 2026 года; снижение затронуло все типы домов.",
+            "Ипотека (KPR) использовалась в 70,68% всех покупок на первичном рынке.",
+            "У девелоперов 73,94% потребности в финансировании проектов покрывалось собственными средствами."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и инвесторов"
+        },
+        {
+          "p": "В масштабах страны цены на новое жильё почти не меняются, а продажи слабеют. В таких условиях у покупателей обычно больше пространства для торга, особенно по готовым объектам, а девелоперы чаще предлагают акции или рассрочку. У рынка Бали свой характер: многие покупатели вилл и земли платят наличными, а спрос определяется туризмом, но для жилья в Денпасаре и окрестностях общенациональная тенденция остаётся актуальной. Bali Are Property рекомендует сравнить несколько предложений и рассчитать полную стоимость покупки (налоги, нотариус, BPHTB) перед решением."
+        },
+        {
+          "note": "Обзор данных Банка Индонезии. Не является инвестиционной рекомендацией."
+        }
+      ]
+    }
+  },
+  {
     "slug": "air-bersih-badung-selatan-rp150-miliar",
     "date": "2026-11-09",
     "ig": {
