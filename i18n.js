@@ -852,7 +852,23 @@
     ["±8 menit ke Finns Beach Club, ±10 menit ke Pererenan, ±20 menit ke Seminyak", "±8 min to Finns Beach Club, ±10 min to Pererenan, ±20 min to Seminyak", "±8 мин до Finns Beach Club, ±10 мин до Перененана, ±20 мин до Семиньяка"],
     ["Kamar ensuite, dapur modern, dan ruang keluarga luas", "Ensuite bedrooms, modern kitchen and a spacious living area", "Спальни с ванными, современная кухня и просторная гостиная"],
     ["Dekat pantai, restoran, beach club, dan fasilitas gaya hidup Canggu", "Close to beaches, restaurants, beach clubs and Canggu's lifestyle amenities", "Рядом пляжи, рестораны, бич-клубы и инфраструктура Чангу"],
-    ["Harga turun dari Rp18 Miliar menjadi Rp14,5 Miliar", "Price reduced from IDR 18 billion to IDR 14.5 billion", "Цена снижена с 18 млрд до 14,5 млрд IDR"]
+    ["Harga turun dari Rp18 Miliar menjadi Rp14,5 Miliar", "Price reduced from IDR 18 billion to IDR 14.5 billion", "Цена снижена с 18 млрд до 14,5 млрд IDR"],
+    // ---------- Villa 3 KT Pererenan ----------
+    ["Pererenan · Kuta Utara", "Pererenan · North Kuta", "Перененан · Северная Кута"],
+    ["Villa 3 kamar tidur dengan pool dan rooftop di Pererenan", "3-bedroom villa with pool and rooftop in Pererenan", "Вилла с 3 спальнями, бассейном и террасой на крыше в Перененане"],
+    ["Villa modern 2,5 lantai di lokasi strategis Pererenan: kolam renang pribadi, rooftop chill area, ruang keluarga dan ruang makan sunken tertutup, serta dapur lengkap. Unit terakhir, tersedia leasehold 20 tahun atau freehold dengan harga yang sudah diturunkan.", "A modern 2.5-storey villa in a strategic Pererenan location: private pool, rooftop chill area, enclosed sunken living and dining area, and a fully equipped kitchen. Last unit available, as a 20-year leasehold or freehold at a reduced price.", "Современная вилла в 2,5 этажа в удобной локации Перененана: частный бассейн, зона отдыха на крыше, закрытая гостиная и столовая с пониженным полом, полностью оборудованная кухня. Последний юнит: аренда на 20 лет или freehold по сниженной цене."],
+    ["Unit terakhir", "Last unit", "Последний юнит"],
+    ["Leasehold 20 tahun", "Leasehold 20 years", "Аренда (leasehold) 20 лет"],
+    ["191 m²", "191 m²", "191 м²"],
+    ["280 m²", "280 m²", "280 м²"],
+    ["2,5 lantai", "2.5 storeys", "2,5 этажа"],
+    ["3 + 1 toilet tamu", "3 + 1 guest powder room", "3 + 1 гостевой туалет"],
+    ["Leasehold 20 tahun / freehold", "20-year leasehold / freehold", "Аренда 20 лет / freehold"],
+    ["Pererenan, Kuta Utara", "Pererenan, North Kuta", "Перененан, Северная Кута"],
+    ["Rooftop chill area, ruang keluarga dan ruang makan sunken tertutup", "Rooftop chill area, enclosed sunken living and dining area", "Зона отдыха на крыше, закрытая гостиная и столовая с пониженным полом"],
+    ["Dapur lengkap, carport, dan gudang", "Fully equipped kitchen, carport and storage room", "Полностью оборудованная кухня, навес для авто и кладовая"],
+    ["±2 menit ke Frestive Pererenan, ±5 menit ke Jungle Padel, Surya Gym & Lions MMA, ±10 menit ke Pantai Pererenan", "±2 min to Frestive Pererenan, ±5 min to Jungle Padel, Surya Gym & Lions MMA, ±10 min to Pererenan Beach", "±2 мин до Frestive Pererenan, ±5 мин до Jungle Padel, Surya Gym и Lions MMA, ±10 мин до пляжа Перененан"],
+    ["±15 menit ke Luna Beach Club, La Brisa, The Lawn, Skool & Desa Kitsune, ±19 menit ke Atlas & Finns Beach Club", "±15 min to Luna Beach Club, La Brisa, The Lawn, Skool & Desa Kitsune, ±19 min to Atlas & Finns Beach Club", "±15 мин до Luna Beach Club, La Brisa, The Lawn, Skool и Desa Kitsune, ±19 мин до Atlas и Finns Beach Club"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
