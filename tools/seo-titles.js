@@ -55,6 +55,10 @@ module.exports = {
     id: { t: "Dijual Tanah 650 m² ITR Permukiman di Toyaning, Ungasan Bali", d: "Tanah 6,5 are SHM, ITR permukiman, lebar depan 23 m, di kawasan villa Toyaning dekat Pantai Melasti, Ungasan. Rp7 jt/m², total Rp4,55 M. Info via WhatsApp." },
     en: { t: "650 m² Residential Land for Sale in Toyaning, Ungasan Bali", d: "6.5-are SHM plot, residential zoning, 23 m frontage, in the Toyaning villa area near Melasti Beach, Ungasan. IDR 7M/m², 4.55B total. Ask on WhatsApp." },
     ru: { t: "Продажа участка 650 м² (жилая зона) в Тоянинг, Унгасан, Бали", d: "Участок 6,5 аре, SHM, жилая зона, фасад 23 м, район вилл Тоянинг рядом с пляжем Меласти, Унгасан. 7 млн IDR/м², всего 4,55 млрд IDR. Пишите в WhatsApp." } },
+  "villa-4-plus-1-kamar-tidur-dengan-private-pool-di-berawa-canggu": {
+    id: { t: "Dijual Villa 4+1 Kamar Private Pool di Berawa, Canggu Bali – Harga Turun", d: "Villa freehold SHM & IMB di Berawa, tanah 400 m², bangunan ±400 m², 4+1 KT ensuite, private pool. Turun dari Rp18 M jadi Rp14,5 M. 8 menit ke Finns. Info via WhatsApp." },
+    en: { t: "4+1-Bedroom Villa with Private Pool for Sale in Berawa, Canggu – Price Reduced", d: "Freehold villa, SHM & IMB, Berawa: 400 m² land, ±400 m² building, 4+1 ensuite beds, private pool. Reduced from IDR 18B to 14.5B. 8 min to Finns. Ask on WhatsApp." },
+    ru: { t: "Продажа виллы 4+1 спальни с бассейном в Бераве, Чангу – цена снижена", d: "Вилла freehold, SHM и IMB, Берава: участок 400 м², дом ±400 м², 4+1 спальни, частный бассейн. Цена снижена с 18 до 14,5 млрд IDR. 8 мин до Finns. Пишите в WhatsApp." } },
   "tanah-15-ha-di-jalan-pura-mesuka": {
     id: { t: "Dijual Tanah 1,5 Hektar di Jalan Pura Mesuka, Ungasan Bali", d: "Tanah 15.000 m² SHM, ITR perumahan di Jl. Pura Mesuka, Ungasan, Kuta Selatan. Rp5,5 jt/m² (nego), total Rp82,5 M. Cocok untuk proyek perumahan. Info via WhatsApp." },
     en: { t: "1.5-Hectare Land for Sale on Jalan Pura Mesuka, Ungasan Bali", d: "15,000 m² SHM plot with residential zoning on Jl. Pura Mesuka, Ungasan, South Kuta. IDR 5.5M/m² (neg.), IDR 82.5B total. Ideal for a housing project. Ask on WhatsApp." },

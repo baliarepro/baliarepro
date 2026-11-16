@@ -835,7 +835,24 @@
     ["23 m", "23 m", "23 м"],
     ["Ngantong (melebar di belakang)", "Pocket-shaped (wider at the rear)", "Расширяется к задней части участка"],
     ["Akses mudah ke Pantai Melasti", "Easy access to Melasti Beach", "Удобный доступ к пляжу Меласти"],
-    ["Lingkungan villa di kawasan Toyaning, Ungasan, Kuta Selatan", "A villa neighbourhood in Toyaning, Ungasan, South Kuta", "Район вилл в Тоянинге, Унгасан, Южная Кута"]
+    ["Lingkungan villa di kawasan Toyaning, Ungasan, Kuta Selatan", "A villa neighbourhood in Toyaning, Ungasan, South Kuta", "Район вилл в Тоянинге, Унгасан, Южная Кута"],
+    // ---------- Villa 4+1 KT Berawa, Canggu ----------
+    ["Berawa · Canggu", "Berawa · Canggu", "Берава · Чангу"],
+    ["Villa 4+1 kamar tidur dengan private pool di Berawa, Canggu", "4+1-bedroom villa with private pool in Berawa, Canggu", "Вилла 4+1 спальни с частным бассейном в Бераве, Чангу"],
+    ["Villa freehold di Berawa, salah satu kawasan hunian dan wisata paling dicari di Bali. Tanah 400 m², bangunan ±400 m², kamar ensuite, kolam renang pribadi, dapur modern, dan ruang keluarga luas. Harga turun dari Rp18 Miliar.", "A freehold villa in Berawa, one of Bali's most sought-after residential and tourism areas. 400 m² of land, ±400 m² building, ensuite bedrooms, private swimming pool, modern kitchen and a spacious living area. Price reduced from IDR 18 billion.", "Вилла в собственности (freehold) в Бераве — одном из самых востребованных жилых и туристических районов Бали. Участок 400 м², дом ±400 м², спальни с ванными, частный бассейн, современная кухня и просторная гостиная. Цена снижена с 18 млрд IDR."],
+    ["Harga turun", "Price reduced", "Цена снижена"],
+    ["Harga sebelumnya", "Previous price", "Прежняя цена"],
+    ["Harga sekarang (freehold)", "Current price (freehold)", "Текущая цена (freehold)"],
+    ["400 m² (4 are)", "400 m² (4 are)", "400 м² (4 аре)"],
+    ["±400 m²", "±400 m²", "±400 м²"],
+    ["4+1 (en-suite)", "4+1 (en-suite)", "4+1 (с ванными комнатами)"],
+    ["Private pool", "Private pool", "Частный бассейн"],
+    ["Ada", "Yes", "Есть"],
+    ["Berawa, Canggu", "Berawa, Canggu", "Берава, Чангу"],
+    ["±8 menit ke Finns Beach Club, ±10 menit ke Pererenan, ±20 menit ke Seminyak", "±8 min to Finns Beach Club, ±10 min to Pererenan, ±20 min to Seminyak", "±8 мин до Finns Beach Club, ±10 мин до Перененана, ±20 мин до Семиньяка"],
+    ["Kamar ensuite, dapur modern, dan ruang keluarga luas", "Ensuite bedrooms, modern kitchen and a spacious living area", "Спальни с ванными, современная кухня и просторная гостиная"],
+    ["Dekat pantai, restoran, beach club, dan fasilitas gaya hidup Canggu", "Close to beaches, restaurants, beach clubs and Canggu's lifestyle amenities", "Рядом пляжи, рестораны, бич-клубы и инфраструктура Чангу"],
+    ["Harga turun dari Rp18 Miliar menjadi Rp14,5 Miliar", "Price reduced from IDR 18 billion to IDR 14.5 billion", "Цена снижена с 18 млрд до 14,5 млрд IDR"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)
