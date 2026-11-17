@@ -868,7 +868,25 @@
     ["Rooftop chill area, ruang keluarga dan ruang makan sunken tertutup", "Rooftop chill area, enclosed sunken living and dining area", "Зона отдыха на крыше, закрытая гостиная и столовая с пониженным полом"],
     ["Dapur lengkap, carport, dan gudang", "Fully equipped kitchen, carport and storage room", "Полностью оборудованная кухня, навес для авто и кладовая"],
     ["±2 menit ke Frestive Pererenan, ±5 menit ke Jungle Padel, Surya Gym & Lions MMA, ±10 menit ke Pantai Pererenan", "±2 min to Frestive Pererenan, ±5 min to Jungle Padel, Surya Gym & Lions MMA, ±10 min to Pererenan Beach", "±2 мин до Frestive Pererenan, ±5 мин до Jungle Padel, Surya Gym и Lions MMA, ±10 мин до пляжа Перененан"],
-    ["±15 menit ke Luna Beach Club, La Brisa, The Lawn, Skool & Desa Kitsune, ±19 menit ke Atlas & Finns Beach Club", "±15 min to Luna Beach Club, La Brisa, The Lawn, Skool & Desa Kitsune, ±19 min to Atlas & Finns Beach Club", "±15 мин до Luna Beach Club, La Brisa, The Lawn, Skool и Desa Kitsune, ±19 мин до Atlas и Finns Beach Club"]
+    ["±15 menit ke Luna Beach Club, La Brisa, The Lawn, Skool & Desa Kitsune, ±19 menit ke Atlas & Finns Beach Club", "±15 min to Luna Beach Club, La Brisa, The Lawn, Skool & Desa Kitsune, ±19 min to Atlas & Finns Beach Club", "±15 мин до Luna Beach Club, La Brisa, The Lawn, Skool и Desa Kitsune, ±19 мин до Atlas и Finns Beach Club"],
+    // ---------- Villa 3 KT Grand Ungasan ----------
+    ["Grand Ungasan · Ungasan", "Grand Ungasan · Ungasan", "Гранд Унгасан · Унгасан"],
+    ["Villa 3 kamar tidur fully furnished di Grand Ungasan", "Fully furnished 3-bedroom villa in Grand Ungasan", "Полностью меблированная вилла с 3 спальнями в Гранд Унгасан"],
+    ["Villa modern 2 lantai dengan desain premium dan kolam renang pribadi di kawasan Grand Ungasan, Kuta Selatan. Dibangun 2024, terawat sangat baik, fully furnished, dan siap huni, cocok untuk hunian pribadi maupun villa sewa.", "A modern two-storey villa with a premium design and private pool in the Grand Ungasan area, South Kuta. Built in 2024, very well maintained, fully furnished and move-in ready, suitable as a private home or a rental villa.", "Современная двухэтажная вилла с премиальным дизайном и частным бассейном в районе Гранд Унгасан, Южная Кута. Построена в 2024 году, в отличном состоянии, полностью меблирована и готова к заселению — для жизни или сдачи в аренду."],
+    ["Harga (freehold, nego)", "Price (freehold, negotiable)", "Цена (freehold, торг)"],
+    ["143 m²", "143 m²", "143 м²"],
+    ["193 m²", "193 m²", "193 м²"],
+    ["3", "3", "3"],
+    ["Fully furnished", "Fully furnished", "Полностью меблирована"],
+    ["2024", "2024", "2024"],
+    ["Legalitas", "Legal documents", "Документы"],
+    ["IMB, PBB, dokumen lengkap", "Building permit (IMB), land tax (PBB), complete documents", "Разрешение на строительство (IMB), налог PBB, полный пакет документов"],
+    ["4.900 Watt", "4,900 W", "4 900 Вт"],
+    ["Grand Ungasan, Kuta Selatan", "Grand Ungasan, South Kuta", "Гранд Унгасан, Южная Кута"],
+    ["Kolam renang pribadi, kitchen set, dan AC", "Private pool, fitted kitchen and air conditioning", "Частный бассейн, кухонный гарнитур и кондиционеры"],
+    ["Garasi dan carport", "Garage and carport", "Гараж и навес для авто"],
+    ["Dibangun 2024, kondisi sangat baik dan siap huni", "Built in 2024, in very good condition and move-in ready", "Построена в 2024 году, в отличном состоянии, готова к заселению"],
+    ["Legalitas lengkap: SHM, IMB, PBB", "Complete legal documents: SHM, IMB, PBB", "Полный пакет документов: SHM, IMB, PBB"]
   ];
 
   // Pola dengan angka (bagian $1, $2 ikut diformat angkanya)

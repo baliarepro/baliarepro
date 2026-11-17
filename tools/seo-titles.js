@@ -63,6 +63,10 @@ module.exports = {
     id: { t: "Dijual Villa 3 Kamar dengan Pool & Rooftop di Pererenan, Bali", d: "Villa modern 2,5 lantai, tanah 191 m², bangunan 280 m², 3 KT, private pool, rooftop. Unit terakhir: leasehold 20 th Rp4 M atau freehold Rp6,8 M. Info via WhatsApp." },
     en: { t: "3-Bedroom Villa with Pool & Rooftop for Sale in Pererenan, Bali", d: "Modern 2.5-storey villa, 191 m² land, 280 m² building, 3 beds, private pool, rooftop. Last unit: 20-yr leasehold IDR 4B or freehold IDR 6.8B. Ask on WhatsApp." },
     ru: { t: "Продажа виллы с 3 спальнями, бассейном и руфтопом в Перененане, Бали", d: "Современная вилла 2,5 этажа, участок 191 м², дом 280 м², 3 спальни, бассейн, руфтоп. Последний юнит: аренда 20 лет 4 млрд или freehold 6,8 млрд IDR. Пишите в WhatsApp." } },
+  "villa-3-kamar-tidur-fully-furnished-di-grand-ungasan": {
+    id: { t: "Dijual Villa 3 Kamar Fully Furnished di Grand Ungasan, Bali", d: "Villa modern 2 lantai dibangun 2024, tanah 143 m², bangunan 193 m², 3 KT, private pool, fully furnished, SHM & IMB. Rp3,8 M nego. Jadwalkan survei via WhatsApp." },
+    en: { t: "Fully Furnished 3-Bedroom Villa for Sale in Grand Ungasan, Bali", d: "Modern two-storey villa built 2024, 143 m² land, 193 m² building, 3 beds, private pool, fully furnished, SHM & IMB. IDR 3.8B negotiable. Book a viewing on WhatsApp." },
+    ru: { t: "Продажа меблированной виллы с 3 спальнями в Гранд Унгасан, Бали", d: "Современная вилла 2024 г., 2 этажа, участок 143 м², дом 193 м², 3 спальни, бассейн, полностью меблирована, SHM и IMB. 3,8 млрд IDR, торг. Пишите в WhatsApp." } },
   "tanah-15-ha-di-jalan-pura-mesuka": {
     id: { t: "Dijual Tanah 1,5 Hektar di Jalan Pura Mesuka, Ungasan Bali", d: "Tanah 15.000 m² SHM, ITR perumahan di Jl. Pura Mesuka, Ungasan, Kuta Selatan. Rp5,5 jt/m² (nego), total Rp82,5 M. Cocok untuk proyek perumahan. Info via WhatsApp." },
     en: { t: "1.5-Hectare Land for Sale on Jalan Pura Mesuka, Ungasan Bali", d: "15,000 m² SHM plot with residential zoning on Jl. Pura Mesuka, Ungasan, South Kuta. IDR 5.5M/m² (neg.), IDR 82.5B total. Ideal for a housing project. Ask on WhatsApp." },
