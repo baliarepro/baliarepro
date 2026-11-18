@@ -1,6 +1,6 @@
 // Kartu katalog bergaya ringkas (foto besar + harga + 1 baris spesifikasi), dipakai di listings.html dan halaman area (3 bahasa).
 // Teks kartu tetap dari HTML asli (ID/EN/RU hasil build); skrip ini hanya menyusun ulang tampilannya.
-// Foto sampul & jumlah foto dari /img/covers.json (dibuat build). Tombol "Ringkas / Lengkap" diingat per browser.
+// Foto sampul & jumlah foto dari /img/covers.json (dibuat build). Selalu tampilan ringkas (permintaan pemilik 18 Nov 2026, tanpa tombol pilihan).
 (function () {
   if (document.body.hasAttribute("data-listing")) return; // halaman detail: tidak diubah
   var cards = [].slice.call(document.querySelectorAll("article.card"));
@@ -21,9 +21,6 @@
     perM2: /(m²|м²)/,
     total: /^(Total|Только|Итого)/i
   };
-  var KEY = "bap-cards";
-  var mode = "compact";
-  try { mode = localStorage.getItem(KEY) || "compact"; } catch (e) {}
 
   var css = "" +
     ".cards-compact .area,.cards-compact .ar-type{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:18px;align-items:start}" +
@@ -59,11 +56,7 @@
     ".card .cp .fx{font-size:12px;color:var(--muted)}" +
     ".card .cs{order:3;padding:8px 16px 0;flex-wrap:wrap;gap:4px 0;font-size:13.5px;color:var(--ink);font-weight:500}" +
     ".card .cs span{white-space:nowrap}.card .cs span:not(:last-child)::after{content:'·';margin:0 7px;color:var(--muted)}" +
-    ".cv-toggle{display:inline-flex;align-items:center;gap:8px;margin:18px 0 0;font-size:14px;color:var(--muted)}" +
-    ".cv-toggle button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 14px;border-radius:999px;font:inherit;font-weight:600;cursor:pointer}" +
-    ".cv-toggle button[aria-pressed=true]{background:var(--sea);border-color:var(--sea);color:var(--bg)}" +
-    "body:not(.cards-compact) .card .cv,body:not(.cards-compact) .card .cp,body:not(.cards-compact) .card .cs,body:not(.cards-compact) .card .cd{display:none!important}" +
-    "@media print{.cv-toggle{display:none}}";
+    "body:not(.cards-compact) .card .cv,body:not(.cards-compact) .card .cp,body:not(.cards-compact) .card .cs,body:not(.cards-compact) .card .cd{display:none!important}";
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
   var txt = function (el) { return el ? el.textContent.replace(/\s+/g, " ").trim() : ""; };
@@ -155,24 +148,9 @@
     }
   }
 
-  function setMode(m) {
-    mode = m;
-    document.body.classList.toggle("cards-compact", m === "compact");
-    try { localStorage.setItem(KEY, m); } catch (e) {}
-    document.querySelectorAll(".cv-toggle button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.m === m ? "true" : "false"); });
-  }
+  function setMode() { document.body.classList.add("cards-compact"); }
 
-  // Tombol tampilan di atas daftar
-  var first = document.querySelector("section.type, .ar-type");
-  if (first) {
-    var tg = document.createElement("div");
-    tg.className = "cv-toggle"; tg.setAttribute("data-noi18n", "");
-    tg.innerHTML = "<span>" + T.view + ":</span>" + '<button type="button" data-m="compact">' + T.compact + "</button>" + '<button type="button" data-m="full">' + T.full + "</button>";
-    tg.addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) setMode(b.dataset.m); });
-    first.parentNode.insertBefore(tg, first);
-  }
-
-  function run(covers) { cards.forEach(function (c) { try { build(c, covers || {}); } catch (e) {} }); setMode(mode); }
-  setMode(mode); // terapkan tata letak segera; foto menyusul
+  function run(covers) { cards.forEach(function (c) { try { build(c, covers || {}); } catch (e) {} }); setMode(); }
+  setMode(); // terapkan tata letak segera; foto menyusul
   fetch("/img/covers.json").then(function (r) { return r.ok ? r.json() : {}; }).then(run, function () { run({}); });
 })();

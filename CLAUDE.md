@@ -108,7 +108,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - Repo ini kadang perlu `git -c safe.directory=*` saat dijalankan di container.
 
 ## Kartu katalog ringkas (gaya foto besar)
-- `cards.js` (root, dimuat di `listings.html` dan halaman area) menyusun ulang kartu di katalog/area: foto sampul + label (Freehold/Leasehold dari spesifikasi/harga, badge, Rekomendasi, Terjual) + jumlah foto, harga besar + harga per m², 1 baris (jenis · KT · KM · bangunan · tanah), judul, lokasi, tombol WA/Detail/Bagikan. Grid 2–3 kolom di layar lebar. Tombol "Ringkas / Lengkap" (localStorage `bap-cards`) mengembalikan tampilan penuh. Halaman detail tidak diubah.
+- `cards.js` (root, dimuat di `listings.html` dan halaman area) menyusun ulang kartu di katalog/area: foto sampul + label (Freehold/Leasehold dari spesifikasi/harga, badge, Rekomendasi, Terjual) + jumlah foto, harga besar + harga per m², 1 baris (jenis · KT · KM · bangunan · tanah), judul, lokasi, tombol WA/Detail/Bagikan. Grid 2–3 kolom di layar lebar. Selalu ringkas, tanpa tombol pilihan tampilan (permintaan pemilik 18 Nov 2026); detail lengkap ada di halaman listing. Halaman detail tidak diubah.
 - Sampul & jumlah foto dari `img/covers.json` (dibuat build dari `img/wm/`). Teks dibaca dari HTML kartu (ID/EN/RU) dengan regex label multi-bahasa di `RX`; node sisipan diberi `data-noi18n`. Label spesifikasi baru (mis. jenis luas lain) → tambahkan ke `RX`.
 
 ## Halaman per area (SEO)
