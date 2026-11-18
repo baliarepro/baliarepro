@@ -90,6 +90,41 @@ const EDU = [
       { t: "detikFinance – WNA boleh beli rumah-apartemen di RI, begini aturannya (16 Mei 2023)", u: "https://finance.detik.com/properti/d-6723693/wna-boleh-beli-rumah-apartemen-di-ri-begini-aturannya" }
     ],
     note: "Informasi umum, bukan nasihat hukum."
+  },
+  {
+    slug: "zona-lahan-bali",
+    title: "Kenali Warna Zona Lahan di Bali",
+    sub: "Cek zonasinya dulu sebelum membeli tanah atau membuka usaha",
+    tag: "Zonasi",
+    slides: [
+      { stat: "RDTR", statL: "Rencana Detail Tata Ruang", h: "Zona menentukan apa yang boleh dibangun",
+        pts: ["Provinsi: RTRW Bali 2023–2043 (Perda Bali 2/2023)", "Kabupaten/kota: RDTR mengatur detail per lokasi", "\"Pink zone\" dll. istilah pasar; yang berlaku dokumen resmi"],
+        arti: "Harga murah belum tentu untung. Pastikan zonanya cocok dengan rencana Anda." },
+      { swatch: "#E58FB0", stat: "Pink", statL: "Kawasan pariwisata", h: "Untuk hotel, resort & villa sewa",
+        pts: ["Akomodasi wisata & fasilitas pendukungnya", "Paling cocok untuk villa yang disewakan harian", "Tetap perlu izin usaha sesuai jenis akomodasi"],
+        arti: "Mau bisnis villa sewa? Prioritaskan tanah di zona pariwisata." },
+      { swatch: "#F2D04B", stat: "Kuning", statL: "Kawasan permukiman", h: "Untuk rumah & villa pribadi",
+        pts: ["Hunian tinggal atau villa pribadi", "Sewa wisata terbatas, mis. pondok wisata (KBLI 55130)", "Umumnya bukan untuk hotel atau villa komersial"],
+        arti: "Cocok untuk tempat tinggal. Untuk bisnis sewa, cek dulu batasannya." },
+      { swatch: "#D9483B", stat: "Merah", statL: "Perdagangan & jasa", h: "Untuk toko, kantor, kafe & restoran",
+        pts: ["Kegiatan usaha dan jasa", "Sering berada di sepanjang jalan utama", "Lebih cocok untuk proyek komersial daripada rumah"],
+        arti: "Rencana ruko, kafe atau kantor? Cari lahan di zona perdagangan & jasa." },
+      { swatch: "#4E9A4A", stat: "Hijau", statL: "Lahan pertanian produktif", h: "Dilindungi dari alih fungsi",
+        pts: ["Sawah, tanaman pangan, hortikultura, perkebunan", "Pada prinsipnya tidak boleh dialihfungsikan", "Harga murah sering karena batasan ini"],
+        arti: "Jangan beli tanah hijau untuk villa dengan harapan zonanya nanti berubah." },
+      { swatch: "#8A5A3C", stat: "Cokelat", statL: "Cagar budaya", h: "Kawasan budaya & warisan dilindungi",
+        pts: ["Sekitar pura besar dan permukiman bersejarah", "Pembangunan dibatasi ketat atau dilarang", "Warna di peta bisa berbeda tiap daerah"],
+        arti: "Dekat pura? Cek aturan radius kesucian dan batas bangunannya." },
+      { stat: "Cek", statL: "sebelum membayar uang muka", h: "Cara memastikan zona sebuah lahan",
+        pts: ["Lihat peta RDTR/RTRW di portal GISTARU Bali", "Cocokkan kode KBLI usaha Anda di OSS", "Ajukan KKPR (kesesuaian ruang) sebelum membangun"],
+        arti: "Bali Are Property membantu mengecek zona setiap listing. Tanya dulu sebelum membeli." }
+    ],
+    en: "Know Bali's land-use zones before you buy: pink = tourism, yellow = residential, red = trade & services, green = protected farmland, brown = cultural heritage.",
+    ru: "Зоны земли на Бали: розовая — туризм, жёлтая — жильё, красная — торговля и услуги, зелёная — защищённые сельхозземли, коричневая — культурное наследие.",
+    sources: [
+      { t: "Bali Home Immo – Bali 2026 zoning laws explained (23 Mar 2026)", u: "https://bali-home-immo.com/blog/bali-2026-zoning-laws-explained" }
+    ],
+    note: "Informasi umum, bukan nasihat hukum. Warna zona hanya panduan; yang berlaku dokumen tata ruang resmi."
   }
 ];
 

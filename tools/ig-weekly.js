@@ -91,9 +91,10 @@ ul li:before{content:"";position:absolute;left:0;top:13px;width:16px;height:16px
 .arti{position:absolute;left:64px;right:64px;bottom:150px;background:#123F36;color:#F6F2EA;border-radius:24px;padding:28px 32px;font-weight:500;font-size:27px;line-height:1.35}
 .arti b{display:block;color:#D9A441;font-size:21px;letter-spacing:.1em;margin-bottom:8px;font-weight:600}
 .foot{font-size:20px;font-weight:500;color:#5b6662}
+.sw{display:flex;align-items:center;gap:30px;margin-top:30px}.sw i{width:120px;height:120px;border-radius:28px;flex:none;box-shadow:inset 0 0 0 3px rgba(0,0,0,.08)}
 </style>${top("#123F36", i, n)}
 <div class="main"><div><span class="pill">${esc(s.tag)}</span></div>
-${s.stat ? `<div class="stat disp">${esc(s.stat)}</div>` : ""}${s.statL ? `<div class="sl">${esc(s.statL)}</div>` : ""}
+${s.swatch ? `<div class="sw"><i style="background:${s.swatch}"></i><span class="stat disp" style="margin:0">${esc(s.stat)}</span></div>` : s.stat ? `<div class="stat disp">${esc(s.stat)}</div>` : ""}${s.statL ? `<div class="sl">${esc(s.statL)}</div>` : ""}
 <h2 class="disp">${esc(s.h)}</h2>
 <ul>${s.pts.map((p) => `<li>${esc(p)}</li>`).join("")}</ul></div>
 <div class="arti"><b class="mono">ARTINYA BAGI ANDA</b>${esc(s.arti)}</div>
@@ -125,7 +126,7 @@ function slidesFor(sel, date) {
   }
   const e = sel.items[0], n = e.slides.length + 2;
   const disc = e.tag === "Pajak" ? "Bukan nasihat pajak" : "Bukan nasihat hukum";
-  return [coverHtml({ title: e.title, sub: "Aturan properti yang perlu diketahui sebelum membeli di Bali", list: e.slides.map((s) => cut(s.h, 60)), foot: "baliareproperty.com", n }),
+  return [coverHtml({ title: e.title, sub: e.sub || "Aturan properti yang perlu diketahui sebelum membeli di Bali", list: e.slides.map((s) => cut((s.swatch ? s.stat + ": " : "") + s.h, 60)), foot: "baliareproperty.com", n }),
     ...e.slides.map((s, i) => contentHtml({ ...s, tag: e.tag }, i + 2, n, srcShort(e.sources), disc)),
     ctaHtml(n)];
 }
@@ -152,7 +153,7 @@ function captionFor(sel, date, lvl = 0) {
   } else {
     const e = sel.items[0];
     L.push(`📘 ${e.title}`, "", "Yang perlu diketahui calon pembeli properti di Bali:", "");
-    e.slides.forEach((s) => { L.push(`▫️ ${s.h}: ${s.pts.join("; ")}.`); });
+    e.slides.forEach((s) => { L.push(`▫️ ${s.swatch ? `Zona ${s.stat} (${s.statL.toLowerCase()}) — ` : ""}${s.h}: ${s.pts.join("; ")}.`); });
     L.push("", `💡 ${e.slides[0].arti}`, "", "🇬🇧 " + e.en, "🇷🇺 " + e.ru, "");
     L.push("Sumber: " + e.sources.map((s) => s.t).join("; ") + ".");
     L.push(e.note);
@@ -165,7 +166,7 @@ function captionFor(sel, date, lvl = 0) {
 }
 
 // ---------- Render ----------
-async function render(sel, date, dir) {
+async function render(sel, date, dir, extra) {
   const { chromium } = require("playwright");
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
@@ -179,7 +180,7 @@ async function render(sel, date, dir) {
     await page.screenshot({ path: path.join(dir, i + 1 + ".jpg"), type: "jpeg", quality: 88 });
   }
   await browser.close();
-  const meta = { date, kind: sel.kind, items: sel.items.map((x) => x.slug), images: slides.length, caption: captionFor(sel, date) };
+  const meta = { date, kind: sel.kind, items: sel.items.map((x) => x.slug), images: slides.length, caption: captionFor(sel, date), ...(extra ? { extra: true } : {}) };
   fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify(meta, null, 2) + "\n");
   return meta;
 }
@@ -187,13 +188,17 @@ async function render(sel, date, dir) {
 async function cmdRender() {
   const state = loadState(), now = Date.now(), date = wita(now);
   const posts = state.posts || {};
-  const last = Object.keys(posts).sort().pop();
-  if (last && date < wita(Date.parse(last) + 6 * 864e5)) { console.log("Carousel mingguan sudah diposting " + last + " — dilewati."); return; }
-  const sel = pick(state, now);
+  // EDU_SLUG (workflow_dispatch "edu"): posting edukasi tambahan di luar jadwal mingguan, tidak dihitung batas 1/minggu
+  const extra = process.env.EDU_SLUG ? require("./ig-edu-content.js").EDU.find((x) => x.slug === process.env.EDU_SLUG) : null;
+  if (process.env.EDU_SLUG && !extra) throw new Error("Topik edukasi tidak ditemukan: " + process.env.EDU_SLUG);
+  if (extra && (state.edu || []).includes(extra.slug)) { console.log("Topik " + extra.slug + " sudah pernah diposting — dilewati."); return; }
+  const last = Object.keys(posts).filter((k) => !posts[k].extra).sort().pop();
+  if (!extra && last && date < wita(Date.parse(last) + 6 * 864e5)) { console.log("Carousel mingguan sudah diposting " + last + " — dilewati."); return; }
+  const sel = extra ? { kind: "edu", items: [extra] } : pick(state, now);
   if (!sel) { console.log("Tidak ada berita baru dan topik edukasi sudah habis — tambahkan topik di tools/ig-edu-content.js."); return; }
   // Hapus folder lama yang sudah diposting (simpan 4 terakhir)
   if (fs.existsSync(OUTROOT)) fs.readdirSync(OUTROOT).sort().slice(0, -4).forEach((d) => posts[d] && fs.rmSync(path.join(OUTROOT, d), { recursive: true, force: true }));
-  const meta = await render(sel, date, path.join(OUTROOT, date));
+  const meta = await render(sel, date, path.join(OUTROOT, extra ? date + "-" + extra.slug : date), !!extra);
   console.log(`Carousel ${meta.kind} ${date}: ${meta.items.join(", ")} (${meta.images} slide)`);
 }
 
@@ -225,7 +230,7 @@ async function cmdPost() {
   const pub = await api("POST", igId + "/media_publish", { creation_id: creation }, token);
   let permalink = "";
   try { permalink = (await api("GET", pub.id, { fields: "permalink" }, token)).permalink || ""; } catch (e) {}
-  state.posts[date] = { kind: meta.kind, items: meta.items, id: pub.id, permalink, at: new Date().toISOString() };
+  state.posts[date] = { kind: meta.kind, items: meta.items, id: pub.id, permalink, at: new Date().toISOString(), ...(meta.extra ? { extra: true } : {}) };
   state[meta.kind] = [...new Set([...state[meta.kind], ...meta.items])];
   delete state.error;
   fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + "\n");
