@@ -103,9 +103,10 @@
   });
   window.addEventListener("appinstalled", function () { var b = document.getElementById("bap-install"); if (b) b.remove(); });
 
-  // ---------- Bar WhatsApp tetap di atas layar (semua halaman, tetap tampil saat di-scroll) ----------
+  // ---------- Bar WhatsApp tetap di atas layar (katalog & detail listing, tetap tampil saat di-scroll) ----------
   (function () {
-    if (document.getElementById("bap-wabar") || /offline\.html$/.test(location.pathname)) return;
+    // Hanya di katalog listing & halaman detail listing (permintaan pemilik 18 Nov 2026)
+    if (document.getElementById("bap-wabar") || !(/\/listings\.html$/.test(location.pathname) || document.body.hasAttribute("data-listing"))) return;
     var L = (document.documentElement.lang || "id").slice(0, 2);
     var T = {
       id: ["Ada pertanyaan? Chat langsung", "Chat WhatsApp", "Halo Pak Bagoes, saya lihat website Bali Are Property dan ingin bertanya."],
