@@ -107,6 +107,10 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - Pesan commit dalam Bahasa Indonesia, diakhiri baris atribusi sesi bila diminta oleh sistem.
 - Repo ini kadang perlu `git -c safe.directory=*` saat dijalankan di container.
 
+## Kartu katalog ringkas (gaya foto besar)
+- `cards.js` (root, dimuat di `listings.html` dan halaman area) menyusun ulang kartu di katalog/area: foto sampul + label (Freehold/Leasehold dari spesifikasi/harga, badge, Rekomendasi, Terjual) + jumlah foto, harga besar + harga per m², 1 baris (jenis · KT · KM · bangunan · tanah), judul, lokasi, tombol WA/Detail/Bagikan. Grid 2–3 kolom di layar lebar. Tombol "Ringkas / Lengkap" (localStorage `bap-cards`) mengembalikan tampilan penuh. Halaman detail tidak diubah.
+- Sampul & jumlah foto dari `img/covers.json` (dibuat build dari `img/wm/`). Teks dibaca dari HTML kartu (ID/EN/RU) dengan regex label multi-bahasa di `RX`; node sisipan diberi `data-noi18n`. Label spesifikasi baru (mis. jenis luas lain) → tambahkan ke `RX`.
+
 ## Halaman per area (SEO)
 - Dibuat build dari `tools/area-content.js` (daftar area 3 bahasa: nama, judul, intro) + tampilan `tools/area.js`: `area/<slug>.html` (+ `en/`, `ru/`) dan daftar `area/index.html`. Listing masuk otomatis bila `data-area` kartu ada di `areas` atau eyebrow cocok regex `eyebrow`; halaman dibuat bila ≥2 listing tersedia. Area baru = tambah objek di `AREAS`.
 - Crumb di halaman listing menaut ke area paling spesifik; homepage (blok cakupan & "Cari & hitung") dan katalog (baris `.quick`) menaut ke `area/` dan kalkulator. Masuk sitemap & llms.txt.
