@@ -284,6 +284,13 @@ main .cta-duo{margin-top:0}
       return fs.existsSync(path.join(ROOT, wm)) ? wm : "img/listing/" + slug + "/" + f;
     });
   };
+  // Foto sampul + jumlah foto untuk kartu katalog bergaya ringkas (cards.js)
+  {
+    const covers = {};
+    for (const c of out.id.cards) { const p = photosOf(c.slug); if (p.length) covers[c.slug] = { n: p.length, src: "/" + p[0] }; }
+    const f = path.join(ROOT, "img/covers.json"), s = JSON.stringify(covers) + "\n";
+    if (!fs.existsSync(f) || fs.readFileSync(f, "utf8") !== s) fs.writeFileSync(f, s);
+  }
   for (const L of LANGS) {
     for (const c of out[L].cards) {
       const file = langDir(L) + "listing/" + c.slug + ".html";

@@ -80,6 +80,7 @@ ${copyScript}
 })();
 </script>
 <script src="/views.js" defer></script>
+<script src="/cards.js" defer></script>
 <script src="${i18nSrc}"></script>
 </body>
 </html>
