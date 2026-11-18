@@ -2,7 +2,7 @@
    - Halaman: ambil dari internet dulu (selalu versi terbaru), simpan salinan; bila offline pakai salinan / offline.html.
    - Gambar, skrip, font: pakai salinan dulu lalu diperbarui di latar belakang.
    Naikkan VERSION bila daftar PRECACHE berubah. */
-const VERSION = "bap-v2";
+const VERSION = "bap-v3";
 const PRECACHE = ["/", "/listings.html", "/offline.html", "/i18n.js", "/app.js", "/favicon.svg", "/icon-192.png", "/icon-512.png", "/logo.png"];
 
 self.addEventListener("install", (e) => {
@@ -30,7 +30,16 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  if (/\.(png|jpe?g|webp|svg|ico|js|css|woff2?)$/i.test(url.pathname)) {
+  // Skrip, gaya & data: utamakan versi terbaru dari jaringan (cache hanya cadangan offline)
+  if (/\.(js|css|json)$/i.test(url.pathname)) {
+    e.respondWith(
+      fetch(req).then((res) => { if (res.ok) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(req, copy)); } return res; })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  if (/\.(png|jpe?g|webp|svg|ico|woff2?)$/i.test(url.pathname)) {
     e.respondWith(
       caches.open(VERSION).then((c) => c.match(req).then((hit) => {
         const net = fetch(req).then((res) => { if (res.ok) c.put(req, res.clone()); return res; }).catch(() => hit);
