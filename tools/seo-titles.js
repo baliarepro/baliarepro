@@ -7,6 +7,10 @@ module.exports = {
     id: { t: "Dijual Estate 3 Villa Ocean View di Labuan Sait, Uluwatu Bali", d: "3 villa ocean view di atas bukit Labuan Sait, Pecatu–Uluwatu: tanah 3.318 m², bangunan ±2.500 m², SHM. Harga Rp65 M. Info & survei lokasi via WhatsApp." },
     en: { t: "Estate of 3 Ocean-View Villas for Sale, Labuan Sait Uluwatu Bali", d: "Three ocean-view villas on Labuan Sait hill, Pecatu–Uluwatu: 3,318 m² land, ±2,500 m² built, SHM freehold. IDR 65B. Ask on WhatsApp for details and a viewing." },
     ru: { t: "Продажа поместья из 3 вилл с видом на океан, Лабуан Саит, Бали", d: "Три виллы с видом на океан на холме Лабуан Саит (Пекату–Улувату): участок 3 318 м², ±2 500 м² построек, SHM. 65 млрд IDR. Пишите в WhatsApp." } },
+  "villa-resort-30-unit-di-pererenan-canggu": {
+    id: { t: "Dijual Villa & Resort 30 Unit di Pererenan, Canggu Bali", d: "Kompleks 14 pool villa + 16 kamar hotel di tanah 3.310 m² SHM, ±1 km dari Echo Beach, Pererenan–Canggu. Fully furnished. Rp75 M. Tanya via WhatsApp." },
+    en: { t: "30-Unit Villa & Resort Complex for Sale in Pererenan, Canggu Bali", d: "14 pool villas + 16 hotel rooms on 3,310 m² SHM freehold land, ±1 km from Echo Beach, Pererenan–Canggu. Fully furnished. IDR 75B. Ask on WhatsApp." },
+    ru: { t: "Продажа комплекса вилл и отеля на 30 юнитов, Перененан, Чангу", d: "14 вилл с бассейнами + 16 номеров на участке 3 310 м² SHM, ±1 км от пляжа Эхо, Перененан–Чангу. С мебелью. 75 млрд IDR. Пишите в WhatsApp." } },
   "properti-hospitality-20-are-dengan-18-kamar-di-tibubeneng": {
     id: { t: "Dijual Properti Hospitality 18 Kamar di Tibubeneng, Canggu Bali", d: "Properti hospitality 20 are (2.000 m²) dengan 18 kamar & 46 bed di Tibubeneng, Canggu. Harga Rp12,9 M. Cocok untuk guesthouse atau hotel. Tanya via WhatsApp." },
     en: { t: "18-Room Hospitality Property for Sale in Tibubeneng, Canggu Bali", d: "2,000 m² (20 are) hospitality property with 18 rooms and 46 beds in Tibubeneng, Canggu. IDR 12.9B. Suited to guesthouse or hotel use. Ask on WhatsApp." },
