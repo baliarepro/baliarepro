@@ -125,5 +125,5 @@ async function main() {
   }
 }
 
-module.exports = { fbText };
+module.exports = { fbText, page, api };
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });

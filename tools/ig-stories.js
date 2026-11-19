@@ -5,6 +5,7 @@
 //   node tools/ig-stories.js preview <slug> <folder>  → cek tampilan dari container (font fallback)
 // Urutan: listing yang carousel IG-nya tayang ≤3 hari lalu & belum pernah di-Story didahulukan; lalu yang Story terakhirnya paling lama.
 // Story tidak bisa diberi stiker link lewat API → ajakan DM/WA + "link di bio". Butuh secret IG_TOKEN (sama dengan carousel).
+// Gambar yang sama juga diposting sebagai Story Halaman Facebook (photo_stories; token seperti fb-post.js) → state.fb / state.fbErrors.
 const fs = require("fs");
 const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
@@ -95,29 +96,48 @@ async function main() {
   if (!fs.existsSync(nf)) { console.log("Belum ada gambar Story."); return; }
   const { slug, file } = JSON.parse(fs.readFileSync(nf, "utf8"));
   const url = IG.BASE + "img/ig-story/" + file;
+  const now = () => new Date().toISOString();
+  state.fb = state.fb || {}; state.fbErrors = state.fbErrors || {};
+  let online = false;
+  for (let i = 0; i < 40 && !online; i++) {
+    try { online = (await fetch(url + "?t=" + Date.now(), { method: "HEAD" })).ok; } catch (e) {}
+    if (!online) await wait(30000);
+  }
+  if (!online) { state.errors[slug] = { msg: "Gambar Story belum online: " + url, at: now() }; save(); process.exit(1); }
+  let ok = 0;
+  // Instagram Story
   try {
-    let online = false;
-    for (let i = 0; i < 40 && !online; i++) {
-      try { online = (await fetch(url + "?t=" + Date.now(), { method: "HEAD" })).ok; } catch (e) {}
-      if (!online) await wait(30000);
-    }
-    if (!online) throw new Error("Gambar Story belum online: " + url);
     const igState = JSON.parse(fs.readFileSync(path.join(ROOT, "tools/ig-state.json"), "utf8"));
     const { igId, token, username } = await IG.connect(igState, null);
     console.log("Akun Instagram: @" + username + " · Story untuk " + slug);
     const c = (await IG.api("POST", igId + "/media", { image_url: url, media_type: "STORIES" }, token)).id;
     await IG.ready(c, token);
     const pub = await IG.api("POST", igId + "/media_publish", { creation_id: c }, token);
-    (state.posted[slug] = state.posted[slug] || []).push({ id: pub.id, at: new Date().toISOString() });
+    (state.posted[slug] = state.posted[slug] || []).push({ id: pub.id, at: now() });
     state.posted[slug] = state.posted[slug].slice(-5);
-    delete state.errors[slug];
-    console.log("✓ Story " + slug + " → " + pub.id);
+    delete state.errors[slug]; ok++;
+    console.log("✓ Story IG " + slug + " → " + pub.id);
   } catch (e) {
-    console.log("✗ Story " + slug + ": " + e.message);
-    state.errors[slug] = { msg: e.message.slice(0, 300), at: new Date().toISOString() };
-    save(); process.exit(1);
+    console.log("✗ Story IG " + slug + ": " + e.message);
+    state.errors[slug] = { msg: e.message.slice(0, 300), at: now() };
+  }
+  // Facebook Page Story (foto diunggah tanpa terbit, lalu photo_stories)
+  try {
+    const FB = require("./fb-post.js");
+    const pg = await FB.page();
+    if (!pg) throw new Error("token Facebook belum diatur");
+    const photo = (await FB.api("POST", pg.id + "/photos", { url, published: "false" }, pg.token)).id;
+    const r = await FB.api("POST", pg.id + "/photo_stories", { photo_id: photo }, pg.token);
+    (state.fb[slug] = state.fb[slug] || []).push({ id: r.post_id || r.id || photo, at: now() });
+    state.fb[slug] = state.fb[slug].slice(-5);
+    delete state.fbErrors[slug]; ok++;
+    console.log("✓ Story Facebook " + slug + " (" + (pg.name || pg.id) + ")");
+  } catch (e) {
+    console.log("✗ Story Facebook " + slug + ": " + e.message);
+    state.fbErrors[slug] = { msg: e.message.slice(0, 300), at: now() };
   }
   save();
+  if (!ok) process.exit(1);
 }
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });

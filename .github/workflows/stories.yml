@@ -52,10 +52,12 @@ jobs:
           git commit -m "Stories: gambar Story"
           for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
           gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
-      - name: Posting Story
+      - name: Posting Story (Instagram + Facebook)
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
         run: node tools/ig-stories.js post
       - name: Simpan status
         if: always()
