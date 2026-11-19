@@ -2,6 +2,8 @@
 // Dijalankan oleh .github/workflows/instagram.yml:
 //   --mode=new    : posting listing BARU (belum pernah diposting & tidak ada di antrean) — setelah build website.
 //   --mode=queue  : sama seperti "new" + posting 1 listing berikutnya dari antrean listing lama (3x sehari).
+//                   Antrean habis → "putar ulang": 1x sehari (jadwal ±12.07 WITA ke atas) posting ulang listing tampil & belum terjual
+//                   yang paling lama tidak tayang (min. REPOST_DAYS hari), caption diawali "MASIH TERSEDIA". Dicatat di state.reposts.
 // Butuh secret GitHub IG_TOKEN (token Instagram long-lived). Tanpa secret: keluar diam-diam.
 // Status disimpan di tools/ig-state.json (antrean, yang sudah diposting, token hasil refresh terenkripsi).
 const fs = require("fs");
@@ -57,7 +59,7 @@ function tags(l) {
   return [...new Set([TYPE_TAG[l.type] || "#propertibali", area, "#baliproperty", "#balirealestate", "#propertibali"])].slice(0, 5).join(" ");
 }
 // Baris pertama (±125 karakter yang tampil di feed sebelum "… selengkapnya"): judul + harga utama + fakta kunci.
-function caption(l, seo) {
+function caption(l, seo, again) {
   const d = parseCard(l.html);
   const main = d.prices.find((p) => p.hl) || d.prices[d.prices.length - 1];
   const short = l.title.replace(/kamar tidur/gi, "KT");
@@ -66,7 +68,7 @@ function caption(l, seo) {
     s[0] === "Kamar tidur" ? s[1] + " KT" : s[0] === "Luas bangunan" ? "bangunan " + s[1] : s[0] === "Luas tanah" ? "tanah " + s[1].replace(/ \(.*\)/, "") :
     /^(ITR|Zonasi|ITR \/ Zonasi)$/.test(s[0]) ? "ITR " + s[1] : s[1]);
   const lines = [];
-  lines.push(`🏝️ DIJUAL ${short}${main ? " · " + main.value + (/unit/i.test(main.label) ? "/unit" : "") : ""}`);
+  lines.push(`${again ? "✅ MASIH TERSEDIA ·" : "🏝️ DIJUAL"} ${short}${main ? " · " + main.value + (/unit/i.test(main.label) ? "/unit" : "") : ""}`);
   if (facts.length) lines.push(facts.join(" · "));
   lines.push(`📍 ${l.eyebrow}, Bali`, "");
   if (d.prices.length) { d.prices.forEach((p) => lines.push(`💰 ${p.label}: ${p.value}`)); lines.push(""); }
@@ -131,11 +133,11 @@ async function imagesOnline(slug, tries) {
   return 0;
 }
 
-async function publish(l, igId, token, seo, tries) {
+async function publish(l, igId, token, seo, tries, again) {
   const n = await imagesOnline(l.slug, tries);
   if (!n) { console.log(`- ${l.slug}: gambar Instagram belum online, dicoba lagi nanti`); return null; }
   const urls = Array.from({ length: n }, (_, i) => `${BASE}img/ig/${l.slug}/${i + 1}.jpg`);
-  const cap = caption(l, seo);
+  const cap = caption(l, seo, again);
   let creation;
   if (urls.length === 1) {
     creation = (await api("POST", igId + "/media", { image_url: urls[0], caption: cap }, token)).id;
@@ -186,9 +188,23 @@ async function connect(state, save) {
   return { igId, token, username, isIgLogin };
 }
 
+// Putar ulang listing lama (antrean habis): maks. 1x per hari WITA, mulai jadwal ±12.07 WITA (04.xx UTC)
+const REPOST_DAYS = 10;
+function pickRepost(state, live) {
+  const now = Date.now(), wita = (ms) => new Date(ms + 8 * 3600e3).toISOString().slice(0, 10);
+  if (new Date(now + 8 * 3600e3).getUTCHours() < 12) { console.log("Putar ulang: menunggu jadwal ±12.07 WITA."); return null; }
+  const today = wita(now);
+  if (Object.values(state.reposts).some((r) => wita(Date.parse(r.at)) === today)) { console.log("Putar ulang: sudah ada posting ulang hari ini."); return null; }
+  const last = (l) => Math.max(Date.parse((state.posted[l.slug] || {}).at || 0) || 0, Date.parse((state.reposts[l.slug] || {}).at || 0) || 0);
+  const c = live.filter((l) => state.posted[l.slug] && fs.existsSync(path.join(ROOT, "img/ig", l.slug, "1.jpg")) && now - last(l) >= REPOST_DAYS * 864e5)
+    .sort((a, b) => last(a) - last(b))[0];
+  if (!c) console.log("Putar ulang: belum ada listing yang cukup lama (min. " + REPOST_DAYS + " hari).");
+  return c || null;
+}
+
 async function main() {
   const state = JSON.parse(fs.readFileSync(STATE, "utf8"));
-  state.posted = state.posted || {}; state.queue = state.queue || []; state.errors = state.errors || {};
+  state.posted = state.posted || {}; state.queue = state.queue || []; state.errors = state.errors || {}; state.reposts = state.reposts || {};
   const save = () => fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + "\n");
   if (!process.env.IG_TOKEN) { console.log("Secret IG_TOKEN belum diatur — posting Instagram dilewati."); return; }
 
@@ -200,11 +216,23 @@ async function main() {
   const live = all.filter((l) => !l.hidden && !l.sold);
   const inQueue = new Set(state.queue);
   const todo = live.filter((l) => !state.posted[l.slug] && !inQueue.has(l.slug)).slice(0, 5);
+  let again = null;
   if (mode === "queue") {
     const next = state.queue.map((s) => live.find((l) => l.slug === s)).find((l) => l && !state.posted[l.slug]);
     if (next) todo.push(next);
+    else again = pickRepost(state, live);
   }
-  if (!todo.length) { console.log("Tidak ada listing untuk diposting."); return; }
+  if (again) {
+    try {
+      const r = await publish(again, igId, token, SEO[again.slug], 2, true);
+      if (r) { const prev = state.reposts[again.slug]; state.reposts[again.slug] = { ...r, n: (prev ? prev.n : 0) + 1 }; delete state.errors[again.slug]; }
+    } catch (e) {
+      console.log(`✗ ulang ${again.slug}: ${e.message}`);
+      state.errors[again.slug] = { msg: e.message.slice(0, 300), at: new Date().toISOString() };
+    }
+    save();
+  }
+  if (!todo.length) { if (!again) console.log("Tidak ada listing untuk diposting."); return; }
   for (const l of todo) {
     try {
       const r = await publish(l, igId, token, SEO[l.slug], mode === "new" ? 12 : 2);
