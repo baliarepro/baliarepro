@@ -7,6 +7,10 @@ module.exports = {
     id: { t: "Dijual Estate 3 Villa Ocean View di Labuan Sait, Uluwatu Bali", d: "3 villa ocean view di atas bukit Labuan Sait, Pecatu–Uluwatu: tanah 3.318 m², bangunan ±2.500 m², SHM. Harga Rp65 M. Info & survei lokasi via WhatsApp." },
     en: { t: "Estate of 3 Ocean-View Villas for Sale, Labuan Sait Uluwatu Bali", d: "Three ocean-view villas on Labuan Sait hill, Pecatu–Uluwatu: 3,318 m² land, ±2,500 m² built, SHM freehold. IDR 65B. Ask on WhatsApp for details and a viewing." },
     ru: { t: "Продажа поместья из 3 вилл с видом на океан, Лабуан Саит, Бали", d: "Три виллы с видом на океан на холме Лабуан Саит (Пекату–Улувату): участок 3 318 м², ±2 500 м² построек, SHM. 65 млрд IDR. Пишите в WhatsApp." } },
+  "villa-2-lantai-3-kamar-tidur-di-jimbaran": {
+    id: { t: "Dijual Villa 3 Kamar Tidur dengan Private Pool di Jimbaran, Bali", d: "Villa 2 lantai, 3 KT en-suite, private pool & deck, tanah 225 m², bangunan 300 m² di Jimbaran. ±15 menit ke pantai Kuta Selatan. Rp3,8 M. Tanya via WhatsApp." },
+    en: { t: "3-Bedroom Villa with Private Pool for Sale in Jimbaran, Bali", d: "2-storey villa, 3 en-suite bedrooms, private pool & deck, 225 m² land, 300 m² building in Jimbaran. ±15 min to South Kuta beaches. IDR 3.8B. Ask on WhatsApp." },
+    ru: { t: "Продажа виллы с 3 спальнями и бассейном в Джимбаране, Бали", d: "Двухэтажная вилла: 3 спальни с ванными, бассейн и терраса, участок 225 м², дом 300 м², Джимбаран. ±15 мин до пляжей. 3,8 млрд IDR. Пишите в WhatsApp." } },
   "villa-resort-30-unit-di-pererenan-canggu": {
     id: { t: "Dijual Villa & Resort 30 Unit di Pererenan, Canggu Bali", d: "Kompleks 14 pool villa + 16 kamar hotel di tanah 3.310 m² SHM, ±1 km dari Echo Beach, Pererenan–Canggu. Fully furnished. Rp75 M. Tanya via WhatsApp." },
     en: { t: "30-Unit Villa & Resort Complex for Sale in Pererenan, Canggu Bali", d: "14 pool villas + 16 hotel rooms on 3,310 m² SHM freehold land, ±1 km from Echo Beach, Pererenan–Canggu. Fully furnished. IDR 75B. Ask on WhatsApp." },
