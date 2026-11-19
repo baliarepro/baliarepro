@@ -68,7 +68,7 @@ function caption(l, seo, again) {
     s[0] === "Kamar tidur" ? s[1] + " KT" : s[0] === "Luas bangunan" ? "bangunan " + s[1] : s[0] === "Luas tanah" ? "tanah " + s[1].replace(/ \(.*\)/, "") :
     /^(ITR|Zonasi|ITR \/ Zonasi)$/.test(s[0]) ? "ITR " + s[1] : s[1]);
   const lines = [];
-  lines.push(`${again ? "✅ MASIH TERSEDIA ·" : "🏝️ DIJUAL"} ${short}${main ? " · " + main.value + (/unit/i.test(main.label) ? "/unit" : "") : ""}`);
+  lines.push(`${again ? "✅ MASIH TERSEDIA ·" : /^(over kontrak|disewakan)/i.test(short) ? "🏝️" : "🏝️ DIJUAL"} ${short}${main ? " · " + main.value + (/unit/i.test(main.label) ? "/unit" : /tahun/i.test(main.label) ? "/tahun" : "") : ""}`);
   if (facts.length) lines.push(facts.join(" · "));
   lines.push(`📍 ${l.eyebrow}, Bali`, "");
   if (d.prices.length) { d.prices.forEach((p) => lines.push(`💰 ${p.label}: ${p.value}`)); lines.push(""); }

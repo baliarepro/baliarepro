@@ -7,6 +7,10 @@ module.exports = {
     id: { t: "Dijual Estate 3 Villa Ocean View di Labuan Sait, Uluwatu Bali", d: "3 villa ocean view di atas bukit Labuan Sait, Pecatu–Uluwatu: tanah 3.318 m², bangunan ±2.500 m², SHM. Harga Rp65 M. Info & survei lokasi via WhatsApp." },
     en: { t: "Estate of 3 Ocean-View Villas for Sale, Labuan Sait Uluwatu Bali", d: "Three ocean-view villas on Labuan Sait hill, Pecatu–Uluwatu: 3,318 m² land, ±2,500 m² built, SHM freehold. IDR 65B. Ask on WhatsApp for details and a viewing." },
     ru: { t: "Продажа поместья из 3 вилл с видом на океан, Лабуан Саит, Бали", d: "Три виллы с видом на океан на холме Лабуан Саит (Пекату–Улувату): участок 3 318 м², ±2 500 м² построек, SHM. 65 млрд IDR. Пишите в WhatsApp." } },
+  "over-kontrak-gedung-ex-karaoke-24-room-di-kedonganan-jimbaran": {
+    id: { t: "Over Kontrak Gedung Ex Karaoke 24 Room di Kedonganan, Jimbaran Bali", d: "Gedung 2 lantai fully furnished, tanah 775 m², bangunan 650 m², 24 room, listrik 35.000 W + genset, di Bypass Kedonganan. Rp1,25 M/tahun, sisa sewa 8 tahun. Tanya WA." },
+    en: { t: "Lease Takeover: 24-Room Ex-Karaoke Building in Kedonganan, Jimbaran", d: "Fully furnished 2-storey building, 775 m² land, 650 m² building, 24 rooms, 35,000 W power + generator on the Kedonganan Bypass. IDR 1.25B/year, 8 years left. WhatsApp us." },
+    ru: { t: "Переуступка аренды: здание караоке на 24 зала, Кедонганан, Джимбаран", d: "Двухэтажное здание с мебелью: участок 775 м², здание 650 м², 24 зала, 35 000 Вт + генератор, Байпас Кедонганан. 1,25 млрд IDR/год, осталось 8 лет. WhatsApp." } },
   "villa-2-lantai-3-kamar-tidur-di-jimbaran": {
     id: { t: "Dijual Villa 3 Kamar Tidur dengan Private Pool di Jimbaran, Bali", d: "Villa 2 lantai, 3 KT en-suite, private pool & deck, tanah 225 m², bangunan 300 m² di Jimbaran. ±15 menit ke pantai Kuta Selatan. Rp3,8 M. Tanya via WhatsApp." },
     en: { t: "3-Bedroom Villa with Private Pool for Sale in Jimbaran, Bali", d: "2-storey villa, 3 en-suite bedrooms, private pool & deck, 225 m² land, 300 m² building in Jimbaran. ±15 min to South Kuta beaches. IDR 3.8B. Ask on WhatsApp." },
