@@ -441,7 +441,6 @@
     ["30 (14 villa + 16 kamar hotel)", "30 (14 villas + 16 hotel rooms)", "30 (14 вилл + 16 номеров)"],
     ["Kolam utama + private pool tiap villa", "Main pool + private pool in every villa", "Общий бассейн + частный бассейн в каждой вилле"],
     ["SHM, sudah dipecah per unit", "SHM (freehold), already split per unit", "SHM (собственность), уже разделён по юнитам"],
-    ["Kuning (permukiman), perlu verifikasi", "Yellow (residential), subject to verification", "Жёлтая (жилая), требует проверки"],
     ["Superior room (32 m²)", "Superior room (32 m²)", "Номер Superior (32 м²)"],
     ["Deluxe room (38 m²)", "Deluxe room (38 m²)", "Номер Deluxe (38 м²)"],
     ["Villa 1 kamar (125 m²)", "1-bedroom villa (125 m²)", "Вилла с 1 спальней (125 м²)"],
