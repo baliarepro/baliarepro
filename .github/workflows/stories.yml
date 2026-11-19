@@ -1,0 +1,68 @@
+# Instagram Stories otomatis (tools/ig-stories.js): 2 Story per hari, ±10.07 & 16.07 WITA.
+# Gambar 1080×1920 dibuat di sini, di-commit ke img/ig-story/ supaya online di GitHub Pages, lalu diposting sebagai Story.
+# Butuh secret IG_TOKEN (+ IG_USER_ID) yang sama dengan posting carousel. Status di tools/stories-state.json.
+name: Instagram Stories
+
+on:
+  schedule:
+    - cron: "7 2 * * *"
+    - cron: "7 8 * * *"
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Slug listing tertentu (kosong = otomatis pilih berikutnya)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  story:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Pasang Playwright + Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+      - name: Buat gambar Story
+        run: |
+          if [ -n "${{ inputs.slug }}" ]; then node tools/ig-stories.js render --slug=${{ inputs.slug }}; else node tools/ig-stories.js render; fi
+      - name: Commit gambar & picu GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A img/ig-story
+          if git diff --cached --quiet; then echo "Tidak ada gambar baru"; exit 0; fi
+          git commit -m "Stories: gambar Story"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
+      - name: Posting Story
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: node tools/ig-stories.js post
+      - name: Simpan status
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/stories-state.json || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Stories: perbarui status"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done

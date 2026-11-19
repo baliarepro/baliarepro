@@ -184,4 +184,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exit(1); });
-module.exports = { render };
+module.exports = { render, frames, parse, photosOf, FONTS, BASE_CSS, MARK, W, H, esc };
