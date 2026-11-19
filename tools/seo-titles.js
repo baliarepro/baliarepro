@@ -96,9 +96,9 @@ module.exports = {
     en: { t: "Sold: 200 m² Land in the Airis Estate, Ungasan Bali", d: "200 m² SHM residential plot in the Airis estate, Ungasan — now sold. Looking for a similar plot in Ungasan? Contact Bali Are Property on WhatsApp." },
     ru: { t: "Продано: участок 200 м² в комплексе Airis, Унгасан, Бали", d: "Участок 200 м², SHM, жилая зона, комплекс Airis, Унгасан — продан. Ищете похожий участок в Унгасане? Пишите Bali Are Property в WhatsApp." } },
   "tanah-215-m2-di-kompleks-villa-labuan-sait": {
-    id: { t: "Dijual Tanah 215 m² di Kompleks Villa Labuan Sait, Uluwatu Bali", d: "Kavling 215 m² SHM di kompleks villa Labuan Sait, Pecatu–Uluwatu, Kuta Selatan. Rp13,5 jt/m², total Rp2,9 M. Cocok untuk villa pribadi. Tanya via WhatsApp." },
-    en: { t: "215 m² Plot for Sale in a Labuan Sait Villa Complex, Uluwatu Bali", d: "215 m² SHM plot in a villa complex in Labuan Sait, Pecatu–Uluwatu, South Kuta. IDR 13.5M/m², IDR 2.9B total. Suits a private villa. Ask on WhatsApp." },
-    ru: { t: "Продажа участка 215 м² в комплексе вилл Лабуан Саит, Улувату", d: "Участок 215 м², SHM, в комплексе вилл Лабуан Саит (Пекату–Улувату), Южная Кута. 13,5 млн IDR/м², всего 2,9 млрд IDR. Под частную виллу. Пишите в WhatsApp." } },
+    id: { t: "Dijual Tanah 215 m² di Kompleks Villa Labuan Sait, Uluwatu Bali", d: "Kavling 215 m² SHM di kompleks villa Labuan Sait, Pecatu–Uluwatu, Kuta Selatan. Rp13,5 jt/m², total Rp2,9 M; bisa beli 105 atau 110 m². Tanya via WhatsApp." },
+    en: { t: "215 m² Plot for Sale in a Labuan Sait Villa Complex, Uluwatu Bali", d: "215 m² SHM plot in a villa complex in Labuan Sait, Pecatu–Uluwatu, South Kuta. IDR 13.5M/m², IDR 2.9B total; 105 or 110 m² portions available. Ask on WhatsApp." },
+    ru: { t: "Продажа участка 215 м² в комплексе вилл Лабуан Саит, Улувату", d: "Участок 215 м², SHM, в комплексе вилл Лабуан Саит (Пекату–Улувату), Южная Кута. 13,5 млн IDR/м², всего 2,9 млрд IDR; можно часть 105 или 110 м². WhatsApp." } },
   "tanah-2802-m2-view-sawah-di-singakerta": {
     id: { t: "Dijual Tanah 2.802 m² View Sawah di Singakerta, Ubud Bali", d: "Tanah 28 are SHM, ITR pariwisata dengan view sawah di Singakerta, Ubud, Gianyar. Rp6 jt/m² (Rp600 jt/are), total Rp16,812 M. Cocok untuk villa/retreat. Info via WhatsApp." },
     en: { t: "2,802 m² Rice-Field-View Land for Sale in Singakerta, Ubud Bali", d: "28-are SHM plot with tourism zoning and rice-field views in Singakerta, Ubud, Gianyar. IDR 6M/m², IDR 16.812B total. Suits villas or a retreat. Ask on WhatsApp." },
