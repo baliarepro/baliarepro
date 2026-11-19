@@ -7,7 +7,9 @@
     "ekonomi-bali-triwulan-3-2026-bandara-oktober",
     "izin-akomodasi-zona-rawan-sempadan-pantai-2026"
   ],
-  "edu": [],
+  "edu": [
+    "zona-lahan-bali"
+  ],
   "posts": {
     "2026-11-09": {
       "kind": "news",
@@ -30,6 +32,16 @@
       "id": "18110777411259923",
       "permalink": "https://www.instagram.com/p/DfzHvFHl6hG/",
       "at": "2026-11-16T10:17:02.280Z"
+    },
+    "2026-11-19-zona-lahan-bali": {
+      "kind": "edu",
+      "items": [
+        "zona-lahan-bali"
+      ],
+      "id": "17952237606349063",
+      "permalink": "https://www.instagram.com/p/Df522uUH8Lz/",
+      "at": "2026-11-19T01:04:07.150Z",
+      "extra": true
     }
   }
 }
