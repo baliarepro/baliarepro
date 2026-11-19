@@ -36,7 +36,14 @@ jobs:
         run: |
           npm install --no-save --no-package-lock playwright
           npx playwright install --with-deps chromium
-          which ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+          # Mirror Ubuntu kadang lambat/putus (gagal 19 Nov 2026): coba ulang sampai 3x.
+          if ! which ffmpeg; then
+            for i in 1 2 3; do
+              sudo apt-get -o Acquire::Retries=5 update && sudo apt-get -o Acquire::Retries=5 install -y --fix-missing ffmpeg && break
+              echo "Pemasangan ffmpeg gagal (percobaan $i), coba lagi..."; sleep 20
+            done
+            which ffmpeg
+          fi
       - name: Buat & posting Reel
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
