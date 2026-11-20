@@ -306,6 +306,8 @@ main .cta-duo{margin-top:0}
     const f = path.join(ROOT, "img/covers.json"), s = JSON.stringify(covers) + "\n";
     if (!fs.existsSync(f) || fs.readFileSync(f, "utf8") !== s) fs.writeFileSync(f, s);
   }
+  // Nama area (chip filter katalog, per bahasa) untuk kotak "Kabari saya" di halaman detail
+  const chipAreas = (L) => [...out[L].html.matchAll(/data-f="(?!all")[^"]*"[^>]*>([^<]+)<small>/g)].map((m) => m[1].trim());
   for (const L of LANGS) {
     for (const c of out[L].cards) {
       const file = langDir(L) + "listing/" + c.slug + ".html";
@@ -358,7 +360,8 @@ ${pageCss}
     <div class="print-only print-band"></div>
     ${cardHtml}
     <div class="print-only print-foot"><div><span class="pf-label">${esc(PT[L].contact)}</span><span class="pf-name">${esc(PT[L].name)}</span> · WhatsApp <b>+62 812 868 080</b><br>wa.me/62812868080</div><div><span class="pf-label">${esc(PT[L].online)}</span><a class="pf-link" href="${alts[L]}">${esc(alts[L].replace(/^https:\/\//, ""))}</a></div><p class="pf-note">${esc(PT[L].note)}</p></div>
-    ${fix(out[L].cta)}
+    ${c.sold ? fix(out[L].cta) : `<section class="cfn" id="cf-notify" data-t="${c.typeKey}" data-a="${esc((ar ? ar.name[L] : c.areaTitle).replace(/^(Area|Район)\s+/i, "").replace(/\s+area$/i, ""))}" data-areas="${esc(JSON.stringify(chipAreas(L)))}"></section>
+    ${fix(out[L].cta).replace('class="cta-duo"', 'class="cta-duo solo"').replace(/<a class="cta" href="[^"]*#buyer"[\s\S]*?<\/a>\s*/, "")}`}
   </main>
   ${out[L].contact}
   <footer><span>${esc(out[L].footer)}</span></footer>
@@ -370,6 +373,7 @@ ${copyScript}
 </script>
 <script src="/views.js" defer></script>
 <script src="/simpan.js" defer></script>
+<script src="/kabari.js" defer></script>
 <script src="${rel(file, "i18n.js")}"></script>
 </body>
 </html>
