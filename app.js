@@ -63,6 +63,52 @@
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", add); else add();
   })();
 
+  // ---------- Bar WhatsApp tetap di atas layar (katalog & detail listing, tetap tampil saat di-scroll) ----------
+  (function () {
+    // Hanya di katalog listing & halaman detail listing (permintaan pemilik 18 Nov 2026)
+    if (document.getElementById("bap-wabar") || !(/\/listings\.html$/.test(location.pathname) || document.body.hasAttribute("data-listing"))) return;
+    var L = (document.documentElement.lang || "id").slice(0, 2);
+    var T = {
+      id: ["Ada pertanyaan? Chat langsung", "Chat WhatsApp", "Halo Pak Bagoes, saya lihat website Bali Are Property dan ingin bertanya."],
+      en: ["Questions? Chat with us", "Chat on WhatsApp", "Hello Pak Bagoes, I saw the Bali Are Property website and have a question."],
+      ru: ["Есть вопросы?", "Написать в WhatsApp", "Здравствуйте, Багус! Я увидел сайт Bali Are Property и хочу задать вопрос."]
+    }[L] || null;
+    if (!T) return;
+    // Di halaman detail listing: pakai pesan WA listing itu (sudah menyebut judulnya)
+    var own = document.body.hasAttribute("data-listing") && document.querySelector('a.btn.wa[href*="wa.me"]');
+    var href = own ? own.getAttribute("href") : "https://wa.me/62812868080?text=" + encodeURIComponent(T[2]);
+    var css = "#bap-wabar{position:fixed;top:0;left:0;right:0;z-index:9998;display:flex;align-items:center;justify-content:center;gap:12px;" +
+      "padding:7px 16px;padding-top:calc(7px + env(safe-area-inset-top));background:#123F36;color:#F6F2EA;font:500 14px/1.2 Figtree,'Helvetica Neue',Arial,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.18)}" +
+      "#bap-wabar .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}" +
+      "#bap-wabar a{flex:none;display:inline-flex;align-items:center;gap:7px;background:#1A8D4A;color:#fff;text-decoration:none;font-weight:700;padding:7px 14px;border-radius:999px;white-space:nowrap}" +
+      "#bap-wabar a:hover{filter:brightness(1.08)}#bap-wabar svg{width:17px;height:17px;flex:none}" +
+      "html{scroll-padding-top:60px}body{padding-top:calc(48px + env(safe-area-inset-top))!important}" +
+      "@media (max-width:420px){#bap-wabar{font-size:13px;gap:8px;padding-inline:10px}#bap-wabar a{padding:7px 12px}}" +
+      "@media (max-width:340px){#bap-wabar .t{display:none}}" +
+      "@media print{#bap-wabar{display:none!important}body{padding-top:0!important}}";
+    var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+    var bar = document.createElement("div");
+    bar.id = "bap-wabar";
+    bar.setAttribute("data-noi18n", "");
+    bar.innerHTML = '<span class="t">' + T[0] + '</span><a target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>' + T[1] + "</a>";
+    bar.querySelector("a").href = href;
+    document.body.insertBefore(bar, document.body.firstChild);
+  })();
+
+  // ---------- Tombol Admin (hanya di aplikasi terpasang di HP pemilik yang sudah login admin) ----------
+  (function () {
+    var sa = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+    var tok = ""; try { tok = localStorage.getItem("bap-admin-token") || ""; } catch (e) {}
+    if (!sa || !tok || /\/admin\.html$/.test(location.pathname)) return;
+    var add = function () {
+      var a = document.createElement("a");
+      a.href = "/admin.html"; a.id = "bap-admin"; a.textContent = "⚙ Admin";
+      a.style.cssText = "position:fixed;left:12px;bottom:12px;z-index:9999;background:#123F36;color:#F6F2EA;font:600 13px/1 system-ui,sans-serif;padding:9px 12px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)";
+      document.body.appendChild(a);
+    };
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", add); else add();
+  })();
+
   var standalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
   if (standalone) return;
   var L = (document.documentElement.lang || "id").slice(0, 2);
@@ -103,35 +149,4 @@
   });
   window.addEventListener("appinstalled", function () { var b = document.getElementById("bap-install"); if (b) b.remove(); });
 
-  // ---------- Bar WhatsApp tetap di atas layar (katalog & detail listing, tetap tampil saat di-scroll) ----------
-  (function () {
-    // Hanya di katalog listing & halaman detail listing (permintaan pemilik 18 Nov 2026)
-    if (document.getElementById("bap-wabar") || !(/\/listings\.html$/.test(location.pathname) || document.body.hasAttribute("data-listing"))) return;
-    var L = (document.documentElement.lang || "id").slice(0, 2);
-    var T = {
-      id: ["Ada pertanyaan? Chat langsung", "Chat WhatsApp", "Halo Pak Bagoes, saya lihat website Bali Are Property dan ingin bertanya."],
-      en: ["Questions? Chat with us", "Chat on WhatsApp", "Hello Pak Bagoes, I saw the Bali Are Property website and have a question."],
-      ru: ["Есть вопросы?", "Написать в WhatsApp", "Здравствуйте, Багус! Я увидел сайт Bali Are Property и хочу задать вопрос."]
-    }[L] || null;
-    if (!T) return;
-    // Di halaman detail listing: pakai pesan WA listing itu (sudah menyebut judulnya)
-    var own = document.body.hasAttribute("data-listing") && document.querySelector('a.btn.wa[href*="wa.me"]');
-    var href = own ? own.getAttribute("href") : "https://wa.me/62812868080?text=" + encodeURIComponent(T[2]);
-    var css = "#bap-wabar{position:fixed;top:0;left:0;right:0;z-index:9998;display:flex;align-items:center;justify-content:center;gap:12px;" +
-      "padding:7px 16px;padding-top:calc(7px + env(safe-area-inset-top));background:#123F36;color:#F6F2EA;font:500 14px/1.2 Figtree,'Helvetica Neue',Arial,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.18)}" +
-      "#bap-wabar .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}" +
-      "#bap-wabar a{flex:none;display:inline-flex;align-items:center;gap:7px;background:#1A8D4A;color:#fff;text-decoration:none;font-weight:700;padding:7px 14px;border-radius:999px;white-space:nowrap}" +
-      "#bap-wabar a:hover{filter:brightness(1.08)}#bap-wabar svg{width:17px;height:17px;flex:none}" +
-      "html{scroll-padding-top:60px}body{padding-top:calc(48px + env(safe-area-inset-top))!important}" +
-      "@media (max-width:420px){#bap-wabar{font-size:13px;gap:8px;padding-inline:10px}#bap-wabar a{padding:7px 12px}}" +
-      "@media (max-width:340px){#bap-wabar .t{display:none}}" +
-      "@media print{#bap-wabar{display:none!important}body{padding-top:0!important}}";
-    var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
-    var bar = document.createElement("div");
-    bar.id = "bap-wabar";
-    bar.setAttribute("data-noi18n", "");
-    bar.innerHTML = '<span class="t">' + T[0] + '</span><a target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.5-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>' + T[1] + "</a>";
-    bar.querySelector("a").href = href;
-    document.body.insertBefore(bar, document.body.firstChild);
-  })();
 })();
