@@ -22,6 +22,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - `favicon.svg` & `logo.png` dibuat oleh build. `favicon.ico`, `favicon-16/32/48.png`, `apple-touch-icon.png`, `icon-192/512.png`, `site.webmanifest` adalah file statis (dibuat sekali dari `favicon.svg`); buat ulang bila logo berubah.
 
 ## Menambah listing
+- **Lokasi bangunan rahasia** (permintaan pemilik 20 Nov 2026): villa, rumah, komersial TIDAK boleh diberi link Google Maps, titik peta, atau alamat lengkap (keamanan penghuni/pemilik); cukup "Lokasi: Diberikan saat survei". Link Maps & peta hanya untuk tanah.
 1. Tambahkan kartu `<article class="card">` di `listings.html`, dikelompokkan per jenis properti (section.type) dan area (div.area). Judul di `<h4><a href="listing/<slug>.html">…</a></h4>` (slug huruf kecil, tanpa simbol).
 2. Tambahkan terjemahan EN/RU untuk semua teks baru di `i18n.js`.
 3. Perbarui angka di chip filter & ringkasan area bila perlu.
