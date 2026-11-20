@@ -68,8 +68,9 @@ function caption(l, seo, again) {
     s[0] === "Kamar tidur" ? s[1] + " KT" : s[0] === "Luas bangunan" ? "bangunan " + s[1] : s[0] === "Luas tanah" ? "tanah " + s[1].replace(/ \(.*\)/, "") :
     /^(ITR|Zonasi|ITR \/ Zonasi)$/.test(s[0]) ? "ITR " + s[1] : s[1]);
   const lines = [];
-  lines.push(`${again ? "✅ MASIH TERSEDIA ·" : /^(over kontrak|disewakan)/i.test(short) ? "🏝️" : "🏝️ DIJUAL"} ${short}${main ? " · " + main.value + (/unit/i.test(main.label) ? "/unit" : /tahun/i.test(main.label) ? "/tahun" : "") : ""}`);
+  lines.push(`${again && l.drop ? "🔻 HARGA TURUN ·" : again ? "✅ MASIH TERSEDIA ·" : /^(over kontrak|disewakan)/i.test(short) ? "🏝️" : "🏝️ DIJUAL"} ${short}${main ? " · " + main.value + (/unit/i.test(main.label) ? "/unit" : /tahun/i.test(main.label) ? "/tahun" : "") : ""}`);
   if (facts.length) lines.push(facts.join(" · "));
+  if (again && l.drop && l.drop.from) lines.push(`Sebelumnya ${l.drop.from.replace(/\s+/g, " ")} → sekarang ${l.drop.to.replace(/\s+/g, " ")}`);
   lines.push(`📍 ${l.eyebrow}, Bali`, "");
   if (d.prices.length) { d.prices.forEach((p) => lines.push(`💰 ${p.label}: ${p.value}`)); lines.push(""); }
   d.specs.slice(0, 8).forEach((s) => lines.push(`▫️ ${s[0]}: ${s[1]}`));
@@ -196,6 +197,10 @@ function pickRepost(state, live) {
   const today = wita(now);
   if (Object.values(state.reposts).some((r) => wita(Date.parse(r.at)) === today)) { console.log("Putar ulang: sudah ada posting ulang hari ini."); return null; }
   const last = (l) => Math.max(Date.parse((state.posted[l.slug] || {}).at || 0) || 0, Date.parse((state.reposts[l.slug] || {}).at || 0) || 0);
+  // Harga turun (tools/listing-meta.json, ditulis build) → didahulukan, tanpa menunggu REPOST_DAYS
+  let meta = {}; try { meta = JSON.parse(fs.readFileSync(path.join(ROOT, "tools/listing-meta.json"), "utf8")); } catch (e) {}
+  const drop = live.filter((l) => { const d = (meta[l.slug] || {}).drop; return d && state.posted[l.slug] && now - Date.parse(d.at) <= 30 * 864e5 && Date.parse(d.at + "T00:00:00+08:00") > last(l) && fs.existsSync(path.join(ROOT, "img/ig", l.slug, "1.jpg")); })[0];
+  if (drop) { drop.drop = meta[drop.slug].drop; console.log("Putar ulang: harga turun → " + drop.slug); return drop; }
   const c = live.filter((l) => state.posted[l.slug] && fs.existsSync(path.join(ROOT, "img/ig", l.slug, "1.jpg")) && now - last(l) >= REPOST_DAYS * 864e5)
     .sort((a, b) => last(a) - last(b))[0];
   if (!c) console.log("Putar ulang: belum ada listing yang cukup lama (min. " + REPOST_DAYS + " hari).");

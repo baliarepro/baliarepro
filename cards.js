@@ -7,9 +7,9 @@
   if (!cards.length) return;
   var L = (document.documentElement.lang || "id").slice(0, 2);
   var T = {
-    id: { beds: "KT", baths: "KM", bld: "bangunan", land: "tanah", sold: "Terjual", rec: "Rekomendasi", detail: "Detail", per: "/m²", view: "Tampilan", compact: "Ringkas", full: "Lengkap", noPhoto: "Foto segera", types: { tanah: "Tanah", villa: "Villa", rumah: "Rumah", komersial: "Komersial" } },
-    en: { beds: "beds", baths: "baths", bld: "building", land: "land", sold: "Sold", rec: "Recommended", detail: "Details", per: "/m²", view: "View", compact: "Compact", full: "Full", noPhoto: "Photos soon", types: { tanah: "Land", villa: "Villa", rumah: "House", komersial: "Commercial" } },
-    ru: { beds: "сп.", baths: "ван.", bld: "дом", land: "участок", sold: "Продано", rec: "Рекомендуем", detail: "Подробнее", per: "/м²", view: "Вид", compact: "Кратко", full: "Подробно", noPhoto: "Фото скоро", types: { tanah: "Участок", villa: "Вилла", rumah: "Дом", komersial: "Коммерция" } }
+    id: { beds: "KT", baths: "KM", bld: "bangunan", land: "tanah", sold: "Terjual", rec: "Rekomendasi", nw: "Baru", drop: "Harga turun", detail: "Detail", per: "/m²", view: "Tampilan", compact: "Ringkas", full: "Lengkap", noPhoto: "Foto segera", types: { tanah: "Tanah", villa: "Villa", rumah: "Rumah", komersial: "Komersial" } },
+    en: { beds: "beds", baths: "baths", bld: "building", land: "land", sold: "Sold", rec: "Recommended", nw: "New", drop: "Price drop", detail: "Details", per: "/m²", view: "View", compact: "Compact", full: "Full", noPhoto: "Photos soon", types: { tanah: "Land", villa: "Villa", rumah: "House", komersial: "Commercial" } },
+    ru: { beds: "сп.", baths: "ван.", bld: "дом", land: "участок", sold: "Продано", rec: "Рекомендуем", nw: "Новое", drop: "Цена снижена", detail: "Подробнее", per: "/м²", view: "Вид", compact: "Кратко", full: "Подробно", noPhoto: "Фото скоро", types: { tanah: "Участок", villa: "Вилла", rumah: "Дом", komersial: "Коммерция" } }
   }[L] || null;
   if (!T) return;
   var RX = {
@@ -45,7 +45,7 @@
     ".card .cv.np small{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-weight:400}" +
     ".card .cv .bd{position:absolute;top:12px;left:12px;right:60px;display:flex;flex-wrap:wrap;gap:6px}" +
     ".card .cv .bd span{background:rgba(255,255,255,.94);color:#123F36;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border-radius:999px;font-weight:600;line-height:1.2}" +
-    ".card .cv .bd span.g{background:#D9A441;color:#1C2421}.card .cv .bd span.r{background:#B3261E;color:#fff}.card .cv .bd span.k{background:#123F36;color:#fff}" +
+    ".card .cv .bd span.g{background:#D9A441;color:#1C2421}.card .cv .bd span.r{background:#B3261E;color:#fff}.card .cv .bd span.k{background:#123F36;color:#fff}.card .cv .bd span.n{background:#1A8D4A;color:#fff}.card .cv .bd span.d{background:#C2410C;color:#fff}" +
     ".card .cv .n{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;padding:4px 9px;border-radius:999px;display:flex;gap:5px;align-items:center;font-variant-numeric:tabular-nums}" +
     ".card .cv .n svg{width:14px;height:14px}" +
     ".card.sold .cv{filter:grayscale(.75)}" +
@@ -97,19 +97,21 @@
     var badges = [];
     var sold = c.classList.contains("sold");
     if (sold) badges.push(["r", T.sold]);
+    var cov = slug && covers[slug], age = function (d) { return d ? (Date.now() - Date.parse(d + "T00:00:00+08:00")) / 864e5 : 1e9; };
+    if (!sold && cov && age(cov.d) <= 30) badges.push(["d", "↓ " + T.drop]);
+    else if (!sold && cov && age(cov.a) <= 14) badges.push(["n", T.nw]);
     if (c.classList.contains("recommended")) badges.push(["k", "★ " + T.rec]);
     var lease = /lease|аренд/i.test(legalTxt), free = /freehold|SHM|HGB|собствен/i.test(legalTxt);
     if (free && lease) badges.push(["", "Freehold / Leasehold"]); else if (lease) badges.push(["", "Leasehold"]); else if (free) badges.push(["", "Freehold"]);
     var b0 = c.querySelector(".card-top > .badge");
     if (b0 && !sold) badges.push([b0.classList.contains("sand") ? "g" : "", txt(b0)]);
 
-    var cov = slug && covers[slug];
     var cv = document.createElement("a");
     cv.setAttribute("data-noi18n", "");
-    cv.className = "cv" + (cov ? "" : " np");
+    cv.className = "cv" + (cov && cov.src ? "" : " np");
     cv.href = href;
     cv.setAttribute("aria-label", txt(link));
-    if (cov) {
+    if (cov && cov.src) {
       cv.style.backgroundImage = "url('" + cov.src + "')";
       cv.innerHTML = '<span class="n">' + camera + "1/" + cov.n + "</span>";
     } else {
@@ -150,7 +152,7 @@
 
   function setMode() { document.body.classList.add("cards-compact"); }
 
-  function run(covers) { cards.forEach(function (c) { try { build(c, covers || {}); } catch (e) {} }); setMode(); }
+  function run(covers) { cards.forEach(function (c) { try { build(c, covers || {}); } catch (e) {} }); setMode(); try { document.dispatchEvent(new Event("bap-cards")); } catch (e) {} }
   setMode(); // terapkan tata letak segera; foto menyusul
   fetch("/img/covers.json").then(function (r) { return r.ok ? r.json() : {}; }).then(run, function () { run({}); });
 })();

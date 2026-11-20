@@ -81,6 +81,7 @@ ${copyScript}
 </script>
 <script src="/views.js" defer></script>
 <script src="/cards.js" defer></script>
+<script src="/simpan.js" defer></script>
 <script src="${i18nSrc}"></script>
 </body>
 </html>
@@ -191,4 +192,69 @@ function renderSold({ cards, L, root, esc, ...rest }) {
   return shell({ L, root, esc, title: t.title, body, ...rest });
 }
 
-module.exports = { areaList, renderArea, renderAreaHub, renderSold, SOLD, L10N, fmtIdr };
+// ---------- Halaman "Harga tanah per m² per area" (permintaan pemilik 20 Nov 2026) ----------
+// Dari harga PENAWARAN listing tanah yang tersedia (bukan harga transaksi/NJOP). rows: [{name, href, n, min, med, max, items:[{title,href,v}]}]
+const PRICES = {
+  id: { title: "Harga Tanah per m² di Bali per Area (2026) | Bali Are Property", eyebrow: "Data harga tanah", h1: "Harga tanah per m² di Bali, per area",
+    lead: "Kisaran harga tanah per meter persegi di Ungasan, Jimbaran, Pecatu–Uluwatu, Pandawa, Canggu, Ubud dan area lain, dihitung dari listing tanah yang sedang kami pasarkan.",
+    desc: "Kisaran harga tanah per m² di Bali per area (Ungasan, Jimbaran, Pecatu, Uluwatu, Pandawa, Canggu, Ubud) dari listing Bali Are Property. Diperbarui otomatis.",
+    upd: "Diperbarui", th: ["Area", "Listing", "Termurah", "Median", "Termahal"], per: "/m²", see: "Lihat listing", note: "Catatan: angka di atas adalah harga penawaran (asking price) listing tanah yang sedang tersedia di Bali Are Property, bukan harga transaksi atau NJOP. Harga sebenarnya sangat bergantung pada lokasi persis, lebar akses jalan, zona/ITR, view, kontur, dan legalitas. Gunakan sebagai gambaran awal, bukan penilaian (appraisal) resmi.",
+    own: "Punya tanah di Bali?", ownP: "Ingin tahu kisaran harga tanah Anda atau ingin menjualnya? Konsultasi gratis dengan Bagoes — kami bandingkan dengan listing sekitar dan bantu pasarkan ke buyer lokal & internasional.", ownBtn: "Titip jual tanah", wa: "Tanya harga via WhatsApp",
+    waText: "Halo Pak Bagoes, saya lihat halaman harga tanah per area di website. Saya ingin tahu kisaran harga tanah saya di ", all: "Lihat semua listing tanah", items: "listing" },
+  en: { title: "Bali Land Prices per m² by Area (2026) | Bali Are Property", eyebrow: "Land price data", h1: "Bali land prices per m², by area",
+    lead: "Price ranges per square metre for land in Ungasan, Jimbaran, Pecatu–Uluwatu, Pandawa, Canggu, Ubud and other areas, calculated from the land listings we are currently marketing.",
+    desc: "Bali land price ranges per m² by area (Ungasan, Jimbaran, Pecatu, Uluwatu, Pandawa, Canggu, Ubud) from Bali Are Property listings. Updated automatically.",
+    upd: "Updated", th: ["Area", "Listings", "Lowest", "Median", "Highest"], per: "/m²", see: "See listings", note: "Note: the figures above are asking prices of land listings currently available at Bali Are Property, not transaction prices or the government tax value (NJOP). Actual prices depend heavily on exact location, road access width, zoning, view, slope and legal status. Use them as a first indication, not an official appraisal.",
+    own: "Own land in Bali?", ownP: "Want to know what your land is worth or planning to sell? Free consultation with Bagoes — we compare it with nearby listings and market it to local and international buyers.", ownBtn: "List your land", wa: "Ask about prices on WhatsApp",
+    waText: "Hello Pak Bagoes, I saw the land price by area page on your website. I'd like to know the price range for my land in ", all: "See all land listings", items: "listings" },
+  ru: { title: "Цены на землю на Бали за м² по районам (2026) | Bali Are Property", eyebrow: "Цены на землю", h1: "Цены на землю на Бали за м², по районам",
+    lead: "Диапазон цен за квадратный метр земли в Унгасане, Джимбаране, Пекату–Улувату, Пандаве, Чангу, Убуде и других районах — по участкам, которые мы сейчас продаём.",
+    desc: "Цены на землю на Бали за м² по районам (Унгасан, Джимбаран, Пекату, Улувату, Пандава, Чангу, Убуд) по объектам Bali Are Property. Обновляется автоматически.",
+    upd: "Обновлено", th: ["Район", "Объекты", "Мин.", "Медиана", "Макс."], per: "/м²", see: "Смотреть объекты", note: "Примечание: это цены предложения (asking price) участков, которые сейчас продаёт Bali Are Property, а не цены сделок и не кадастровая стоимость (NJOP). Реальная цена сильно зависит от точного расположения, ширины подъезда, зонирования, вида, рельефа и документов. Используйте как ориентир, а не официальную оценку.",
+    own: "Есть земля на Бали?", ownP: "Хотите узнать стоимость участка или продать его? Бесплатная консультация с Багусом — сравним с соседними предложениями и предложим покупателям из Индонезии и других стран.", ownBtn: "Разместить участок", wa: "Спросить о цене в WhatsApp",
+    waText: "Здравствуйте, Багус! Я посмотрел страницу цен на землю по районам. Хочу узнать стоимость моего участка в районе ", all: "Все участки", items: "объектов" }
+};
+const PRICE_CSS = `<style>
+.pt{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
+.pt th,.pt td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.pt thead th{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.pt a{color:var(--sea);font-weight:700}.pt td.n{white-space:nowrap}.pt td b{color:var(--sea)}
+.pt details{margin-top:6px;font-size:14px}.pt summary{cursor:pointer;color:var(--muted)}
+.pt details ul{margin:6px 0 0;padding-left:18px}.pt details li{margin:3px 0}
+.pt-w{overflow-x:auto}.pt-note{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;color:var(--muted);font-size:14px;margin-top:18px}
+@media (max-width:620px){.pt thead{display:none}.pt,.pt tbody,.pt tr,.pt td{display:block;width:100%}.pt tr{border-bottom:1px solid var(--line);padding:10px 0}.pt td{border:0;padding:3px 0}
+.pt td[data-l]::before{content:attr(data-l) ": ";color:var(--muted);font-size:13px}.pt td:first-child{font-weight:700;font-size:17px}}
+</style>`;
+function renderPrices({ rows, L, root, esc, date, ...rest }) {
+  const t = PRICES[L];
+  const fmt = (v) => (L === "id" ? "Rp" + (v / 1e6).toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " jt" : L === "en" ? "IDR " + (v / 1e6).toLocaleString("en-US", { maximumFractionDigits: 1 }) + "M" : (v / 1e6).toLocaleString("ru-RU", { maximumFractionDigits: 1 }) + " млн IDR") + t.per;
+  const wa = "https://wa.me/62812868080?text=" + encodeURIComponent(t.waText);
+  const body = `
+  ${PRICE_CSS}
+  <header class="ar-hero">
+    <div class="eyebrow">${esc(t.eyebrow)}</div>
+    <h1>${esc(t.h1)}</h1>
+    <p class="lead">${esc(t.lead)}</p>
+    <div class="ar-stats"><span>${rows.reduce((a, r) => a + r.n, 0)} ${esc(t.items)}<small>${esc(t.upd)} ${esc(date)}</small></span></div>
+  </header>
+  <section class="ar-type">
+    <div class="pt-w"><table class="pt"><thead><tr>${t.th.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>
+    ${rows.map((r) => `<tr><td>${r.href ? `<a href="${root}${r.href}">${esc(r.name)}</a>` : esc(r.name)}
+      <details><summary>${esc(t.see)}</summary><ul>${r.items.map((i) => `<li><a href="${root}${i.href}">${esc(i.title)}</a> — ${esc(fmt(i.v))}</li>`).join("")}</ul></details></td>
+      <td data-l="${esc(t.th[1])}">${r.n}</td><td class="n" data-l="${esc(t.th[2])}">${esc(fmt(r.min))}</td><td class="n" data-l="${esc(t.th[3])}"><b>${esc(fmt(r.med))}</b></td><td class="n" data-l="${esc(t.th[4])}">${esc(fmt(r.max))}</td></tr>`).join("\n    ")}
+    </tbody></table></div>
+    <p class="pt-note">${esc(t.note)}</p>
+  </section>
+  <section class="ask">
+    <h2>${esc(t.own)}</h2>
+    <p>${esc(t.ownP)}</p>
+    <div class="actions">
+      <a class="btn wa" href="${wa}" target="_blank" rel="noopener">${waIcon}${esc(t.wa)}</a>
+      <a class="btn ghost" href="${root}inquiry.html#owner">${esc(t.ownBtn)}</a>
+    </div>
+  </section>
+  <p style="margin-top:28px"><a class="more-link" href="${root}listings.html#t-tanah">${esc(t.all)} →</a></p>`;
+  return shell({ L, root, esc, title: t.title, body, ...rest });
+}
+
+module.exports = { areaList, renderArea, renderAreaHub, renderSold, SOLD, renderPrices, PRICES, AREAS, matches, L10N, fmtIdr };

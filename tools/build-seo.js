@@ -288,6 +288,21 @@ main .cta-duo{margin-top:0}
   {
     const covers = {};
     for (const c of out.id.cards) { const p = photosOf(c.slug); if (p.length) covers[c.slug] = { n: p.length, src: "/" + p[0] }; }
+    // Tanggal tayang & riwayat harga (label "Baru" ≤14 hari, "Harga turun" ≤30 hari; dihitung di browser oleh cards.js)
+    const mf = path.join(ROOT, "tools/listing-meta.json"), meta = fs.existsSync(mf) ? JSON.parse(fs.readFileSync(mf, "utf8")) : {};
+    const today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+    for (const c of out.id.cards) {
+      const m = meta[c.slug] || (meta[c.slug] = { added: today }), pr = prices[c.slug], txt = (c.priceText || "").trim();
+      if (pr && m.price && !c.sold) {
+        if (pr < m.price) m.drop = { from: m.text || "", to: txt, at: today };
+        else if (pr > m.price) delete m.drop;
+      }
+      if (pr) { m.price = pr; m.text = txt; }
+      const e = covers[c.slug] || (covers[c.slug] = {});
+      e.a = m.added; if (m.drop && !c.sold) e.d = m.drop.at;
+    }
+    const ms = JSON.stringify(meta, null, 1) + "\n";
+    if (!fs.existsSync(mf) || fs.readFileSync(mf, "utf8") !== ms) fs.writeFileSync(mf, ms);
     const f = path.join(ROOT, "img/covers.json"), s = JSON.stringify(covers) + "\n";
     if (!fs.existsSync(f) || fs.readFileSync(f, "utf8") !== s) fs.writeFileSync(f, s);
   }
@@ -354,6 +369,7 @@ ${copyScript}
 })();
 </script>
 <script src="/views.js" defer></script>
+<script src="/simpan.js" defer></script>
 <script src="${rel(file, "i18n.js")}"></script>
 </body>
 </html>
@@ -390,6 +406,44 @@ ${copyScript}
       let html = AR.renderSold({ ...common, cards: sold, root: rel(file, langDir(L)), i18nSrc: rel(file, "i18n.js"),
         seoBlock: seo({ L, pageUrl: alts[L], alts, desc: t.desc, ogTitle: t.h1, jsonld }) });
       html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "terjual.html")])), L);
+      write(file, html);
+    }
+    // Halaman "Harga tanah per m² per area" (dari harga penawaran listing tanah tersedia)
+    {
+      const perM2 = (c) => {
+        const rows = [...c.cardHtml.matchAll(/<small>([\s\S]*?)<\/small><b>([\s\S]*?)<\/b>/g)].map((m) => [m[1].replace(/<[^>]+>/g, ""), m[2].replace(/<[^>]+>/g, "")]);
+        const m2 = rows.find((r) => /per m²|setara per m²/i.test(r[0]) && !/^total/i.test(r[0]));
+        if (m2) return parseRp(m2[1]);
+        const are = rows.find((r) => /per are/i.test(r[0]) && !/sewa/i.test(r[0]));
+        return are && parseRp(are[1]) ? parseRp(are[1]) / 100 : null;
+      };
+      const land = idCards.filter((c) => c.typeKey === "tanah" && !c.sold && !/data-status="hidden"/.test(c.cardHtml.slice(0, 200)))
+        .map((c) => ({ c, v: perM2(c) })).filter((x) => x.v && x.v > 1e5 && x.v < 2e8);
+      const groups = [], used = new Set();
+      for (const a of AR.AREAS.filter((a) => a.slug !== "kuta-selatan")) {
+        const g = land.filter((x) => !used.has(x.c.slug) && AR.matches(a, x.c));
+        if (!g.length) continue; g.forEach((x) => used.add(x.c.slug));
+        groups.push({ name: a.name[L], href: idAreas.some((z) => z.slug === a.slug) ? "area/" + a.slug + ".html" : "", g });
+      }
+      const rest = {};
+      land.filter((x) => !used.has(x.c.slug)).forEach((x) => { (rest[x.c.areaKey] = rest[x.c.areaKey] || []).push(x); });
+      for (const k of Object.keys(rest)) {
+        const lc = out[L].cards.find((c) => c.slug === rest[k][0].c.slug);
+        groups.push({ name: (lc ? lc.areaTitle : rest[k][0].c.areaTitle).replace(/^(Area|Район)\s+/i, ""), href: "", g: rest[k] });
+      }
+      const rows = groups.map((gr) => {
+        const v = gr.g.map((x) => x.v).sort((a, b) => a - b), mid = v.length >> 1;
+        return { name: gr.name, href: gr.href, n: v.length, min: v[0], max: v[v.length - 1], med: v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2,
+          items: gr.g.sort((a, b) => a.v - b.v).map((x) => ({ title: (out[L].cards.find((c) => c.slug === x.c.slug) || x.c).title, href: "listing/" + x.c.slug + ".html", v: x.v })) };
+      }).sort((a, b) => b.n - a.n || b.med - a.med);
+      const file = langDir(L) + "harga-tanah.html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "harga-tanah.html")]));
+      const t = AR.PRICES[L];
+      const d = new Date(Date.now() + 8 * 3600e3), date = d.toLocaleDateString({ id: "id-ID", en: "en-GB", ru: "ru-RU" }[L], { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT, { "@type": "WebPage", name: t.h1, description: t.desc, url: alts[L], inLanguage: L, dateModified: d.toISOString().slice(0, 10) }] };
+      let html = AR.renderPrices({ ...common, rows, date, root: rel(file, langDir(L)), i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc: t.desc, ogTitle: t.h1, jsonld }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "harga-tanah.html")])), L);
       write(file, html);
     }
     for (const a of list) {
@@ -627,7 +681,7 @@ ${copyScript}
 
   // ---------- Sitemap & robots ----------
   const today = new Date().toISOString().slice(0, 10);
-  const pages = ["", "about.html", "faq.html", "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", "kalkulator.html", "terjual.html", "area/", ...idAreas.map((a) => "area/" + a.slug + ".html"), ...idCards.map((c) => "listing/" + c.slug + ".html")];
+  const pages = ["", "about.html", "faq.html", "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", "kalkulator.html", "terjual.html", "harga-tanah.html", "area/", ...idAreas.map((a) => "area/" + a.slug + ".html"), ...idCards.map((c) => "listing/" + c.slug + ".html")];
   const urls = pages.flatMap((p) => LANGS.map((L) => `  <url>
     <loc>${url(L, p)}</loc>
     <lastmod>${today}</lastmod>
