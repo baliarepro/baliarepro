@@ -7,6 +7,10 @@ module.exports = {
     id: { t: "Dijual Estate 3 Villa Ocean View di Labuan Sait, Uluwatu Bali", d: "3 villa ocean view di atas bukit Labuan Sait, Pecatu–Uluwatu: tanah 3.318 m², bangunan ±2.500 m², SHM. Harga Rp65 M. Info & survei lokasi via WhatsApp." },
     en: { t: "Estate of 3 Ocean-View Villas for Sale, Labuan Sait Uluwatu Bali", d: "Three ocean-view villas on Labuan Sait hill, Pecatu–Uluwatu: 3,318 m² land, ±2,500 m² built, SHM freehold. IDR 65B. Ask on WhatsApp for details and a viewing." },
     ru: { t: "Продажа поместья из 3 вилл с видом на океан, Лабуан Саит, Бали", d: "Три виллы с видом на океан на холме Лабуан Саит (Пекату–Улувату): участок 3 318 м², ±2 500 м² построек, SHM. 65 млрд IDR. Пишите в WhatsApp." } },
+  "villa-4-kamar-tidur-di-kayu-tulang-kuta-utara": {
+    id: { t: "Dijual Villa 4 Kamar Tidur dengan Pool di Kayu Tulang, Canggu Bali", d: "Villa 4+1 KT, private pool, tanah 500 m² SHM, bangunan 280 m², IMB pondok wisata, renovasi 2023 di Kayu Tulang, Kuta Utara. Rp12 M nego. Tanya via WhatsApp." },
+    en: { t: "4-Bedroom Villa with Pool for Sale in Kayu Tulang, Canggu Bali", d: "4+1-bedroom villa, private pool, 500 m² SHM land, 280 m² building, guesthouse permit, renovated 2023, Kayu Tulang, North Kuta. IDR 12B negotiable." },
+    ru: { t: "Продажа виллы с 4 спальнями и бассейном, Каю-Туланг, Чангу, Бали", d: "Вилла 4+1 спальни, бассейн, участок 500 м² SHM, дом 280 м², разрешение pondok wisata, ремонт 2023, Каю-Туланг. 12 млрд IDR, торг. WhatsApp." } },
   "rumah-modern-3-lantai-4-kamar-tidur-di-nusa-dua": {
     id: { t: "Dijual Rumah Modern 3 Lantai 4+1 Kamar Tidur di Nusa Dua, Bali", d: "Rumah 3 lantai, 4+1 KT, 4+1 KM, garasi 2 mobil, tanah 144 m², bangunan 300 m² di Nusa Dua. ±5 menit ke tol. Rp4,9 M nego tipis. Tanya via WhatsApp." },
     en: { t: "Modern 3-Storey 4+1-Bedroom House for Sale in Nusa Dua, Bali", d: "3-storey house, 4+1 bedrooms, 4+1 baths, 2-car garage, 144 m² land, 300 m² building in Nusa Dua. ±5 min to the toll road. IDR 4.9B, slightly negotiable." },
