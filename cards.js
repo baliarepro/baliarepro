@@ -36,10 +36,10 @@
     ".cards-compact .card .eyebrow{order:2;font-size:11px;color:var(--muted);margin-top:4px}" +
     ".cards-compact .card-top>div{display:flex;flex-direction:column}.cards-compact .card-top>div>h4{order:1}" +
     ".cards-compact article.card>.actions{order:5;padding:14px 16px 0;margin-top:auto;gap:8px}" +
-    ".cards-compact .actions .btn{padding:9px 12px;font-size:13.5px;gap:6px}.cards-compact .actions .btn svg{width:16px;height:16px}.cards-compact .actions .btn.wa{flex:1 1 auto;justify-content:center}" +
-    ".cards-compact .actions .btn.ghost:not(.cd):not(.bap-share){display:none}" +
-    ".cards-compact .actions .bap-share{padding:9px 10px}.cards-compact .actions .bap-share span{display:none}" +
-    ".cards-compact .actions .pdf{display:none}" +
+    ".cards-compact article.card .actions .btn{padding:9px 12px;font-size:13.5px;gap:6px}.cards-compact article.card .actions .btn svg{width:16px;height:16px}.cards-compact article.card .actions .btn.wa{flex:1 1 auto;justify-content:center}" +
+    ".cards-compact article.card .actions .btn.ghost:not(.cd):not(.bap-share){display:none}" +
+    ".cards-compact article.card .actions .bap-share{padding:9px 10px}.cards-compact article.card .actions .bap-share span{display:none}" +
+    ".cards-compact article.card .actions .pdf{display:none}" +
     ".card .cv{order:1;position:relative;display:block;aspect-ratio:4/3;background:var(--sea-soft) center/cover no-repeat;color:#fff;text-decoration:none}" +
     ".card .cv.np{background:linear-gradient(135deg,var(--sea),#0b2a24);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;font-family:var(--display);font-size:22px;font-weight:700}" +
     ".card .cv.np small{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-weight:400}" +
@@ -167,17 +167,17 @@
     id: { price: "Budget", land: "Luas tanah", beds: "Kamar tidur", sort: "Urutkan", any: "Semua", def: "Bawaan", cheap: "Harga termurah", exp: "Harga termahal", big: "Tanah terluas",
       reset: "Reset", found: "listing cocok", none: "Belum ada listing yang cocok dengan filter ini.", wa: "Kabari saya lewat WhatsApp",
       notifyH: "🔔 Kabari saya bila ada listing baru", notifyP: "Belum ketemu yang pas? Tulis kebutuhan Anda, kami kabari lewat WhatsApp begitu ada listing yang cocok.",
-      type: "Jenis", area: "Area incaran", budget: "Budget", name: "Nama (opsional)", send: "Kirim lewat WhatsApp", types: ["Tanah", "Villa", "Rumah", "Komersial"],
+      type: "Jenis", area: "Area incaran", budget: "Budget", name: "Nama (opsional)", send: "Kirim lewat WhatsApp", follow: "Atau ikuti semua listing baru di", types: ["Tanah", "Villa", "Rumah", "Komersial"],
       msg: function (o) { return "Halo Pak Bagoes, tolong kabari saya bila ada listing baru yang cocok:\n• Jenis: " + o.type + "\n• Area: " + o.area + "\n• Budget: " + o.budget + (o.land ? "\n• Luas tanah: " + o.land : "") + (o.name ? "\nNama: " + o.name : "") + "\nTerima kasih."; } },
     en: { price: "Budget", land: "Land size", beds: "Bedrooms", sort: "Sort", any: "Any", def: "Default", cheap: "Lowest price", exp: "Highest price", big: "Largest land",
       reset: "Reset", found: "matching listings", none: "No listings match these filters yet.", wa: "Notify me on WhatsApp",
       notifyH: "🔔 Notify me about new listings", notifyP: "Haven't found the right one? Tell us what you need and we'll message you on WhatsApp when a matching listing comes in.",
-      type: "Type", area: "Preferred area", budget: "Budget", name: "Name (optional)", send: "Send via WhatsApp", types: ["Land", "Villa", "House", "Commercial"],
+      type: "Type", area: "Preferred area", budget: "Budget", name: "Name (optional)", send: "Send via WhatsApp", follow: "Or follow every new listing on", types: ["Land", "Villa", "House", "Commercial"],
       msg: function (o) { return "Hello Pak Bagoes, please let me know when a new listing matches:\n• Type: " + o.type + "\n• Area: " + o.area + "\n• Budget: " + o.budget + (o.land ? "\n• Land size: " + o.land : "") + (o.name ? "\nName: " + o.name : "") + "\nThank you."; } },
     ru: { price: "Бюджет", land: "Площадь участка", beds: "Спальни", sort: "Сортировка", any: "Любая", def: "По умолчанию", cheap: "Сначала дешевле", exp: "Сначала дороже", big: "Самый большой участок",
       reset: "Сбросить", found: "подходящих объектов", none: "Пока нет объектов по этим фильтрам.", wa: "Сообщите мне в WhatsApp",
       notifyH: "🔔 Сообщите о новых объектах", notifyP: "Не нашли подходящее? Опишите, что ищете, — мы напишем в WhatsApp, когда появится подходящий объект.",
-      type: "Тип", area: "Район", budget: "Бюджет", name: "Имя (необязательно)", send: "Отправить в WhatsApp", types: ["Участок", "Вилла", "Дом", "Коммерция"],
+      type: "Тип", area: "Район", budget: "Бюджет", name: "Имя (необязательно)", send: "Отправить в WhatsApp", follow: "Или подписывайтесь на новые объекты:", types: ["Участок", "Вилла", "Дом", "Коммерция"],
       msg: function (o) { return "Здравствуйте, Багус! Сообщите мне, пожалуйста, о новых подходящих объектах:\n• Тип: " + o.type + "\n• Район: " + o.area + "\n• Бюджет: " + o.budget + (o.land ? "\n• Площадь участка: " + o.land : "") + (o.name ? "\nИмя: " + o.name : "") + "\nСпасибо."; } }
   }[L];
   if (!T) return;
@@ -294,7 +294,8 @@
     '<select data-n="a" aria-label="' + T.area + '"><option value="">' + T.area + "</option>" + areaNames.map(function (x) { return "<option>" + x + "</option>"; }).join("") + "</select>" +
     '<select data-n="b" aria-label="' + T.budget + '"><option value="">' + T.budget + "</option>" + B.map(function (x) { return "<option>" + x + "</option>"; }).join("") + "</select>" +
     '<input data-n="n" placeholder="' + T.name + '" aria-label="' + T.name + '"></div>' +
-    '<button type="button">' + T.send + "</button>";
+    '<button type="button">' + T.send + "</button>" +
+    '<p style="font-size:14px">' + T.follow + ' <a href="https://whatsapp.com/channel/0029VbD8IGrEgGfNYeVYfD3J" target="_blank" rel="noopener">WhatsApp Channel</a> · <a href="https://t.me/baliareproperty" target="_blank" rel="noopener">Telegram</a></p>';
   var last = [].slice.call(document.querySelectorAll("section.type")).pop();
   last.parentNode.insertBefore(nb, last.nextSibling);
   nb.querySelector("button").addEventListener("click", function () {

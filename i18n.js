@@ -853,6 +853,7 @@
     ["Kalkulator biaya beli", "Buying cost calculator", "Калькулятор расходов"],
     ["Sudah terjual", "Sold", "Продано"],
     ["Harga tanah per m²", "Land prices per m²", "Цены на землю за м²"],
+    ["Ikuti listing baru & berita properti:", "Follow new listings & property news:", "Новые объекты и новости — подписывайтесь:"],
     // ---------- Tanah 7.000 m² Toyaning, Ungasan ----------
     ["Toyaning · Ungasan", "Toyaning · Ungasan", "Тоянинг · Унгасан"],
     ["Tanah 7.000 m² di kawasan villa Toyaning, Ungasan", "7,000 m² land in the Toyaning villa area, Ungasan", "Участок 7 000 м² в районе вилл Тоянинг, Унгасан"],

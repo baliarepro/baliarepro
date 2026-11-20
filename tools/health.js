@@ -35,6 +35,10 @@ function check(now = Date.now()) {
   add("Instagram Reels (1 per hari)", rl.posted, rl.errors, { maxAgeH: Object.keys(rl.posted || {}).length ? 50 : 0 });
   add("Facebook Page (listing)", fb.posted, fb.errors, { maxAgeH: fbOff ? 0 : queue ? 30 : 0, off: fbOff });
   add("Facebook Page (berita mingguan)", fbw.posted, fbw.errors, { maxAgeH: fbOff ? 0 : 8 * 24, off: fbOff });
+  const tg = read("tools/tg-state.json", {}), tgw = read("tools/tg-weekly-state.json", {});
+  const tgOff = !Object.keys(tg.posted || {}).length && !Object.keys(tgw.posted || {}).length && !Object.keys(tg.errors || {}).length;
+  add("Telegram (listing)", tg.posted, tg.errors, { off: tgOff, note: tgOff ? "belum aktif (secret TELEGRAM_BOT_TOKEN)" : "" });
+  add("Telegram (berita mingguan)", tgw.posted, tgw.errors, { maxAgeH: tgOff ? 0 : 8 * 24, off: tgOff });
   const reminders = (read("pengingat.json", { items: [] }).items || []).filter((r) => !r.done);
   const pend = Object.keys(read("tools/perlu-terjemahan.json", {}));
   const views = read("laporan-dilihat.json", null);
@@ -48,7 +52,7 @@ function report(d) {
     const icon = c.ok === null ? "⏸️" : c.ok ? "✅" : "⚠️";
     L.push(`${icon} ${c.name}: ${c.count} posting, terakhir ${when}${c.note ? " · " + c.note : ""}`);
     if (c.ok !== null) for (const e of c.errors) L.push(`   ⚠️ ${e.key}: ${e.msg}`);
-    if (c.ok === null) L.push("   ⏸️ Belum aktif (lihat pengingat Facebook Page).");
+    if (c.ok === null) L.push("   ⏸️ Belum aktif (lihat pengingat).");
     if (c.ok === false && !c.errors.length) L.push("   ⚠️ Tidak ada posting baru lebih lama dari jadwal. Cek token/secret atau workflow GitHub Actions.");
   }
   if (d.pendingTranslations.length) L.push("", "⚠️ Iklan diedit di admin, terjemahan EN/RU belum dirapikan: " + d.pendingTranslations.join(", "));

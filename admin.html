@@ -774,11 +774,12 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   function lastOf(o) { var v = Object.keys(o || {}).map(function (k) { return { key: k, at: o[k].at, permalink: o[k].permalink }; }).filter(function (x) { return x.at; }); v.sort(function (a, b) { return b.at < a.at ? -1 : 1; }); return v[0] || null; }
   function fmt(at) { try { return new Date(at).toLocaleString("id-ID", { timeZone: "Asia/Makassar", dateStyle: "medium", timeStyle: "short" }) + " WITA"; } catch (e) { return at; } }
   function loadStatus() {
-    var files = ["tools/ig-state.json", "tools/ig-weekly-state.json", "tools/threads-state.json", "tools/threads-weekly-state.json", "tools/fb-state.json", "tools/fb-weekly-state.json", REM, "tools/reels-state.json", "laporan-dilihat.json"];
+    var files = ["tools/ig-state.json", "tools/ig-weekly-state.json", "tools/threads-state.json", "tools/threads-weekly-state.json", "tools/fb-state.json", "tools/fb-weekly-state.json", REM, "tools/reels-state.json", "laporan-dilihat.json", "tools/tg-state.json", "tools/tg-weekly-state.json"];
     return Promise.all(files.map(rj)).then(function (r) {
       var ig = r[0], igw = r[1], th = r[2], thw = r[3], fb = r[4], fbw = r[5]; rem = r[6].items ? r[6] : { items: [] };
       var q = (ig.queue || []).length, now = Date.now(), H = 3600e3, bad = 0;
       var fbOff = !Object.keys(fb.posted || {}).length && !Object.keys(fbw.posted || {}).length;
+      var tgOff = !Object.keys(r[9].posted || {}).length && !Object.keys(r[10].posted || {}).length && !Object.keys(r[9].errors || {}).length;
       var ch = [
         ["Instagram · listing", ig.posted, ig.errors, q ? 30 : 0, q + " listing lama di antrean (3 per hari)"],
         ["Instagram · berita mingguan", igw.posts, igw.error ? { terakhir: igw.error } : {}, 8 * 24, "Tiap Senin ±16.07 WITA"],
@@ -786,12 +787,14 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
         ["Threads · berita mingguan", thw.weekly, thw.errors, 8 * 24, ""],
         ["Instagram · Reels", r[7].posted, r[7].errors, Object.keys(r[7].posted || {}).length ? 50 : 0, "1 Reel per hari ±19.07 WITA"],
         ["Facebook Page · listing", fb.posted, fb.errors, fbOff ? 0 : q ? 30 : 0, fbOff ? "Belum aktif, lihat pengingat" : ""],
-        ["Facebook Page · berita mingguan", fbw.posted, fbw.errors, fbOff ? 0 : 8 * 24, ""]
+        ["Facebook Page · berita mingguan", fbw.posted, fbw.errors, fbOff ? 0 : 8 * 24, ""],
+        ["Telegram · listing", r[9].posted, r[9].errors, 0, tgOff ? "Belum aktif, lihat pengingat" : "Salinan IG ke t.me/baliareproperty", tgOff],
+        ["Telegram · berita mingguan", r[10].posted, r[10].errors, tgOff ? 0 : 8 * 24, "", tgOff]
       ];
       $("#stlist").innerHTML = ch.map(function (c, i) {
         var last = lastOf(c[1]), errs = Object.keys(c[2] || {}).map(function (k) { return k + ": " + (c[2][k].msg || ""); });
         var age = last ? (now - Date.parse(last.at)) / H : Infinity;
-        var cls = (i >= 5 && fbOff) ? "off" : (errs.length || (c[3] && last && age > c[3])) ? "bad" : "ok";
+        var cls = (c[5] || (i >= 5 && i <= 6 && fbOff)) ? "off" : (errs.length || (c[3] && last && age > c[3])) ? "bad" : "ok";
         if (cls === "bad") bad++;
         return '<div class="st ' + cls + '"><h3>' + (cls === "ok" ? "✅ " : cls === "off" ? "⏸️ " : "⚠️ ") + esc(c[0]) + '</h3>' +
           '<div class="muted">' + Object.keys(c[1] || {}).length + ' posting · terakhir: ' + (last ? (last.permalink ? '<a target="_blank" rel="noopener" href="' + esc(last.permalink) + '">' + fmt(last.at) + '</a>' : fmt(last.at)) : "belum ada") + (c[4] ? " · " + esc(c[4]) : "") + '</div>' +
