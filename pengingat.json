@@ -62,7 +62,8 @@
     {
       "id": "telegram-bot",
       "text": "Telegram otomatis: buat bot di @BotFather (/newbot), jadikan bot admin channel t.me/baliareproperty (izin Post messages), lalu simpan token bot sebagai secret GitHub TELEGRAM_BOT_TOKEN (Settings → Secrets → Actions). Jangan kirim token di chat.",
-      "added": "2026-11-20"
+      "added": "2026-11-20",
+      "done": "2026-11-20"
     }
   ]
 }
