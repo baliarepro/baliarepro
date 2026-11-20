@@ -146,4 +146,49 @@ function renderAreaHub({ list, L, root, esc, ...rest }) {
   return shell({ L, root, esc, title: t.hubTitle, body, ...rest });
 }
 
-module.exports = { areaList, renderArea, renderAreaHub, L10N, fmtIdr };
+// Halaman "Sudah terjual" (bukti transaksi): kartu listing berstatus terjual + ajakan untuk pemilik & pembeli.
+const SOLD = {
+  id: { title: "Properti yang Sudah Terjual | Bali Are Property", eyebrow: "Rekam jejak", h1: "Sudah terjual lewat Bali Are Property",
+    lead: "Sebagian properti yang sudah terjual lewat kami. Ingin properti Anda menyusul? Titipkan ke kami — listing tayang di website 3 bahasa dan dipromosikan ke Instagram, Threads & Facebook.",
+    desc: "Daftar tanah dan villa di Bali yang sudah terjual lewat Bali Are Property. Titip jual properti Anda atau cari yang serupa via WhatsApp.",
+    n: "terjual", owner: "Titip jual properti", buyer: "Cari properti serupa", wa: "Tanya via WhatsApp", all: "Lihat listing yang masih tersedia",
+    waText: "Halo Pak Bagoes, saya lihat halaman properti terjual di website. Saya ingin " },
+  en: { title: "Sold Properties | Bali Are Property", eyebrow: "Track record", h1: "Sold through Bali Are Property",
+    lead: "Some of the properties we have sold. Want yours to be next? List it with us — your listing goes live on our 3-language website and is promoted on Instagram, Threads & Facebook.",
+    desc: "Land and villas in Bali sold through Bali Are Property. List your property with us or find something similar on WhatsApp.",
+    n: "sold", owner: "List your property", buyer: "Find something similar", wa: "Ask on WhatsApp", all: "See available listings",
+    waText: "Hello Pak Bagoes, I saw the sold properties page on your website. I would like to " },
+  ru: { title: "Проданные объекты | Bali Are Property", eyebrow: "Наши сделки", h1: "Продано через Bali Are Property",
+    lead: "Некоторые объекты, проданные через нас. Хотите продать свой? Разместите его у нас — объявление появится на сайте на 3 языках и в Instagram, Threads и Facebook.",
+    desc: "Земля и виллы на Бали, проданные через Bali Are Property. Разместите свой объект или найдите похожий через WhatsApp.",
+    n: "продано", owner: "Разместить объект", buyer: "Найти похожий", wa: "Написать в WhatsApp", all: "Объекты в продаже",
+    waText: "Здравствуйте, Багус! Я посмотрел страницу проданных объектов на сайте. Я хочу " }
+};
+function renderSold({ cards, L, root, esc, ...rest }) {
+  const t = SOLD[L];
+  const fixCard = (h) => h.replace(/href="listing\//g, `href="${root}listing/`).replace(/href="inquiry\.html/g, `href="${root}inquiry.html`);
+  const wa = "https://wa.me/62812868080?text=" + encodeURIComponent(t.waText);
+  const body = `
+  <header class="ar-hero">
+    <div class="eyebrow">${esc(t.eyebrow)}</div>
+    <h1>${esc(t.h1)}</h1>
+    <p class="lead">${esc(t.lead)}</p>
+    <div class="ar-stats"><span>${cards.length} ${esc(t.n)}</span></div>
+  </header>
+  <section class="ar-type" aria-label="${esc(t.h1)}">
+    ${cards.map((c) => fixCard(c.cardHtml)).join("\n    ")}
+  </section>
+  <section class="ask">
+    <h2>${esc(t.owner)} / ${esc(t.buyer)}</h2>
+    <p>${esc(t.lead.split(". ").slice(1).join(". "))}</p>
+    <div class="actions">
+      <a class="btn wa" href="${wa}" target="_blank" rel="noopener">${waIcon}${esc(t.wa)}</a>
+      <a class="btn ghost" href="${root}inquiry.html#owner">${esc(t.owner)}</a>
+      <a class="btn ghost" href="${root}inquiry.html#buyer">${esc(t.buyer)}</a>
+    </div>
+  </section>
+  <p style="margin-top:28px"><a class="more-link" href="${root}listings.html">${esc(t.all)} →</a></p>`;
+  return shell({ L, root, esc, title: t.title, body, ...rest });
+}
+
+module.exports = { areaList, renderArea, renderAreaHub, renderSold, SOLD, L10N, fmtIdr };

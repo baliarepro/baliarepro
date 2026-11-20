@@ -379,6 +379,19 @@ ${copyScript}
       html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "area/")])), L);
       write(file, html);
     }
+    // Halaman "Sudah terjual"
+    {
+      const sold = out[L].cards.filter((c) => c.sold);
+      const file = langDir(L) + "terjual.html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "terjual.html")]));
+      const t = AR.SOLD[L];
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT, { "@type": "CollectionPage", name: t.h1, description: t.desc, url: alts[L], inLanguage: L,
+        mainEntity: { "@type": "ItemList", numberOfItems: sold.length, itemListElement: sold.map((c, i) => ({ "@type": "ListItem", position: i + 1, url: url(L, "listing/" + c.slug + ".html"), name: c.title })) } }] };
+      let html = AR.renderSold({ ...common, cards: sold, root: rel(file, langDir(L)), i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc: t.desc, ogTitle: t.h1, jsonld }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "terjual.html")])), L);
+      write(file, html);
+    }
     for (const a of list) {
       const file = langDir(L) + "area/" + a.slug + ".html";
       const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "area/" + a.slug + ".html")]));
@@ -614,7 +627,7 @@ ${copyScript}
 
   // ---------- Sitemap & robots ----------
   const today = new Date().toISOString().slice(0, 10);
-  const pages = ["", "about.html", "faq.html", "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", "kalkulator.html", "area/", ...idAreas.map((a) => "area/" + a.slug + ".html"), ...idCards.map((c) => "listing/" + c.slug + ".html")];
+  const pages = ["", "about.html", "faq.html", "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", "kalkulator.html", "terjual.html", "area/", ...idAreas.map((a) => "area/" + a.slug + ".html"), ...idCards.map((c) => "listing/" + c.slug + ".html")];
   const urls = pages.flatMap((p) => LANGS.map((L) => `  <url>
     <loc>${url(L, p)}</loc>
     <lastmod>${today}</lastmod>

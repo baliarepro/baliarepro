@@ -126,6 +126,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     <div class="tabs" role="tablist">
       <button role="tab" data-tab="ads" aria-selected="true">Iklan</button>
       <button role="tab" data-tab="wa" aria-selected="false">Bagikan ke Grup WA</button>
+      <button role="tab" data-tab="new" aria-selected="false">+ Iklan baru</button>
       <button role="tab" data-tab="st" aria-selected="false">Status <span id="st-dot" hidden>•</span></button>
     </div>
     <div id="tab-ads">
@@ -139,7 +140,12 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     </div>
     <p class="muted" id="summary"></p>
     <div class="list" id="list"></div>
-    <div class="note">Iklan <b>baru</b> dan perubahan <b>status Terjual</b> tetap lewat chat dengan Claude, supaya 3 bahasa &amp; SEO langsung lengkap. Teks yang diedit di sini langsung tampil di versi Indonesia; versi English/Русский dan judul Google ikut dirapikan oleh Claude.</div>
+    <div class="note">Iklan baru bisa ditambah di tab <b>+ Iklan baru</b>. Perubahan <b>status Terjual</b> tetap lewat chat dengan Claude. Teks yang diedit/ditambah di sini langsung tampil di versi Indonesia; versi English/Русский dan judul Google ikut dirapikan oleh Claude.</div>
+    </div>
+    <div id="tab-new" hidden>
+      <p class="muted">Isi data iklan → <b>Tayangkan</b>. Iklan tampil di website ±5 menit kemudian (versi Indonesia), lalu otomatis diposting ke Instagram, Threads &amp; Facebook. Versi English/Русский dilengkapi Claude.</p>
+      <div id="nf"></div>
+      <div class="row" style="margin-top:16px"><button class="btn primary" id="n-save" type="button">Tayangkan iklan</button><button class="btn ghost" id="n-reset" type="button">Kosongkan</button></div>
     </div>
     <div id="tab-st" hidden>
       <p class="muted">Kondisi posting otomatis (Instagram, Threads, Facebook) dan hal yang perlu Bapak kerjakan. Data diambil dari GitHub saat tab ini dibuka.</p>
@@ -208,7 +214,13 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       head = ref.object.sha;
       return gh("/git/commits/" + head);
     }).then(function (c) {
-      return gh("/git/trees", { method: "POST", body: { base_tree: c.tree.sha, tree: files.map(function (f) { return { path: f.path, mode: "100644", type: "blob", content: f.content }; }) } });
+      // File biner (foto) diunggah dulu sebagai blob base64
+      return Promise.all(files.map(function (f) {
+        if (!f.b64 || f.sha) return f;
+        return gh("/git/blobs", { method: "POST", body: { content: f.b64, encoding: "base64" } }).then(function (b) { f.sha = b.sha; return f; });
+      })).then(function () { return c; });
+    }).then(function (c) {
+      return gh("/git/trees", { method: "POST", body: { base_tree: c.tree.sha, tree: files.map(function (f) { return f.sha ? { path: f.path, mode: "100644", type: "blob", sha: f.sha } : { path: f.path, mode: "100644", type: "blob", content: f.content }; }) } });
     }).then(function (tree) {
       return gh("/git/commits", { method: "POST", body: { message: message, tree: tree.sha, parents: [head] } });
     }).then(function (nc) {
@@ -453,6 +465,183 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     if (e.submitter && e.submitter.value === "save") { e.preventDefault(); saveEdit(); }
   });
 
+
+  // ---------- Iklan baru ----------
+  var TYPES = [["tanah", "Tanah"], ["villa", "Villa"], ["komersial", "Komersial"], ["rumah", "Rumah"]];
+  var SPEC0 = {
+    tanah: [["Luas tanah", ""], ["Sertifikat", "SHM"], ["Zona", ""], ["Akses jalan", ""], ["Lokasi", ""]],
+    villa: [["Luas tanah", ""], ["Luas bangunan", ""], ["Sertifikat", "SHM"], ["Kamar tidur", ""], ["Kamar mandi", ""], ["Kolam renang", ""], ["Furnitur", ""], ["IMB/PBG", ""]],
+    rumah: [["Luas tanah", ""], ["Luas bangunan", ""], ["Sertifikat", "SHM"], ["Kamar tidur", ""], ["Kamar mandi", ""], ["Carport/garasi", ""], ["IMB/PBG", ""]],
+    komersial: [["Luas tanah", ""], ["Luas bangunan", ""], ["Sertifikat", "SHM"], ["Jumlah kamar/unit", ""], ["Izin", ""], ["Listrik", ""]]
+  };
+  var ICON_WA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"/></svg>';
+  var ICON_MAP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+  var ICON_PH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>';
+  var photos = [];
+  function areasOf(text) {
+    var doc = new DOMParser().parseFromString(text, "text/html"), seen = {}, out = [];
+    $$(".area[data-area]", doc).forEach(function (a) {
+      var k = a.getAttribute("data-area"); if (seen[k]) return; seen[k] = 1;
+      out.push({ key: k, name: txt($(".area-head h3", a)).replace(/^Area\s+/, ""), kab: txt($(".area-head p", a)).split("·")[0].trim() });
+    });
+    return out;
+  }
+  function newForm() {
+    var ar = areasOf(src);
+    $("#nf").innerHTML =
+      '<div class="grid2" style="grid-template-columns:1fr 1fr"><div><label for="n-type">Jenis</label><select id="n-type">' + TYPES.map(function (t) { return '<option value="' + t[0] + '">' + t[1] + '</option>'; }).join("") + '</select></div>' +
+      '<div><label for="n-area">Area</label><select id="n-area">' + ar.map(function (a) { return '<option value="' + a.key + '" data-kab="' + esc(a.kab) + '">' + esc(a.name) + '</option>'; }).join("") + '</select></div></div>' +
+      '<label for="n-title">Judul iklan</label><input id="n-title" placeholder="mis. Villa 3 kamar tidur dengan private pool di Ungasan">' +
+      '<label for="n-eb">Lokasi singkat</label><input id="n-eb" placeholder="mis. Jl. Tulip · Ungasan">' +
+      '<label for="n-desc">Deskripsi (2–3 kalimat)</label><textarea id="n-desc"></textarea>' +
+      '<label for="n-badge">Label kecil (opsional, mis. Posisi hook, Baru 2025)</label><input id="n-badge">' +
+      '<fieldset><legend>Harga</legend>' + rowsHtml("nprice", [["Harga", ""]], "Keterangan (mis. Harga per m²)", "Nilai (mis. Rp6.500.000)") + '<p class="muted">Baris pertama = harga utama. Tulis seperti: Rp3,8 Miliar · Rp6.500.000 · Rp1,25 Miliar/tahun.</p></fieldset>' +
+      '<fieldset><legend>Spesifikasi</legend><div id="n-specbox">' + rowsHtml("nspec", SPEC0.tanah, "Nama", "Isi") + '</div><p class="muted">Baris yang isinya kosong tidak ditampilkan.</p></fieldset>' +
+      '<label for="n-points">Keunggulan (satu per baris)</label><textarea id="n-points"></textarea>' +
+      '<label for="n-uses">Cocok untuk (satu per baris)</label><textarea id="n-uses"></textarea>' +
+      '<label for="n-map">Link Google Maps (opsional)</label><input id="n-map" type="url" placeholder="https://maps.app.goo.gl/…">' +
+      '<label for="n-drive">Link folder foto Google Drive (opsional)</label><input id="n-drive" type="url" placeholder="https://drive.google.com/…">' +
+      '<fieldset><legend>Foto (maks. 3, foto pertama = foto utama)</legend><input id="n-photo" type="file" accept="image/jpeg,image/png,image/webp" multiple><div id="n-thumbs" class="row" style="margin-top:8px"></div><p class="muted">Foto otomatis dikecilkan &amp; diberi watermark. Foto HEIC dari iPhone: kirim lewat chat ke Claude bila tidak bisa dipilih.</p></fieldset>' +
+      '<fieldset><legend>Google (SEO)</legend><label for="n-st">Judul di Google</label><input id="n-st" maxlength="90"><label for="n-sd">Deskripsi di Google</label><textarea id="n-sd" maxlength="200"></textarea><p class="muted">Terisi otomatis dari data di atas, boleh diubah. Ideal: judul 50–70 huruf, deskripsi 140–165 huruf.</p></fieldset>' +
+      '<p class="muted" id="n-slug"></p>';
+    photos = []; seoAuto();
+  }
+  function slugify(t) {
+    return t.toLowerCase().replace(/²/g, "2").replace(/&/g, " ").replace(/\+/g, " plus ").normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").replace(/-+/g, "-").slice(0, 90).replace(/-+$/, "");
+  }
+  function nRows(name) {
+    return $$('[data-rows="' + name + '"] .grid2').map(function (r) { var i = $$("input", r); return [i[0].value.trim(), i[1].value.trim()]; })
+      .filter(function (r) { return r[0] && r[1]; });
+  }
+  var seoTouched = false;
+  function seoAuto() {
+    var t = $("#n-title").value.trim(), slug = slugify(t);
+    $("#n-slug").textContent = slug ? "Alamat iklan: baliareproperty.com/listing/" + slug + ".html" : "";
+    if (seoTouched) return;
+    var price = (nRows("nprice")[0] || [])[1] || "";
+    var short = price.replace(/\s*Miliar/i, " M").replace(/\s*juta/i, " jt");
+    $("#n-st").value = t ? ("Dijual " + t.charAt(0).toLowerCase() + t.slice(1)).replace(/^Dijual over kontrak/i, "Over kontrak") + ", Bali" : "";
+    var specs = nRows("nspec").slice(0, 4).map(function (r) { return r[0].toLowerCase() + " " + r[1]; }).join(", ");
+    $("#n-sd").value = t ? (t + (specs ? ": " + specs : "") + ". " + (short ? short + ". " : "") + "Tanya via WhatsApp.").replace(/\s+/g, " ").slice(0, 200) : "";
+  }
+  $("#nf").addEventListener("input", function (e) {
+    if (e.target.id === "n-st" || e.target.id === "n-sd") { seoTouched = true; return; }
+    seoAuto();
+  });
+  $("#nf").addEventListener("change", function (e) {
+    if (e.target.id === "n-type") {
+      // Ganti ke daftar bawaan jenis ini; isian yang sudah diketik dengan nama sama dipertahankan
+      var cur = {}; nRows("nspec").forEach(function (r) { cur[r[0]] = r[1]; });
+      $("#n-specbox").innerHTML = rowsHtml("nspec", SPEC0[e.target.value].map(function (r) { return [r[0], cur[r[0]] || r[1]]; }), "Nama", "Isi");
+    }
+    if (e.target.id === "n-photo") addPhotos(e.target.files);
+  });
+  function shrink(file) {
+    return new Promise(function (ok, no) {
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var w = Math.min(1600, img.naturalWidth), h = Math.round(img.naturalHeight * w / img.naturalWidth);
+        var c = document.createElement("canvas"); c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h); URL.revokeObjectURL(url);
+        var data = c.toDataURL("image/jpeg", 0.8);
+        ok({ name: file.name, url: data, b64: data.split(",")[1] });
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); no(new Error("Foto " + file.name + " tidak bisa dibaca (format HEIC?). Kirim lewat Claude.")); };
+      img.src = url;
+    });
+  }
+  function addPhotos(list) {
+    var files = [].slice.call(list || []).slice(0, 3 - photos.length);
+    Promise.all(files.map(shrink)).then(function (r) { photos = photos.concat(r).slice(0, 3); thumbs(); }).catch(fail).then(function () { $("#n-photo").value = ""; });
+  }
+  function thumbs() {
+    $("#n-thumbs").innerHTML = photos.map(function (p, i) {
+      return '<span style="position:relative;display:inline-block"><img src="' + p.url + '" alt="" style="width:92px;height:70px;object-fit:cover;border-radius:8px;border:' + (i ? "1px solid var(--line)" : "2px solid var(--gold)") + '">' +
+        '<button type="button" class="x" data-ph="' + i + '" aria-label="Hapus foto" style="position:absolute;top:-8px;right:-8px">×</button></span>';
+    }).join("");
+  }
+  $("#nf").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-ph]"); if (!b) return;
+    photos.splice(+b.dataset.ph, 1); thumbs();
+  });
+  $("#n-reset").addEventListener("click", function () { if (confirm("Kosongkan form?")) { seoTouched = false; newForm(); } });
+  function bump(text, re, add) {
+    return text.replace(re, function (all, a, n, b) { return a + (+n + add) + b; });
+  }
+  function buildCard(d) {
+    var I = "\n        ", J = "\n          ";
+    var wa = "https://wa.me/62812868080?text=" + encodeURIComponent("Halo Pak Bagoes, saya tertarik dengan listing " + d.title + " (" + d.eb.replace(/\s*·\s*/g, ", ") + "). Boleh minta info detail dan jadwal survei?");
+    var h = '<article class="card">' + I + '<div class="card-top">' + J + "<div>" +
+      J + '  <div class="eyebrow">' + esc(d.eb) + "</div>" +
+      J + '  <h4><a href="listing/' + d.slug + '.html">' + esc(d.title) + "</a></h4>" +
+      J + '  <p class="desc">' + esc(d.desc) + "</p>" + J + "</div>" +
+      (d.badge ? J + '<span class="badge">' + esc(d.badge) + "</span>" : "") + I + "</div>\n" +
+      I + '<div class="price">' + d.prices.map(function (r, i) { return J + "<div" + (i ? "" : ' class="hl"') + "><small>" + esc(r[0]) + "</small><b>" + esc(r[1]) + "</b></div>"; }).join("") + I + "</div>\n" +
+      I + '<dl class="specs">' + d.specs.map(function (r) { return J + "<div><dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("") + I + "</dl>\n" +
+      (d.points.length ? I + '<ul class="points">' + d.points.map(function (x) { return J + "<li>" + esc(x) + "</li>"; }).join("") + I + "</ul>\n" : "") +
+      (d.uses.length ? I + '<ul class="uses">' + d.uses.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>\n" : "") +
+      I + '<div class="actions">' +
+      J + '<a class="btn wa" href="' + esc(wa) + '" target="_blank" rel="noopener">' + ICON_WA + "Tanya via WhatsApp</a>" +
+      (d.map ? J + '<a class="btn ghost" href="' + esc(d.map) + '" target="_blank" rel="noopener">' + ICON_MAP + "Lihat Lokasi</a>" : "") +
+      (d.drive ? J + '<a class="btn ghost" href="' + esc(d.drive) + '" target="_blank" rel="noopener">' + ICON_PH + "Lihat Foto</a>" : "") +
+      I + "</div>\n      </article>";
+    return h;
+  }
+  function insertCard(text, d, card) {
+    var sec = text.indexOf('<section class="type" data-type="' + d.type + '"');
+    if (sec < 0) throw new Error("Bagian jenis " + d.type + " tidak ditemukan.");
+    var secEnd = text.indexOf("</section>", sec);
+    var aStart = text.indexOf('<div class="area" data-area="' + d.area + '"', sec), newArea = aStart < 0 || aStart > secEnd;
+    if (newArea) {
+      var id = d.area + "-" + d.type; if (text.indexOf('id="' + id + '"') >= 0) id += "-2";
+      var block = "\n    <!-- Area: " + d.areaName + " (" + d.typeName + ") -->\n    <div class=\"area\" data-area=\"" + d.area + "\" id=\"" + id + "\">\n      <div class=\"area-head\"><h3>Area " + esc(d.areaName) + "</h3><p>" + esc(d.kab) + " · 1 listing</p></div>\n\n      " + card + "\n    </div>\n";
+      var at = text.lastIndexOf("</div>", secEnd) + 6;
+      text = text.slice(0, at) + "\n" + block + text.slice(at);
+      text = text.slice(0, sec) + bump(text.slice(sec, sec + 400), /(<span>)(\d+)( listing · )/, 1).replace(/( listing · )(\d+)( area)/, function (a, x, n, y) { return x + (+n + 1) + y; }) + text.slice(sec + 400);
+    } else {
+      var nextA = text.indexOf('<div class="area"', aStart + 10); if (nextA < 0 || nextA > secEnd) nextA = secEnd;
+      var close = text.lastIndexOf("</div>", nextA);
+      text = text.slice(0, close) + "\n      " + card + "\n    " + text.slice(close);
+      text = text.slice(0, aStart) + bump(text.slice(aStart, aStart + 400), /(· )(\d+)( listing<\/p>)/, 1) + text.slice(aStart + 400);
+      text = text.slice(0, sec) + bump(text.slice(sec, sec + 400), /(<span>)(\d+)( listing · )/, 1) + text.slice(sec + 400);
+    }
+    ["j-all", "j-" + d.type, "f-all", "f-" + d.area].forEach(function (id) {
+      text = bump(text, new RegExp('(id="' + id + '"[^>]*>[^<]*<small>)(\\d+)(</small>)'), 1);
+    });
+    return text;
+  }
+  $("#n-save").addEventListener("click", function () {
+    var btn = this, typeSel = $("#n-type"), areaSel = $("#n-area"), opt = areaSel.selectedOptions[0];
+    var lines = function (id) { return $(id).value.split("\n").map(function (x) { return x.trim(); }).filter(Boolean); };
+    var d = { type: typeSel.value, typeName: typeSel.selectedOptions[0].textContent, area: areaSel.value, areaName: opt.textContent, kab: opt.dataset.kab,
+      title: $("#n-title").value.trim(), eb: $("#n-eb").value.trim(), desc: $("#n-desc").value.trim(), badge: $("#n-badge").value.trim(),
+      prices: nRows("nprice"), specs: nRows("nspec"), points: lines("#n-points"), uses: lines("#n-uses"),
+      map: $("#n-map").value.trim(), drive: $("#n-drive").value.trim(), st: $("#n-st").value.trim(), sd: $("#n-sd").value.trim() };
+    d.slug = slugify(d.title);
+    var miss = [!d.title && "judul", !d.eb && "lokasi singkat", !d.desc && "deskripsi", !d.prices.length && "harga", !d.specs.length && "spesifikasi"].filter(Boolean);
+    if (miss.length) return toast("Lengkapi dulu: " + miss.join(", ") + ".", true);
+    if (!photos.length && !confirm("Belum ada foto. Tetap tayangkan tanpa foto?")) return;
+    btn.disabled = true; toast("Menyimpan iklan…", false, 0);
+    Promise.all([readFile(SRC), readFile(SEO)]).then(function (r) {
+      src = r[0]; seo = r[1];
+      if (src.indexOf('href="listing/' + d.slug + '.html"') >= 0) throw new Error("Judul ini sudah dipakai iklan lain. Ubah sedikit judulnya.");
+      var next = insertCard(src, d, buildCard(d));
+      var entry = "  " + JSON.stringify(d.slug) + ": {\n    id: { t: " + JSON.stringify(d.st || d.title) + ", d: " + JSON.stringify(d.sd || d.desc) + " } },\n";
+      var nseo = seo.replace(/module\.exports = \{\n/, function (m) { return m + entry; });
+      var files = [{ path: SRC, content: next }, { path: SEO, content: nseo }];
+      photos.forEach(function (p, i) { files.push({ path: "img/listing/" + d.slug + "/" + (i + 1) + ".jpg", b64: p.b64 }); });
+      return pending(d.slug).then(function (pj) {
+        files.push({ path: PEND, content: pj });
+        return commit(files, "Admin: iklan baru " + d.slug);
+      }).then(function (sha) {
+        src = next; seo = nseo; parseAll(); render();
+        afterCommit(sha, "Iklan \"" + d.title + "\" disimpan.");
+        seoTouched = false; newForm();
+      });
+    }).catch(fail).then(function () { btn.disabled = false; });
+  });
+
   function fail(e) {
     console.error(e);
     if (e.status === 401) { toast("Token tidak berlaku. Silakan masuk lagi.", true, 0); logout(); return; }
@@ -616,8 +805,9 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     var r = v && v.report; if (!r) return;
     var head = '<p class="muted">' + (r.since ? "7 hari terakhir (" + esc(r.since) + " → " + esc(r.date) + ") · " + r.weekViews + " kali dilihat" : "Total sejak awal (per " + esc(r.date) + ") · kenaikan mingguan mulai Senin depan") + ' · total ' + r.totalViews + '</p>';
     var top = r.top.map(function (x, i) { return '<div class="st ok"><h3>' + (i + 1) + '. ' + esc(x.title) + '</h3><div class="muted">' + (r.since ? "+" + x.week + " minggu ini · " : "") + x.total + ' total · <a target="_blank" rel="noopener" href="listing/' + esc(x.slug) + '.html">buka</a></div></div>'; }).join("");
+    var wa = r.waTop && r.waTop.length ? '<div class="st ok"><h3>💬 Klik WhatsApp terbanyak</h3><div class="muted">' + r.waTop.map(function (x) { return esc(x.title) + " (" + (r.since && x.waWeek !== null ? "+" + x.waWeek + " minggu ini, " : "") + x.wa + " total)"; }).join("<br>") + '<br>Total klik WA: ' + r.waTotal + '</div></div>' : (r.waTotal !== undefined ? '<div class="st"><h3>💬 Klik WhatsApp</h3><div class="muted">Belum ada data.</div></div>' : "");
     var quiet = r.quiet.length ? '<div class="st bad"><h3>Sepi (' + r.quiet.length + ')</h3><div class="muted">' + r.quiet.map(function (x) { return esc(x.title); }).join(" · ") + '</div></div>' : "";
-    $("#poplist").innerHTML = head + top + quiet;
+    $("#poplist").innerHTML = head + top + wa + quiet;
   }
   function renderRem() {
     var open = rem.items.filter(function (x) { return !x.done; });
@@ -638,7 +828,8 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     b.addEventListener("click", function () {
       var t = b.dataset.tab;
       $$(".tabs button").forEach(function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
-      $("#tab-ads").hidden = t !== "ads"; $("#tab-wa").hidden = t !== "wa"; $("#tab-st").hidden = t !== "st";
+      $("#tab-ads").hidden = t !== "ads"; $("#tab-wa").hidden = t !== "wa"; $("#tab-st").hidden = t !== "st"; $("#tab-new").hidden = t !== "new";
+      if (t === "new" && !$("#n-title")) newForm();
       if (t === "wa") { $("#walist").innerHTML = '<p class="muted">Memuat…</p>'; Promise.all([loadNews(), loadShared()]).then(renderWa); }
       if (t === "st") { $("#stlist").innerHTML = '<p class="muted">Memuat…</p>'; loadStatus().catch(fail); }
     });

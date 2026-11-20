@@ -851,6 +851,7 @@
     ["±19 menit ke Green School Sibang Kaja", "±19 min to Green School, Sibang Kaja", "±19 мин до Green School, Сибанг-Каджа"],
     ["Cari per area", "Search by area", "Поиск по районам"],
     ["Kalkulator biaya beli", "Buying cost calculator", "Калькулятор расходов"],
+    ["Sudah terjual", "Sold", "Продано"],
     // ---------- Tanah 7.000 m² Toyaning, Ungasan ----------
     ["Toyaning · Ungasan", "Toyaning · Ungasan", "Тоянинг · Унгасан"],
     ["Tanah 7.000 m² di kawasan villa Toyaning, Ungasan", "7,000 m² land in the Toyaning villa area, Ungasan", "Участок 7 000 м² в районе вилл Тоянинг, Унгасан"],

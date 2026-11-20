@@ -1,7 +1,8 @@
 /* Jumlah dilihat per iklan (ikon mata) — katalog listing & halaman detail listing.
    Penghitung: abacus.jasoncameron.dev, kunci "v-<slug>" (sama untuk ID/EN/RU).
    Dihitung 1x per sesi browser: saat halaman detail dibuka, atau saat kartu di katalog terlihat ≥1 detik.
-   Angka hanya ditambah di domain asli; di tempat lain hanya dibaca. */
+   Angka hanya ditambah di domain asli; di tempat lain hanya dibaca.
+   Klik tombol WhatsApp juga dihitung per iklan: kunci "wa-<slug>" (laporan mingguan tools/views-report.js). */
 (function () {
   var NS = "baliarepro.github.io";
   var host = location.hostname;
@@ -57,6 +58,16 @@
     if (op === "hit") markSeen(slug);
     request(op, slug, function (v) { show(chip, v); });
   }
+
+  // Klik tombol WhatsApp per iklan (kunci "wa-<slug>"; di luar kartu iklan → "wa-umum"). Hanya di domain asli, 1x per sesi per iklan.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="wa.me/62812868080"]');
+    if (!a || !live) return;
+    var card = a.closest("article.card"), h = card && card.querySelector("h4 a[href*='listing/']");
+    var slug = document.body.getAttribute("data-listing") || (h ? h.getAttribute("href").replace(/^.*listing\//, "").replace(/\.html.*$/, "") : "umum");
+    try { if (sessionStorage.getItem("bapw-" + slug) === "1") return; sessionStorage.setItem("bapw-" + slug, "1"); } catch (x) {}
+    try { fetch("https://abacus.jasoncameron.dev/hit/" + NS + "/wa-" + slug, { keepalive: true, mode: "cors" }).catch(function () {}); } catch (x) {}
+  }, true);
 
   var detail = document.body.getAttribute("data-listing");
   if (detail) {
