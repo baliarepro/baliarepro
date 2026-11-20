@@ -202,5 +202,5 @@ async function main() {
   }
 }
 
-module.exports = { listingText, weeklyText };
+module.exports = { listingText, weeklyText, api, ready, dec, read };
 if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
