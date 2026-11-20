@@ -500,7 +500,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       '<fieldset><legend>Spesifikasi</legend><div id="n-specbox">' + rowsHtml("nspec", SPEC0.tanah, "Nama", "Isi") + '</div><p class="muted">Baris yang isinya kosong tidak ditampilkan.</p></fieldset>' +
       '<label for="n-points">Keunggulan (satu per baris)</label><textarea id="n-points"></textarea>' +
       '<label for="n-uses">Cocok untuk (satu per baris)</label><textarea id="n-uses"></textarea>' +
-      '<label for="n-map">Link Google Maps (opsional)</label><input id="n-map" type="url" placeholder="https://maps.app.goo.gl/…">' +
+      '<div id="n-mapbox"><label for="n-map">Link Google Maps (khusus tanah, opsional)</label><input id="n-map" type="url" placeholder="https://maps.app.goo.gl/…"></div>' +
       '<label for="n-drive">Link folder foto Google Drive (opsional)</label><input id="n-drive" type="url" placeholder="https://drive.google.com/…">' +
       '<fieldset><legend>Foto (maks. 3, foto pertama = foto utama)</legend><input id="n-photo" type="file" accept="image/jpeg,image/png,image/webp" multiple><div id="n-thumbs" class="row" style="margin-top:8px"></div><p class="muted">Foto otomatis dikecilkan &amp; diberi watermark. Foto HEIC dari iPhone: kirim lewat chat ke Claude bila tidak bisa dipilih.</p></fieldset>' +
       '<fieldset><legend>Google (SEO)</legend><label for="n-st">Judul di Google</label><input id="n-st" maxlength="90"><label for="n-sd">Deskripsi di Google</label><textarea id="n-sd" maxlength="200"></textarea><p class="muted">Terisi otomatis dari data di atas, boleh diubah. Ideal: judul 50–70 huruf, deskripsi 140–165 huruf.</p></fieldset>' +
@@ -537,6 +537,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       $("#n-specbox").innerHTML = rowsHtml("nspec", SPEC0[e.target.value].map(function (r) { return [r[0], cur[r[0]] || r[1]]; }), "Nama", "Isi");
     }
     if (e.target.id === "n-photo") addPhotos(e.target.files);
+    if (e.target.id === "n-type") $("#n-mapbox").hidden = e.target.value !== "tanah"; // lokasi bangunan tidak ditampilkan
   });
   function shrink(file) {
     return new Promise(function (ok, no) {
@@ -618,7 +619,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     var d = { type: typeSel.value, typeName: typeSel.selectedOptions[0].textContent, area: areaSel.value, areaName: opt.textContent, kab: opt.dataset.kab,
       title: $("#n-title").value.trim(), eb: $("#n-eb").value.trim(), desc: $("#n-desc").value.trim(), badge: $("#n-badge").value.trim(),
       prices: nRows("nprice"), specs: nRows("nspec"), points: lines("#n-points"), uses: lines("#n-uses"),
-      map: $("#n-map").value.trim(), drive: $("#n-drive").value.trim(), st: $("#n-st").value.trim(), sd: $("#n-sd").value.trim() };
+      map: typeSel.value === "tanah" ? $("#n-map").value.trim() : "", drive: $("#n-drive").value.trim(), st: $("#n-st").value.trim(), sd: $("#n-sd").value.trim() };
     d.slug = slugify(d.title);
     var miss = [!d.title && "judul", !d.eb && "lokasi singkat", !d.desc && "deskripsi", !d.prices.length && "harga", !d.specs.length && "spesifikasi"].filter(Boolean);
     if (miss.length) return toast("Lengkapi dulu: " + miss.join(", ") + ".", true);
