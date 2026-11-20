@@ -7,7 +7,8 @@
 <meta name="theme-color" content="#123F36">
 <title>Admin Iklan – Bali Are Property</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="manifest" href="/admin.webmanifest">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
 :root{--bg:#F6F2EA;--surface:#fff;--ink:#1C2421;--muted:#59625D;--line:#E2DACB;--green:#123F36;--green-soft:#E3ECE7;--gold:#D9A441;--gold-ink:#946410;--red:#B3261E;--red-soft:#F8E3E1;--wa:#1A8D4A;color-scheme:light}
 @media (prefers-color-scheme:dark){:root{--bg:#0B1814;--surface:#12241D;--ink:#EDF0EA;--muted:#A3B1A8;--line:#24392F;--green:#7FC4A8;--green-soft:#173129;--gold-ink:#E7BE6A;--red:#FF8A80;--red-soft:#3A1E1C;color-scheme:dark}}
@@ -854,5 +855,6 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   if (token) start(); else $("#login").hidden = false;
 })();
 </script>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(function () {});</script>
 </body>
 </html>
