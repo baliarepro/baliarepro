@@ -7,6 +7,10 @@ module.exports = {
     id: { t: "Dijual Estate 3 Villa Ocean View di Labuan Sait, Uluwatu Bali", d: "3 villa ocean view di atas bukit Labuan Sait, Pecatu–Uluwatu: tanah 3.318 m², bangunan ±2.500 m², SHM. Harga Rp65 M. Info & survei lokasi via WhatsApp." },
     en: { t: "Estate of 3 Ocean-View Villas for Sale, Labuan Sait Uluwatu Bali", d: "Three ocean-view villas on Labuan Sait hill, Pecatu–Uluwatu: 3,318 m² land, ±2,500 m² built, SHM freehold. IDR 65B. Ask on WhatsApp for details and a viewing." },
     ru: { t: "Продажа поместья из 3 вилл с видом на океан, Лабуан Саит, Бали", d: "Три виллы с видом на океан на холме Лабуан Саит (Пекату–Улувату): участок 3 318 м², ±2 500 м² построек, SHM. 65 млрд IDR. Пишите в WhatsApp." } },
+  "rumah-modern-3-lantai-4-kamar-tidur-di-nusa-dua": {
+    id: { t: "Dijual Rumah Modern 3 Lantai 4+1 Kamar Tidur di Nusa Dua, Bali", d: "Rumah 3 lantai, 4+1 KT, 4+1 KM, garasi 2 mobil, tanah 144 m², bangunan 300 m² di Nusa Dua. ±5 menit ke tol. Rp4,9 M nego tipis. Tanya via WhatsApp." },
+    en: { t: "Modern 3-Storey 4+1-Bedroom House for Sale in Nusa Dua, Bali", d: "3-storey house, 4+1 bedrooms, 4+1 baths, 2-car garage, 144 m² land, 300 m² building in Nusa Dua. ±5 min to the toll road. IDR 4.9B, slightly negotiable." },
+    ru: { t: "Продажа современного дома 4+1 спальни, 3 этажа, Нуса-Дуа, Бали", d: "Трёхэтажный дом: 4+1 спальни, 4+1 ванные, гараж на 2 машины, участок 144 м², дом 300 м², Нуса-Дуа. ±5 мин до трассы. 4,9 млрд IDR, небольшой торг." } },
   "over-kontrak-gedung-ex-karaoke-24-room-di-kedonganan-jimbaran": {
     id: { t: "Over Kontrak Gedung Ex Karaoke 24 Room di Kedonganan, Jimbaran Bali", d: "Gedung 2 lantai fully furnished, tanah 775 m², bangunan 650 m², 24 room, listrik 35.000 W + genset, di Bypass Kedonganan. Rp1,25 M/tahun, sisa sewa 8 tahun. Tanya WA." },
     en: { t: "Lease Takeover: 24-Room Ex-Karaoke Building in Kedonganan, Jimbaran", d: "Fully furnished 2-storey building, 775 m² land, 650 m² building, 24 rooms, 35,000 W power + generator on the Kedonganan Bypass. IDR 1.25B/year, 8 years left. WhatsApp us." },
