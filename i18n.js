@@ -359,6 +359,17 @@
     ["Bidang luas dengan pemandangan laut terbuka, posisi hook dengan dua muka jalan dan lebar depan 62 meter. Ideal untuk kompleks villa, perumahan, atau properti komersial.", "A large plot with open ocean views, on a corner with two road frontages and 62 m of frontage. Ideal for a villa complex, housing or commercial property.", "Большой угловой участок с открытым видом на океан, два фасада, ширина 62 м. Идеален для комплекса вилл, жилья или коммерции."],
     ["Tanah 395 m² gandeng di Labuan Sait", "395 m² combined plots in Labuan Sait", "Смежные участки 395 м² в Лабуан-Саит"],
     ["Dua bidang bersebelahan di kawasan villa dan akomodasi wisata Uluwatu. Bisa dibeli satuan atau sekaligus.", "Two adjoining plots in Uluwatu's villa and tourist accommodation area. Buy one or both.", "Два смежных участка в районе вилл и туристического жилья Улувату. Можно купить один или оба."],
+    // ---------- Tanah tebing 1,4 ha sebelah Savaya, Pecatu ----------
+    ["Tanah tebing 1,4 ha di sebelah Savaya, Pecatu", "1.4 ha clifftop land next to Savaya, Pecatu", "Участок 1,4 га на скале рядом с Savaya, Пекату"],
+    ["Lahan tebing strategis di kawasan Pecatu, bersebelahan dengan Savaya Bali. Bentang tebing ±53 meter menghadap selatan dengan akses jalan aspal yang lebar. Sangat potensial untuk luxury resort, cliff-front villas, boutique hotel, maupun proyek hospitality eksklusif.", "Strategic clifftop land in Pecatu, right next to Savaya Bali. A ±53 m south-facing cliff span with wide asphalt road access. Strong potential for a luxury resort, cliff-front villas, a boutique hotel or an exclusive hospitality project.", "Стратегический участок на скале в Пекату, по соседству с Savaya Bali. Скала протяжённостью ±53 м с видом на юг и широкая асфальтированная дорога. Большой потенциал для люкс-курорта, вилл на скале, бутик-отеля или эксклюзивного гостиничного проекта."],
+    ["Total 14.000 m²", "Total 14,000 m²", "Итого 14 000 м²"],
+    ["14.000 m² (140 are)", "14,000 m² (140 are)", "14 000 м² (140 ар)"],
+    ["Aspal, lebar ±7 m", "Asphalt, ±7 m wide", "Асфальт, ширина ±7 м"],
+    ["Bentang tebing ±53 meter menghadap selatan", "±53 m south-facing cliff span", "Скала ±53 м с видом на юг"],
+    ["Akses jalan aspal lebar ±7 meter", "Wide asphalt road access, ±7 m", "Широкая асфальтированная дорога, ±7 м"],
+    ["Skala lahan cocok untuk proyek resort kelas premium", "Plot size suited to a premium resort project", "Размер участка подходит для премиального курорта"],
+    ["Luxury resort", "Luxury resort", "Люкс-курорт"],
+    ["Cliff-front villas", "Cliff-front villas", "Виллы на скале"],
     // ---------- Tanah tebing 50 are sebelah Savaya, Pecatu ----------
     ["Tanah tebing 50 are di sebelah Savaya, Pecatu", "50-are clifftop land next to Savaya, Pecatu", "Участок 50 аре на скале рядом с Savaya, Пекату"],
     ["Sebelah Savaya · Pecatu", "Next to Savaya · Pecatu", "Рядом с Savaya · Пекату"],

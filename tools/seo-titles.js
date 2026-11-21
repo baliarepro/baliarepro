@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "tanah-tebing-14000-m2-sebelah-savaya-pecatu": {
+    id: { t: "Dijual Tanah Tebing 1,4 Ha Zona Pariwisata sebelah Savaya, Pecatu", d: "Tanah tebing 14.000 m² SHM zona pariwisata di sebelah Savaya Bali, Pecatu. Bentang tebing ±53 m hadap selatan, jalan aspal ±7 m. Rp17 jt/m² (Rp238 M). Tanya WA." },
+    en: { t: "1.4 Ha Clifftop Land for Sale next to Savaya, Pecatu Bali", d: "14,000 m² SHM clifftop plot with tourism zoning next to Savaya Bali, Pecatu. ±53 m south-facing cliff, ±7 m asphalt road. IDR 17M/m² (IDR 238B). Ask on WhatsApp." },
+    ru: { t: "Продажа участка 1,4 га на скале рядом с Savaya, Пекату, Бали", d: "Участок 14 000 м² на скале, SHM, турзона, рядом с Savaya Bali, Пекату. Скала ±53 м на юг, асфальт ±7 м. 17 млн IDR/м² (238 млрд IDR). Пишите в WhatsApp." } },
   "tanah-tebing-5000-m2-sebelah-savaya-pecatu": {
     id: { t: "Dijual Tanah Tebing 50 Are Zona Pariwisata sebelah Savaya, Pecatu", d: "Tanah tebing 5.000 m² SHM zona pariwisata di sebelah Savaya Bali, Pecatu. Lebar tebing ±48 m hadap selatan, jalan aspal ±6 m. Rp2,5 M/are (Rp125 M). Tanya WA." },
     en: { t: "50-Are Clifftop Land for Sale next to Savaya, Pecatu Bali", d: "5,000 m² SHM clifftop plot with tourism zoning next to Savaya Bali, Pecatu. ±48 m south-facing cliff, ±6 m asphalt road. IDR 2.5B/are (IDR 125B). Ask on WhatsApp." },
