@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "tanah-6000-m2-zona-pariwisata-dekat-bulgari-pecatu": {
+    id: { t: "Dijual Tanah 6.000 m² Zona Pariwisata dekat Bulgari, Pecatu Bali", d: "Tanah 60 are SHM zona pariwisata di kawasan tebing Pecatu dekat Bulgari Resort. Frontage ±91 m, jalan aspal, hadap timur. Rp10 jt/m² (Rp60 M). Tanya via WhatsApp." },
+    en: { t: "6,000 m² Tourism-Zoned Land for Sale near Bulgari, Pecatu Bali", d: "60-are SHM plot with tourism zoning in Pecatu's clifftop area near Bulgari Resort. ±91 m frontage, asphalt road, east-facing. IDR 10M/m² (IDR 60B). Ask on WhatsApp." },
+    ru: { t: "Продажа участка 6 000 м² в турзоне рядом с Bulgari, Пекату, Бали", d: "Участок 60 аре, SHM, туристическая зона, район скал Пекату рядом с Bulgari Resort. Фасад ±91 м, асфальт, на восток. 10 млн IDR/м² (60 млрд). Пишите в WhatsApp." } },
   "estate-3-villa-ocean-view-di-bukit-labuan-sait": {
     id: { t: "Dijual Estate 3 Villa Ocean View di Labuan Sait, Uluwatu Bali", d: "3 villa ocean view di atas bukit Labuan Sait, Pecatu–Uluwatu: tanah 3.318 m², bangunan ±2.500 m², SHM. Harga Rp65 M. Info & survei lokasi via WhatsApp." },
     en: { t: "Estate of 3 Ocean-View Villas for Sale, Labuan Sait Uluwatu Bali", d: "Three ocean-view villas on Labuan Sait hill, Pecatu–Uluwatu: 3,318 m² land, ±2,500 m² built, SHM freehold. IDR 65B. Ask on WhatsApp for details and a viewing." },
