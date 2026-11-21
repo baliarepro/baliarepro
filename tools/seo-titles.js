@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "tanah-tebing-5000-m2-sebelah-savaya-pecatu": {
+    id: { t: "Dijual Tanah Tebing 50 Are Zona Pariwisata sebelah Savaya, Pecatu", d: "Tanah tebing 5.000 m² SHM zona pariwisata di sebelah Savaya Bali, Pecatu. Lebar tebing ±48 m hadap selatan, jalan aspal ±6 m. Rp2,5 M/are (Rp125 M). Tanya WA." },
+    en: { t: "50-Are Clifftop Land for Sale next to Savaya, Pecatu Bali", d: "5,000 m² SHM clifftop plot with tourism zoning next to Savaya Bali, Pecatu. ±48 m south-facing cliff, ±6 m asphalt road. IDR 2.5B/are (IDR 125B). Ask on WhatsApp." },
+    ru: { t: "Продажа участка 50 аре на скале рядом с Savaya, Пекату, Бали", d: "Участок 5 000 м² на скале, SHM, турзона, рядом с Savaya Bali, Пекату. Скала ±48 м на юг, асфальт ±6 м. 2,5 млрд IDR/ар (125 млрд IDR). Пишите в WhatsApp." } },
   "tanah-6000-m2-zona-pariwisata-dekat-bulgari-pecatu": {
     id: { t: "Dijual Tanah 6.000 m² Zona Pariwisata dekat Bulgari, Pecatu Bali", d: "Tanah 60 are SHM zona pariwisata di kawasan tebing Pecatu dekat Bulgari Resort. Frontage ±91 m, jalan aspal, hadap timur. Rp10 jt/m² (Rp60 M). Tanya via WhatsApp." },
     en: { t: "6,000 m² Tourism-Zoned Land for Sale near Bulgari, Pecatu Bali", d: "60-are SHM plot with tourism zoning in Pecatu's clifftop area near Bulgari Resort. ±91 m frontage, asphalt road, east-facing. IDR 10M/m² (IDR 60B). Ask on WhatsApp." },
