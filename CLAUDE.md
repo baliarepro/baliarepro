@@ -28,6 +28,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 3. Perbarui angka di chip filter & ringkasan area bila perlu.
 4. Tambahkan judul & deskripsi SEO 3 bahasa di `tools/seo-titles.js` (build memberi peringatan bila belum ada). Bila listing terjual, ganti judulnya ke pola "Terjual:".
 5. `node tools/build-seo.js`, cek, commit, push ke `main`.
+6. Perbarui daftar listing di aplikasi **Bali Are Agen** (artifact https://claude.ai/artifact/2aNro3XL7bpBQnN23DvgHS): `node tools/agen-listings.js > <scratch>/listings.json`, lalu publish ulang artifact itu dengan `url` + `files: {"listings.json": …}` (baca artifact dulu). Sama bila listing terjual/diturunkan.
 
 ## SEO & GEO
 - Build membuat JSON-LD `RealEstateListing` per listing (alamat, harga, ketersediaan, semua spesifikasi sebagai `additionalProperty`), breadcrumb 3 level, sitemap, dan `llms.txt` (ringkasan situs + semua listing untuk mesin AI).
@@ -155,3 +156,8 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - WhatsApp Channel: https://whatsapp.com/channel/0029VbD8IGrEgGfNYeVYfD3J (tidak ada API posting; posting manual oleh pemilik). Telegram: https://t.me/baliareproperty. Tombol "Ikuti" ada di `section.contact` di `listings.html` (ikut ke semua halaman yang memakai blok kontak) dan di kotak "Kabari saya" (`cards.js`).
 - `tools/tg-post.js` (Bot API) dijalankan setelah Facebook di `instagram.yml` (listing → `tools/tg-state.json`: `posted`, `drops`, `errors`) dan `instagram-weekly.yml` (`--only=weekly` → `tools/tg-weekly-state.json`). Album foto IG yang sama + caption ≤1024 karakter (`tgText`: tanpa hashtag, link langsung, baris spesifikasi dibuang bila terlalu panjang). Maks. 2 per jalan: harga turun (dari `listing-meta.json`, "🔻 HARGA TURUN") → listing IG ≤3 hari (terbaru) → antrean lama (terlama dulu). Listing tersembunyi/terjual dilewati.
 - Butuh secret `TELEGRAM_BOT_TOKEN` (bot dari @BotFather, admin channel dengan izin Post messages); opsional `TELEGRAM_CHAT` (default `@baliareproperty`). Tanpa secret: dilewati (status ⏸️ di admin & health.js).
+
+## Aplikasi Bali Are Agen (CRM pribadi pemilik, artifact claude.ai)
+- https://claude.ai/artifact/2aNro3XL7bpBQnN23DvgHS — Hari Ini, Leads (8 tahap + template WA + rekomendasi listing), Jual-Beli (Closing → PPJB/KJB → AJB → Komisi), Sewa, Komisi. Data di `db` path `data/users/<id>` (pribadi; Claude bisa membaca sebagai pemilik lewat ArtifactData `data/users/me`). Data lead TIDAK pernah masuk repo publik ini.
+- Pilihan listing dari website = file `listings.json` di artifact (dibuat `tools/agen-listings.js`; artifact tidak bisa fetch domain lain).
+- Pengingat: tombol "Kirim ringkasan hari ini ke WA saya" (wa.me ke nomor pemilik) + tugas terjadwal Claude tiap pagi yang membaca data dan mengirim notifikasi ringkasan (WhatsApp tidak punya API gratis untuk kirim otomatis).
