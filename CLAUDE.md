@@ -159,5 +159,6 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 
 ## Aplikasi Bali Are Agen (CRM pribadi pemilik, artifact claude.ai)
 - https://claude.ai/artifact/2aNro3XL7bpBQnN23DvgHS — Hari Ini, Leads (8 tahap + template WA + rekomendasi listing), Jual-Beli (Closing → PPJB/KJB → AJB → Komisi), Sewa, Komisi. Data di `db` path `data/users/<id>` (pribadi; Claude bisa membaca sebagai pemilik lewat ArtifactData `data/users/me`). Data lead TIDAK pernah masuk repo publik ini.
+- Ditautkan dari `admin.html` (tombol emas "Bali Are Agen" di kepala halaman + catatan di tab Status); tidak disematkan (iframe) karena claude.ai tidak bisa disematkan dan datanya harus tetap di luar repo publik.
 - Pilihan listing dari website = file `listings.json` di artifact (dibuat `tools/agen-listings.js`; artifact tidak bisa fetch domain lain).
 - Pengingat: tombol "Kirim ringkasan hari ini ke WA saya" (wa.me ke nomor pemilik) + tugas terjadwal Claude tiap pagi yang membaca data dan mengirim notifikasi ringkasan (WhatsApp tidak punya API gratis untuk kirim otomatis).
