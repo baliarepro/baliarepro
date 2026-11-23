@@ -12,6 +12,11 @@ on:
         description: "Slug listing tertentu (kosong = otomatis pilih berikutnya)"
         required: false
         default: ""
+      tiktok_only:
+        description: "Hanya kirim ke draft TikTok (tanpa posting Instagram)"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -49,6 +54,7 @@ jobs:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           REEL_KEEP: /tmp/reel-out
+          TIKTOK_ONLY: ${{ inputs.tiktok_only && '1' || '' }}
         run: |
           if [ -n "${{ inputs.slug }}" ]; then node tools/ig-reels.js post --slug=${{ inputs.slug }}; else node tools/ig-reels.js post; fi
       - name: Kirim ke draft TikTok

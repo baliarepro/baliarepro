@@ -156,16 +156,17 @@ async function main() {
   const state = fs.existsSync(STATE) ? JSON.parse(fs.readFileSync(STATE, "utf8")) : {};
   state.posted = state.posted || {}; state.errors = state.errors || {};
   const save = () => fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + "\n");
-  if (!process.env.IG_TOKEN) { console.log("Secret IG_TOKEN belum diatur — Reels dilewati."); return; }
+  const TT_ONLY = !!process.env.TIKTOK_ONLY; // hanya buat video untuk draft TikTok (uji/manual), tanpa posting Instagram
+  if (!process.env.IG_TOKEN && !TT_ONLY) { console.log("Secret IG_TOKEN belum diatur — Reels dilewati."); return; }
   const igState = JSON.parse(fs.readFileSync(path.join(ROOT, "tools/ig-state.json"), "utf8"));
   const want = (process.argv.find((x) => x.startsWith("--slug=")) || "").slice(7);
-  const live = all.filter((l) => !l.hidden && !l.sold && photosOf(l.slug).length >= 2 && (want ? l.slug === want : !state.posted[l.slug]));
+  const live = all.filter((l) => !l.hidden && !l.sold && photosOf(l.slug).length >= 2 && (want ? l.slug === want : TT_ONLY || !state.posted[l.slug]));
   const igAt = (s) => (igState.posted && igState.posted[s] && igState.posted[s].at) || "9999";
   live.sort((x, y) => igAt(x.slug).localeCompare(igAt(y.slug)));
   const l = live[0];
   if (!l) { console.log("Tidak ada listing baru untuk Reel."); return; }
-  const { igId, token, username } = await IG.connect(igState, null);
-  console.log("Akun Instagram: @" + username + " · Reel untuk " + l.slug);
+  const { igId, token, username } = TT_ONLY ? {} : await IG.connect(igState, null);
+  console.log((TT_ONLY ? "Hanya TikTok" : "Akun Instagram: @" + username) + " · Reel untuk " + l.slug);
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "reel-"));
   try {
     const v = await render(l, dir, Object.keys(state.posted).length);
@@ -177,6 +178,7 @@ async function main() {
       fs.copyFileSync(v.file, path.join(process.env.REEL_KEEP, "reel.mp4"));
       fs.writeFileSync(path.join(process.env.REEL_KEEP, "reel.json"), JSON.stringify({ slug: l.slug, caption: cap.replace(/ ?\(link di bio\)/g, " (link di bio)") }));
     }
+    if (TT_ONLY) { console.log("Video disiapkan untuk TikTok saja."); return; }
     const r = await upload(v.file, cap, { igId, token, api: IG.api, ready: IG.ready });
     state.posted[l.slug] = { ...r, music: v.track }; delete state.errors[l.slug];
     console.log(`✓ Reel ${l.slug} → ${r.permalink || r.id}`);
