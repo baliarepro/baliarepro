@@ -157,10 +157,12 @@ async function main() {
   state.posted = state.posted || {}; state.errors = state.errors || {};
   const save = () => fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + "\n");
   const TT_ONLY = !!process.env.TIKTOK_ONLY; // hanya buat video untuk draft TikTok (uji/manual), tanpa posting Instagram
-  if (!process.env.IG_TOKEN && !TT_ONLY) { console.log("Secret IG_TOKEN belum diatur — Reels dilewati."); return; }
+  const FB_BACKLOG = !!process.env.FB_BACKLOG; // hanya Facebook Reels untuk listing yang Reel IG-nya sudah tayang sebelumnya (tanpa IG/TikTok)
+  const NO_IG = TT_ONLY || FB_BACKLOG;
+  if (!process.env.IG_TOKEN && !NO_IG) { console.log("Secret IG_TOKEN belum diatur — Reels dilewati."); return; }
   const igState = JSON.parse(fs.readFileSync(path.join(ROOT, "tools/ig-state.json"), "utf8"));
   const want = (process.argv.find((x) => x.startsWith("--slug=")) || "").slice(7);
-  let live = all.filter((l) => !l.hidden && !l.sold && photosOf(l.slug).length >= 2 && (want ? l.slug === want : TT_ONLY || !state.posted[l.slug]));
+  let live = all.filter((l) => !l.hidden && !l.sold && photosOf(l.slug).length >= 2 && (want ? l.slug === want : NO_IG || !state.posted[l.slug]));
   const igAt = (s) => (igState.posted && igState.posted[s] && igState.posted[s].at) || "9999";
   live.sort((x, y) => igAt(x.slug).localeCompare(igAt(y.slug)));
   if (TT_ONLY && !want) {
@@ -173,10 +175,15 @@ async function main() {
     const old = pool.filter((l) => tt[l.slug] && Date.now() - Date.parse(tt[l.slug].at) >= 14 * 864e5).sort((x, y) => tt[x.slug].at.localeCompare(tt[y.slug].at));
     live = [...fresh, ...old];
   }
+  if (FB_BACKLOG && !want) {
+    // Facebook Reels susulan (permintaan pemilik 23 Nov 2026): listing yang Reel IG-nya sudah tayang tapi belum ada di Facebook, urut Reel IG terlama
+    const fb = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, "tools/fb-reels-state.json"), "utf8")).posted || {}; } catch (e) { return {}; } })();
+    live = live.filter((l) => state.posted[l.slug] && !fb[l.slug]).sort((x, y) => (state.posted[x.slug].at || "").localeCompare(state.posted[y.slug].at || ""));
+  }
   const l = live[0];
-  if (!l) { console.log("Tidak ada listing baru untuk Reel."); return; }
-  const { igId, token, username } = TT_ONLY ? {} : await IG.connect(igState, null);
-  console.log((TT_ONLY ? "Hanya TikTok" : "Akun Instagram: @" + username) + " · Reel untuk " + l.slug);
+  if (!l) { console.log(FB_BACKLOG ? "Tidak ada Reel lama yang belum ada di Facebook." : "Tidak ada listing baru untuk Reel."); return; }
+  const { igId, token, username } = NO_IG ? {} : await IG.connect(igState, null);
+  console.log((TT_ONLY ? "Hanya TikTok" : FB_BACKLOG ? "Hanya Facebook Reels" : "Akun Instagram: @" + username) + " · Reel untuk " + l.slug);
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "reel-"));
   try {
     const v = await render(l, dir, Object.keys(state.posted).length);
@@ -186,9 +193,9 @@ async function main() {
     if (process.env.REEL_KEEP) { // salinan untuk draft TikTok (tools/tiktok-post.js, langkah berikutnya di reels.yml)
       fs.mkdirSync(process.env.REEL_KEEP, { recursive: true });
       fs.copyFileSync(v.file, path.join(process.env.REEL_KEEP, "reel.mp4"));
-      fs.writeFileSync(path.join(process.env.REEL_KEEP, "reel.json"), JSON.stringify({ slug: l.slug, caption: cap.replace(/ ?\(link di bio\)/g, " (link di bio)") }));
+      fs.writeFileSync(path.join(process.env.REEL_KEEP, "reel.json"), JSON.stringify({ slug: l.slug, caption: cap, noTiktok: FB_BACKLOG, noFb: TT_ONLY }));
     }
-    if (TT_ONLY) { console.log("Video disiapkan untuk TikTok saja."); return; }
+    if (NO_IG) { console.log("Video disiapkan untuk " + (TT_ONLY ? "TikTok" : "Facebook Reels") + " saja."); return; }
     const r = await upload(v.file, cap, { igId, token, api: IG.api, ready: IG.ready });
     state.posted[l.slug] = { ...r, music: v.track }; delete state.errors[l.slug];
     console.log(`✓ Reel ${l.slug} → ${r.permalink || r.id}`);

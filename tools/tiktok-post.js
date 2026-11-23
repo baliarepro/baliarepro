@@ -78,7 +78,8 @@ async function main() {
   const dir = arg("dir");
   const file = path.join(dir, "reel.mp4"), meta = path.join(dir, "reel.json");
   if (!fs.existsSync(file) || !fs.existsSync(meta)) { console.log("Tidak ada video Reel baru untuk TikTok."); return; }
-  const { slug, caption } = JSON.parse(fs.readFileSync(meta, "utf8"));
+  const { slug, caption, noTiktok } = JSON.parse(fs.readFileSync(meta, "utf8"));
+  if (noTiktok) { console.log("Video ini khusus Facebook Reels — TikTok dilewati."); return; }
   if (state.posted[slug] && !process.argv.includes("--force") && !(Date.now() - Date.parse(state.posted[slug].at) >= 14 * 864e5)) { console.log(`${slug} sudah pernah dikirim ke TikTok.`); return; }
   try {
     const token = await access(state); save();
