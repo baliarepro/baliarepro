@@ -197,6 +197,10 @@
   function priceOf(c) {
     var b = c.querySelector(".price > .hl b") || c.querySelector(".price > div:not(.sold-note) b");
     if (!b) return NaN;
+    if (/us\$|usd/i.test(b.textContent)) { // harga utama dolar: pakai baris "Setara rupiah" untuk filter/urutan
+      var rp = [].filter.call(c.querySelectorAll(".price > div > b"), function (x) { return /rp/i.test(x.textContent); })[0];
+      if (rp) b = rp;
+    }
     var x = b.cloneNode(true); [].forEach.call(x.querySelectorAll(".fx"), function (f) { f.remove(); });
     var s = txt(x).toLowerCase(), n = numIn(s);
     if (/miliar|billion|млрд|\d\s*(m|b|bn)\b/.test(s)) return n * 1e9;

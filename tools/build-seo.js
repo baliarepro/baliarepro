@@ -151,7 +151,8 @@ function parseRp(t) {
   fs.unlinkSync(path.join(ROOT, tmp));
 
   const idCards = out.id.cards;
-  const prices = Object.fromEntries(idCards.map((c) => [c.slug, parseRp(c.priceText)]));
+  // Harga utama dalam US$ (mis. leasehold): pakai baris rupiah pertama di kartu ("Setara rupiah ±…")
+  const prices = Object.fromEntries(idCards.map((c) => [c.slug, parseRp(c.priceText) ?? (c.priceBs.map(parseRp).find((v) => v) || null)]));
   // Halaman per area: keanggotaan dihitung dari kartu Indonesia, lalu dipetakan ke kartu tiap bahasa
   const AR = require("./area.js");
   const idAreas = AR.areaList(idCards.map((c) => ({ ...c, total: prices[c.slug] })));

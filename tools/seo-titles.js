@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "villa-1-kamar-private-pool-leasehold-di-tumbak-bayuh": {
+    id: { t: "Dijual Villa 1 Kamar Private Pool Leasehold di Tumbak Bayuh Bali", d: "Villa 1 KT fully furnished, private pool, tanah 100 m², leasehold 25 tahun di Tumbak Bayuh dekat Canggu. US$199.000, potensi sewa Rp372 jt/tahun. Tanya WA." },
+    en: { t: "1-Bedroom Private Pool Villa for Sale, Leasehold, Tumbak Bayuh Bali", d: "Fully furnished 1-bed villa with private pool, 100 m² land, 25-year leasehold in Tumbak Bayuh near Canggu. USD 199,000, rental potential IDR 372M/yr. WhatsApp." },
+    ru: { t: "Продажа виллы с 1 спальней и бассейном, лизхолд, Тумбак Баюх, Бали", d: "Меблированная вилла с 1 спальней и бассейном, участок 100 м², лизхолд 25 лет, Тумбак Баюх у Чангу. 199 000 USD, аренда до 372 млн IDR в год. WhatsApp." } },
   "gudang-baru-924-m2-posisi-hook-disewakan-di-pidada-denpasar": {
     id: { t: "Disewakan Gudang Baru 924 m² Posisi Hook di Pidada, Denpasar Bali", d: "Gudang baru 924 m² (tanah 756 m²) posisi hook, jalan 12 m, akses truk tronton & wing box, listrik 16.500 W. Sewa mulai Rp500 jt/tahun. Tanya WA." },
     en: { t: "New 924 m² Corner Warehouse for Rent in Pidada, Denpasar Bali", d: "New 924 m² corner warehouse (756 m² land), 12 m road, tronton & wing-box truck access, 16,500 W power. Lease from IDR 500M/year. WhatsApp us." },
