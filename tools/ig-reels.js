@@ -172,6 +172,11 @@ async function main() {
     console.log("video", v.seconds + " dtk,", (fs.statSync(v.file).size / 1e6).toFixed(1) + " MB");
     const SEO = require("./seo-titles.js");
     const cap = IG.caption(l, SEO[l.slug]).replace(/^🏝️ /, "🎥 ");
+    if (process.env.REEL_KEEP) { // salinan untuk draft TikTok (tools/tiktok-post.js, langkah berikutnya di reels.yml)
+      fs.mkdirSync(process.env.REEL_KEEP, { recursive: true });
+      fs.copyFileSync(v.file, path.join(process.env.REEL_KEEP, "reel.mp4"));
+      fs.writeFileSync(path.join(process.env.REEL_KEEP, "reel.json"), JSON.stringify({ slug: l.slug, caption: cap.replace(/ ?\(link di bio\)/g, " (link di bio)") }));
+    }
     const r = await upload(v.file, cap, { igId, token, api: IG.api, ready: IG.ready });
     state.posted[l.slug] = { ...r, music: v.track }; delete state.errors[l.slug];
     console.log(`✓ Reel ${l.slug} → ${r.permalink || r.id}`);

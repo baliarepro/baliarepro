@@ -39,6 +39,8 @@ function check(now = Date.now()) {
   const tgOff = !Object.keys(tg.posted || {}).length && !Object.keys(tgw.posted || {}).length && !Object.keys(tg.errors || {}).length;
   add("Telegram (listing)", tg.posted, tg.errors, { off: tgOff, note: tgOff ? "belum aktif (secret TELEGRAM_BOT_TOKEN)" : "" });
   add("Telegram (berita mingguan)", tgw.posted, tgw.errors, { maxAgeH: tgOff ? 0 : 8 * 24, off: tgOff });
+  const tt = read("tools/tiktok-state.json", {});
+  add("TikTok (draft Reel)", tt.posted, tt.errors, { maxAgeH: tt.connected ? 50 : 0, off: !tt.connected, note: tt.connected ? "dikirim ke kotak masuk TikTok, diposting manual" : "belum aktif (aplikasi TikTok + secret TIKTOK_CLIENT_KEY/SECRET)" });
   const reminders = (read("pengingat.json", { items: [] }).items || []).filter((r) => !r.done);
   const pend = Object.keys(read("tools/perlu-terjemahan.json", {}));
   const views = read("laporan-dilihat.json", null);

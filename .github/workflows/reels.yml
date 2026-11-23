@@ -48,14 +48,20 @@ jobs:
         env:
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          REEL_KEEP: /tmp/reel-out
         run: |
           if [ -n "${{ inputs.slug }}" ]; then node tools/ig-reels.js post --slug=${{ inputs.slug }}; else node tools/ig-reels.js post; fi
+      - name: Kirim ke draft TikTok
+        env:
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+        run: node tools/tiktok-post.js post --dir=/tmp/reel-out || true
       - name: Simpan status
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/reels-state.json
+          git add tools/reels-state.json tools/tiktok-state.json 2>/dev/null || git add tools/reels-state.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Reels: perbarui status posting"
           for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done

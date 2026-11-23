@@ -49,7 +49,8 @@
     {
       "id": "tiktok",
       "text": "Putuskan TikTok: A (full otomatis, perlu review TikTok) atau B (dikirim ke draft, Bapak tinggal pilih lagu & posting).",
-      "added": "2026-11-09"
+      "added": "2026-11-09",
+      "done": "2026-11-23"
     },
     {
       "id": "gsc-laporan",
@@ -71,6 +72,11 @@
     {
       "id": "gbp-isi",
       "text": "Google Business Profile: pastikan sudah terverifikasi, lalu lengkapi jam buka, logo, foto sampul, 5–10 foto listing, Layanan, dan Deskripsi (teks di dokumen Project \"claude/google-business-profile.md\"). Kirim link \"Minta ulasan\" (g.page/r/…) ke Claude.",
+      "added": "2026-11-23"
+    },
+    {
+      "id": "tiktok-app",
+      "text": "TikTok (opsi B): buat aplikasi di developers.tiktok.com (Login Kit + Content Posting API/Upload, scope video.upload), simpan secret GitHub TIKTOK_CLIENT_KEY & TIKTOK_CLIENT_SECRET, kirim Client Key ke Claude, lalu login di baliareproperty.com/tiktok.html. Panduan dari Claude 23 Nov 2026.",
       "added": "2026-11-23"
     }
   ]

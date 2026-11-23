@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123F36">
+<meta name="robots" content="noindex">
+<title>Hubungkan TikTok – Bali Are Property</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#F6F2EA;--ink:#1C2421;--muted:#59625D;--green:#123F36;--gold:#946410;--line:#E2DACB}
+@media (prefers-color-scheme:dark){:root{--bg:#0B1814;--ink:#EDF0EA;--muted:#A3B1A8;--green:#2E7D69;--gold:#D9A441;--line:#24342E}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif;padding:28px 16px 48px}
+main{max-width:720px;margin:0 auto}
+header a{display:inline-flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-weight:700}
+header img{width:40px;height:40px;border-radius:10px}
+h1{font-size:28px;line-height:1.2;margin:26px 0 4px}
+h2{font-size:19px;margin:26px 0 6px}
+p,li{color:var(--ink)}
+.muted{color:var(--muted);font-size:14px}
+a{color:var(--gold)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+code,.code{font:600 15px ui-monospace,Menlo,monospace;word-break:break-all;background:rgba(127,127,127,.12);padding:10px 12px;border-radius:10px;display:block}
+.btn{display:inline-block;border:0;border-radius:999px;padding:12px 20px;font:600 15px system-ui,sans-serif;text-decoration:none;cursor:pointer;background:var(--green);color:#F6F2EA;margin:6px 6px 0 0}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+</style>
+</head>
+<body>
+<main>
+<header><a href="/"><img src="/icon-192.png" alt="">Bali Are Property</a></header>
+
+<h1>Hubungkan TikTok</h1>
+<p class="muted">Halaman ini hanya untuk pemilik Bali Are Property. This page is only for the Bali Are Property account owner.</p>
+<div id="box"></div>
+<script>
+(function () {
+  var CK = ""; // TikTok client key (publik), diisi setelah aplikasi dibuat di developers.tiktok.com
+  var REDIRECT = "https://baliareproperty.com/tiktok.html";
+  var WF = "https://github.com/baliarepro/baliarepro/actions/workflows/tiktok-auth.yml";
+  var box = document.getElementById("box"), q = new URLSearchParams(location.search);
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  if (q.get("code")) {
+    var code = q.get("code");
+    box.innerHTML = "<p>✅ Login TikTok berhasil. Kode ini berlaku beberapa menit dan hanya sekali pakai:</p><div class='code' id='c'>" + esc(code) + "</div>" +
+      "<p><button class='btn' id='cp' type='button'>Salin kode</button><a class='btn alt' href='" + WF + "' target='_blank' rel='noopener'>Buka GitHub Actions</a></p>" +
+      "<ol><li>Tekan <b>Salin kode</b>.</li><li>Tekan <b>Buka GitHub Actions</b> → <b>Run workflow</b>.</li><li>Tempel kode di kolom <b>Kode</b> → <b>Run workflow</b>.</li></ol>" +
+      "<p class='muted'>Jangan kirim kode ini ke chat atau orang lain.</p>";
+    document.getElementById("cp").onclick = function () {
+      var b = this; (navigator.clipboard ? navigator.clipboard.writeText(code) : Promise.reject()).then(function () { b.textContent = "Tersalin ✓"; }).catch(function () {
+        var r = document.createRange(); r.selectNodeContents(document.getElementById("c")); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Kode terpilih, salin manual";
+      });
+    };
+  } else if (q.get("error")) {
+    box.innerHTML = "<p>⚠️ Login TikTok dibatalkan atau gagal: " + esc(q.get("error_description") || q.get("error")) + "</p><p><a class='btn' href='tiktok.html'>Coba lagi</a></p>";
+  } else if (!CK) {
+    box.innerHTML = "<p>Aplikasi TikTok belum disiapkan. Kabari Claude.</p>";
+  } else {
+    var url = "https://www.tiktok.com/v2/auth/authorize/?client_key=" + encodeURIComponent(CK) + "&scope=user.info.basic,video.upload&response_type=code&redirect_uri=" + encodeURIComponent(REDIRECT) + "&state=bap";
+    box.innerHTML = "<p>Login dengan akun TikTok <b>Bali Are Property</b> agar video Reel harian dikirim otomatis ke draft TikTok.</p><p><a class='btn' href='" + url + "'>Login dengan TikTok</a></p>";
+  }
+})();
+</script>
+
+<hr>
+<p class="muted">Bali Are Property · Jl. Sedap Malam No.18, Sanur Kaja, Denpasar, Bali 80237 · WhatsApp <a href="https://wa.me/62812868080">+62 812 868 080</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></p>
+</main>
+</body>
+</html>

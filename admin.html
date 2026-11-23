@@ -775,7 +775,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   function lastOf(o) { var v = Object.keys(o || {}).map(function (k) { return { key: k, at: o[k].at, permalink: o[k].permalink }; }).filter(function (x) { return x.at; }); v.sort(function (a, b) { return b.at < a.at ? -1 : 1; }); return v[0] || null; }
   function fmt(at) { try { return new Date(at).toLocaleString("id-ID", { timeZone: "Asia/Makassar", dateStyle: "medium", timeStyle: "short" }) + " WITA"; } catch (e) { return at; } }
   function loadStatus() {
-    var files = ["tools/ig-state.json", "tools/ig-weekly-state.json", "tools/threads-state.json", "tools/threads-weekly-state.json", "tools/fb-state.json", "tools/fb-weekly-state.json", REM, "tools/reels-state.json", "laporan-dilihat.json", "tools/tg-state.json", "tools/tg-weekly-state.json"];
+    var files = ["tools/ig-state.json", "tools/ig-weekly-state.json", "tools/threads-state.json", "tools/threads-weekly-state.json", "tools/fb-state.json", "tools/fb-weekly-state.json", REM, "tools/reels-state.json", "laporan-dilihat.json", "tools/tg-state.json", "tools/tg-weekly-state.json", "tools/tiktok-state.json"];
     return Promise.all(files.map(rj)).then(function (r) {
       var ig = r[0], igw = r[1], th = r[2], thw = r[3], fb = r[4], fbw = r[5]; rem = r[6].items ? r[6] : { items: [] };
       var q = (ig.queue || []).length, now = Date.now(), H = 3600e3, bad = 0;
@@ -790,7 +790,8 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
         ["Facebook Page · listing", fb.posted, fb.errors, fbOff ? 0 : q ? 30 : 0, fbOff ? "Belum aktif, lihat pengingat" : ""],
         ["Facebook Page · berita mingguan", fbw.posted, fbw.errors, fbOff ? 0 : 8 * 24, ""],
         ["Telegram · listing", r[9].posted, r[9].errors, 0, tgOff ? "Belum aktif, lihat pengingat" : "Salinan IG ke t.me/baliareproperty", tgOff],
-        ["Telegram · berita mingguan", r[10].posted, r[10].errors, tgOff ? 0 : 8 * 24, "", tgOff]
+        ["Telegram · berita mingguan", r[10].posted, r[10].errors, tgOff ? 0 : 8 * 24, "", tgOff],
+        ["TikTok · draft Reel", r[11].posted, r[11].errors, r[11].connected ? 50 : 0, r[11].connected ? "Video Reel dikirim ke kotak masuk TikTok; buka TikTok, pilih lagu, tempel caption, posting" : "Belum aktif, lihat pengingat", !r[11].connected]
       ];
       $("#stlist").innerHTML = ch.map(function (c, i) {
         var last = lastOf(c[1]), errs = Object.keys(c[2] || {}).map(function (k) { return k + ": " + (c[2][k].msg || ""); });
@@ -802,6 +803,11 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
           errs.map(function (e) { return '<div class="err">' + esc(e) + '</div>'; }).join("") +
           (cls === "bad" && !errs.length ? '<div class="err">Tidak ada posting baru lebih lama dari jadwal. Kabari Claude.</div>' : "") + '</div>';
       }).join("");
+      var tt = lastOf(r[11].posted), ttc = tt && r[11].posted[tt.key].caption;
+      if (ttc) {
+        $("#stlist").insertAdjacentHTML("beforeend", '<div class="st ok"><h3>🎵 Caption TikTok terbaru</h3><div class="muted">Draft: ' + esc(tt.key) + ' · ' + fmt(tt.at) + '</div><textarea id="ttcap" readonly rows="5" style="width:100%;margin-top:8px;font:inherit;font-size:14px">' + esc(ttc) + '</textarea><button class="btn small" type="button" id="ttcopy">Salin caption</button></div>');
+        $("#ttcopy").onclick = function () { var t = $("#ttcap"); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(function () { toast("Caption tersalin."); }).catch(function () { document.execCommand("copy"); toast("Caption tersalin."); }); };
+      }
       renderPop(r[8]);
       renderRem();
       $("#st-dot").hidden = !(bad || rem.items.some(function (x) { return !x.done; }));
