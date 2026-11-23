@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "gudang-baru-924-m2-posisi-hook-disewakan-di-pidada-denpasar": {
+    id: { t: "Disewakan Gudang Baru 924 m² Posisi Hook di Pidada, Denpasar Bali", d: "Gudang baru 924 m² (tanah 756 m²) posisi hook, jalan 12 m, akses truk tronton & wing box, listrik 16.500 W. Sewa mulai Rp500 jt/tahun. Tanya WA." },
+    en: { t: "New 924 m² Corner Warehouse for Rent in Pidada, Denpasar Bali", d: "New 924 m² corner warehouse (756 m² land), 12 m road, tronton & wing-box truck access, 16,500 W power. Lease from IDR 500M/year. WhatsApp us." },
+    ru: { t: "Аренда нового склада 924 м², угловой, Пидада, Денпасар, Бали", d: "Новый угловой склад 924 м² (участок 756 м²), дорога 12 м, подъезд для фур, электричество 16 500 Вт. Аренда от 500 млн IDR в год. WhatsApp." } },
   "tanah-202-m2-di-gatsu-vi-denpasar": {
     id: { t: "Dijual Tanah 202 m² di Gatot Subroto VI, Denpasar Bali", d: "Tanah SHM 202 m² di kawasan hunian Gatsu VI, Denpasar, dekat Lapangan Lumintang & RS Puri Bunda. Cocok untuk kost. Rp7,5 jt/m² nego (±Rp1,5 M). Tanya WA." },
     en: { t: "202 m² Land for Sale on Gatot Subroto VI, Denpasar Bali", d: "202 m² plot in the Gatsu VI residential area, Denpasar, near Lumintang Field & Puri Bunda Hospital. Suits a boarding house. IDR 7.5M/m², negotiable. WhatsApp us." },
