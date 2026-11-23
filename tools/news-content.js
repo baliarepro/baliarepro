@@ -5,6 +5,555 @@
 //    pts: [3 fakta ≤70 karakter], arti: 1 kalimat "artinya bagi Anda" ≤110 karakter}. Tanpa ig, slide dibuat otomatis dari judul & isi.
 const NEWS = [
   {
+    "slug": "ump-bali-2027-naik-42-persen-hotel-villa",
+    "date": "2026-11-23",
+    "ig": {
+      "stat": "+42,15%",
+      "statL": "UMP Bali 2027: Rp4.559.287 per bulan, berlaku 1 Januari 2027",
+      "h": "UMP Bali 2027 naik 42,15%, hotel berbintang Rp4,64 juta",
+      "pts": [
+        "Naik Rp1.351.828 dari UMP 2026 sebesar Rp3.207.459",
+        "Upah minimum sektor hotel berbintang: Rp4.644.907 per bulan",
+        "Badung bahas UMK 2027 mulai 23 Nov; UMK Badung 2026 Rp3,79 juta"
+      ],
+      "arti": "Biaya staf villa dan hotel naik mulai 2027: hitung ulang proyeksi imbal hasil sewa sebelum membeli."
+    },
+    "sources": [
+      {
+        "t": "ANTARA News Bali – UMP Bali 2027 naik drastis jadi Rp4,55 juta, ini pertimbangan yang dilakukan Gubernur Koster (20 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/419511/ump-bali-2027-naik-drastis-jadi-rp455-juta-ini-pertimbangan-yang-dilakukan-gubernur-koster"
+      },
+      {
+        "t": "Bali Post – UMP Bali 2027 tembus Rp4,55 juta, Disperinaker Badung segera bahas UMK dan UMSK (22 Nov 2026)",
+        "u": "https://www.balipost.com/news/2026/11/22/598725/UMP-Bali-2027-Tembus-Rp4,55...html"
+      }
+    ],
+    "id": {
+      "tag": "Regulasi",
+      "title": "UMP Bali 2027 naik 42,15% jadi Rp4.559.287, upah minimum hotel berbintang Rp4.644.907",
+      "summary": "Gubernur Bali Wayan Koster menetapkan UMP 2027 sebesar Rp4.559.287 per bulan, naik 42,15% dari 2026, serta upah minimum sektor hotel berbintang Rp4.644.907. Keduanya berlaku 1 Januari 2027; Badung mulai membahas UMK 2027.",
+      "body": [
+        {
+          "p": "Pemprov Bali menetapkan Upah Minimum Provinsi (UMP) 2027 sebesar Rp4.559.287 per bulan lewat Keputusan Gubernur Bali Nomor 995/03-M/HK/2026 yang ditandatangani Jumat, 20 November 2026. Angka ini naik Rp1.351.828 atau 42,15% dari UMP 2026 sebesar Rp3.207.459, dan berlaku mulai 1 Januari 2027."
+        },
+        {
+          "h": "Fakta utama"
+        },
+        {
+          "ul": [
+            "Gubernur juga menetapkan Upah Minimum Sektoral Provinsi (UMSP) 2027 untuk hotel berbintang sebesar Rp4.644.907 per bulan.",
+            "Menurut ANTARA, penetapan merujuk pada berita acara Dewan Pengupahan Provinsi tertanggal 18 November 2026. Kebutuhan hidup layak (KHL) 2027 ditetapkan Rp5.604.481, sehingga UMP setara 81,35% KHL.",
+            "Disperinaker Badung menjadwalkan sidang Dewan Pengupahan pada Senin, 23 November 2026, untuk rekomendasi UMK dan UMSK Badung 2027; angkanya belum diketahui.",
+            "Sebagai pembanding, Bali Post mencatat UMK Badung 2026 sebesar Rp3.791.002,57 dan UMSK hotel bintang 4 dan 5 di Badung Rp3.828.912,60, tertinggi di Bali."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer, investor, dan pemilik villa"
+        },
+        {
+          "p": "Gaji staf adalah salah satu biaya terbesar villa sewaan dan hotel. Dengan kenaikan upah minimum sebesar ini, biaya operasional properti sewaan di Bali, termasuk Kuta Selatan, akan naik mulai 2027, sementara UMK Badung yang biasanya lebih tinggi dari UMP masih akan ditetapkan. Bagi calon buyer villa investasi, Bali Are Property (agen independen sejak 2009) menyarankan meminta rincian biaya staf dalam proyeksi imbal hasil dari developer atau pengelola, dan memastikan angkanya sudah memakai upah 2027. Pemilik villa sebaiknya meninjau tarif sewa dan struktur staf sebelum tahun depan."
+        },
+        {
+          "note": "Catatan: ringkasan ini bukan nasihat hukum maupun nasihat investasi. Besaran UMK/UMSK Badung 2027 masih menunggu penetapan resmi."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Regulation",
+      "title": "Bali's 2027 minimum wage rises 42.15% to Rp4,559,287; star-hotel minimum set at Rp4,644,907",
+      "summary": "Bali Governor Wayan Koster set the 2027 provincial minimum wage (UMP) at Rp4,559,287 per month, up 42.15% from 2026, plus a star-hotel sector minimum of Rp4,644,907. Both take effect on 1 January 2027; Badung has started discussing its 2027 regency wage.",
+      "body": [
+        {
+          "p": "The Bali provincial government set the 2027 Provincial Minimum Wage (UMP) at Rp4,559,287 per month through Bali Governor Decree No. 995/03-M/HK/2026, signed on Friday, 20 November 2026. This is an increase of Rp1,351,828, or 42.15%, from the 2026 UMP of Rp3,207,459, and applies from 1 January 2027."
+        },
+        {
+          "h": "Key facts"
+        },
+        {
+          "ul": [
+            "The governor also set the 2027 Provincial Sectoral Minimum Wage (UMSP) for star hotels at Rp4,644,907 per month.",
+            "According to ANTARA, the decision refers to the minutes of the Provincial Wage Council dated 18 November 2026. The 2027 decent living needs figure (KHL) was set at Rp5,604,481, so the UMP equals 81.35% of KHL.",
+            "Badung's Manpower Office scheduled a Wage Council session on Monday, 23 November 2026, for its 2027 regency (UMK) and sectoral (UMSK) wage recommendations; the figures are not yet known.",
+            "For comparison, Bali Post reports Badung's 2026 UMK at Rp3,791,002.57 and the 2026 UMSK for 4- and 5-star hotels in Badung at Rp3,828,912.60, the highest in Bali."
+          ]
+        },
+        {
+          "h": "What it means for buyers, investors and villa owners"
+        },
+        {
+          "p": "Staff salaries are one of the largest costs of rental villas and hotels. With a minimum-wage increase of this size, operating costs for rental properties in Bali, including South Kuta, will rise from 2027, while Badung's UMK, which is usually higher than the UMP, is still to be set. For buyers of investment villas, Bali Are Property (an independent agency since 2009) recommends asking developers or managers for the staff-cost breakdown in their yield projections and checking that it already uses 2027 wages. Villa owners should review rental rates and staffing before next year."
+        },
+        {
+          "note": "Note: this summary is not legal or investment advice. Badung's 2027 UMK/UMSK is still awaiting official determination."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Регулирование",
+      "title": "Минимальная зарплата на Бали в 2027 году вырастет на 42,15% до Rp4 559 287; для звёздных отелей — Rp4 644 907",
+      "summary": "Губернатор Бали Ваян Костер установил минимальную зарплату провинции (UMP) на 2027 год в Rp4 559 287 в месяц, на 42,15% выше 2026 года, а также отраслевой минимум для звёздных отелей Rp4 644 907. Оба действуют с 1 января 2027 года; Бадунг начал обсуждать свой минимум на 2027 год.",
+      "body": [
+        {
+          "p": "Правительство провинции Бали установило минимальную зарплату провинции (UMP) на 2027 год в размере Rp4 559 287 в месяц решением губернатора Бали № 995/03-M/HK/2026, подписанным в пятницу, 20 ноября 2026 года. Это рост на Rp1 351 828, или 42,15%, по сравнению с UMP 2026 года (Rp3 207 459); новая ставка действует с 1 января 2027 года."
+        },
+        {
+          "h": "Основные факты"
+        },
+        {
+          "ul": [
+            "Губернатор также установил отраслевую минимальную зарплату провинции (UMSP) на 2027 год для звёздных отелей — Rp4 644 907 в месяц.",
+            "По данным ANTARA, решение основано на протоколе Совета по заработной плате провинции от 18 ноября 2026 года. Прожиточный уровень (KHL) на 2027 год определён в Rp5 604 481, то есть UMP составляет 81,35% KHL.",
+            "Управление труда Бадунга назначило заседание Совета по заработной плате на понедельник, 23 ноября 2026 года, для рекомендаций по UMK и UMSK Бадунга на 2027 год; цифры пока неизвестны.",
+            "Для сравнения, по данным Bali Post, UMK Бадунга в 2026 году — Rp3 791 002,57, а UMSK для отелей 4 и 5 звёзд в Бадунге — Rp3 828 912,60, самые высокие на Бали."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей, инвесторов и владельцев вилл"
+        },
+        {
+          "p": "Зарплата персонала — одна из крупнейших статей расходов арендных вилл и отелей. При таком росте минимальной зарплаты операционные расходы арендной недвижимости на Бали, включая Южную Куту, вырастут с 2027 года, а UMK Бадунга, обычно выше UMP, ещё предстоит установить. Покупателям инвестиционных вилл Bali Are Property (независимое агентство с 2009 года) советует запрашивать у девелопера или управляющей компании расшифровку расходов на персонал в прогнозе доходности и проверять, что в расчёте уже используются зарплаты 2027 года. Владельцам вилл стоит пересмотреть арендные ставки и штат до следующего года."
+        },
+        {
+          "note": "Примечание: этот обзор не является юридической или инвестиционной консультацией. UMK/UMSK Бадунга на 2027 год ещё ожидают официального утверждения."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "bi-indeks-sewa-apartemen-bali-triwulan-3-2026",
+    "date": "2026-11-23",
+    "ig": {
+      "stat": "+23,18%",
+      "statL": "kenaikan tahunan indeks harga sewa apartemen Bali, triwulan III 2026 (BI)",
+      "h": "BI: sewa apartemen naik, harga properti komersial turun",
+      "pts": [
+        "Indeks harga properti komersial Bali turun 6,16% dari triwulan II",
+        "Permintaan sewa apartemen, hotel, dan kantor turun 3,52%",
+        "Colliers: 41% apartemen Bali di Nusa Dua, 16% di Uluwatu"
+      ],
+      "arti": "Unit kecil sewaan di Nusa Dua–Uluwatu menarik, tapi persaingan akomodasi ketat: hitung okupansi realistis."
+    },
+    "sources": [
+      {
+        "t": "ANTARA News Bali – Segmentasi sewa apartemen saat ini jadi pilihan wisatawan di Bali (20 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/419479/segmentasi-sewa-apartemen-saat-ini-jadi-pilihan-wisatawan-di-bali"
+      },
+      {
+        "t": "detikProperti – Apartemen kalah pamor, vila tetap jadi primadona di Bali (8 Jan 2026)",
+        "u": "https://www.detik.com/properti/berita/d-8296895/apartemen-kalah-pamor-vila-tetap-jadi-primadona-di-bali"
+      }
+    ],
+    "id": {
+      "tag": "Data Pasar",
+      "title": "BI: indeks harga sewa apartemen di Bali naik 23,18%, harga properti komersial turun 6,16% di triwulan III 2026",
+      "summary": "Bank Indonesia Bali mencatat indeks harga sewa apartemen naik 23,18% secara tahunan pada triwulan III 2026, sementara indeks harga properti komersial turun 6,16% dibanding triwulan sebelumnya. Permintaan sewa apartemen, hotel, dan kantor turun 3,52%.",
+      "body": [
+        {
+          "p": "Kepala Perwakilan Bank Indonesia Provinsi Bali, Achris Sarwani, di Denpasar pada Jumat, 20 November 2026, menyebut segmen sewa apartemen kini menjadi pilihan wisatawan. Indeks harga sewanya tumbuh 23,18% secara tahunan (yoy) pada triwulan III 2026. Menurut Achris, kondisi ini menandakan perubahan preferensi konsumen."
+        },
+        {
+          "h": "Data triwulan III 2026"
+        },
+        {
+          "ul": [
+            "Indeks harga properti komersial di Bali terkontraksi 6,16% dibanding triwulan II 2026; penyesuaian harga masih terjadi di segmen hotel, ritel sewa, dan perkantoran sewa.",
+            "Permintaan apartemen sewa, hotel, dan perkantoran sewa tercatat turun 3,52%. Kantor sewa tertekan oleh pergeseran ke ruang kerja yang lebih fleksibel; hotel dan apartemen terdampak ketatnya persaingan penyedia akomodasi dan perubahan pola perjalanan.",
+            "Mengutip BPS Bali, ekonomi Bali tumbuh 5,85% pada triwulan III 2026, didorong konsumsi rumah tangga, investasi, pariwisata, dan konstruksi.",
+            "Sebagai konteks, data Colliers Indonesia yang dipaparkan Januari 2026 (detikProperti) mencatat sekitar 3.200 unit apartemen di Bali pada 2025: 41% di Nusa Dua, 25% di Canggu, dan 16% di Uluwatu. Permintaan didominasi unit leasehold (hak sewa) 25–35 tahun; studio dan satu kamar paling laku, dan villa tetap mendominasi pasar tinggal lama."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan investor"
+        },
+        {
+          "p": "Kenaikan indeks sewa apartemen menunjukkan ada permintaan untuk unit kecil yang harganya lebih terjangkau dari villa, dan lebih dari separuh pasokan apartemen Bali ada di Kuta Selatan (Nusa Dua dan Uluwatu). Namun turunnya permintaan hotel dan apartemen serta koreksi harga properti komersial adalah sinyal persaingan yang ketat. Bali Are Property (agen independen sejak 2009) menyarankan buyer unit sewaan menilai lokasi, sisa masa leasehold, dan pengelola, serta memakai asumsi okupansi yang realistis, bukan angka promosi."
+        },
+        {
+          "note": "Catatan: ringkasan data ini bukan nasihat investasi."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Market Data",
+      "title": "Bank Indonesia: Bali apartment rental price index up 23.18%, commercial property prices down 6.16% in Q3 2026",
+      "summary": "Bank Indonesia's Bali office recorded a 23.18% year-on-year rise in the apartment rental price index in Q3 2026, while the commercial property price index fell 6.16% from the previous quarter. Demand for rental apartments, hotels and offices fell 3.52%.",
+      "body": [
+        {
+          "p": "The head of Bank Indonesia's Bali representative office, Achris Sarwani, said in Denpasar on Friday, 20 November 2026, that the apartment rental segment has become a choice for tourists. Its rental price index grew 23.18% year on year (yoy) in Q3 2026. According to Achris, this signals a change in consumer preferences."
+        },
+        {
+          "h": "Q3 2026 data"
+        },
+        {
+          "ul": [
+            "Bali's commercial property price index contracted 6.16% compared with Q2 2026; price adjustments continued in the hotel, retail rental and office rental segments.",
+            "Demand for rental apartments, hotels and rental offices fell 3.52%. Rental offices were hit by a shift to more flexible workspaces; hotels and apartments were affected by tight competition among accommodation providers and changing travel patterns.",
+            "Citing BPS Bali, Bali's economy grew 5.85% in Q3 2026, driven by household consumption, investment, tourism and construction.",
+            "For context, Colliers Indonesia data presented in January 2026 (detikProperti) counted about 3,200 apartment units in Bali in 2025: 41% in Nusa Dua, 25% in Canggu and 16% in Uluwatu. Demand is dominated by leasehold units of 25–35 years; studios and one-bedroom units sell best, and villas still dominate the long-stay market."
+          ]
+        },
+        {
+          "h": "What it means for buyers and investors"
+        },
+        {
+          "p": "The rise in the apartment rental index shows demand for small units that are more affordable than villas, and more than half of Bali's apartment supply is in South Kuta (Nusa Dua and Uluwatu). However, falling hotel and apartment demand and the correction in commercial property prices signal tight competition. Bali Are Property (an independent agency since 2009) recommends that buyers of rental units assess the location, the remaining leasehold term and the operator, and use realistic occupancy assumptions rather than promotional figures."
+        },
+        {
+          "note": "Note: this data summary is not investment advice."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Данные рынка",
+      "title": "Банк Индонезии: индекс арендных ставок апартаментов на Бали вырос на 23,18%, цены коммерческой недвижимости снизились на 6,16% в III квартале 2026",
+      "summary": "Представительство Банка Индонезии на Бали зафиксировало рост индекса арендных ставок апартаментов на 23,18% в годовом выражении в III квартале 2026 года, тогда как индекс цен коммерческой недвижимости снизился на 6,16% к предыдущему кварталу. Спрос на аренду апартаментов, отели и офисы упал на 3,52%.",
+      "body": [
+        {
+          "p": "Глава представительства Банка Индонезии на Бали Ахрис Сарвани заявил в Денпасаре в пятницу, 20 ноября 2026 года, что сегмент аренды апартаментов стал выбором туристов. Индекс арендных ставок вырос на 23,18% в годовом выражении (yoy) в III квартале 2026 года. По словам Ахриса, это говорит об изменении предпочтений потребителей."
+        },
+        {
+          "h": "Данные за III квартал 2026"
+        },
+        {
+          "ul": [
+            "Индекс цен коммерческой недвижимости на Бали снизился на 6,16% по сравнению со II кварталом 2026 года; корректировка цен продолжилась в сегментах отелей, арендной торговой недвижимости и арендных офисов.",
+            "Спрос на арендные апартаменты, отели и арендные офисы снизился на 3,52%. На офисы повлиял переход к более гибким рабочим пространствам; на отели и апартаменты — жёсткая конкуренция среди поставщиков жилья и изменение моделей путешествий.",
+            "Со ссылкой на BPS Бали: экономика Бали выросла на 5,85% в III квартале 2026 года благодаря потреблению домохозяйств, инвестициям, туризму и строительству.",
+            "Для контекста: по данным Colliers Indonesia, представленным в январе 2026 года (detikProperti), в 2025 году на Бали было около 3 200 апартаментов: 41% в Нуса-Дуа, 25% в Чангу и 16% в Улувату. Спрос формируют юниты на праве аренды (leasehold) на 25–35 лет; лучше всего продаются студии и однокомнатные, а на рынке долгосрочного проживания по-прежнему доминируют виллы."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и инвесторов"
+        },
+        {
+          "p": "Рост индекса аренды апартаментов показывает спрос на небольшие юниты, более доступные, чем виллы, причём более половины предложения апартаментов Бали находится в Южной Куте (Нуса-Дуа и Улувату). Однако снижение спроса на отели и апартаменты и коррекция цен коммерческой недвижимости указывают на жёсткую конкуренцию. Bali Are Property (независимое агентство с 2009 года) советует покупателям арендных юнитов оценивать локацию, оставшийся срок leasehold и управляющую компанию и закладывать реалистичную загрузку, а не рекламные цифры."
+        },
+        {
+          "note": "Примечание: этот обзор данных не является инвестиционной консультацией."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "fodors-no-list-2027-bali-dispar",
+    "date": "2026-11-23",
+    "ig": {
+      "stat": "8",
+      "statL": "destinasi di Fodor's No List 2027, salah satunya Bali",
+      "h": "Bali masuk Fodor's No List 2027, Dispar: Bali tetap aman",
+      "pts": [
+        "Alasan: polusi bakar sampah, alih fungsi lahan pertanian, tekanan air",
+        "Daftar lain: Amalfi, Kyoto, Edinburgh, Corsica, Sedona, dan lainnya",
+        "Dispar Bali: Bali sangat aman dan sangat layak dikunjungi"
+      ],
+      "arti": "Air, sampah, dan tata ruang makin disorot: cek sumber air dan zonasi sebelum membeli lahan atau villa."
+    },
+    "sources": [
+      {
+        "t": "ANTARA News Bali – Disorot media asing, Dinas Pariwisata tegaskan Bali tetap layak dikunjungi (19 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/419383/disorot-media-asing-dinas-pariwisata-tegaskan-bali-tetap-layak-dikunjungi"
+      }
+    ],
+    "id": {
+      "tag": "Pasar",
+      "title": "Bali masuk Fodor's \"No List 2027\", Dinas Pariwisata tegaskan Bali tetap aman dan layak dikunjungi",
+      "summary": "Media perjalanan Fodor's Travel memasukkan Bali ke \"No List 2027\" bersama tujuh destinasi lain, dengan alasan polusi pembakaran sampah, menyusutnya lahan pertanian, dan tekanan pada sumber air. Dinas Pariwisata Bali menegaskan Bali tetap aman.",
+      "body": [
+        {
+          "p": "Fodor's Travel merilis \"No List 2027\" pada November 2026, daftar delapan destinasi yang disarankan untuk dipertimbangkan ulang sebagai tujuan wisata pada 2027. Bali termasuk di dalamnya, bersama Riviera Albania, Pantai Amalfi (Italia), Corsica (Prancis), Edinburgh (Skotlandia), Kyoto (Jepang), Kawasan Konservasi Ngorongoro (Tanzania), dan Sedona, Arizona (AS)."
+        },
+        {
+          "h": "Alasan dan tanggapan"
+        },
+        {
+          "ul": [
+            "Untuk Bali, Fodor's menyoroti polusi udara dari pembakaran sampah, menyusutnya lahan pertanian akibat alih fungsi lahan, dan tekanan terhadap sumber daya air.",
+            "Kepala Dinas Pariwisata Bali I Wayan Sumarajaya di Denpasar, Kamis (19/11), menegaskan Bali sangat aman, sangat layak dikunjungi, dan tetap salah satu destinasi terbaik dunia.",
+            "Menurutnya, pemerintah dan pelaku industri sudah menangani isu lingkungan, pengelolaan sampah, dan kemacetan. Ia juga menyebut sejumlah penghargaan World Travel Awards 2026 tingkat Asia untuk Bali, antara lain Asia's Leading Wedding Destination dan Asia's Leading Green Resort.",
+            "Sumarajaya menegaskan pertumbuhan pariwisata harus diimbangi tata kelola yang lebih baik, perlindungan alam, dan pelestarian budaya sesuai visi Nangun Sat Kerthi Loka Bali."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan investor"
+        },
+        {
+          "p": "Daftar seperti ini lebih memengaruhi persepsi daripada data kunjungan, tetapi isu yang diangkat, yaitu air, sampah, dan alih fungsi lahan, juga yang mendorong pengetatan izin dan tata ruang di Bali. Bagi buyer, ini pengingat untuk memeriksa sumber air (PDAM atau sumur bor berizin), pengelolaan limbah, dan zonasi sebelum membeli lahan atau villa, terutama di area yang berkembang cepat seperti Kuta Selatan dan Kuta Utara. Bali Are Property (agen independen sejak 2009) melihat properti dengan izin dan infrastruktur dasar yang jelas akan makin bernilai bila aturan terus diperketat."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Market",
+      "title": "Bali makes Fodor's \"No List 2027\"; Tourism Office insists Bali remains safe and worth visiting",
+      "summary": "Travel media Fodor's Travel put Bali on its \"No List 2027\" alongside seven other destinations, citing air pollution from waste burning, shrinking farmland and pressure on water resources. Bali's Tourism Office insists the island remains safe.",
+      "body": [
+        {
+          "p": "Fodor's Travel published its \"No List 2027\" in November 2026, a list of eight destinations travellers are advised to reconsider for 2027. Bali is on it, together with the Albanian Riviera, the Amalfi Coast (Italy), Corsica (France), Edinburgh (Scotland), Kyoto (Japan), the Ngorongoro Conservation Area (Tanzania) and Sedona, Arizona (USA)."
+        },
+        {
+          "h": "Reasons and response"
+        },
+        {
+          "ul": [
+            "For Bali, Fodor's highlighted air pollution from waste burning, shrinking farmland due to land conversion, and pressure on water resources.",
+            "The head of the Bali Tourism Office, I Wayan Sumarajaya, said in Denpasar on Thursday (19/11) that Bali is very safe, very much worth visiting, and still one of the world's best destinations.",
+            "He said the government and industry have been addressing the environment, waste management and traffic congestion. He also cited several 2026 World Travel Awards (Asia) for Bali, including Asia's Leading Wedding Destination and Asia's Leading Green Resort.",
+            "Sumarajaya stressed that tourism growth must be matched by better governance, protection of nature and preservation of culture, in line with the Nangun Sat Kerthi Loka Bali vision."
+          ]
+        },
+        {
+          "h": "What it means for buyers and investors"
+        },
+        {
+          "p": "Lists like this affect perception more than visitor data, but the issues raised (water, waste and land conversion) are the same ones driving tighter permits and spatial planning in Bali. For buyers, it is a reminder to check the water source (PDAM mains or a licensed borehole), waste management and zoning before buying land or a villa, especially in fast-growing areas such as South Kuta and North Kuta. Bali Are Property (an independent agency since 2009) expects properties with clear permits and basic infrastructure to become more valuable as rules keep tightening."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Рынок",
+      "title": "Бали попал в «No List 2027» Fodor's; туристическое управление настаивает, что остров безопасен и достоин посещения",
+      "summary": "Туристическое издание Fodor's Travel включило Бали в «No List 2027» вместе с семью другими направлениями, указав на загрязнение воздуха от сжигания мусора, сокращение сельхозугодий и нагрузку на водные ресурсы. Туристическое управление Бали заявляет, что остров остаётся безопасным.",
+      "body": [
+        {
+          "p": "Fodor's Travel опубликовал «No List 2027» в ноябре 2026 года — список из восьми направлений, поездки в которые на 2027 год предлагается пересмотреть. В него вошёл Бали, а также Албанская Ривьера, Амальфитанское побережье (Италия), Корсика (Франция), Эдинбург (Шотландия), Киото (Япония), заповедник Нгоронгоро (Танзания) и Седона, Аризона (США)."
+        },
+        {
+          "h": "Причины и ответ"
+        },
+        {
+          "ul": [
+            "Для Бали Fodor's указал на загрязнение воздуха от сжигания мусора, сокращение сельхозугодий из-за смены назначения земель и нагрузку на водные ресурсы.",
+            "Глава туристического управления Бали И Ваян Сумараджая заявил в Денпасаре в четверг (19/11), что Бали очень безопасен, очень достоин посещения и остаётся одним из лучших направлений мира.",
+            "По его словам, власти и отрасль уже занимаются экологией, обращением с отходами и пробками. Он также упомянул ряд азиатских наград World Travel Awards 2026 для Бали, в том числе Asia's Leading Wedding Destination и Asia's Leading Green Resort.",
+            "Сумараджая подчеркнул, что рост туризма должен сопровождаться лучшим управлением, защитой природы и сохранением культуры в соответствии с концепцией Nangun Sat Kerthi Loka Bali."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и инвесторов"
+        },
+        {
+          "p": "Подобные списки влияют скорее на восприятие, чем на данные о прибытиях, но поднятые темы — вода, мусор и смена назначения земель — те же, что ведут к ужесточению разрешений и территориального планирования на Бали. Для покупателей это напоминание проверять источник воды (водопровод PDAM или скважину с разрешением), утилизацию отходов и зонирование перед покупкой земли или виллы, особенно в быстро растущих районах, таких как Южная и Северная Кута. Bali Are Property (независимое агентство с 2009 года) ожидает, что объекты с понятными разрешениями и базовой инфраструктурой будут дорожать по мере ужесточения правил."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "satpol-pp-badung-hentikan-event-vila-seminyak",
+    "date": "2026-11-23",
+    "ig": {
+      "stat": "80 dB",
+      "statL": "kebisingan terukur warga; batas kawasan 70 dB(A)",
+      "h": "Satpol PP Badung hentikan event di villa Seminyak",
+      "pts": [
+        "KBLI villa tidak mencakup event maupun minuman beralkohol",
+        "Pemilik diminta mengurus izin tambahan dan SLF",
+        "Dilarang event, DJ, prewedding, dan aktivitas bising"
+      ],
+      "arti": "Beli villa untuk usaha? Pastikan KBLI, PBG, dan SLF sesuai kegiatannya agar tidak dihentikan."
+    },
+    "sources": [
+      {
+        "t": "Bali Post – Diduga vila disulap jadi THM, Satpol PP Badung hentikan aktivitas akomodasi di Seminyak (19 Nov 2026)",
+        "u": "https://www.balipost.com/news/2026/11/19/598289/Diduga-Vila-Disulap-Jadi-THM,...html"
+      }
+    ],
+    "id": {
+      "tag": "Regulasi",
+      "title": "Diduga jadi tempat hiburan, Satpol PP Badung hentikan event di sebuah villa di Seminyak",
+      "summary": "Tim perizinan terpadu Badung menghentikan aktivitas event di sebuah villa di Jalan Abimanyu, Seminyak, pada 19 November 2026 setelah keluhan kebisingan warga. KBLI villa itu tidak mencakup event dan minuman beralkohol; pemilik diminta mengurus izin tambahan dan SLF.",
+      "body": [
+        {
+          "p": "Sebuah villa di Jalan Abimanyu, Seminyak, Kuta, diduga beroperasi seperti tempat hiburan malam (THM) dan mengganggu warga. Warga dan pemilik villa di sekitarnya mengadu ke Satpol PP Badung pada 10 September 2026. Menurut Bali Post, villa itu disebut milik WNA asal Irlandia dan kebisingannya dikeluhkan sejak 2021."
+        },
+        {
+          "h": "Fakta penindakan"
+        },
+        {
+          "ul": [
+            "Pengukuran warga dari rumahnya mencatat kebisingan sekitar 80 desibel, di atas batas 70 dB(A) untuk kawasan tersebut. Sejumlah event disebut digelar tanpa izin keramaian dari kepolisian.",
+            "Kamis (19/11), tim perizinan terpadu Badung sebagai leading sector bersama DLHK, Dinas PU, Satpol PP bidang pariwisata, dan Dinas Pariwisata meninjau lokasi dan menghentikan aktivitas karena ada event yang menimbulkan kebisingan.",
+            "Menurut I Wayan Sukanta, Pol PP Ahli Madya bidang penegakan perda yang ditugaskan Kasatpol PP Badung IGK Suryanegara, KBLI villa tersebut tidak mencakup kegiatan event dan tidak mencantumkan minuman beralkohol.",
+            "Selama izin belum lengkap, tidak boleh ada event, DJ, prewedding, atau kegiatan yang menimbulkan suara. Pemilik diminta mengurus izin di luar izin villa yang sudah dimiliki, termasuk Sertifikat Laik Fungsi (SLF). Petugas menjadwalkan pengecekan lanjutan minggu berikutnya."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan pemilik villa"
+        },
+        {
+          "p": "Kasus ini menunjukkan izin villa tidak otomatis mencakup semua kegiatan usaha. Event, pesta, atau penjualan minuman beralkohol butuh KBLI dan izin sendiri, dan bangunan perlu SLF. Bagi calon buyer villa yang akan disewakan atau dipakai untuk acara, Bali Are Property (agen independen sejak 2009) menyarankan memeriksa KBLI di OSS, PBG, SLF, dan riwayat keluhan lingkungan sebelum transaksi, serta menanyakan kepada banjar setempat. Villa dengan izin yang cocok dengan rencana usahanya lebih aman dan lebih mudah dijual kembali."
+        },
+        {
+          "note": "Catatan: ringkasan berita ini bukan nasihat hukum. Untuk kasus tertentu, konsultasikan dengan notaris/PPAT, konsultan perizinan, atau instansi terkait."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Regulation",
+      "title": "Suspected of operating as a nightlife venue, a Seminyak villa has its events halted by Badung's Satpol PP",
+      "summary": "Badung's integrated permit team halted event activity at a villa on Jalan Abimanyu, Seminyak, on 19 November 2026 after residents complained about noise. The villa's KBLI business code does not cover events or alcohol; the owner was told to obtain additional permits and an SLF.",
+      "body": [
+        {
+          "p": "A villa on Jalan Abimanyu, Seminyak, Kuta, is suspected of operating like a nightlife venue (THM) and disturbing residents. Residents and nearby villa owners complained to Badung's Public Order Agency (Satpol PP) on 10 September 2026. According to Bali Post, the villa is reportedly owned by an Irish national, and its noise has been the subject of complaints since 2021."
+        },
+        {
+          "h": "Enforcement facts"
+        },
+        {
+          "ul": [
+            "Residents' own measurement from a home recorded about 80 decibels, above the 70 dB(A) limit for the area. Several events were reportedly held without a police crowd permit.",
+            "On Thursday (19/11), Badung's integrated permit team, as lead sector, together with the Environment and Sanitation Agency (DLHK), the Public Works Agency, Satpol PP's tourism unit and the Tourism Office inspected the site and halted activity because an event causing noise was being held.",
+            "According to I Wayan Sukanta, a senior Satpol PP officer for bylaw enforcement assigned by Badung Satpol PP head IGK Suryanegara, the villa's KBLI does not cover events and does not list alcoholic beverages.",
+            "Until permits are complete, no events, DJs, pre-wedding shoots or other noisy activities are allowed. The owner was told to obtain permits beyond the existing villa permit, including a Certificate of Building Worthiness (SLF). Officers scheduled a follow-up check for the following week."
+          ]
+        },
+        {
+          "h": "What it means for buyers and villa owners"
+        },
+        {
+          "p": "This case shows that a villa permit does not automatically cover every business activity. Events, parties or selling alcohol need their own KBLI and permits, and the building needs an SLF. For buyers of villas to be rented out or used for events, Bali Are Property (an independent agency since 2009) recommends checking the KBLI in the OSS system, the PBG, the SLF and any history of neighbourhood complaints before the transaction, and asking the local banjar. A villa whose permits match its business plan is safer and easier to resell."
+        },
+        {
+          "note": "Note: this news summary is not legal advice. For specific cases, consult a notary/PPAT, a licensing consultant, or the relevant authority."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Регулирование",
+      "title": "Сатпол ПП Бадунга остановила мероприятия на вилле в Семиньяке, подозреваемой в работе как ночной клуб",
+      "summary": "Объединённая разрешительная группа Бадунга 19 ноября 2026 года остановила проведение мероприятий на вилле на улице Абиманью в Семиньяке после жалоб жителей на шум. Код деятельности KBLI виллы не охватывает мероприятия и алкоголь; владельцу велено оформить дополнительные разрешения и SLF.",
+      "body": [
+        {
+          "p": "Вилла на улице Абиманью в Семиньяке (Кута) подозревается в работе как место ночных развлечений (THM) и мешает жителям. Жители и владельцы соседних вилл пожаловались в службу общественного порядка Бадунга (Satpol PP) 10 сентября 2026 года. По данным Bali Post, вилла, как сообщается, принадлежит гражданину Ирландии, а жалобы на шум поступают с 2021 года."
+        },
+        {
+          "h": "Факты проверки"
+        },
+        {
+          "ul": [
+            "Собственный замер жителей из дома показал около 80 децибел при норме 70 дБ(А) для района. Ряд мероприятий, по сообщениям, проводился без разрешения полиции на массовые мероприятия.",
+            "В четверг (19/11) объединённая разрешительная группа Бадунга (ведущий орган) вместе с управлением экологии и санитарии (DLHK), управлением общественных работ, туристическим отделом Satpol PP и управлением туризма проверила объект и остановила деятельность, так как там проходило шумное мероприятие.",
+            "По словам И Ваяна Суканты, старшего сотрудника Satpol PP по исполнению местных законов, назначенного главой Satpol PP Бадунга IGK Сурьянегарой, KBLI виллы не охватывает проведение мероприятий и не включает алкогольные напитки.",
+            "Пока разрешения не оформлены, запрещены мероприятия, DJ, предсвадебные съёмки и любая шумная деятельность. Владельцу велено получить разрешения помимо уже имеющегося разрешения на виллу, в том числе сертификат пригодности здания к эксплуатации (SLF). Повторная проверка назначена на следующую неделю."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и владельцев вилл"
+        },
+        {
+          "p": "Случай показывает, что разрешение на виллу не охватывает автоматически любую коммерческую деятельность. Для мероприятий, вечеринок или продажи алкоголя нужны отдельные KBLI и разрешения, а зданию — SLF. Покупателям вилл под аренду или мероприятия Bali Are Property (независимое агентство с 2009 года) советует до сделки проверить KBLI в системе OSS, PBG, SLF и историю жалоб соседей, а также поговорить с местным банджаром. Вилла, разрешения которой соответствуют бизнес-плану, безопаснее и легче перепродаётся."
+        },
+        {
+          "note": "Примечание: этот обзор новостей не является юридической консультацией. В конкретных случаях обратитесь к нотариусу/PPAT, консультанту по лицензированию или в соответствующее ведомство."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "kadin-bali-tol-gilimanuk-mengwi-bandara-buleleng",
+    "date": "2026-11-23",
+    "ig": {
+      "stat": "5–6 jam",
+      "statL": "antrean di Pelabuhan Gilimanuk–Ketapang menurut Kadin Bali",
+      "h": "Kadin Bali desak percepat Tol Gilimanuk–Mengwi",
+      "pts": [
+        "Tol masuk PSN; dilelang ulang setelah perjanjian lama diakhiri 2023",
+        "Rencana 3 seksi: Gilimanuk–Pekutatan–Soka–Mengwi",
+        "Kadin juga usul bandara baru di Buleleng untuk kargo"
+      ],
+      "arti": "Lahan koridor Tabanan–Jembrana prospektif jangka panjang, tol belum dibangun: jangan bayar premi berlebih."
+    },
+    "sources": [
+      {
+        "t": "ANTARA News Bali – Kadin Bali usul percepatan realisasi Tol Gilimanuk-Mengwi dan Bandara Buleleng (20 Nov 2026)",
+        "u": "https://bali.antaranews.com/berita/419455/kadin-bali-usul-percepatan-realisasi-tol-gilimanuk-mengwi-dan-bandara-buleleng"
+      },
+      {
+        "t": "Petromindo – Bali's longest toll road project to be re-tendered after previous deal collapses (19 Feb 2026)",
+        "u": "https://www.petromindo.com/news/article/bali-s-longest-toll-road-project-to-be-re-tendered-after-previous-deal-collapses"
+      }
+    ],
+    "id": {
+      "tag": "Infrastruktur",
+      "title": "Kadin Bali desak percepatan Tol Gilimanuk–Mengwi dan bandara di Buleleng",
+      "summary": "Kadin Bali meminta pembangunan Tol Gilimanuk–Mengwi dan bandara baru di Buleleng dipercepat untuk memperlancar logistik. Tol sepanjang tiga seksi ini berstatus Proyek Strategis Nasional dan sedang disiapkan untuk lelang ulang.",
+      "body": [
+        {
+          "p": "Wakil Ketua Bidang Organisasi Kadin Bali, Agung Bagus Tri Candra Arka, dalam Musyawarah Wilayah VI ALFI (asosiasi logistik dan forwarder) Bali di Badung, Jumat, 20 November 2026, meminta pembangunan Tol Gilimanuk–Mengwi dan bandara di Bali utara dipercepat. Menurutnya, tol adalah satu-satunya solusi agar distribusi barang lebih lancar."
+        },
+        {
+          "h": "Fakta utama"
+        },
+        {
+          "ul": [
+            "Kadin menyebut antrean di Pelabuhan Gilimanuk–Ketapang bisa 5–6 jam, dan perjalanan Denpasar–Gilimanuk dengan angkutan umum 4–5 jam. Menambah dermaga dinilai tidak cukup tanpa akses jalan kedua.",
+            "Kadin mendukung bandara baru di Buleleng untuk kargo udara karena Bandara Ngurah Rai dinilai sulit diperluas (menjorok ke laut dan padat), serta mengusulkan tol laut lewat Pelabuhan Benoa dari Surabaya.",
+            "Latar belakang (Petromindo, Februari 2026): Kementerian PU menyiapkan lelang ulang paket tol ini setelah perjanjian pengusahaan jalan tol yang lama diakhiri pada 3 Agustus 2023 karena pengadaan lahan dan financial close gagal. Tol ini Proyek Strategis Nasional (Permenko Perekonomian No. 16/2025).",
+            "Rencananya melintasi 3 kabupaten, 13 kecamatan, dan 58 desa dalam 3 seksi: Gilimanuk–Pekutatan 53,6 km, Pekutatan–Soka 24,3 km, dan Soka–Mengwi 18,9 km."
+          ]
+        },
+        {
+          "h": "Artinya bagi buyer dan pemilik lahan"
+        },
+        {
+          "p": "Tol Gilimanuk–Mengwi akan memperpendek akses ke Tabanan dan Jembrana, sehingga lahan di sekitar koridornya punya prospek jangka panjang. Namun proyek ini belum punya investor baru dan belum dibangun. Bali Are Property (agen independen sejak 2009) menyarankan buyer tidak membayar premi besar hanya karena label \"dekat rencana tol\", dan memastikan lahan tidak masuk trase yang akan dibebaskan. Untuk Kuta Selatan, dampaknya tidak langsung, tetapi logistik yang lebih lancar bisa menekan biaya bahan bangunan dan pasokan di seluruh Bali."
+        }
+      ]
+    },
+    "en": {
+      "tag": "Infrastructure",
+      "title": "Kadin Bali urges faster Gilimanuk–Mengwi toll road and an airport in Buleleng",
+      "summary": "The Bali Chamber of Commerce (Kadin Bali) has asked for faster construction of the Gilimanuk–Mengwi toll road and a new airport in Buleleng to ease logistics. The three-section toll road is a National Strategic Project being prepared for re-tender.",
+      "body": [
+        {
+          "p": "Kadin Bali's deputy chairman for organisation, Agung Bagus Tri Candra Arka, speaking at the 6th Regional Meeting of ALFI Bali (the logistics and forwarders association) in Badung on Friday, 20 November 2026, asked for faster construction of the Gilimanuk–Mengwi toll road and an airport in northern Bali. He said the toll road is the only solution for smoother distribution of goods."
+        },
+        {
+          "h": "Key facts"
+        },
+        {
+          "ul": [
+            "Kadin says queues at the Gilimanuk–Ketapang port can reach 5–6 hours, and the Denpasar–Gilimanuk trip by public transport takes 4–5 hours. Adding berths is not seen as enough without a second road access.",
+            "Kadin backs a new airport in Buleleng for air cargo, as Ngurah Rai Airport is seen as hard to expand (it juts into the sea and is busy), and proposed a sea toll route via Benoa Port from Surabaya.",
+            "Background (Petromindo, February 2026): the Ministry of Public Works is preparing to re-tender the toll road package after the previous toll road concession agreement was terminated on 3 August 2023 because land acquisition and financial close failed. The road is a National Strategic Project (Coordinating Minister for Economic Affairs Regulation No. 16/2025).",
+            "It is planned to cross 3 regencies, 13 districts and 58 villages in 3 sections: Gilimanuk–Pekutatan 53.6 km, Pekutatan–Soka 24.3 km and Soka–Mengwi 18.9 km."
+          ]
+        },
+        {
+          "h": "What it means for buyers and landowners"
+        },
+        {
+          "p": "The Gilimanuk–Mengwi toll road would shorten access to Tabanan and Jembrana, so land around its corridor has long-term prospects. However, the project has no new investor yet and has not been built. Bali Are Property (an independent agency since 2009) advises buyers not to pay a large premium just for a \"near the planned toll road\" label, and to make sure the land is not on the route to be acquired. For South Kuta the impact is indirect, but smoother logistics could lower the cost of building materials and supplies across Bali."
+        }
+      ]
+    },
+    "ru": {
+      "tag": "Инфраструктура",
+      "title": "Kadin Bali призывает ускорить платную трассу Гилиманук–Менгви и аэропорт в Булеленге",
+      "summary": "Торгово-промышленная палата Бали (Kadin Bali) призвала ускорить строительство платной трассы Гилиманук–Менгви и нового аэропорта в Булеленге для улучшения логистики. Трасса из трёх участков имеет статус национального стратегического проекта и готовится к повторному тендеру.",
+      "body": [
+        {
+          "p": "Заместитель председателя Kadin Bali по организационным вопросам Агунг Багус Три Чандра Арка на VI региональном собрании ALFI Bali (ассоциации логистических и экспедиторских компаний) в Бадунге в пятницу, 20 ноября 2026 года, призвал ускорить строительство платной трассы Гилиманук–Менгви и аэропорта на севере Бали. По его словам, трасса — единственное решение для более плавной доставки грузов."
+        },
+        {
+          "h": "Основные факты"
+        },
+        {
+          "ul": [
+            "По данным Kadin, очереди в порту Гилиманук–Кетапанг достигают 5–6 часов, а поездка Денпасар–Гилиманук на общественном транспорте занимает 4–5 часов. Добавление причалов не решит проблему без второй дороги.",
+            "Kadin поддерживает новый аэропорт в Булеленге для авиагрузов, так как аэропорт Нгурах-Рай сложно расширить (он выдаётся в море и перегружен), и предложил морской маршрут через порт Беноа из Сурабаи.",
+            "Предыстория (Petromindo, февраль 2026): Министерство общественных работ готовит повторный тендер по трассе после расторжения прежнего концессионного соглашения 3 августа 2023 года из-за срыва изъятия земли и финансового закрытия. Трасса — национальный стратегический проект (постановление координирующего министра экономики № 16/2025).",
+            "Она должна пройти через 3 округа, 13 районов и 58 деревень тремя участками: Гилиманук–Пекутатан 53,6 км, Пекутатан–Сока 24,3 км и Сока–Менгви 18,9 км."
+          ]
+        },
+        {
+          "h": "Что это значит для покупателей и владельцев земли"
+        },
+        {
+          "p": "Трасса Гилиманук–Менгви сократит путь в Табанан и Джембрану, поэтому у земли вдоль её коридора есть долгосрочные перспективы. Однако у проекта пока нет нового инвестора, и он не построен. Bali Are Property (независимое агентство с 2009 года) советует не переплачивать только за ярлык «рядом с планируемой трассой» и убедиться, что участок не попадает в полосу изъятия. Для Южной Куты влияние косвенное, но более плавная логистика может снизить стоимость стройматериалов и поставок по всему Бали."
+        }
+      ]
+    }
+  },
+  {
     "slug": "bus-listrik-trans-sarbagita-gwk-jimbaran",
     "date": "2026-11-16",
     "ig": {
