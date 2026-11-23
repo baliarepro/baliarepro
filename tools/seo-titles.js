@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "villa-joglo-4-kamar-private-pool-di-kutuh-pandawa": {
+    id: { t: "Dijual Villa Joglo 4 Kamar Private Pool di Kutuh, Pandawa Bali", d: "Villa joglo kayu jati 4 KT + kamar pembantu, tanah 300 m², pool 3×10 m, 1 menit ke Pantai Pandawa. Freehold Rp5,9 M nego atau sewa Rp450 jt/tahun. Tanya WA." },
+    en: { t: "4-Bedroom Joglo Villa with Pool for Sale in Kutuh, Pandawa Bali", d: "Teak Joglo villa, 4 beds + maid room, 300 m² land, 3×10 m pool, 1 min to Pandawa Beach. Freehold IDR 5.9B negotiable, or rent IDR 450M/year. WhatsApp us." },
+    ru: { t: "Продажа виллы-джогло с 4 спальнями и бассейном, Кутух, Пандава", d: "Вилла-джогло из тика, 4 спальни + комната персонала, 300 м², бассейн 3×10 м, 1 мин до пляжа Пандава. Фрихолд 5,9 млрд IDR (торг), аренда 450 млн/год." } },
   "villa-2-kamar-private-pool-leasehold-di-pererenan": {
     id: { t: "Dijual Villa 2 Kamar Private Pool Leasehold di Pererenan Bali", d: "Villa 2 KT fully furnished, private pool, bangunan 100 m², leasehold 25 tahun di Pererenan, ±3 km ke pantai. US$199.000, potensi sewa Rp376 jt/tahun. Tanya WA." },
     en: { t: "2-Bedroom Private Pool Villa for Sale, Leasehold, Pererenan Bali", d: "Fully furnished 2-bed villa with private pool, 100 m² building, 25-year leasehold in Pererenan, ±3 km to the beach. USD 199,000, rent IDR 376M/yr. WhatsApp us." },
