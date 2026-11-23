@@ -72,13 +72,13 @@
     {
       "id": "gbp-isi",
       "text": "Google Business Profile: pastikan sudah terverifikasi, lalu lengkapi jam buka, logo, foto sampul, 5–10 foto listing, Layanan, dan Deskripsi (teks di dokumen Project \"claude/google-business-profile.md\"). Kirim link \"Minta ulasan\" (g.page/r/…) ke Claude.",
-      "added": "2026-11-23"
+      "added": "2026-11-23",
+      "done": "2026-11-23T10:19:29.658Z"
     },
     {
       "id": "tiktok-app",
       "text": "TikTok: aplikasi \"Bali Are Poster\" sudah diajukan review (23 Nov 2026). Bila email persetujuan datang: kabari Claude, kirim Client Key Production, ganti secret TIKTOK_CLIENT_KEY/SECRET ke Production, lalu login ulang di baliareproperty.com/tiktok.html. Sementara itu tiap hari ±10.37 & ±18.07 WIB ada draft video di kotak masuk TikTok: tambah lagu + caption (Salin caption di tab Status), posting ±11.30–12.30 & ±19.30–20.30 WIB.",
-      "added": "2026-11-23",
-      "done": "2026-11-23T10:19:27.498Z"
+      "added": "2026-11-23"
     }
   ]
 }
