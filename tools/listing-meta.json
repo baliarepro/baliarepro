@@ -261,8 +261,13 @@
  },
  "rumah-modern-victorian-2-lantai-di-dalung-tegal-jaya": {
   "added": "2026-11-04",
-  "price": 3000000000,
-  "text": "Rp3 Miliar"
+  "price": 2750000000,
+  "text": "Rp2,75 Miliar",
+  "drop": {
+   "from": "Rp3 Miliar",
+   "to": "Rp2,75 Miliar",
+   "at": "2026-11-23"
+  }
  },
  "rumah-2-kamar-tidur-di-perumahan-one-gate-pering": {
   "added": "2026-11-04",
