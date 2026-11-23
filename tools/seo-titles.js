@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "villa-5-kamar-tidur-dengan-private-pool-di-kerobokan": {
+    id: { t: "Dijual Villa 5 Kamar Tidur dengan Private Pool di Kerobokan, Bali", d: "Villa 2 lantai fully furnished, 5 KT, pool 12×8 m, tanah 483 m², bangunan 600 m², SHM & IMB di Kerobokan, Kuta Utara. Rp8,75 M. Tanya via WhatsApp." },
+    en: { t: "5-Bedroom Villa with Private Pool for Sale in Kerobokan, Bali", d: "Fully furnished 2-storey villa, 5 bedrooms, 12×8 m pool, 483 m² land, 600 m² building, SHM & IMB in Kerobokan, North Kuta. IDR 8.75B. Ask on WhatsApp." },
+    ru: { t: "Продажа виллы с 5 спальнями и бассейном в Керобокане, Бали", d: "Меблированная двухэтажная вилла: 5 спален, бассейн 12×8 м, участок 483 м², дом 600 м², SHM и IMB, Керобокан. 8,75 млрд IDR. Пишите в WhatsApp." } },
   "tanah-tebing-14000-m2-sebelah-savaya-pecatu": {
     id: { t: "Dijual Tanah Tebing 1,4 Ha Zona Pariwisata sebelah Savaya, Pecatu", d: "Tanah tebing 14.000 m² SHM zona pariwisata di sebelah Savaya Bali, Pecatu. Bentang tebing ±53 m hadap selatan, jalan aspal ±7 m. Rp17 jt/m² (Rp238 M). Tanya WA." },
     en: { t: "1.4 Ha Clifftop Land for Sale next to Savaya, Pecatu Bali", d: "14,000 m² SHM clifftop plot with tourism zoning next to Savaya Bali, Pecatu. ±53 m south-facing cliff, ±7 m asphalt road. IDR 17M/m² (IDR 238B). Ask on WhatsApp." },

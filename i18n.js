@@ -359,6 +359,17 @@
     ["Bidang luas dengan pemandangan laut terbuka, posisi hook dengan dua muka jalan dan lebar depan 62 meter. Ideal untuk kompleks villa, perumahan, atau properti komersial.", "A large plot with open ocean views, on a corner with two road frontages and 62 m of frontage. Ideal for a villa complex, housing or commercial property.", "Большой угловой участок с открытым видом на океан, два фасада, ширина 62 м. Идеален для комплекса вилл, жилья или коммерции."],
     ["Tanah 395 m² gandeng di Labuan Sait", "395 m² combined plots in Labuan Sait", "Смежные участки 395 м² в Лабуан-Саит"],
     ["Dua bidang bersebelahan di kawasan villa dan akomodasi wisata Uluwatu. Bisa dibeli satuan atau sekaligus.", "Two adjoining plots in Uluwatu's villa and tourist accommodation area. Buy one or both.", "Два смежных участка в районе вилл и туристического жилья Улувату. Можно купить один или оба."],
+    // ---------- Villa 5 KT Kerobokan ----------
+    ["Villa 5 kamar tidur dengan private pool di Kerobokan", "5-bedroom villa with private pool in Kerobokan", "Вилла с 5 спальнями и бассейном в Керобокане"],
+    ["Banjar Semer · Kerobokan", "Banjar Semer · Kerobokan", "Банджар Семер · Керобокан"],
+    ["Villa 2 lantai fully furnished di Banjar Semer, Kerobokan, Kuta Utara. Tanah 483 m² dan bangunan 600 m² dengan 5 kamar tidur, kolam renang pribadi 12 × 8 m, SHM dan IMB.", "Fully furnished 2-storey villa in Banjar Semer, Kerobokan, North Kuta. 483 m² of land and a 600 m² building with 5 bedrooms, a 12 × 8 m private pool, SHM title and IMB permit.", "Полностью меблированная двухэтажная вилла в Банджар Семер, Керобокан, Северная Кута. Участок 483 м², дом 600 м², 5 спален, бассейн 12 × 8 м, SHM и IMB."],
+    ["4 + toilet tamu", "4 + guest toilet", "4 + гостевой туалет"],
+    ["Private pool 12 × 8 m", "Private pool 12 × 8 m", "Бассейн 12 × 8 м"],
+    ["Carport pribadi", "Private carport", "Собственный навес для авто"],
+    ["Kolam renang pribadi besar 12 × 8 m", "Large 12 × 8 m private pool", "Большой бассейн 12 × 8 м"],
+    ["Bangunan 600 m² dua lantai, 5 kamar tidur", "600 m² two-storey building, 5 bedrooms", "Двухэтажный дом 600 м², 5 спален"],
+    ["Fully furnished, ada gudang dan toilet tamu", "Fully furnished, with storage room and guest toilet", "Полностью меблирована, есть кладовая и гостевой туалет"],
+    ["Carport pribadi, legalitas SHM + IMB", "Private carport, SHM title + IMB permit", "Собственный навес для авто, документы SHM + IMB"],
     // ---------- Tanah tebing 1,4 ha sebelah Savaya, Pecatu ----------
     ["Tanah tebing 1,4 ha di sebelah Savaya, Pecatu", "1.4 ha clifftop land next to Savaya, Pecatu", "Участок 1,4 га на скале рядом с Savaya, Пекату"],
     ["Lahan tebing strategis di kawasan Pecatu, bersebelahan dengan Savaya Bali. Bentang tebing ±53 meter menghadap selatan dengan akses jalan aspal yang lebar. Sangat potensial untuk luxury resort, cliff-front villas, boutique hotel, maupun proyek hospitality eksklusif.", "Strategic clifftop land in Pecatu, right next to Savaya Bali. A ±53 m south-facing cliff span with wide asphalt road access. Strong potential for a luxury resort, cliff-front villas, a boutique hotel or an exclusive hospitality project.", "Стратегический участок на скале в Пекату, по соседству с Savaya Bali. Скала протяжённостью ±53 м с видом на юг и широкая асфальтированная дорога. Большой потенциал для люкс-курорта, вилл на скале, бутик-отеля или эксклюзивного гостиничного проекта."],
