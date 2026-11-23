@@ -1,1 +1,14 @@
-{ "posted": {}, "errors": {} }
+{
+  "posted": {},
+  "errors": {},
+  "token": {
+    "iv": "DEynB372JLy5jSLb",
+    "tag": "UQGU/zxzG6c/vWs3K+k5Jw==",
+    "data": "Ui4lBL5pIrmtWK8UOLibm16S08f2RxeibZc/XFweJi8GjRJjeIdJzzzhRZb85qBtgnjIuH2iSPz4auVNQR3S6vswv/20bd7sNIlb6HmLgh9DfOLYrh3/5CMZihfUCO5KCoAc3RAz7zBQ64KiPXpH2G+NsvdnkCRhjtz9pOc9/tzRj1KNw6waCf7YhjWcduTABGLoYMbRhzh0SEbNhGmQwdvAvrEX4OklIhHVtwnucQdOLcbcc2CwWbXDjVm4i5d4UzkjLjycEQMH/W5CZ6Ge9OGKn2zmM8/zbMl+kCqNyG4OmeSimBUOS1Wz+7xTi3Gb9UzKs8z4+Ec4Yht5Xm9aI2vxsp0="
+  },
+  "connected": {
+    "at": "2026-11-23T07:11:55.799Z",
+    "scope": "user.info.basic,video.upload",
+    "refreshUntil": "2027-11-23"
+  }
+}
