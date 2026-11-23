@@ -360,6 +360,7 @@
     ["Tanah 395 m² gandeng di Labuan Sait", "395 m² combined plots in Labuan Sait", "Смежные участки 395 м² в Лабуан-Саит"],
     ["Dua bidang bersebelahan di kawasan villa dan akomodasi wisata Uluwatu. Bisa dibeli satuan atau sekaligus.", "Two adjoining plots in Uluwatu's villa and tourist accommodation area. Buy one or both.", "Два смежных участка в районе вилл и туристического жилья Улувату. Можно купить один или оба."],
     ["Google Maps & ulasan", "Google Maps & reviews", "Google Карты и отзывы"],
+    ["Beri ulasan Google", "Review us on Google", "Оставить отзыв в Google"],
     // ---------- Villa 2 KT Pererenan (leasehold) ----------
     ["Villa 2 kamar private pool leasehold di Pererenan", "2-bedroom private pool villa, leasehold, in Pererenan", "Вилла с 2 спальнями и частным бассейном, лизхолд, Переренан"],
     ["Villa 2 kamar tidur fully furnished dengan kolam renang pribadi di Pererenan, sekitar 3 km ke pantai. Ruang tamu tinggi berdinding kaca menghadap kolam. Leasehold 25 tahun, siap disewakan harian, bulanan, atau tahunan.", "Fully furnished 2-bedroom villa with a private pool in Pererenan, about 3 km from the beach. High-ceilinged living room with glass walls facing the pool. 25-year leasehold, ready to rent out daily, monthly or yearly.", "Полностью меблированная вилла с 2 спальнями и частным бассейном в Переренане, около 3 км до пляжа. Гостиная с высоким потолком и стеклянными стенами с видом на бассейн. Лизхолд на 25 лет, готова к посуточной, помесячной или годовой аренде."],

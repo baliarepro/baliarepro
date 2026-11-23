@@ -31,7 +31,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 6. Perbarui daftar listing di aplikasi **Bali Are Agen** (artifact https://claude.ai/artifact/2aNro3XL7bpBQnN23DvgHS): `node tools/agen-listings.js > <scratch>/listings.json`, lalu publish ulang artifact itu dengan `url` + `files: {"listings.json": …}` (baca artifact dulu). Sama bila listing terjual/diturunkan.
 
 ## SEO & GEO
-- Google Business Profile "Bali Are Property" (dibuat pemilik 23 Nov 2026): Jl. Sedap Malam No.18, Sanur Kaja, Denpasar Selatan 80237, link https://www.google.com/maps?cid=18329018382978472684. Dipakai di `AGENT` (`tools/build-seo.js`: address, hasMap, sameAs semua akun sosial) dan tombol "Google Maps & ulasan" di `section.contact` `listings.html`. Alamat kantor agen ini boleh tampil (berbeda dengan alamat listing bangunan).
+- Google Business Profile "Bali Are Property" (dibuat pemilik 23 Nov 2026): Jl. Sedap Malam No.18, Sanur Kaja, Denpasar Selatan 80237, link https://www.google.com/maps?cid=18329018382978472684. Dipakai di `AGENT` (`tools/build-seo.js`: address, hasMap, sameAs semua akun sosial) dan tombol "Google Maps & ulasan" + "Beri ulasan Google" (link tulis ulasan, place_id `ChIJISU0EPtB0i0R7FoJpxvBXf4`) di `section.contact` `listings.html`. Alamat kantor agen ini boleh tampil (berbeda dengan alamat listing bangunan).
 - Build membuat JSON-LD `RealEstateListing` per listing (alamat, harga, ketersediaan, semua spesifikasi sebagai `additionalProperty`), breadcrumb 3 level, sitemap, dan `llms.txt` (ringkasan situs + semua listing untuk mesin AI).
 
 ## Foto & tombol PDF di halaman listing
