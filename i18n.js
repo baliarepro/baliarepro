@@ -359,6 +359,7 @@
     ["Bidang luas dengan pemandangan laut terbuka, posisi hook dengan dua muka jalan dan lebar depan 62 meter. Ideal untuk kompleks villa, perumahan, atau properti komersial.", "A large plot with open ocean views, on a corner with two road frontages and 62 m of frontage. Ideal for a villa complex, housing or commercial property.", "Большой угловой участок с открытым видом на океан, два фасада, ширина 62 м. Идеален для комплекса вилл, жилья или коммерции."],
     ["Tanah 395 m² gandeng di Labuan Sait", "395 m² combined plots in Labuan Sait", "Смежные участки 395 м² в Лабуан-Саит"],
     ["Dua bidang bersebelahan di kawasan villa dan akomodasi wisata Uluwatu. Bisa dibeli satuan atau sekaligus.", "Two adjoining plots in Uluwatu's villa and tourist accommodation area. Buy one or both.", "Два смежных участка в районе вилл и туристического жилья Улувату. Можно купить один или оба."],
+    ["Google Maps & ulasan", "Google Maps & reviews", "Google Карты и отзывы"],
     // ---------- Tanah 202 m² Gatsu VI, Denpasar ----------
     ["Tanah 202 m² di Gatsu VI, Denpasar", "202 m² land on Gatsu VI, Denpasar", "Участок 202 м² на улице Гатсу VI, Денпасар"],
     ["Gatsu VI · Denpasar", "Gatsu VI · Denpasar", "Гатсу VI · Денпасар"],

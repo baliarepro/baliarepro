@@ -21,7 +21,8 @@
     {
       "id": "gbp",
       "text": "Buat/klaim Google Business Profile \"Bali Are Property\" di business.google.com (teks profil, kategori & layanan ada di dokumen Project \"claude/google-business-profile.md\"), lalu verifikasi.",
-      "added": "2026-11-09"
+      "added": "2026-11-09",
+      "done": "2026-11-23"
     },
     {
       "id": "lokasi-sangeh",
@@ -66,6 +67,11 @@
       "text": "Telegram otomatis: buat bot di @BotFather (/newbot), jadikan bot admin channel t.me/baliareproperty (izin Post messages), lalu simpan token bot sebagai secret GitHub TELEGRAM_BOT_TOKEN (Settings → Secrets → Actions). Jangan kirim token di chat.",
       "added": "2026-11-20",
       "done": "2026-11-20"
+    },
+    {
+      "id": "gbp-isi",
+      "text": "Google Business Profile: pastikan sudah terverifikasi, lalu lengkapi jam buka, logo, foto sampul, 5–10 foto listing, Layanan, dan Deskripsi (teks di dokumen Project \"claude/google-business-profile.md\"). Kirim link \"Minta ulasan\" (g.page/r/…) ke Claude.",
+      "added": "2026-11-23"
     }
   ]
 }
