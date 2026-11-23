@@ -199,7 +199,7 @@ function pickRepost(state, live) {
   const last = (l) => Math.max(Date.parse((state.posted[l.slug] || {}).at || 0) || 0, Date.parse((state.reposts[l.slug] || {}).at || 0) || 0);
   // Harga turun (tools/listing-meta.json, ditulis build) → didahulukan, tanpa menunggu REPOST_DAYS
   let meta = {}; try { meta = JSON.parse(fs.readFileSync(path.join(ROOT, "tools/listing-meta.json"), "utf8")); } catch (e) {}
-  const drop = live.filter((l) => { const d = (meta[l.slug] || {}).drop; return d && state.posted[l.slug] && now - Date.parse(d.at) <= 30 * 864e5 && Date.parse(d.at + "T00:00:00+08:00") > last(l) && fs.existsSync(path.join(ROOT, "img/ig", l.slug, "1.jpg")); })[0];
+  const drop = live.filter((l) => { const d = (meta[l.slug] || {}).drop; return d && state.posted[l.slug] && now - Date.parse(d.at) <= 30 * 864e5 && Date.parse(d.ts || d.at + "T00:00:00+08:00") > last(l) && fs.existsSync(path.join(ROOT, "img/ig", l.slug, "1.jpg")); })[0];
   if (drop) { drop.drop = meta[drop.slug].drop; console.log("Putar ulang: harga turun → " + drop.slug); return drop; }
   const c = live.filter((l) => state.posted[l.slug] && fs.existsSync(path.join(ROOT, "img/ig", l.slug, "1.jpg")) && now - last(l) >= REPOST_DAYS * 864e5)
     .sort((a, b) => last(a) - last(b))[0];

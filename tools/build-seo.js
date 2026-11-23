@@ -300,7 +300,7 @@ main .cta-duo{margin-top:0}
     for (const c of out.id.cards) {
       const m = meta[c.slug] || (meta[c.slug] = { added: today }), pr = prices[c.slug], txt = (c.priceText || "").trim();
       if (pr && m.price && !c.sold) {
-        if (pr < m.price) m.drop = { from: m.text || "", to: txt, at: today };
+        if (pr < m.price) m.drop = { from: m.text || "", to: txt, at: today, ts: new Date().toISOString() };
         else if (pr > m.price) delete m.drop;
       }
       if (pr) { m.price = pr; m.text = txt; }

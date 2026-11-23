@@ -71,7 +71,7 @@ async function main() {
     // 1) Harga turun setelah terakhir dikirim ke Telegram
     for (const [slug, m] of Object.entries(meta)) {
       const d = m.drop, sent = Math.max(Date.parse((state.posted[slug] || {}).at || 0) || 0, Date.parse((state.drops[slug] || {}).at || 0) || 0);
-      if (d && live.has(slug) && state.posted[slug] && now - Date.parse(d.at) <= 30 * 864e5 && Date.parse(d.at + "T00:00:00+08:00") > sent)
+      if (d && live.has(slug) && state.posted[slug] && now - Date.parse(d.at) <= 30 * 864e5 && Date.parse(d.ts || d.at + "T00:00:00+08:00") > sent)
         todo.push({ key: slug, drop: d, cap: () => caption(live.get(slug), SEO[slug], true) });
     }
     // 2) Listing baru di IG (≤3 hari, terbaru dulu), lalu sisanya (terlama dulu)
