@@ -1,18 +1,13 @@
 {
   "posted": {},
-  "errors": {
-    "auth": {
-      "msg": "Token TikTok gagal: Authorization code is expired.",
-      "at": "2026-11-23T07:13:03.361Z"
-    }
-  },
+  "errors": {},
   "token": {
-    "iv": "DEynB372JLy5jSLb",
-    "tag": "UQGU/zxzG6c/vWs3K+k5Jw==",
-    "data": "Ui4lBL5pIrmtWK8UOLibm16S08f2RxeibZc/XFweJi8GjRJjeIdJzzzhRZb85qBtgnjIuH2iSPz4auVNQR3S6vswv/20bd7sNIlb6HmLgh9DfOLYrh3/5CMZihfUCO5KCoAc3RAz7zBQ64KiPXpH2G+NsvdnkCRhjtz9pOc9/tzRj1KNw6waCf7YhjWcduTABGLoYMbRhzh0SEbNhGmQwdvAvrEX4OklIhHVtwnucQdOLcbcc2CwWbXDjVm4i5d4UzkjLjycEQMH/W5CZ6Ge9OGKn2zmM8/zbMl+kCqNyG4OmeSimBUOS1Wz+7xTi3Gb9UzKs8z4+Ec4Yht5Xm9aI2vxsp0="
+    "iv": "avV5wCzbk8AyIas7",
+    "tag": "7CW6NZLPvoy59edTh0mEjA==",
+    "data": "I79MCStGvqkyTL5qwiNeaINM33IseLG+9JjuUnageo6mnnTnvAAQeIUY2MA72xSM99XmiplH1iUpfVHGQLUR7xAnducZ0aBCdTyTGSB1KRgzIA2DHokRTv76BBw+28f/i7RY5zE1c2voeuXbDVPHVGTMSXW7d+86jHnJ80KGuvOerheJhXoIVGcrLqh6W0XP1QpF3CfehJuTLKKoCBtIsMnkYFP/W1uug8IQQKqN/NuFLRrJFmo//mj615nhj6nhYhOAOfThR0nMCnL+/cYEcRKpK5kGgbn7iifjK1utH3lFZyWUciW5M02PBnoV1MZX7yHyXzxAk/y58gZ/bwlaj2x0rfs="
   },
   "connected": {
-    "at": "2026-11-23T07:11:55.799Z",
+    "at": "2026-11-23T07:14:58.759Z",
     "scope": "user.info.basic,video.upload",
     "refreshUntil": "2027-11-23"
   }
