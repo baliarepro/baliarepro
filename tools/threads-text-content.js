@@ -288,7 +288,18 @@ WA: +62 812 868 080` },
 👉 baliareproperty.com
 
 Viewing gratis, chat WA 0812 868 080.
-Repost kalau ada temanmu yang "cuma liburan" tapi tiap hari buka listing tanah 😂` }
+Repost kalau ada temanmu yang "cuma liburan" tapi tiap hari buka listing tanah 😂` },
+
+  { id: "buyer-utas-kuta-selatan-2", cat: "buyer", topic: "Bali", text:
+`Kuta Selatan itu "Bukit": Jimbaran, Ungasan, Pecatu, Uluwatu, Kutuh, Pandawa, Balangan, Nusa Dua.
+
+Ciri khasnya:
+🌊 view laut
+🏄 surfer di mana-mana
+☕ kafe estetik tiap 200 meter
+🛵 tanjakan yang bikin motor matic berdoa
+
+Cari tanah atau villa di Bukit? baliareproperty.com · WA 0812 868 080` }
 ];
 
 module.exports = { POSTS };
