@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "tanah-350-m2-di-gang-taman-sri-pererenan": {
+    id: { t: "Dijual Tanah 350 m² Freehold di Pererenan, Canggu Bali", d: "Tanah 3,5 are SHM zona kuning di Gg. Taman Sri, Pererenan. Lebar depan ±21 m, ±8 menit ke pantai. Rp1,95 M/are (total Rp6,825 M). Tanya via WhatsApp." },
+    en: { t: "350 m² Freehold Land for Sale in Pererenan, Canggu Bali", d: "3.5-are SHM plot, yellow zoning, on Gg. Taman Sri, Pererenan. ±21 m frontage, ±8 min to the beach. IDR 1.95B/are (IDR 6.825B total). Ask on WhatsApp." },
+    ru: { t: "Продажа участка 350 м² (freehold) в Переренане, Чангу, Бали", d: "Участок 3,5 аре, SHM, жёлтая зона, Ганг Таман Сри, Переренан. Фасад ±21 м, ±8 мин до пляжа. 1,95 млрд IDR/ар (всего 6,825 млрд). Пишите в WhatsApp." } },
   "villa-5-kamar-tidur-dengan-private-pool-di-kerobokan": {
     id: { t: "Dijual Villa 5 Kamar Tidur dengan Private Pool di Kerobokan, Bali", d: "Villa 2 lantai fully furnished, 5 KT, pool 12×8 m, tanah 483 m², bangunan 600 m², SHM & IMB di Kerobokan, Kuta Utara. Rp8,75 M. Tanya via WhatsApp." },
     en: { t: "5-Bedroom Villa with Private Pool for Sale in Kerobokan, Bali", d: "Fully furnished 2-storey villa, 5 bedrooms, 12×8 m pool, 483 m² land, 600 m² building, SHM & IMB in Kerobokan, North Kuta. IDR 8.75B. Ask on WhatsApp." },
