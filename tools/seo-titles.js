@@ -4,7 +4,7 @@
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
   "tanah-202-m2-di-gatsu-vi-denpasar": {
-    id: { t: "Dijual Tanah 202 m² di Gatot Subroto VI, Denpasar Bali", d: "Tanah 202 m² di kawasan hunian Gatsu VI, Denpasar, dekat Lapangan Lumintang & RS Puri Bunda. Cocok untuk kost. Rp7,5 jt/m² nego (±Rp1,5 M). Tanya WA." },
+    id: { t: "Dijual Tanah 202 m² di Gatot Subroto VI, Denpasar Bali", d: "Tanah SHM 202 m² di kawasan hunian Gatsu VI, Denpasar, dekat Lapangan Lumintang & RS Puri Bunda. Cocok untuk kost. Rp7,5 jt/m² nego (±Rp1,5 M). Tanya WA." },
     en: { t: "202 m² Land for Sale on Gatot Subroto VI, Denpasar Bali", d: "202 m² plot in the Gatsu VI residential area, Denpasar, near Lumintang Field & Puri Bunda Hospital. Suits a boarding house. IDR 7.5M/m², negotiable. WhatsApp us." },
     ru: { t: "Продажа участка 202 м² на Гатот Суброто VI, Денпасар, Бали", d: "Участок 202 м² в жилом районе Гатсу VI, Денпасар, рядом с площадью Луминтанг и больницей Пури Бунда. Под доходный дом. 7,5 млн IDR/м², торг. WhatsApp." } },
   "tanah-1300-m2-zona-pink-dekat-pantai-seseh": {
