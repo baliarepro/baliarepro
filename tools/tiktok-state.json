@@ -1,6 +1,11 @@
 {
   "posted": {},
-  "errors": {},
+  "errors": {
+    "auth": {
+      "msg": "Token TikTok gagal: Authorization code is expired.",
+      "at": "2026-11-23T07:13:03.361Z"
+    }
+  },
   "token": {
     "iv": "DEynB372JLy5jSLb",
     "tag": "UQGU/zxzG6c/vWs3K+k5Jw==",
