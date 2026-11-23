@@ -76,7 +76,7 @@
     },
     {
       "id": "tiktok-app",
-      "text": "TikTok (opsi B): buat aplikasi di developers.tiktok.com (Login Kit + Content Posting API/Upload, scope video.upload), simpan secret GitHub TIKTOK_CLIENT_KEY & TIKTOK_CLIENT_SECRET, kirim Client Key ke Claude, lalu login di baliareproperty.com/tiktok.html. Panduan dari Claude 23 Nov 2026.",
+      "text": "TikTok: aplikasi \"Bali Are Poster\" sudah diajukan review (23 Nov 2026). Bila email persetujuan datang: kabari Claude, kirim Client Key Production, ganti secret TIKTOK_CLIENT_KEY/SECRET ke Production, lalu login ulang di baliareproperty.com/tiktok.html. Sementara itu tiap hari ±10.37 & ±18.07 WIB ada draft video di kotak masuk TikTok: tambah lagu + caption (Salin caption di tab Status), posting ±11.30–12.30 & ±19.30–20.30 WIB.",
       "added": "2026-11-23"
     }
   ]

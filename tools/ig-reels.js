@@ -160,9 +160,19 @@ async function main() {
   if (!process.env.IG_TOKEN && !TT_ONLY) { console.log("Secret IG_TOKEN belum diatur — Reels dilewati."); return; }
   const igState = JSON.parse(fs.readFileSync(path.join(ROOT, "tools/ig-state.json"), "utf8"));
   const want = (process.argv.find((x) => x.startsWith("--slug=")) || "").slice(7);
-  const live = all.filter((l) => !l.hidden && !l.sold && photosOf(l.slug).length >= 2 && (want ? l.slug === want : TT_ONLY || !state.posted[l.slug]));
+  let live = all.filter((l) => !l.hidden && !l.sold && photosOf(l.slug).length >= 2 && (want ? l.slug === want : TT_ONLY || !state.posted[l.slug]));
   const igAt = (s) => (igState.posted && igState.posted[s] && igState.posted[s].at) || "9999";
   live.sort((x, y) => igAt(x.slug).localeCompare(igAt(y.slug)));
+  if (TT_ONLY && !want) {
+    // Draft TikTok siang (jadwal ke-2, permintaan pemilik 23 Nov 2026): jangan ambil calon Reel malam ini;
+    // dahulukan listing yang belum pernah dikirim ke TikTok (yang Reel IG-nya sudah tayang dulu), lalu putar ulang yang terkirim ≥14 hari lalu.
+    const tt = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, "tools/tiktok-state.json"), "utf8")).posted || {}; } catch (e) { return {}; } })();
+    const next = live.find((l) => !state.posted[l.slug]);
+    const pool = live.filter((l) => l !== next);
+    const fresh = pool.filter((l) => !tt[l.slug]).sort((x, y) => (state.posted[x.slug] ? 0 : 1) - (state.posted[y.slug] ? 0 : 1));
+    const old = pool.filter((l) => tt[l.slug] && Date.now() - Date.parse(tt[l.slug].at) >= 14 * 864e5).sort((x, y) => tt[x.slug].at.localeCompare(tt[y.slug].at));
+    live = [...fresh, ...old];
+  }
   const l = live[0];
   if (!l) { console.log("Tidak ada listing baru untuk Reel."); return; }
   const { igId, token, username } = TT_ONLY ? {} : await IG.connect(igState, null);

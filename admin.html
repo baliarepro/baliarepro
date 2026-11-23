@@ -803,11 +803,11 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
           errs.map(function (e) { return '<div class="err">' + esc(e) + '</div>'; }).join("") +
           (cls === "bad" && !errs.length ? '<div class="err">Tidak ada posting baru lebih lama dari jadwal. Kabari Claude.</div>' : "") + '</div>';
       }).join("");
-      var tt = lastOf(r[11].posted), ttc = tt && r[11].posted[tt.key].caption;
-      if (ttc) {
-        $("#stlist").insertAdjacentHTML("beforeend", '<div class="st ok"><h3>🎵 Caption TikTok terbaru</h3><div class="muted">Draft: ' + esc(tt.key) + ' · ' + fmt(tt.at) + '</div><textarea id="ttcap" readonly rows="5" style="width:100%;margin-top:8px;font:inherit;font-size:14px">' + esc(ttc) + '</textarea><button class="btn small" type="button" id="ttcopy">Salin caption</button></div>');
-        $("#ttcopy").onclick = function () { var t = $("#ttcap"); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(function () { toast("Caption tersalin."); }).catch(function () { document.execCommand("copy"); toast("Caption tersalin."); }); };
-      }
+      var ttp = r[11].posted || {}, ttl = Object.keys(ttp).filter(function (k) { return ttp[k].caption && ttp[k].at; }).sort(function (a, b) { return ttp[b].at < ttp[a].at ? -1 : 1; }).slice(0, 2);
+      ttl.forEach(function (k, i) {
+        $("#stlist").insertAdjacentHTML("beforeend", '<div class="st ok"><h3>🎵 Caption TikTok ' + (i ? "sebelumnya" : "terbaru") + '</h3><div class="muted">Draft: ' + esc(k) + ' · ' + fmt(ttp[k].at) + ' · posting ±11.30–12.30 / 19.30–20.30 WIB</div><textarea id="ttcap' + i + '" readonly rows="5" style="width:100%;margin-top:8px;font:inherit;font-size:14px">' + esc(ttp[k].caption) + '</textarea><button class="btn small" type="button" data-ttc="' + i + '">Salin caption</button></div>');
+      });
+      $$("[data-ttc]").forEach(function (b) { b.onclick = function () { var t = $("#ttcap" + b.dataset.ttc); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(function () { toast("Caption tersalin."); }).catch(function () { document.execCommand("copy"); toast("Caption tersalin."); }); }; });
       renderPop(r[8]);
       renderRem();
       $("#st-dot").hidden = !(bad || rem.items.some(function (x) { return !x.done; }));
