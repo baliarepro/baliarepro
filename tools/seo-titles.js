@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "villa-2-kamar-private-pool-leasehold-di-pererenan": {
+    id: { t: "Dijual Villa 2 Kamar Private Pool Leasehold di Pererenan Bali", d: "Villa 2 KT fully furnished, private pool, bangunan 100 m², leasehold 25 tahun di Pererenan, ±3 km ke pantai. US$199.000, potensi sewa Rp376 jt/tahun. Tanya WA." },
+    en: { t: "2-Bedroom Private Pool Villa for Sale, Leasehold, Pererenan Bali", d: "Fully furnished 2-bed villa with private pool, 100 m² building, 25-year leasehold in Pererenan, ±3 km to the beach. USD 199,000, rent IDR 376M/yr. WhatsApp us." },
+    ru: { t: "Продажа виллы с 2 спальнями и бассейном, лизхолд, Переренан, Бали", d: "Меблированная вилла с 2 спальнями и бассейном, 100 м², лизхолд 25 лет, Переренан, ±3 км до пляжа. 199 000 USD, аренда до 376 млн IDR в год. WhatsApp." } },
   "villa-1-kamar-private-pool-leasehold-di-tumbak-bayuh": {
     id: { t: "Dijual Villa 1 Kamar Private Pool Leasehold di Tumbak Bayuh Bali", d: "Villa 1 KT fully furnished, private pool, tanah 100 m², leasehold 25 tahun di Tumbak Bayuh dekat Canggu. US$199.000, potensi sewa Rp372 jt/tahun. Tanya WA." },
     en: { t: "1-Bedroom Private Pool Villa for Sale, Leasehold, Tumbak Bayuh Bali", d: "Fully furnished 1-bed villa with private pool, 100 m² land, 25-year leasehold in Tumbak Bayuh near Canggu. USD 199,000, rental potential IDR 372M/yr. WhatsApp." },
