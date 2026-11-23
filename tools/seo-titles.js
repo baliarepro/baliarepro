@@ -3,6 +3,10 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "tanah-1300-m2-zona-pink-dekat-pantai-seseh": {
+    id: { t: "Dijual Tanah 1.300 m² Zona Pink dekat Pantai Seseh, Bali", d: "Tanah 13 are zona pink (pariwisata) ±850 m dari Pantai Seseh, akses mudah ke Canggu & Pererenan. Rp1,5 M/are (total Rp19,5 M). Tanya via WhatsApp." },
+    en: { t: "1,300 m² Pink-Zone Land for Sale near Seseh Beach, Bali", d: "13-are pink-zone (tourism) plot ±850 m from Seseh Beach, easy access to Canggu & Pererenan. IDR 1.5B/are (IDR 19.5B total). Ask on WhatsApp." },
+    ru: { t: "Продажа участка 1 300 м² в розовой зоне у пляжа Сесех, Бали", d: "Участок 13 аре в розовой (туристической) зоне, ±850 м до пляжа Сесех, рядом Чангу и Переренан. 1,5 млрд IDR/ар (всего 19,5 млрд). Пишите в WhatsApp." } },
   "tanah-350-m2-di-gang-taman-sri-pererenan": {
     id: { t: "Dijual Tanah 350 m² Freehold di Pererenan, Canggu Bali", d: "Tanah 3,5 are SHM zona kuning di Gg. Taman Sri, Pererenan. Lebar depan ±21 m, ±8 menit ke pantai. Rp1,95 M/are (total Rp6,825 M). Tanya via WhatsApp." },
     en: { t: "350 m² Freehold Land for Sale in Pererenan, Canggu Bali", d: "3.5-are SHM plot, yellow zoning, on Gg. Taman Sri, Pererenan. ±21 m frontage, ±8 min to the beach. IDR 1.95B/are (IDR 6.825B total). Ask on WhatsApp." },
