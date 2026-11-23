@@ -281,7 +281,14 @@ Buka listing yang kamu suka → tekan "Download PDF".` },
 2️⃣ Kirim foto (boleh langsung dari HP) atau link Google Drive
 3️⃣ Kami susun listing 3 bahasa & promosikan
 
-WA: +62 812 868 080` }
+WA: +62 812 868 080` },
+
+  { id: "buyer-utas-kuta-selatan-7", cat: "buyer", topic: "Real Estate", text:
+`Daftar tanah & villa di Jimbaran, Ungasan, Pecatu, Uluwatu, Pandawa, Balangan (lengkap foto, harga, sertifikat & zonasi):
+👉 baliareproperty.com
+
+Viewing gratis, chat WA 0812 868 080.
+Repost kalau ada temanmu yang "cuma liburan" tapi tiap hari buka listing tanah 😂` }
 ];
 
 module.exports = { POSTS };
