@@ -104,6 +104,7 @@ const CSS = `<style>
 .pj-hero .eyebrow{color:var(--gold2)}
 .pj-hero h1{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:clamp(34px,5vw,54px);line-height:1.03;margin:10px 0 12px;color:#F6F2EA}
 .pj-hero p{color:#DCE7E1;max-width:620px;margin:0;font-size:17px}
+.pj-feat+.pj-feat{margin-top:18px}
 .pj-feat{display:flex;flex-wrap:wrap;background:var(--card);border:1px solid var(--ln);border-radius:22px;overflow:hidden;text-decoration:none;color:inherit}
 .pj-feat .ph{flex:1 1 520px;min-height:340px;position:relative;background:var(--fill2)}
 .pj-feat .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -164,6 +165,18 @@ const CSS = `<style>
 </style>`;
 const IC_WA = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"/></svg>';
 
+const APT = { id: "Apartemen", en: "Apartments", ru: "Апартаменты" };
+// Ringkasan harga/fakta per proyek (kartu daftar & kotak samping). c.kv (opsional) menimpa bawaan.
+function kvOf(p, L) {
+  const t = P[L], c = p[L];
+  if (c.kv) return [[t.from, rpShort(p.priceFrom, L), 1], ...c.kv];
+  const out = [[c.apt ? t.aptFrom : t.villaFrom, rpShort(p.priceFrom, L), 1]];
+  if (c.apt && p.villaFrom) out.push([t.villaFrom, rpShort(p.villaFrom, L), 1]);
+  if (p.completion) out.push([t.done, COMPLETION[L](p.completion)]);
+  if (c.villa && c.apt) out.push([`Villa · ${APT[L].toLowerCase()}`, `${c.villa.own} · ${c.apt.own}`]);
+  return out;
+}
+
 function renderProyekHub(o) {
   const { L, esc, root } = o, t = P[L];
   const cards = PROJECTS.map((p) => {
@@ -172,7 +185,7 @@ function renderProyekHub(o) {
     <div class="ph">${img ? `<img src="${img}" alt="${esc(p.name)}" loading="lazy">` : ""}<div class="pj-ph-tags"><span class="pj-badge">${esc(t.limited)}</span></div></div>
     <div class="tx"><div><div class="pj-dev">${esc(p.developer)}</div><h2>${esc(p.name)} — ${esc(c.tagline)}</h2><div style="color:var(--mut)">${esc(c.area)}</div></div>
       <p style="margin:0">${esc(c.intro)}</p>
-      <dl class="pj-kv"><div><dt>${esc(t.aptFrom)}</dt><dd class="big">${esc(rpShort(p.priceFrom, L))}</dd></div><div><dt>${esc(t.villaFrom)}</dt><dd class="big">${esc(rpShort(p.villaFrom, L))}</dd></div><div><dt>${esc(t.done)}</dt><dd>${esc(COMPLETION[L](p.completion))}</dd></div><div><dt>Villa · ${esc(L === "ru" ? "апартаменты" : L === "en" ? "Apartments" : "Apartemen")}</dt><dd>${esc(c.villa.own)} · ${esc(c.apt.own)}</dd></div></dl>
+      <dl class="pj-kv">${kvOf(p, L).map((x) => `<div><dt>${esc(x[0])}</dt><dd${x[2] ? ' class="big"' : ""}>${esc(x[1])}</dd></div>`).join("")}</dl>
       <span class="pj-btn" style="align-self:flex-start;margin-top:auto">${esc(t.see)} →</span></div></a>`;
   }).join("\n");
   const body = `  ${top({ ...o, up: "", current: "proyek" })}
@@ -191,7 +204,7 @@ function renderProyek(o) {
   const { L, esc, project: p, root } = o, t = P[L], c = p[L];
   const imgs = imagesOf(root, p.slug).map((x) => (L === "id" ? "../" : "../../") + x);
   const row = (r) => `<tr><td><b>${esc(c.rowNames[r.k])}</b></td><td>${esc(r.beds)}</td><td>${esc(L === "ru" ? r.size.replace(/m²/g, "м²").replace("net", "чистая") : r.size)}</td><td style="font-weight:700;color:var(--gt)">${r.price ? esc(priceTxt(r.price, L)) : "–"}</td><td><span class="pj-st${r.status === "sold" ? " s" : ""}">${esc(r.status === "sold" ? t.sold : t.limited)}</span></td></tr>`;
-  const prod = (x, from) => `<article><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="pj-dev">${x === c.villa ? "Villa" : (L === "ru" ? "Апартаменты" : L === "en" ? "Apartments" : "Apartemen")}</span><span class="pj-badge l" style="border:1px solid var(--ln)">${esc(x.own)}</span></div>
+  const prod = (x, from) => `<article><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="pj-dev">${x === c.villa ? "Villa" : APT[L]}</span>${x.own ? `<span class="pj-badge l" style="border:1px solid var(--ln)">${esc(x.own)}</span>` : ""}</div>
       <h3>${esc(x.h)}</h3><p>${esc(x.p)}</p>
       <dl class="pj-kv"><div><dt>${esc(x.a)}</dt><dd>${esc(x.av)}</dd></div><div><dt>${esc(x.b)}</dt><dd>${esc(x.bv)}</dd></div><div><dt>${esc(t.from)}</dt><dd class="big">${esc(rpShort(from, L))}</dd></div><div><dt>Status</dt><dd style="color:var(--gt2)">${esc(t.limited)}</dd></div></dl></article>`;
   const body = `  ${top({ ...o, up: "../", current: "proyek" })}
@@ -200,28 +213,28 @@ function renderProyek(o) {
   <p class="crumbs"><a href="../proyek.html">← ${esc(t.crumb)}</a></p>
   <section class="pj-dhero">${imgs[0] ? `<img src="${imgs[0]}" alt="${esc(p.name)}">` : ""}<div class="in">
     <div class="eyebrow">${esc(p.developer)} · ${esc(c.area)}</div><h1>${esc(p.name)}</h1><p>${esc(c.intro)}</p>
-    <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="pj-badge l">Villa · ${esc(c.villa.own)}</span><span class="pj-badge l">${esc(L === "ru" ? "Апартаменты" : L === "en" ? "Apartments" : "Apartemen")} · ${esc(c.apt.own)}</span><span class="pj-badge" style="background:var(--gold2);color:var(--gt)">${esc(t.done)} ${esc(COMPLETION[L](p.completion))}</span><span class="pj-badge">${esc(t.limited)}</span></div></div></section>
-  <div class="pj-stats"><div><b>${p.units.land.toLocaleString(L === "en" ? "en-US" : "id-ID")} ${L === "ru" ? "м²" : "m²"}</b><span>${esc(t.land)}</span></div><div><b>${p.units.villa} + ${p.units.apt}</b><span>${esc(t.unitsL)}</span></div><div><b>±800 m</b><span>${esc(t.beach)}</span></div><div><b>${esc(rpShort(p.priceFrom, L))}</b><span>${esc(t.aptFrom)}</span></div></div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">${(c.badges || [`Villa · ${c.villa.own}`, `${APT[L]} · ${c.apt.own}`]).map((b) => `<span class="pj-badge l">${esc(b)}</span>`).join("")}${p.completion ? `<span class="pj-badge" style="background:var(--gold2);color:#123F36">${esc(t.done)} ${esc(COMPLETION[L](p.completion))}</span>` : ""}<span class="pj-badge">${esc(t.limited)}</span></div></div></section>
+  <div class="pj-stats">${(c.stats || [[`${p.units.land.toLocaleString(L === "en" ? "en-US" : "id-ID")} ${L === "ru" ? "м²" : "m²"}`, t.land], [`${p.units.villa} + ${p.units.apt}`, t.unitsL], ["±800 m", t.beach], [rpShort(p.priceFrom, L), t.aptFrom]]).map((x) => `<div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join("")}</div>
   <div class="pj-cols"><div class="pj-main">
-    <section><h2>${esc(t.two)}</h2><div class="pj-two">${prod(c.villa, p.villaFrom)}${prod(c.apt, p.priceFrom)}</div></section>
-    <section><h2>${esc(t.types)}</h2><div class="pj-tw"><table><thead><tr>${t.typeCols.map((h) => `<th scope="col">${esc(h)}</th>`).join("")}</tr></thead><tbody>${p.rows.map(row).join("")}</tbody></table></div><p class="pj-note">${esc(t.priceNote)}</p></section>
+    <section><h2>${esc(t.two)}</h2><div class="pj-two">${c.villa ? prod(c.villa, p.villaFrom || p.priceFrom) : ""}${c.apt ? prod(c.apt, p.priceFrom) : ""}</div></section>
+    <section><h2>${esc(t.types)}</h2><div class="pj-tw"><table><thead><tr>${t.typeCols.map((h, i) => (i === 3 && c.priceCol) || h).map((h) => `<th scope="col">${esc(h)}</th>`).join("")}</tr></thead><tbody>${p.rows.map(row).join("")}</tbody></table></div><p class="pj-note">${esc(c.priceNote || t.priceNote)}</p></section>
     <section><h2>${esc(t.payH)}</h2><ol class="pj-steps">${c.pay.map((s, i) => `<li><small>0${i + 1}</small><b>${esc(s[0])}</b><span>${esc(s[1])}</span></li>`).join("")}</ol><p class="pj-note">${esc(c.payNote)}</p></section>
     ${imgs.length > 1 ? `<section><h2>${esc(t.gallery)}</h2><div class="pj-gal">${imgs.slice(1).map((x) => `<img src="${x}" alt="${esc(p.name)}" loading="lazy">`).join("")}</div><p class="pj-note">${esc(L === "id" ? "Render dan ilustrasi adalah gambaran artis dari developer." : L === "en" ? "Renders and illustrations are the developer's artist impressions." : "Рендеры и иллюстрации — художественное изображение девелопера.")}</p></section>` : ""}
-    <section><h2>${esc(t.wellH)}</h2><p style="margin:-6px 0 14px;color:var(--body)">${esc(t.wellP)}</p><div class="pj-pill5">${c.pillars.map((x) => `<div><small>${esc(x[0])}</small><b>${esc(x[1])}</b><span>${esc(x[2])}</span></div>`).join("")}</div>
-      <div class="pj-band"><em>${esc(t.wellC)}</em>${c.wellness.map((w) => `<span>${esc(w)}</span>`).join('<span style="color:#4E7A6E">·</span>')}</div></section>
-    <section><h2>${esc(t.featH)}</h2><div class="pj-two">${c.feats.map((f) => `<article><h3 style="font-size:18px">${esc(f[0])}</h3><ul style="margin:0;padding-left:18px;font-size:14px;color:var(--body)">${f[1].map((x) => `<li>${esc(x)}</li>`).join("")}</ul></article>`).join("")}</div></section>
-    <section><h2>${esc(t.rentH)}</h2><p style="margin:-6px 0 14px;color:var(--body)">${esc(c.rental.p)}</p><div class="pj-two"><div class="pj-box"><div style="font-size:13px;color:var(--mut)">${esc(t.rentV)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--gt)">${esc(c.rental.villa)}</div></div><div class="pj-box"><div style="font-size:13px;color:var(--mut)">${esc(t.rentA)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--gt)">${esc(c.rental.apt)}</div></div></div><p class="pj-note">${esc(t.rentNote)}</p></section>
-    <section><h2>${esc(t.teamH)}</h2><dl class="pj-team">${p.team.map((x) => `<div><dt>${esc(t.team[x[0]])}</dt><dd>${esc(x[1])}</dd></div>`).join("")}</dl></section>
+    ${c.pillars ? `<section><h2>${esc(c.pillH || t.wellH)}</h2><p style="margin:-6px 0 14px;color:var(--body)">${esc(c.pillP || t.wellP)}</p><div class="pj-pill5">${c.pillars.map((x) => `<div><small>${esc(x[0])}</small><b>${esc(x[1])}</b><span>${esc(x[2])}</span></div>`).join("")}</div>
+      ${c.wellness ? `<div class="pj-band"><em>${esc(c.wellC || t.wellC)}</em>${c.wellness.map((w) => `<span>${esc(w)}</span>`).join('<span style="color:#4E7A6E">·</span>')}</div>` : ""}</section>` : ""}
+    <section><h2>${esc(c.featH || t.featH)}</h2><div class="pj-two">${c.feats.map((f) => `<article><h3 style="font-size:18px">${esc(f[0])}</h3><ul style="margin:0;padding-left:18px;font-size:14px;color:var(--body)">${f[1].map((x) => `<li>${esc(x)}</li>`).join("")}</ul></article>`).join("")}</div></section>
+    ${c.rental ? `<section><h2>${esc(t.rentH)}</h2><p style="margin:-6px 0 14px;color:var(--body)">${esc(c.rental.p)}</p><div class="pj-two"><div class="pj-box"><div style="font-size:13px;color:var(--mut)">${esc(t.rentV)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--gt)">${esc(c.rental.villa)}</div></div><div class="pj-box"><div style="font-size:13px;color:var(--mut)">${esc(t.rentA)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--gt)">${esc(c.rental.apt)}</div></div></div><p class="pj-note">${esc(t.rentNote)}</p></section>` : ""}
+    ${p.team ? `<section><h2>${esc(t.teamH)}</h2><dl class="pj-team">${p.team.map((x) => `<div><dt>${esc(t.team[x[0]])}</dt><dd>${esc(x[1])}</dd></div>`).join("")}</dl></section>` : ""}
   </div>
   <aside class="pj-side">
     <div class="pj-box" style="display:flex;flex-direction:column;gap:12px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><div style="font-size:12px;color:var(--mut)">${esc(t.aptFrom)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)">${esc(rpShort(p.priceFrom, L))}</div></div><div><div style="font-size:12px;color:var(--mut)">${esc(t.villaFrom)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)">${esc(rpShort(p.villaFrom, L))}</div></div></div>
-      <div style="font-size:13px;color:var(--mut)">${esc(t.direct)}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">${kvOf(p, L).filter((x) => x[2]).map((x) => `<div><div style="font-size:12px;color:var(--mut)">${esc(x[0])}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)">${esc(x[1])}</div></div>`).join("")}</div>
+      <div style="font-size:13px;color:var(--mut)">${esc(c.direct || t.direct)}</div>
       <a class="pj-btn wa" href="${wa(t.waMsg(p.name))}" target="_blank" rel="noopener">${IC_WA}${esc(t.waBtn)}</a>
       <a class="pj-btn o" href="${wa(t.visitMsg(p.name))}" target="_blank" rel="noopener">${esc(t.visit)}</a>
       <a href="../kalkulator.html?harga=${p.priceFrom}" style="text-align:center;font-weight:600">${esc(t.calc)}</a>
     </div>
-    <div class="pj-box"><b>${esc(t.locH)}</b><p style="margin:6px 0 10px;font-size:14px;color:var(--body)">${esc(c.area)}. ${esc(t.locP)}</p><a href="${wa(t.locMsg(p.name))}" target="_blank" rel="noopener" style="font-weight:600">${esc(t.locBtn)} →</a></div>
+    <div class="pj-box"><b>${esc(t.locH)}</b><p style="margin:6px 0 10px;font-size:14px;color:var(--body)">${esc(c.area)}. ${esc(t.locP)}</p>${c.near ? `<ul style="margin:0 0 10px;padding-left:18px;font-size:14px;color:var(--body)">${c.near.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}<a href="${wa(t.locMsg(p.name))}" target="_blank" rel="noopener" style="font-weight:600">${esc(t.locBtn)} →</a></div>
     <div class="pj-box" style="background:var(--g);color:#F6F2EA;border-color:var(--gt)"><div style="font-size:12px;color:#B9CCC4">Developer</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:20px;font-weight:700">${esc(p.developer)}</div><div style="font-size:13px;color:#DCE7E1">${esc(c.devAbout)}</div></div>
   </aside></div>
   <p class="pj-note" style="margin-top:34px;border-top:1px solid var(--ln);padding-top:14px">${esc(t.disclaimer)}</p>

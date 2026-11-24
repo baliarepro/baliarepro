@@ -153,7 +153,7 @@ const TOOLS = {
   en: { h: "Search & calculate", items: [["area/", "By area", "Find property by area", "Ungasan, Jimbaran, Pecatu–Uluwatu, Pandawa, Canggu, Kuta, Ubud, Gianyar."], ["kalkulator.html", "Calculator", "Estimate buying costs", "BPHTB transfer tax, PPAT/notary fee, developer VAT and long-term lease costs."]] },
   ru: { h: "Поиск и расчёт", items: [["area/", "По районам", "Недвижимость по районам", "Унгасан, Джимбаран, Пекату–Улувату, Пандава, Чангу, Кута, Убуд, Гианьяр."], ["kalkulator.html", "Калькулятор", "Рассчитать расходы на покупку", "Налог BPHTB, услуги PPAT/нотариуса, НДС застройщика и расходы на лизхолд."]] }
 };
-function renderHome({ project = null, news = [], newsLabels = {}, guide = [], guideLabels = {}, L, head, seoBlock, flags, cards, cta, contact, footer, visitsScript, copyScript, i18nSrc, esc }) {
+function renderHome({ projects = [], news = [], newsLabels = {}, guide = [], guideLabels = {}, L, head, seoBlock, flags, cards, cta, contact, footer, visitsScript, copyScript, i18nSrc, esc }) {
   const t = T[L];
   const featured = [...cards.filter((c) => !c.sold && c.rec), ...cards.filter((c) => !c.sold && !c.rec)].slice(0, 3);
   const wa = "https://wa.me/62812868080?text=" + encodeURIComponent(L === "id" ? "Halo Pak Bagoes, saya ingin info properti dari Bali Are Property." : "Hello Pak Bagoes, I'd like information about properties from Bali Are Property.");
@@ -232,9 +232,9 @@ ${CSS}
     </div>
   </section>
 
-  ${project ? `<section class="hsec" aria-labelledby="h-pj">
-    <div class="feat-head"><h2 id="h-pj">${esc(project.h)}</h2><a href="proyek.html">${esc(project.all)} →</a></div>
-    <a class="pjh" href="proyek/${project.slug}.html">${project.img ? `<img src="${project.img}" alt="${esc(project.name)}" loading="lazy">` : ""}<span><span class="eyebrow">${esc(project.eyebrow)}</span><b>${esc(project.name)}</b><span>${esc(project.tagline)}</span><em>${esc(project.price)}</em></span></a>
+  ${projects.length ? `<section class="hsec" aria-labelledby="h-pj">
+    <div class="feat-head"><h2 id="h-pj">${esc(projects[0].h)}</h2><a href="proyek.html">${esc(projects[0].all)} →</a></div>
+    <div style="display:grid;gap:12px">${projects.map((project) => `<a class="pjh" href="proyek/${project.slug}.html">${project.img ? `<img src="${project.img}" alt="${esc(project.name)}" loading="lazy">` : ""}<span><span class="eyebrow">${esc(project.eyebrow)}</span><b>${esc(project.name)}</b><span>${esc(project.tagline)}</span><em>${esc(project.price)}</em></span></a>`).join("")}</div>
   </section>` : ""}
 
   ${news.length ? `<section class="hsec" aria-labelledby="h-news">
