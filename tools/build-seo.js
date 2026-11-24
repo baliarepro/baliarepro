@@ -287,7 +287,9 @@ main .cta-duo{margin-top:0}
     if (!fs.existsSync(dir)) return [];
     return fs.readdirSync(dir).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).sort().slice(0, 3).map((f) => {
       const wm = "img/wm/" + slug + "/" + f.replace(/\.(png|webp|jpeg)$/i, ".jpg");
-      return fs.existsSync(path.join(ROOT, wm)) ? wm : "img/listing/" + slug + "/" + f;
+      const rp = fs.existsSync(path.join(ROOT, wm)) ? wm : "img/listing/" + slug + "/" + f;
+      // ?v=<hash isi file>: foto yang diganti langsung tampil baru (tidak tertahan cache browser/aplikasi) — 24 Nov 2026
+      return rp + "?v=" + require("crypto").createHash("md5").update(fs.readFileSync(path.join(ROOT, rp))).digest("hex").slice(0, 8);
     });
   };
   // Foto sampul + jumlah foto untuk kartu katalog bergaya ringkas (cards.js)
