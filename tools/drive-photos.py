@@ -29,7 +29,10 @@ def fetch(slug, url, replace):
     out = os.path.join(ROOT, "img/listing", slug)
     if not slug.startswith("test-") and os.path.isdir(out) and any(re.search(r"\.(jpe?g|png|webp)$", f, re.I) for f in os.listdir(out)) and not replace:
         return "sudah ada foto (tidak diganti)"
-    entries = gdown.download_folder(url=url, skip_download=True, quiet=True, remaining_ok=True)
+    try:
+        entries = gdown.download_folder(url=url, skip_download=True, quiet=True, remaining_ok=True)
+    except TypeError:  # gdown versi baru tidak punya remaining_ok
+        entries = gdown.download_folder(url=url, skip_download=True, quiet=True)
     if not entries:
         raise RuntimeError("Folder kosong atau tidak bisa dibuka. Pastikan folder dibagikan 'Siapa saja yang memiliki link'.")
     files = [e for e in entries if not VIDEO.search(os.path.basename(e.path))]
