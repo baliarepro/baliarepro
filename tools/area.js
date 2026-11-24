@@ -63,6 +63,7 @@ ${CSS}
     <nav aria-label="Menu">
       <a href="${root}about.html">${esc(h.nav[3])}</a>
       <a href="${root}listings.html">${esc(h.nav[0])}</a>
+      <a href="${root}proyek.html">${esc({id:"Proyek",en:"Projects",ru:"Проекты"}[L])}</a>
       <a href="${root}news.html">${esc(h.nav[1])}</a>
       <a href="${root}guide.html">${esc(h.nav[5])}</a>
       <a href="${root}faq.html">${esc(h.nav[4])}</a>

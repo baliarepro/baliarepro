@@ -119,6 +119,13 @@ const CSS = `<style>
 .note{color:var(--muted);margin:0;max-width:70ch}
 .feat-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
 .feat-head a{color:var(--sea);font-weight:600;text-decoration:none}
+.pjh{display:grid;grid-template-columns:1.3fr 1fr;border-radius:18px;overflow:hidden;background:#123F36;color:#F6F2EA;text-decoration:none;min-height:260px}
+.pjh img{width:100%;height:100%;object-fit:cover;display:block}
+.pjh>span{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:28px}
+.pjh .eyebrow{color:#D9A441;font-size:11px}
+.pjh b{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.05}
+.pjh em{font-style:normal;color:#D9A441;font-weight:600;margin-top:6px}
+@media (max-width:700px){.pjh{grid-template-columns:1fr}.pjh img{height:220px}}
 .feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .feat a.fc{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
 .feat a.fc:hover{border-color:var(--sea)}
@@ -146,7 +153,7 @@ const TOOLS = {
   en: { h: "Search & calculate", items: [["area/", "By area", "Find property by area", "Ungasan, Jimbaran, Pecatu–Uluwatu, Pandawa, Canggu, Kuta, Ubud, Gianyar."], ["kalkulator.html", "Calculator", "Estimate buying costs", "BPHTB transfer tax, PPAT/notary fee, developer VAT and long-term lease costs."]] },
   ru: { h: "Поиск и расчёт", items: [["area/", "По районам", "Недвижимость по районам", "Унгасан, Джимбаран, Пекату–Улувату, Пандава, Чангу, Кута, Убуд, Гианьяр."], ["kalkulator.html", "Калькулятор", "Рассчитать расходы на покупку", "Налог BPHTB, услуги PPAT/нотариуса, НДС застройщика и расходы на лизхолд."]] }
 };
-function renderHome({ news = [], newsLabels = {}, guide = [], guideLabels = {}, L, head, seoBlock, flags, cards, cta, contact, footer, visitsScript, copyScript, i18nSrc, esc }) {
+function renderHome({ project = null, news = [], newsLabels = {}, guide = [], guideLabels = {}, L, head, seoBlock, flags, cards, cta, contact, footer, visitsScript, copyScript, i18nSrc, esc }) {
   const t = T[L];
   const featured = [...cards.filter((c) => !c.sold && c.rec), ...cards.filter((c) => !c.sold && !c.rec)].slice(0, 3);
   const wa = "https://wa.me/62812868080?text=" + encodeURIComponent(L === "id" ? "Halo Pak Bagoes, saya ingin info properti dari Bali Are Property." : "Hello Pak Bagoes, I'd like information about properties from Bali Are Property.");
@@ -164,6 +171,7 @@ ${CSS}
     <nav aria-label="Menu">
       <a href="about.html">${esc(t.nav[3])}</a>
       <a href="listings.html">${esc(t.nav[0])}</a>
+      <a href="proyek.html">${esc({id:"Proyek",en:"Projects",ru:"Проекты"}[L])}</a>
       <a href="news.html">${esc(t.nav[1])}</a>
       <a href="guide.html">${esc(t.nav[5])}</a>
       <a href="faq.html">${esc(t.nav[4])}</a>
@@ -223,6 +231,11 @@ ${CSS}
       ${featured.map((c) => `<a class="fc" href="listing/${c.slug}.html"><span class="eyebrow">${esc(c.eyebrow.trim())}</span><h3>${esc(c.title)}</h3><b>${esc(c.priceText.trim())}</b></a>`).join("\n      ")}
     </div>
   </section>
+
+  ${project ? `<section class="hsec" aria-labelledby="h-pj">
+    <div class="feat-head"><h2 id="h-pj">${esc(project.h)}</h2><a href="proyek.html">${esc(project.all)} →</a></div>
+    <a class="pjh" href="proyek/${project.slug}.html">${project.img ? `<img src="${project.img}" alt="${esc(project.name)}" loading="lazy">` : ""}<span><span class="eyebrow">${esc(project.eyebrow)}</span><b>${esc(project.name)}</b><span>${esc(project.tagline)}</span><em>${esc(project.price)}</em></span></a>
+  </section>` : ""}
 
   ${news.length ? `<section class="hsec" aria-labelledby="h-news">
     <div class="feat-head"><h2 id="h-news">${esc(newsLabels.h)}</h2><a href="news.html">${esc(newsLabels.all)} →</a></div>

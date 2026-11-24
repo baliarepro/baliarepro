@@ -644,6 +644,41 @@ ${copyScript}
     }
   }
 
+  // ---------- Proyek developer (3 bahasa) ----------
+  const PJ = require("./proyek.js");
+  for (const L of LANGS) {
+    const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
+    const common = { L, head, esc, flags, cta: out[L].cta, contact: out[L].contact, footer: out[L].footer, copyScript, root: ROOT };
+    {
+      const file = langDir(L) + "proyek.html";
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "proyek.html")]));
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT, { "@type": "CollectionPage", name: PJ.P[L].hubTitle, url: alts[L], inLanguage: L,
+        hasPart: PJ.PROJECTS.map((p) => ({ "@type": "Residence", name: p.name, url: url(L, "proyek/" + p.slug + ".html") })) }] };
+      let html = PJ.renderProyekHub({ ...common, i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc: PJ.P[L].hubDesc, ogTitle: PJ.P[L].hubTitle, jsonld, image: PJ.imagesOf(ROOT, PJ.PROJECTS[0].slug)[0] ? BASE + PJ.imagesOf(ROOT, PJ.PROJECTS[0].slug)[0] : "" }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "proyek.html")])), L);
+      write(file, html);
+    }
+    for (const p of PJ.PROJECTS) {
+      const file = langDir(L) + "proyek/" + p.slug + ".html", c = p[L];
+      const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "proyek/" + p.slug + ".html")]));
+      const imgs = PJ.imagesOf(ROOT, p.slug).map((x) => BASE + x);
+      const desc = `${p.name} (${p.developer}) – ${c.intro}`.slice(0, 300);
+      const jsonld = { "@context": "https://schema.org", "@graph": [AGENT,
+        { "@type": "Residence", name: p.name, description: c.intro, url: alts[L], image: imgs,
+          address: { "@type": "PostalAddress", addressLocality: "Canggu", addressRegion: "Bali", addressCountry: "ID" },
+          offers: { "@type": "AggregateOffer", priceCurrency: "IDR", lowPrice: p.priceFrom, availability: "https://schema.org/LimitedAvailability", seller: { "@id": BASE + "#agent" } } },
+        { "@type": "BreadcrumbList", itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Bali Are Property", item: url(L, "") },
+          { "@type": "ListItem", position: 2, name: PJ.P[L].crumb, item: url(L, "proyek.html") },
+          { "@type": "ListItem", position: 3, name: p.name, item: alts[L] }] }] };
+      let html = PJ.renderProyek({ ...common, project: p, i18nSrc: rel(file, "i18n.js"),
+        seoBlock: seo({ L, pageUrl: alts[L], alts, desc, ogTitle: `${p.name} – ${c.tagline}`, jsonld, image: imgs[0] || "" }) });
+      html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "proyek/" + p.slug + ".html")])), L);
+      write(file, html);
+    }
+  }
+
   // ---------- Homepage (3 bahasa) ----------
   const { T: HT, renderHome } = require("./home.js");
   const visitsSrc = (srcIndex.match(/<script>\n\(function\(\)\{\n  var box=document\.getElementById\('visits'\)[\s\S]*?<\/script>/) || [""])[0]
@@ -658,7 +693,11 @@ ${copyScript}
       { "@type": "WebSite", name: "Bali Are Property", url: BASE, inLanguage: ["id", "en", "ru"], publisher: { "@id": BASE + "#agent" } }] };
     const flags = (out[L].html.match(/<div class="langs"[\s\S]*?<\/div>/) || [""])[0];
     const GDh = require("./guide.js");
-    let html = renderHome({ news: require("./news.js").NEWS.slice(0, 3).map((a) => ({ slug: a.slug, ...a[L] })),
+    const PJh = require("./proyek.js"), pj0 = PJh.PROJECTS[0];
+    const project = pj0 && { slug: pj0.slug, name: pj0.name, tagline: pj0[L].tagline, img: PJh.imagesOf(ROOT, pj0.slug)[0] ? (L === "id" ? "" : "../") + PJh.imagesOf(ROOT, pj0.slug)[0] : "",
+      eyebrow: `${pj0.developer} · ${pj0[L].area} · ${PJh.P[L].limited}`, price: `${PJh.P[L].aptFrom} ${PJh.rpShort(pj0.priceFrom, L)}`,
+      h: { id: "Proyek developer pilihan", en: "Featured developer project", ru: "Проект девелопера" }[L], all: { id: "Semua proyek", en: "All projects", ru: "Все проекты" }[L] };
+    let html = renderHome({ project, news: require("./news.js").NEWS.slice(0, 3).map((a) => ({ slug: a.slug, ...a[L] })),
       newsLabels: { h: { id: "Berita properti terbaru", en: "Latest property news", ru: "Свежие новости" }[L], all: { id: "Semua berita", en: "All news", ru: "Все новости" }[L] },
       guide: GDh.ARTICLES.slice(0, 3).map((a) => ({ slug: a.slug, ...a[L] })),
       guideLabels: { all: { id: "Semua artikel", en: "All articles", ru: "Все статьи" }[L] }, L, head, esc, flags, cards: out[L].cards, cta: out[L].cta, contact: out[L].contact, footer: out[L].footer,
@@ -699,7 +738,7 @@ ${copyScript}
 
   // ---------- Sitemap & robots ----------
   const today = new Date().toISOString().slice(0, 10);
-  const pages = ["", "about.html", "faq.html", "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", "kalkulator.html", "terjual.html", "harga-tanah.html", "area/", ...idAreas.map((a) => "area/" + a.slug + ".html"), ...idCards.map((c) => "listing/" + c.slug + ".html")];
+  const pages = ["", "about.html", "faq.html", "proyek.html", ...require("./proyek.js").PROJECTS.map((p) => "proyek/" + p.slug + ".html"), "news.html", ...require("./news.js").NEWS.map((a) => "news/" + a.slug + ".html"), "guide.html", ...require("./guide.js").ARTICLES.map((a) => "guide/" + a.slug + ".html"), "listings.html", "inquiry.html", "kalkulator.html", "terjual.html", "harga-tanah.html", "area/", ...idAreas.map((a) => "area/" + a.slug + ".html"), ...idCards.map((c) => "listing/" + c.slug + ".html")];
   const urls = pages.flatMap((p) => LANGS.map((L) => `  <url>
     <loc>${url(L, p)}</loc>
     <lastmod>${today}</lastmod>
@@ -734,6 +773,7 @@ ${urls.join("\n")}
 - [Daftar listing (ID)](${url("id", "listings.html")})
 - [About](${url("en", "about.html")}) · [FAQ](${url("en", "faq.html")}) · [Bali Property Guide](${url("en", "guide.html")}) · [Bali property news](${url("en", "news.html")})
 - [Inquiry form](${url("en", "inquiry.html")}): find a property or list yours for sale
+- [Developer projects](${url("en", "proyek.html")}): ${require("./proyek.js").PROJECTS.map((p) => `[${p.name}](${url("en", "proyek/" + p.slug + ".html")}) (${p.developer}, ${p.en.area}; apartments from IDR ${(p.priceFrom / 1e9).toFixed(2)}B, villas from IDR ${(p.villaFrom / 1e9).toFixed(2)}B, target completion ${p.completion})`).join(" · ")}
 - [Property by area](${url("en", "area/")}): ${idAreas.map((a) => `[${a.name.en}](${url("en", "area/" + a.slug + ".html")})`).join(" · ")}
 - [Buying cost calculator](${url("en", "kalkulator.html")}): estimate BPHTB transfer tax, notary/PPAT fee, VAT and leasehold costs in Bali
 

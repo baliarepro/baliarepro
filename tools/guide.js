@@ -70,6 +70,7 @@ function top({ L, up, flags, esc, current }) {
     <nav aria-label="Menu">
       ${a("about.html", h.nav[3])}
       ${a("listings.html", h.nav[0])}
+      ${a("proyek.html", {id:"Proyek",en:"Projects",ru:"Проекты"}[L], current === "proyek")}
       ${a("news.html", h.nav[1], current === "news")}
       ${a("guide.html", NAV_GUIDE[L], current === true || current === "guide")}
       ${a("faq.html", h.nav[4])}
