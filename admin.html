@@ -151,6 +151,9 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     <div id="tab-st" hidden>
       <p class="muted">Kondisi posting otomatis (Instagram, Threads, Facebook) dan hal yang perlu Bapak kerjakan. Data diambil dari GitHub saat tab ini dibuka.</p>
       <div class="list" id="stlist"></div>
+      <h2>Cek ketersediaan</h2>
+      <p class="muted">Listing yang sudah tayang ≥30 hari sejak tayang atau konfirmasi terakhir. Tanyakan ke pemilik properti: masih tersedia &amp; harga sama? Bila ya, tekan "Masih tersedia ✓". Bila berubah: Edit (ubah harga) atau Turunkan di tab Iklan.</p>
+      <div class="list" id="chklist"><p class="muted">Memuat…</p></div>
       <h2>Pengingat untuk Bapak</h2>
       <div class="list" id="remlist"></div>
       <div class="note" style="margin-top:18px"><b>Bali Are Agen</b>: catatan leads, follow-up WA, transaksi sampai AJB, sewa, dan komisi ada di aplikasi terpisah yang datanya tersimpan pribadi di akun Claude Bapak (tidak di website). <a href="https://claude.ai/artifact/2aNro3XL7bpBQnN23DvgHS" target="_blank" rel="noopener">Buka Bali Are Agen →</a></div>
@@ -456,6 +459,9 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       }
       return work.then(function () { return pending(ed.slug); }).then(function (p) {
         files.push({ path: PEND, content: p });
+        return confirmChk([ed.slug]); // edit = data sudah dicek pemilik
+      }).then(function (f) {
+        files.push(f);
         return commit(files, "Admin: edit iklan " + ed.slug);
       }).then(function (sha) {
         src = next; parseAll(); render(); $("#dlg").close();
@@ -491,6 +497,8 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   function newForm() {
     var ar = areasOf(src);
     $("#nf").innerHTML =
+      '<fieldset><legend>✨ Tempel teks listing (dari WA)</legend><textarea id="n-paste" rows="6" placeholder="Tempel teks listing apa adanya, mis. DIJUAL TANAH – GATSU VI, DENPASAR … Luas Tanah: 202 m² … Harga: 7,5jt/m² … Maps: … Foto: https://drive.google.com/…"></textarea>' +
+      '<button type="button" class="btn small" id="n-fill">Isi form otomatis</button><p class="muted">Form di bawah terisi otomatis. Periksa &amp; rapikan dulu sebelum menyimpan; terjemahan EN/RU tetap dilengkapi Claude.</p></fieldset>' +
       '<div class="grid2" style="grid-template-columns:1fr 1fr"><div><label for="n-type">Jenis</label><select id="n-type">' + TYPES.map(function (t) { return '<option value="' + t[0] + '">' + t[1] + '</option>'; }).join("") + '</select></div>' +
       '<div><label for="n-area">Area</label><select id="n-area">' + ar.map(function (a) { return '<option value="' + a.key + '" data-kab="' + esc(a.kab) + '">' + esc(a.name) + '</option>'; }).join("") + '</select></div></div>' +
       '<label for="n-title">Judul iklan</label><input id="n-title" placeholder="mis. Villa 3 kamar tidur dengan private pool di Ungasan">' +
@@ -508,6 +516,80 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       '<p class="muted" id="n-slug"></p>';
     photos = []; seoAuto();
   }
+  // ---- Tempel teks WA → isi form (permintaan pemilik 24 Nov 2026) ----
+  function parseWA(raw) {
+    var txt = String(raw || "").replace(/\r/g, "").replace(/[*~]/g, "").replace(/(^|\s)_+|_+(\s|$)/g, "$1$2").replace(/(\d)\s?m2\b/gi, "$1 m²");
+    var lines = txt.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
+    var low = txt.toLowerCase(), r = { prices: [], specs: [], points: [], uses: [], desc: [] };
+    r.type = /gudang|warehouse|ruko|shophouse|komersial|commercial|hotel|over kontrak|karaoke|restoran|restaurant|kantor|office/.test(low) ? "komersial"
+      : /\bvilla\b|joglo/.test(low) ? "villa" : /\brumah\b|\bhouse\b/.test(low) ? "rumah" : "tanah";
+    var urls = txt.match(/https?:\/\/\S+/g) || [];
+    urls.forEach(function (u) { u = u.replace(/[)\].,]+$/, "");
+      if (/maps\.app\.goo\.gl|google\.[a-z.]+\/maps|goo\.gl\/maps/.test(u)) r.map = u.replace(/\?g_st=\w+$/, "");
+      else if (/drive\.google\.com/.test(u)) r.drive = u.replace(/\?usp=\w+$/, ""); });
+    var cap = function (t) { return t.toLowerCase().replace(/(^|[\s(\/-])([a-zà-ÿ])/g, function (m, a, b) { return a + b.toUpperCase(); }).replace(/\b(Di|Dan|Dengan|Ke|Dari|Untuk|Yang)\b/g, function (w) { return w.toLowerCase(); }).replace(/\bM2\b|\bM²\b/gi, "m²").replace(/\bShm\b/g, "SHM").replace(/\b(Ii|Iii|Iv|Vi|Vii|Viii|Ix|Xi|Xii)\b/g, function (w) { return w.toUpperCase(); }); };
+    // Judul dari baris pertama
+    var head = (lines[0] || "").replace(/^(dijual|disewakan|for sale|for rent|sale|jual|sewa)\s*[-–:]?\s*/i, "").replace(/\s*[-–]\s*/g, " – ");
+    var t0 = head.split(" – "), what = cap(t0[0] || ""), where = cap(t0.slice(1).join(", "));
+    var sec = "", KEYS = [
+      [/^(luas tanah|land size|land area|luas lahan|luas)$/i, "Luas tanah"], [/^(luas bangunan|building size|building area)$/i, "Luas bangunan"],
+      [/^(kamar tidur|bedrooms?|kt)$/i, "Kamar tidur"], [/^(kamar mandi|bathrooms?|km)$/i, "Kamar mandi"],
+      [/^(sertifikat|sertipikat|certificate|legalitas|ownership|status)$/i, "Sertifikat"], [/^(zona|zoning|zonasi|itr|peruntukan)$/i, "Zona"],
+      [/^(listrik|electricity|power)$/i, "Listrik"], [/^(air|water)$/i, "Air"], [/^(akses|akses jalan|access|lebar jalan|road access)$/i, "Akses jalan"],
+      [/^(lokasi|location|alamat)$/i, "Lokasi"], [/^(posisi|position)$/i, "Posisi"], [/^(view|pemandangan)$/i, "View"], [/^(hadap|facing)$/i, "Hadap"],
+      [/^(lease period|masa sewa|lease|leasehold)$/i, "Masa sewa"], [/^(kolam renang|pool|swimming pool)$/i, "Kolam renang"], [/^(furnitur|furniture|furnished)$/i, "Furnitur"],
+      [/^(imb|pbg|imb\/pbg)$/i, "IMB/PBG"], [/^(lebar depan|frontage)$/i, "Lebar depan"], [/^(dimensi|ukuran|dimension)$/i, "Dimensi"]];
+    lines.slice(1).forEach(function (l) {
+      if (/^https?:\/\//.test(l) || /^(maps|map|lokasi maps|foto|photo|photos|link)\s*:?\s*https?:/i.test(l)) return;
+      var plain = l.replace(/^[•\-–·▪▫️✅✔️✓*\d.)\s]+/, "").trim();
+      if (/^[A-ZÀ-Ý0-9 &/()–-]{4,}$/.test(l) && !/\d{3}/.test(l)) { // judul bagian, mis. KEUNGGULAN / HARGA
+        sec = /unggul|kelebihan|highlight|advantage|fasilitas|feature|lingkungan|dekat/i.test(l) ? "pt" : /potensi|cocok|ideal|suitable|use/i.test(l) ? "use" : /harga|price|sewa|rental/i.test(l) ? "price" : "spec"; return; }
+      var kv = plain.match(/^([^:]{2,32})\s*:\s*(.+)$/);
+      if (kv) {
+        var k = kv[1].trim(), v = kv[2].trim();
+        if (/harga|price|sewa|rent|rental|nego/i.test(k) || (/\b(rp|idr|usd|us\$)\b|jt|juta|miliar|\bm\b\/are/i.test(v) && /\d/.test(v))) { r.prices.push([cap(k), v]); return; }
+        var hit = KEYS.filter(function (x) { return x[0].test(k); })[0];
+        r.specs.push([hit ? hit[1] : cap(k), v]); return;
+      }
+      if (sec === "price" || (/\b(rp|idr|usd|us\$)\b|\d\s*(jt|juta|miliar)\b/i.test(plain) && plain.length < 90)) { var pm = plain.match(/^(.*?)\s*[:=]?\s*((?:rp|idr|usd|us\$)\s?[\d.,]+.*|[\d.,]+\s*(?:jt|juta|miliar|m)\b.*)$/i); r.prices.push(pm && pm[1] ? [cap(pm[1]), pm[2]] : ["Harga", plain]); return; }
+      if (sec === "pt" || /^dekat |^akses |^\d+ ?(menit|min)/i.test(plain)) { r.points.push(plain.charAt(0).toUpperCase() + plain.slice(1)); return; }
+      if (sec === "use") { r.uses.push(plain.replace(/^(pembangunan|untuk)\s+/i, "").replace(/^./, function (c) { return c.toUpperCase(); })); return; }
+      if (plain.length > 60) r.desc.push(plain);
+      else if (sec === "spec" || /m²|m2|are\b|watt|kva|meter/i.test(plain)) r.specs.push(["Keterangan", plain]);
+      else r.points.push(plain.charAt(0).toUpperCase() + plain.slice(1));
+    });
+    var lt = (r.specs.filter(function (x) { return x[0] === "Luas tanah"; })[0] || [])[1] || "", kt = (r.specs.filter(function (x) { return x[0] === "Kamar tidur"; })[0] || [])[1] || "";
+    var place = where || cap(((r.specs.filter(function (x) { return x[0] === "Lokasi"; })[0] || [])[1] || "").split(",")[0]);
+    var base = /^(tanah|villa|rumah|gudang|ruko)/i.test(what) ? what : (TYPES.filter(function (x) { return x[0] === r.type; })[0][1] + (what ? " " + what.toLowerCase() : ""));
+    if (r.type === "tanah" && lt && !/\d/.test(base)) base = "Tanah " + lt.replace(/\s*\(.*\)/, "");
+    if (r.type !== "tanah" && kt && !/kamar/i.test(base)) base += " " + kt.replace(/\D.*/, "") + " kamar tidur";
+    r.title = (base + (place && base.toLowerCase().indexOf(place.toLowerCase()) < 0 ? " di " + place : "")).replace(/\s+/g, " ").trim();
+    r.eyebrow = place ? place.replace(/,\s*/g, " · ") : "";
+    r.descText = r.desc.slice(0, 3).join(" ");
+    var AREA = [[/ungasan|jimbaran|pecatu|uluwatu|kutuh|pandawa|balangan|nusa dua|benoa|labuan sait|melasti|bingin|kuta selatan|south kuta|goa gong/i, "kuta-selatan"],
+      [/canggu|berawa|pererenan|kerobokan|tibubeneng|dalung|umalas|padonan|kuta utara|north kuta|seminyak/i, "kuta-utara"], [/seseh|munggu|cemagi|mengwi|tumbak bayuh/i, "mengwi"],
+      [/denpasar|sanur|pidada|gatsu|renon/i, "denpasar"], [/ubud|tegallalang|lod tunduh/i, "ubud"], [/\bkuta\b|legian|tuban/i, "kuta"], [/sukawati|ketewel/i, "sukawati"], [/kediri|tabanan|nyanyi/i, "kediri"], [/abiansemal|sangeh/i, "abiansemal"], [/blahbatuh/i, "blahbatuh"]];
+    var a = AREA.filter(function (x) { return x[0].test(txt); })[0]; r.area = a ? a[1] : "";
+    return r;
+  }
+  function fillFromWA() {
+    var r = parseWA($("#n-paste").value); if (!$("#n-paste").value.trim()) { toast("Tempel teks listing dulu."); return; }
+    var set = function (id, v) { if (v) $(id).value = v; };
+    $("#n-type").value = r.type; $("#n-type").dispatchEvent(new Event("change", { bubbles: true }));
+    if (r.area && $('#n-area option[value="' + r.area + '"]')) $("#n-area").value = r.area;
+    set("#n-title", r.title); set("#n-eb", r.eyebrow); set("#n-desc", r.descText);
+    set("#n-points", r.points.join("\n")); set("#n-uses", r.uses.join("\n"));
+    if (r.type === "tanah") set("#n-map", r.map); set("#n-drive", r.drive);
+    if (r.prices.length) $('[data-rows="nprice"]').parentNode.innerHTML = '<legend>Harga</legend>' + rowsHtml("nprice", r.prices, "Keterangan (mis. Harga per m²)", "Nilai (mis. Rp6.500.000)") + '<p class="muted">Baris pertama = harga utama. Tulis seperti: Rp3,8 Miliar · Rp6.500.000 · Rp1,25 Miliar/tahun.</p>';
+    var spec0 = SPEC0[r.type].map(function (row) { var f = r.specs.filter(function (x) { return x[0] === row[0]; })[0]; return [row[0], f ? f[1] : row[1]]; });
+    r.specs.forEach(function (x) { if (!spec0.some(function (y) { return y[0] === x[0]; })) spec0.push(x); });
+    if (r.type !== "tanah") spec0 = spec0.filter(function (x) { return x[0] !== "Lokasi"; }).concat([["Lokasi", "Diberikan saat survei"]]); // lokasi bangunan rahasia
+    $("#n-specbox").innerHTML = rowsHtml("nspec", spec0, "Nama", "Isi");
+    seoTouched = false; seoAuto();
+    toast("Form terisi. Periksa judul, harga & spesifikasi sebelum menyimpan.");
+    $("#n-title").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  $("#nf").addEventListener("click", function (e) { if (e.target.id === "n-fill") fillFromWA(); });
   function slugify(t) {
     return t.toLowerCase().replace(/²/g, "2").replace(/&/g, " ").replace(/\+/g, " plus ").normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").replace(/-+/g, "-").slice(0, 90).replace(/-+$/, "");
@@ -811,6 +893,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       $$("[data-ttc]").forEach(function (b) { b.onclick = function () { var t = $("#ttcap" + b.dataset.ttc); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(function () { toast("Caption tersalin."); }).catch(function () { document.execCommand("copy"); toast("Caption tersalin."); }); }; });
       renderPop(r[8]);
       renderRem();
+      Promise.all([rj(META), rj(CHK)]).then(function (x) { meta = x[0]; chk = x[1]; renderChk(); });
       $("#st-dot").hidden = !(bad || rem.items.some(function (x) { return !x.done; }));
     });
   }
@@ -822,6 +905,35 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     var quiet = r.quiet.length ? '<div class="st bad"><h3>Sepi (' + r.quiet.length + ')</h3><div class="muted">' + r.quiet.map(function (x) { return esc(x.title); }).join(" · ") + '</div></div>' : "";
     $("#poplist").innerHTML = head + top + wa + quiet;
   }
+  // Cek ketersediaan ≥30 hari (permintaan pemilik 24 Nov 2026); konfirmasi di listing-check.json (root, tidak memicu build)
+  var META = "tools/listing-meta.json", CHK = "listing-check.json", meta = {}, chk = {}, STALE = 30;
+  function today() { return new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10); }
+  function staleList() {
+    var now = Date.now();
+    return items.filter(function (it) { return !it.off && !it.sold; }).map(function (it) {
+      var m = meta[it.slug] || {}, since = [m.added, chk[it.slug], m.drop && m.drop.at].filter(Boolean).sort().pop();
+      return { it: it, since: since, days: since ? Math.floor((now - Date.parse(since + "T00:00:00+08:00")) / 864e5) : 0 };
+    }).filter(function (x) { return x.days >= STALE; }).sort(function (a, b) { return b.days - a.days; });
+  }
+  function renderChk() {
+    var l = staleList();
+    $("#chklist").innerHTML = l.map(function (x) {
+      return '<div class="rem" data-slug="' + esc(x.it.slug) + '"><p><b>' + esc(x.it.title) + '</b><br><span class="muted">' + esc(x.it.price || "") + ' · ' + x.days + ' hari sejak ' + esc(x.since) + ' · <a target="_blank" rel="noopener" href="listing/' + esc(x.it.slug) + '.html">buka</a></span></p><button class="btn small" data-ok>Masih tersedia ✓</button></div>';
+    }).join("") || '<p class="muted">Semua listing masih baru atau sudah dikonfirmasi. 👍</p>';
+    if (l.length) $("#st-dot").hidden = false;
+  }
+  function confirmChk(slugs, msg) {
+    return readFile(CHK).then(function (t) { return JSON.parse(t); }).catch(function () { return {}; }).then(function (cur) {
+      slugs.forEach(function (s) { cur[s] = today(); }); chk = cur;
+      return { path: CHK, content: JSON.stringify(cur, null, 1) + "\n" };
+    });
+  }
+  $("#chklist").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-ok]"); if (!b) return;
+    var slug = b.closest(".rem").dataset.slug; b.disabled = true;
+    confirmChk([slug]).then(function (f) { return commit([f], "Admin: konfirmasi masih tersedia " + slug); })
+      .then(function () { renderChk(); toast("Tercatat masih tersedia. Diingatkan lagi 30 hari lagi."); }).catch(fail).then(function () { b.disabled = false; });
+  });
   function renderRem() {
     var open = rem.items.filter(function (x) { return !x.done; });
     $("#remlist").innerHTML = open.map(function (x) {

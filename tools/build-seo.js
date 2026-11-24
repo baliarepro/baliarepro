@@ -306,6 +306,11 @@ main .cta-duo{margin-top:0}
         else if (pr > m.price) delete m.drop;
       }
       if (pr) { m.price = pr; m.text = txt; }
+      // Tanggal terjual (laporan mingguan health.js): hanya dicatat saat status berubah tersedia → terjual
+      const st = c.sold ? "sold" : "live";
+      if (st === "sold" && m.st === "live") m.sold = today;
+      if (st === "live") delete m.sold;
+      m.st = st;
       const e = covers[c.slug] || (covers[c.slug] = {});
       e.a = m.added; if (m.drop && !c.sold) e.d = m.drop.at;
     }
