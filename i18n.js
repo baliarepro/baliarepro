@@ -25,6 +25,7 @@
     ["Sold", "Sold", "Продано"],
     ["Sold by Bali Are Property", "Sold by Bali Are Property", "Продано Bali Are Property"],
     ["by Bali Are Property", "by Bali Are Property", "Bali Are Property"],
+    ["by another agent", "by another agent", "другим агентом"],
     ["Tanya via WhatsApp", "Ask on WhatsApp", "Написать в WhatsApp"],
     ["Lihat Lokasi", "View location", "Локация"],
     ["Lihat Foto", "View photos", "Фото"],

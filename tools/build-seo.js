@@ -407,7 +407,8 @@ ${copyScript}
     }
     // Halaman "Sudah terjual"
     {
-      const sold = out[L].cards.filter((c) => c.sold);
+      // Rekam jejak "terjual lewat Bali Are Property": kartu terjual oleh agen lain (data-sold-by="other") tidak ditampilkan
+      const sold = out[L].cards.filter((c) => c.sold && !/data-sold-by="other"/.test(c.cardHtml.slice(0, 200)));
       const file = langDir(L) + "terjual.html";
       const alts = Object.fromEntries(LANGS.map((k) => [k, url(k, "terjual.html")]));
       const t = AR.SOLD[L];

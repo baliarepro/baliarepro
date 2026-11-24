@@ -158,6 +158,7 @@ Buat ulang dengan: `node tools/build-seo.js` (butuh Playwright/Chromium; jalanka
 - `cards.js` (bagian kedua, hanya di katalog): filter harga/luas tanah/kamar tidur + urutkan (harga, luas), bekerja bersama chip jenis/area; kartu tak cocok diberi `cf-out`. Harga dibaca dari teks kartu 3 bahasa (`priceOf`: Miliar/M/billion/млрд, jt/juta/million/млн).
 - Kotak "Kabari saya bila ada listing baru" (`#cf-notify`) membuka WA dengan kebutuhan calon buyer (data tidak disimpan di repo publik).
 - Halaman detail listing (belum terjual): kotak "Cari properti" diganti `<section class="cfn" id="cf-notify" data-t data-a data-areas>` (dibuat template di `build-seo.js`, diisi `kabari.js`): "Kabari saya bila ada listing serupa", jenis & area terisi otomatis, pesan WA menyebut listing + link. "Titip jual properti" tetap di bawahnya (`.cta-duo.solo`). Listing terjual tetap memakai cta-duo lengkap.
+- Terjual oleh agen lain (permintaan pemilik 24 Nov 2026): `<article class="card sold" data-sold-by="other">` + stempel `<b>SOLD</b><small>by another agent</small>`; tidak masuk `terjual.html` (rekam jejak Bali Are Property).
 - `terjual.html` (+ `en/`, `ru/`) dibuat build dari kartu `.sold` (`renderSold` di `tools/area.js`), ditautkan di baris `.quick` katalog, masuk sitemap.
 
 ## Label "Baru"/"Harga turun", Simpan & Bandingkan, Harga tanah per area (permintaan pemilik 20 Nov 2026)
