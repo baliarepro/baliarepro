@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "slug": "tanah-di-banjar-kulu-tampaksiring",
+      "at": "2026-11-24T13:28:18.004Z",
+      "deleted": [
+        {
+          "ch": "Facebook",
+          "url": "https://www.facebook.com/122200437038916210/posts/122202602966916210"
+        },
+        {
+          "ch": "Telegram",
+          "url": "https://t.me/baliareproperty/305"
+        }
+      ],
+      "manual": [
+        {
+          "ch": "Instagram",
+          "url": "https://www.instagram.com/p/DgICanAGQfU/",
+          "err": "DELETE 18131203807881593: (#10) Insufficient permissions to access this data"
+        },
+        {
+          "ch": "Threads",
+          "url": "https://www.threads.com/@bali.are/post/DgICcDcIKiL",
+          "err": "DELETE 17889510504501855: Application does not have permission for this action"
+        }
+      ]
+    }
+  ]
+}
