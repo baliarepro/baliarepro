@@ -1,16 +1,14 @@
 {
- "pending": {
-  "tanah-di-banjar-kulu-tampaksiring": {
-   "url": "https://drive.google.com/drive/folders/1ZBwuxJNxn9Fv4U-q5qOT_4sqYeM-PL7J",
-   "replace": false,
-   "at": "2026-11-24T13:12:08.563Z"
-  }
- },
+ "pending": {},
  "errors": {},
  "done": {
   "test-pandawa": {
    "at": "2026-11-24T13:03:26+00:00",
    "msg": "uji OK: 20-are-balicliff (1600x720), 20are-balicliff (1600x720), Screenshot_20261124-192916 (1).png (1080x1891)"
+  },
+  "tanah-di-banjar-kulu-tampaksiring": {
+   "at": "2026-11-24T13:12:36+00:00",
+   "msg": "3 foto"
   }
  }
 }
