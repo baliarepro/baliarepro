@@ -71,7 +71,7 @@ module.exports = async function igImages({ browser, ROOT, cards, photosOf, netRo
   for (const c of cards) {
     if (c.sold) continue;
     const dir = path.join(ROOT, "img/ig", c.slug);
-    const photos = photosOf(c.slug);
+    const photos = photosOf(c.slug).map((p) => p.split("?")[0]); // tanpa ?v=<hash> (path file di disk)
     const d = parseCard(c.html);
     const hash = crypto.createHash("sha1").update(JSON.stringify({ v: 3, t: c.title, e: c.eyebrow, d, ty: c.type,
       p: photos.map((p) => p + ":" + fs.statSync(path.join(ROOT, p)).size) })).digest("hex");
