@@ -26,7 +26,7 @@ const A = {
     ],
     webH: "Mengapa website ini hadir di 2026",
     web: [
-      "Setelah lebih dari 15 tahun bekerja lewat jaringan dan pertemuan langsung, kami meluncurkan baliareproperty.com pada September 2026.",
+      "Setelah lebih dari 15 tahun bekerja lewat jaringan dan pertemuan langsung, kami meluncurkan baliareproperty.com pada November 2026.",
       "Cara orang mencari properti terus berubah. Calon pembeli dari dalam dan luar negeri kini memulai pencarian dari ponsel: Google, Instagram, TikTok, hingga asisten AI. Strategi pemasaran pun harus ikut berkembang.",
       "Kami tidak ingin kehilangan eksistensi di era baru ini. Karena itu setiap listing kami tampilkan lengkap dengan foto, harga, legalitas, dan PDF dalam tiga bahasa, terhubung langsung ke WhatsApp, dan dibagikan otomatis ke media sosial.",
       "Pengalaman lapangan sejak 2009 tetap menjadi dasar kami. Yang berubah hanya caranya: lebih cepat, lebih terbuka, dan lebih mudah dijangkau dari mana saja."
@@ -59,7 +59,7 @@ const A = {
     ],
     webH: "Why this website launched in 2026",
     web: [
-      "After more than 15 years of working through networks and face-to-face meetings, we launched baliareproperty.com in September 2026.",
+      "After more than 15 years of working through networks and face-to-face meetings, we launched baliareproperty.com in November 2026.",
       "The way people look for property keeps changing. Buyers from Indonesia and abroad now start their search on their phones: Google, Instagram, TikTok and even AI assistants. Marketing strategy has to evolve with them.",
       "We do not want to lose our presence in this new era. That is why every listing is shown in full, with photos, prices, legal details and a PDF in three languages, linked directly to WhatsApp and shared automatically on social media.",
       "Our field experience since 2009 remains our foundation. Only the way we work has changed: faster, more transparent and easier to reach from anywhere."
@@ -92,7 +92,7 @@ const A = {
     ],
     webH: "Почему этот сайт появился в 2026 году",
     web: [
-      "После более чем 15 лет работы через личные связи и встречи мы запустили baliareproperty.com в сентябре 2026 года.",
+      "После более чем 15 лет работы через личные связи и встречи мы запустили baliareproperty.com в ноябре 2026 года.",
       "То, как люди ищут недвижимость, постоянно меняется. Покупатели из Индонезии и других стран начинают поиск со смартфона: Google, Instagram, TikTok и даже ИИ-ассистенты. Маркетинг должен развиваться вместе с ними.",
       "Мы не хотим терять своё присутствие в новую эпоху. Поэтому каждый объект представлен полностью — с фото, ценой, юридической информацией и PDF на трёх языках, со связью через WhatsApp и автоматической публикацией в соцсетях.",
       "Наш практический опыт с 2009 года остаётся основой. Изменился лишь способ работы: быстрее, прозрачнее и доступнее из любой точки мира."
