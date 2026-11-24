@@ -548,7 +548,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     var t = String(s).toLowerCase().replace(/\s+/g, " ");
     var usd = /usd|us\$|\$/.test(t), m = t.match(/(\d[\d.,]*)\s*(miliar|milyar|m(?![²2a-z])|b(?:illion)?(?![a-z])|juta|jt|k(?![a-z]))?/);
     if (!m) return null;
-    var n = waNum(m[1]), u = m[2] || "";
+    var u = m[2] || "", n = u ? (/^\d+\.\d{1,2}$/.test(m[1]) ? +m[1] : +m[1].replace(/\./g, "").replace(",", ".")) : waNum(m[1]); // dengan satuan (M/jt), koma = desimal
     if (/^(miliar|milyar|m|b|billion)$/.test(u)) n *= 1e9; else if (/^(juta|jt)$/.test(u)) n *= 1e6; else if (u === "k") n *= 1e3;
     if (!n || isNaN(n)) return null;
     var unit = /\/\s*(m²|m2|meter)|per\s*(m²|m2|meter)/.test(t) ? "m2" : /\/\s*are|per\s*are/.test(t) ? "are" : /tahun|thn|year|\/th\b/.test(t) ? "tahun" : "";
@@ -588,7 +588,12 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       [/^(lokasi|location|alamat|area)$/i, "Lokasi"], [/^(posisi|position)$/i, "Posisi"], [/^(view|pemandangan)$/i, "View"], [/^(hadap|facing|arah)$/i, "Hadap"],
       [/^(lease period|masa sewa|lease|leasehold|periode sewa)$/i, "Masa sewa"], [/^(kolam renang|pool|swimming pool)$/i, "Kolam renang"], [/^(furnitur|furniture|furnished|perabot)$/i, "Furnitur"],
       [/^(imb|pbg|imb\/pbg)$/i, "IMB/PBG"], [/^(lebar depan|frontage|lebar muka)$/i, "Lebar depan"], [/^(dimensi|ukuran|dimension)$/i, "Dimensi"],
-      [/^(lingkungan|environment|surrounding)$/i, "Lingkungan"], [/^(kontur|contour|topografi)$/i, "Kontur"], [/^(lantai|floors?|jumlah lantai)$/i, "Jumlah lantai"]];
+      [/^(lingkungan|environment|surrounding)$/i, "Lingkungan"], [/^(kontur|contour|topografi)$/i, "Kontur"], [/^(lantai|floors?|jumlah lantai)$/i, "Jumlah lantai"],
+      [/^(ukuran|ukuran lebar ?[x×] ?panjang|lebar ?[x×] ?panjang|ukuran tanah)$/i, "Dimensi"], [/^(lebar jalan( akses)?|akses jalan lebar)$/i, "Lebar jalan"],
+      [/^(utilitas( tersedia)?|fasilitas umum|utilities)$/i, "Utilitas"], [/^(jarak( ke)? pantai( terdekat)?|ke pantai)$/i, "Ke pantai"]];
+    // Kunci formulir yang tidak ditampilkan sebagai spesifikasi (dipakai untuk lokasi/keunggulan)
+    var LOCK = { kab: /^(kabupaten|kota|kabupaten ?\/ ?kota)$/i, kec: /^kecamatan$/i, desa: /^(desa|kelurahan|desa ?\/ ?kelurahan)$/i, jl: /^(nama jalan|jalan|nama jalan ?\/ ?banjar|banjar|alamat jalan)$/i };
+    var DROPK = /^(jenis properti|tipe properti|ditawarkan untuk|status penawaran|kategori)$/i;
     var BOILER = /hubungi|survei lokasi|survey lokasi|info(rmasi)? (harga|lebih|detail)|detail lebih lanjut|untuk penawaran|serius|minat\b|tanpa perantara|wa\.me|whatsapp/i;
     var usesFrom = function (s) { // "…cocok untuk pembangunan private villa, luxury villa complex, maupun investasi …" → daftar
       var m = s.match(/(?:sangat |juga )?(?:cocok|ideal|pas|sesuai|suitable|perfect)\s+(?:untuk|bagi|for)\s+(.+)$/i); if (!m) return null;
@@ -613,14 +618,23 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
           : /unggul|kelebihan|highlight|advantage|fasilitas|feature|nilai plus|kenapa|why/i.test(l) ? "pt" : /spesifikasi|spec|detail|data|informasi|info/i.test(l) ? "spec" : "other";
         return;
       }
-      var kv = plain.match(/^([^:]{2,32}?)\s*:\s*(.+)$/);
+      var kv = plain.match(/^([^:]{2,50}?)\s*:\s*(.+)$/);
       if (kv && /^https?:/.test(kv[2].trim())) return; // Foto: / Titik Lokasi: / Maps: <link>
       if (/^https?:\/\//.test(plain)) return;
       if (BOILER.test(plain) && !/\d/.test(plain.replace(/\d{3,}/g, ""))) return;
       if (kv) {
         var k = kv[1].trim(), v = kv[2].trim().replace(/\s*meter\b/gi, " m").replace(/\((\d+[.,]?\d*)\s*Are\)/g, "($1 are)").replace(/\bAre\b/g, "are");
-        if (/harga|price|nego|sewa|rent|rental/i.test(k) || (/^(rp|idr|usd|us\$)/i.test(v) && /\d/.test(v))) { r.money.push([k, v]); return; }
+        if (/harga|price|nego|sewa|rent|rental/i.test(k) || (/total|estimasi/i.test(k) && /\d/.test(v)) || (/^(rp|idr|usd|us\$)/i.test(v) && /\d/.test(v))) { r.money.push([k, v]); return; }
+        var lk = Object.keys(LOCK).filter(function (q) { return LOCK[q].test(k); })[0];
+        if (lk) { r.loc = r.loc || {}; r.loc[lk] = cap(v); return; }
+        if (DROPK.test(k)) { if (/freehold|hak milik/i.test(v)) r.fh = 1; return; }
+        if (/^pbb/i.test(k)) { if (/lunas/i.test(v)) r.flags = (r.flags || []).concat("PBB lunas"); return; }
+        if (/sengketa|dijaminkan|agunan/i.test(k)) { if (/^(ya|yes|aman|bebas)/i.test(v)) r.flags = ["Bebas sengketa, tidak dijaminkan di bank"].concat(r.flags || []); return; }
+        if (/^(cocok untuk|ideal untuk|peruntukan|potensi)$/i.test(k)) { r.uses = r.uses.concat(v.split(/\s*[,;/]\s*|\s+(?:dan|atau|maupun)\s+/i).map(sentence).filter(Boolean)); return; }
         var hit = KEYS.filter(function (x) { return x[0].test(k); })[0], name = hit ? hit[1] : sentence(k.toLowerCase());
+        if (name === "Sertifikat") v = v.replace(/\s*\((sertifikat )?hak milik\)/i, "");
+        if (name === "Dimensi" && !/m\b/.test(v)) v = "±" + v.replace(/\s*x\s*/gi, " × ") + " m";
+        if (name === "Lebar jalan") { var aj = r.specs.filter(function (x) { return x[0] === "Akses jalan"; })[0]; if (aj) { aj[1] += ", " + v.replace(/^>/, "> "); return; } name = "Akses jalan"; }
         if (name === "Sertifikat") v = v.replace(/^SHM\s*\(sertifikat hak milik\)/i, "SHM");
         if (name === "Akses jalan") v = v.replace(/^jalan\s+/i, "").replace(/^./, function (c) { return c.toUpperCase(); });
         if (name === "Zona" && /^(pariwisata|pink|kuning|hijau|perumahan|komersial|perdagangan|campuran)$/i.test(v)) v = "Zona " + v.toLowerCase();
@@ -647,23 +661,31 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     }
     var lt = spec("Luas tanah"), m2 = 0, mm = lt.match(/([\d.,]+)\s*m²/), ma = lt.match(/([\d.,]+)\s*are/i);
     if (mm) m2 = waNum(mm[1]); else if (ma) m2 = waNum(ma[1]) * 100;
-    var main = [], rest = [];
+    var main = [], rest = [], explicit = null, negoAll = false;
     r.money.forEach(function (kv) {
-      var k = kv[0], v = kv[1], p = waMoney(v), label = /^harga$/i.test(k.trim()) ? "Harga" : sentence(k.toLowerCase());
+      var k = kv[0], v = kv[1], p = waMoney(/per\s*(are|m²|m2|meter)|\/\s*(are|m)/i.test(k) && !/\/|per\s/i.test(v) ? v + " " + k : v), label = /^harga$/i.test(k.trim()) ? "Harga" : sentence(k.toLowerCase());
+      if (/setara|equivalent/i.test(k)) return; // dihitung sendiri
+      if (/sifat harga|nego/i.test(k) && !/\d/.test(v)) { negoAll = /nego|bisa/i.test(v) && !/tidak|fix|pas/i.test(v); return; }
+      if (/total|estimasi|keseluruhan|semua/i.test(k) && p && !p.unit) { explicit = p; return; }
       if (!p) { rest.push([label, v]); return; }
       var neg = p.nego ? " (nego)" : "";
       if (p.usd) { (main.length ? rest : main).push([label, "US$" + Math.round(p.n).toLocaleString("id-ID") + neg]); return; }
-      if (p.unit === "m2") { if (m2) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2) + neg]); rest.push(["Harga per m²", rpFull(p.n)]);
+      if (p.unit === "m2") { if (m2 && !hasTotal()) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2) + neg]); rest.push(["Harga per m²", rpFull(p.n)]);
         if (r.kav && r.kav.length > 1) r.kav.forEach(function (k) { rest.push(["Kavling " + k.toLocaleString("id-ID") + " m²", rpShort(p.n * k)]); }); return; }
-      if (p.unit === "are") { if (m2) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2 / 100) + neg]); rest.push(["Harga per are (≈" + rpShort(p.n / 100) + "/m²)", rpShort(p.n)]); return; }
-      if (p.unit === "tahun") { (main.length ? rest : main).push([/sewa/i.test(k) ? label : "Sewa per tahun", rpShort(p.n) + neg]); return; }
+      if (p.unit === "are") { if (m2 && !hasTotal()) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2 / 100) + neg]); rest.push(["Harga per are (≈" + rpShort(p.n / 100) + "/m²)", rpShort(p.n)]); return; }
+      if (p.unit === "tahun") { (main.length ? rest : main).push([/sewa/i.test(k) ? (/tahun/i.test(label) ? label : label + " per tahun") : "Sewa per tahun", rpShort(p.n) + neg]); return; }
       (main.length ? rest : main).push([label, rpShort(p.n) + neg]);
       if (r.type === "tanah" && m2 && p.n > 1e8) rest.push(["Setara per m²", rpFull(p.n / m2)]);
     });
+    function hasTotal() { return r.money.some(function (kv) { return /total|estimasi|keseluruhan/i.test(kv[0]) && /\d/.test(kv[1]); }); }
+    if (explicit) main.unshift(["Total" + (m2 ? " " + Math.round(m2).toLocaleString("id-ID") + " m²" : ""), (explicit.usd ? "US$" + Math.round(explicit.n).toLocaleString("id-ID") : rpShort(explicit.n))]);
+    if (negoAll && main[0] && !/nego/i.test(main[0].join(" "))) main[0][0] += " (nego)";
     r.prices = main.concat(rest);
     // Judul, lokasi singkat, badge
     var ov = /ocean ?view|sea ?view|view laut|pemandangan laut/i.test(low), hook = /\bhook\b/i.test(low);
-    var place = where || cap((spec("Lokasi").split(",")[0] || "")).replace(/,?\s*Bali$/i, "");
+    var L0 = r.loc || {};
+    if (!spec("Lokasi") && (L0.jl || L0.desa || L0.kec)) r.specs.push(["Lokasi", [L0.jl, L0.desa, L0.kec].filter(Boolean).join(", ")]);
+    var place = where || [L0.jl, L0.desa].filter(Boolean).join(", ") || cap((spec("Lokasi").split(",")[0] || "")).replace(/,?\s*Bali$/i, "");
     var luasTxt = lt.replace(/\s*\(.*\)/, "");
     var base;
     if (r.type === "tanah") base = "Tanah" + (hook ? " hook" : "") + (ov ? " ocean view" : "") + (luasTxt ? " " + luasTxt : "");
@@ -685,6 +707,18 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     r.badge = ov ? "Ocean view" : hook ? "Posisi hook" : "";
     var d = r.desc.filter(function (x, i, a) { return !BOILER.test(x) && a.indexOf(x) === i; });
     r.descText = d.slice(0, 2).join(" ").replace(/\s+/g, " ");
+    if (r.descText.length < 50) { // deskripsi terlalu pendek → susun dari data
+      var lcz = function (t) { return t ? t.charAt(0).toLowerCase() + t.slice(1) : ""; };
+      var bits = [TYPES.filter(function (x) { return x[0] === r.type; })[0][1] + (spec("Kontur") ? " " + lcz(spec("Kontur")) : "") + (spec("Zona") ? " " + (/^zona/i.test(spec("Zona")) ? lcz(spec("Zona")) : "zona " + lcz(spec("Zona"))) : "") + (spec("View") ? " dengan " + lcz(spec("View")) : "") + (place ? " di " + place : "") + "."];
+      if (spec("Ke pantai")) bits.push(sentence(spec("Ke pantai")) + ".");
+      r.descText = (r.descText ? r.descText.replace(/[.\s]*$/, ". ") : "") + bits.join(" ");
+    }
+    if (spec("Ke pantai")) {
+      var kp = spec("Ke pantai").split(/\.\s+|;\s*|\n/).map(function (x) { return sentence(x.replace(/(\d)\s*(m|km)\b/gi, "$1 $2").replace(/\b(pantai|beach)\s+([a-z])/gi, function (m0, a, b) { return "Pantai " + b.toUpperCase(); }).replace(/^(\d)/, "±$1")); }).filter(Boolean);
+      r.points = kp.concat(r.points);
+      r.descText = r.descText.replace(spec("Ke pantai"), kp.join(", ").replace(/^./, function (c) { return c.toLowerCase(); }) ).replace(/\. ±/, ". Sekitar ").replace(/Sekitar ±/, "Sekitar ");
+    }
+    r.points = r.points.concat(r.flags || []);
     if (!r.uses.length && r.descText) { var u2 = usesFrom(r.descText.split(/(?<=\.)\s+/).pop() || ""); if (u2) r.uses = u2.items; }
     var AREA = [[/ungasan|jimbaran|pecatu|uluwatu|kutuh|pandawa|balangan|nusa dua|benoa|labuan sait|melasti|bingin|kuta selatan|south kuta|goa gong|bali cliff|kedonganan|tanjung benoa|sawangan/i, "kuta-selatan"],
       [/canggu|berawa|pererenan|kerobokan|tibubeneng|dalung|umalas|padonan|kuta utara|north kuta|seminyak|kayu tulang|batu bolong|nelayan/i, "kuta-utara"], [/seseh|munggu|cemagi|mengwi|tumbak bayuh|kaba-kaba|buduk/i, "mengwi"],

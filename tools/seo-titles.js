@@ -4,7 +4,9 @@
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
   "tanah-ocean-view-456-m2-new-kuta-golf": {
-    id: { t: "Dijual tanah ocean view 456 m² New Kuta Golf, Bali", d: "Tanah ocean view 456 m² New Kuta Golf: luas tanah 456 m² (4,56 are), SHM (hak milik), pariwisata (pink), akses jalan lebar. Rp1,7 M. Info & survei via WhatsApp." } },
+    id: { t: "Dijual Tanah Ocean View 456 m² depan New Kuta Golf, Pecatu Bali", d: "Tanah 456 m² SHM zona pariwisata, ocean & sunset view, depan New Kuta Golf. ±500 m ke Pantai Balangan. Rp1,7 M/are, total Rp7,752 M nego. Tanya via WhatsApp." },
+    en: { t: "456 m² Ocean-View Land for Sale by New Kuta Golf, Pecatu, Bali", d: "456 m² SHM plot, tourism zoning, ocean & sunset views, facing New Kuta Golf; ±500 m to Balangan Beach. IDR 1.7B/are, total IDR 7.752B, negotiable. WhatsApp us." },
+    ru: { t: "Продажа участка 456 м² с видом на океан у New Kuta Golf, Пекату", d: "Участок 456 м², SHM, туристическая зона, вид на океан и закат, напротив New Kuta Golf; ±500 м до пляжа Баланган. 1,7 млрд IDR/ар, всего 7,752 млрд, торг. WhatsApp." } },
   "tanah-di-banjar-kulu-tampaksiring": {
     id: { t: "Dijual Tanah 369 m² (2 Kavling) di Tampaksiring, Gianyar Bali", d: "2 kavling 184 + 185 m² SHM di Banjar Kulu, Tampaksiring, lebar ±12 m, hadap selatan, siap bangun. Rp3,5 jt/m², total Rp1,29 M. Dekat Ubud. Info & survei via WhatsApp." },
     en: { t: "369 m² Land (2 Plots) for Sale in Tampaksiring, Gianyar, Bali", d: "Two SHM plots, 184 + 185 m², in Banjar Kulu, Tampaksiring; ±12 m frontage, south-facing, ready to build. IDR 3.5M/m², total IDR 1.29B. Near Ubud. Ask on WhatsApp." },
