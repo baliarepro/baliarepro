@@ -191,6 +191,16 @@ async function connect(state, save) {
 
 // Putar ulang listing lama (antrean habis): maks. 1x per hari WITA, mulai jadwal ±12.07 WITA (04.xx UTC)
 const REPOST_DAYS = 10;
+// Harga turun: diposting ulang SEGERA (jalan berikutnya, jadwal apa pun) — permintaan pemilik 24 Nov 2026
+function pickDrop(state, live) {
+  const now = Date.now();
+  const last = (l) => Math.max(Date.parse((state.posted[l.slug] || {}).at || 0) || 0, Date.parse((state.reposts[l.slug] || {}).at || 0) || 0);
+  let meta = {}; try { meta = JSON.parse(fs.readFileSync(path.join(ROOT, "tools/listing-meta.json"), "utf8")); } catch (e) {}
+  const drop = live.filter((l) => { const d = (meta[l.slug] || {}).drop; return d && state.posted[l.slug] && now - Date.parse(d.at) <= 30 * 864e5 && Date.parse(d.ts || d.at + "T00:00:00+08:00") > last(l) && fs.existsSync(path.join(ROOT, "img/ig", l.slug, "1.jpg")); })[0];
+  if (drop) { drop.drop = meta[drop.slug].drop; console.log("Harga turun → posting ulang sekarang: " + drop.slug); }
+  return drop || null;
+}
+
 function pickRepost(state, live) {
   const now = Date.now(), wita = (ms) => new Date(ms + 8 * 3600e3).toISOString().slice(0, 10);
   if (new Date(now + 8 * 3600e3).getUTCHours() < 12) { console.log("Putar ulang: menunggu jadwal ±12.07 WITA."); return null; }
@@ -221,8 +231,8 @@ async function main() {
   const live = all.filter((l) => !l.hidden && !l.sold);
   const inQueue = new Set(state.queue);
   const todo = live.filter((l) => !state.posted[l.slug] && !inQueue.has(l.slug)).slice(0, 5);
-  let again = null;
-  if (mode === "queue") {
+  let again = pickDrop(state, live);
+  if (!again && mode === "queue") {
     const next = state.queue.map((s) => live.find((l) => l.slug === s)).find((l) => l && !state.posted[l.slug]);
     if (next) todo.push(next);
     else again = pickRepost(state, live);

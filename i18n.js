@@ -44,6 +44,7 @@
     ["Harga per m² (nego)", "Price per m² (negotiable)", "Цена за м² (торг)"],
     ["Harga per are (Rp6,5 jt/m²)", "Price per are (Rp6.5 million/m²)", "Цена за ар (Rp6,5 млн/м²)"],
     ["Harga per are (≈Rp21 jt/m²)", "Price per are (≈Rp21 million/m²)", "Цена за ар (≈Rp21 млн/м²)"],
+    ["Harga per are (≈Rp19 jt/m²)", "Price per are (≈Rp19 million/m²)", "Цена за ар (≈Rp19 млн/м²)"],
     ["Harga per m² (Rp600 jt/are)", "Price per m² (Rp600 million/are)", "Цена за м² (Rp600 млн/ар)"],
     ["Harga per m² (Rp380 jt/are)", "Price per m² (Rp380 million/are)", "Цена за м² (Rp380 млн/ар)"],
     ["Harga (nego)", "Price (negotiable)", "Цена (торг)"],

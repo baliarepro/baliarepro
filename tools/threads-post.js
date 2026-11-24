@@ -37,13 +37,14 @@ function fit(head, body, tail) {
 const topicFor = (t) => (t.kind === "weekly" ? "Bali" : t.l && t.l.type === "villa" ? "Bali" : "Real Estate");
 
 // ---------- Caption ----------
-function listingText(l) {
+function listingText(l, drop) {
   const d = parseCard(l.html);
   const main = d.prices.find((p) => p.hl) || d.prices[d.prices.length - 1];
   const pick = ["Luas tanah", "Luas bangunan", "Kamar tidur", "Sertifikat", "Legalitas", "ITR", "ITR / Zonasi", "Zona", "Zonasi", "Posisi", "View"];
   const specs = pick.map((k) => d.specs.find((s) => s[0] === k)).filter(Boolean).slice(0, 4);
-  const head = `🏝️ DIJUAL · ${l.title}\n📍 ${l.eyebrow}, Bali`;
+  const head = drop ? `🔻 HARGA TURUN · ${l.title}\n📍 ${l.eyebrow}, Bali` : `🏝️ DIJUAL · ${l.title}\n📍 ${l.eyebrow}, Bali`;
   const body = [];
+  if (drop && drop.from) body.push(`Sebelumnya ${drop.from.replace(/\s+/g, " ")} → sekarang ${drop.to.replace(/\s+/g, " ")}`);
   if (main) body.push(`💰 ${main.label}: ${main.value}`);
   if (specs.length) body.push(specs.map((s) => `${s[0]}: ${s[1]}`).join(" · "));
   d.points.slice(0, 2).forEach((p) => body.push(`✓ ${p}`));
@@ -170,6 +171,14 @@ async function main() {
   const ig = read("tools/ig-state.json", {}).posted || {};
   const { listings } = require("./ig-post.js");
   const live = new Map(listings().filter((l) => !l.hidden && !l.sold).map((l) => [l.slug, l]));
+  // Harga turun (listing-meta.json) → diposting ulang dulu dengan baris "🔻 HARGA TURUN"
+  state.drops = state.drops || {};
+  const meta = read("tools/listing-meta.json", {});
+  for (const [slug, m] of Object.entries(meta)) {
+    const d = m.drop; if (!d || !live.has(slug) || !state.posted[slug]) continue;
+    const sent = Math.max(Date.parse(state.posted[slug].at || 0) || 0, Date.parse((state.drops[slug] || {}).at || 0) || 0);
+    if (Date.now() - Date.parse(d.at) <= 30 * 864e5 && Date.parse(d.ts || d.at + "T00:00:00+08:00") > sent) todo.push({ kind: "listing", slug, l: live.get(slug), drop: d });
+  }
   Object.entries(ig).sort((a, b) => (a[1].at || "").localeCompare(b[1].at || ""))
     .forEach(([slug]) => { if (!state.posted[slug] && live.has(slug)) todo.push({ kind: "listing", slug, l: live.get(slug) }); });
   }
@@ -188,11 +197,11 @@ async function main() {
         const meta = read(`img/ig/${t.slug}/meta.json`, null);
         if (!meta) throw new Error("gambar Instagram belum ada");
         urls = Array.from({ length: meta.images || 1 }, (_, i) => `${BASE}img/ig/${t.slug}/${i + 1}.jpg`);
-        text = listingText(t.l);
+        text = listingText(t.l, t.drop);
       }
       const r = await post(me.id, token, urls, text, topicFor(t));
       r.topic = topicFor(t);
-      if (t.kind === "weekly") { wstate.weekly[t.date] = r; delete wstate.errors[k]; } else { state.posted[t.slug] = r; delete state.errors[k]; }
+      if (t.kind === "weekly") { wstate.weekly[t.date] = r; delete wstate.errors[k]; } else if (t.drop) { state.drops[t.slug] = r; delete state.errors[k]; } else { state.posted[t.slug] = r; delete state.errors[k]; }
       console.log(`✓ ${k} → ${r.permalink || r.id}`);
     } catch (e) {
       console.log(`✗ ${k}: ${e.message}`);

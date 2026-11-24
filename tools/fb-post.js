@@ -95,6 +95,14 @@ async function main() {
     const { listings, caption } = require("./ig-post.js");
     const SEO = require("./seo-titles.js");
     const live = new Map(listings().filter((l) => !l.hidden && !l.sold).map((l) => [l.slug, l]));
+    state.drops = state.drops || {};
+    const meta = read("tools/listing-meta.json", {});
+    for (const [slug, m] of Object.entries(meta)) { // harga turun → posting ulang "🔻 HARGA TURUN" dulu
+      const d = m.drop; if (!d || !live.has(slug) || !state.posted[slug]) continue;
+      const sent = Math.max(Date.parse(state.posted[slug].at || 0) || 0, Date.parse((state.drops[slug] || {}).at || 0) || 0);
+      if (Date.now() - Date.parse(d.at) <= 30 * 864e5 && Date.parse(d.ts || d.at + "T00:00:00+08:00") > sent)
+        todo.push({ key: slug, drop: true, cap: () => caption({ ...live.get(slug), drop: d }, SEO[slug], true) });
+    }
     Object.entries(ig).sort((a, b) => (a[1].at || "").localeCompare(b[1].at || ""))
       .forEach(([slug]) => { if (!state.posted[slug] && live.has(slug)) todo.push({ key: slug, l: live.get(slug), cap: () => caption(live.get(slug), SEO[slug]) }); });
   }
@@ -115,7 +123,8 @@ async function main() {
         msg = fbText(t.cap(), `${BASE}listing/${t.key}.html`);
       }
       const r = await publish(pg, urls, msg);
-      state.posted[t.key] = r; delete state.errors[t.key];
+      if (t.drop) state.drops[t.key] = r; else state.posted[t.key] = r;
+      delete state.errors[t.key];
       console.log(`✓ ${t.key} → ${r.permalink || r.id}`);
     } catch (e) {
       console.log(`✗ ${t.key}: ${e.message}`);

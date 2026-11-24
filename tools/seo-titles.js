@@ -160,9 +160,9 @@ module.exports = {
     en: { t: "2,802 m² Rice-Field-View Land for Sale in Singakerta, Ubud Bali", d: "28-are SHM plot with tourism zoning and rice-field views in Singakerta, Ubud, Gianyar. IDR 6M/m², IDR 16.812B total. Suits villas or a retreat. Ask on WhatsApp." },
     ru: { t: "Продажа участка 2 802 м² с видом на рисовые поля, Сингакерта, Убуд", d: "Участок 28 аре, SHM, туристическая зона, вид на рисовые поля, Сингакерта, Убуд (Гианьяр). 6 млн IDR/м², всего 16,812 млрд IDR. Под виллы или ретрит. WhatsApp." } },
   "tanah-350-m2-di-jalan-utama-canggu": {
-    id: { t: "Dijual Tanah 350 m² di Jalan Utama Canggu (Umah Buluh), Bali", d: "Tanah 3,5 are SHM, zona kuning (pemukiman) di Jl. Umah Buluh, Canggu, Kuta Utara. Rp2,1 M/are, total Rp7,35 M (nego). Akses jalan utama. Tanya via WhatsApp." },
-    en: { t: "350 m² Land for Sale on a Main Road in Canggu, Bali", d: "3.5-are SHM plot with residential (yellow) zoning on Jl. Umah Buluh, Canggu, North Kuta. IDR 2.1B/are, IDR 7.35B total (neg.). Main-road access. Ask on WhatsApp." },
-    ru: { t: "Продажа участка 350 м² на главной дороге в Чангу, Бали", d: "Участок 3,5 аре, SHM, жилая (жёлтая) зона, Джл. Умах Булух, Чангу, Северная Кута. 2,1 млрд IDR/аре, всего 7,35 млрд IDR (торг). Пишите в WhatsApp." } },
+    id: { t: "Dijual Tanah 350 m² di Jalan Utama Canggu (Umah Buluh), Bali", d: "Tanah 3,5 are SHM, zona kuning (pemukiman) di Jl. Umah Buluh, Canggu, Kuta Utara. Turun harga: Rp1,9 M/are, total Rp6,65 M (nego). Akses jalan utama. Tanya via WhatsApp." },
+    en: { t: "350 m² Land for Sale on a Main Road in Canggu, Bali", d: "3.5-are SHM plot with residential (yellow) zoning on Jl. Umah Buluh, Canggu, North Kuta. Price drop: IDR 1.9B/are, IDR 6.65B total. Main-road access. Ask on WhatsApp." },
+    ru: { t: "Продажа участка 350 м² на главной дороге в Чангу, Бали", d: "Участок 3,5 аре, SHM, жилая (жёлтая) зона, Джл. Умах Булух, Чангу, Северная Кута. Цена снижена: 1,9 млрд IDR/аре, всего 6,65 млрд IDR. Пишите в WhatsApp." } },
   "tanah-395-m2-gandeng-di-labuan-sait": {
     id: { t: "Dijual Tanah 395 m² (2 Kavling Gandeng) di Labuan Sait, Uluwatu", d: "Dua kavling gandeng 214 m² + 181 m² SHM di Labuan Sait, Pecatu–Uluwatu. Rp12,5 jt/m²; per kavling mulai Rp2,263 M, gandeng Rp4,938 M. Tanya via WhatsApp." },
     en: { t: "395 m² Land (2 Adjoining Plots) for Sale in Labuan Sait, Uluwatu", d: "Two adjoining SHM plots, 214 m² + 181 m², in Labuan Sait, Pecatu–Uluwatu. IDR 12.5M/m²; single plots from IDR 2.263B, both IDR 4.938B. Ask on WhatsApp." },
