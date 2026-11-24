@@ -406,5 +406,11 @@
   "price": 15000000000,
   "text": "Rp15 Miliar",
   "st": "live"
+ },
+ "tanah-di-banjar-kulu-tampaksiring": {
+  "added": "2026-11-24",
+  "price": 3500000,
+  "text": "Rp3.500.000",
+  "st": "live"
  }
 }
