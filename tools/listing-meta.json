@@ -126,8 +126,14 @@
  },
  "tanah-350-m2-di-jalan-utama-canggu": {
   "added": "2026-11-04",
-  "price": 7350000000,
-  "text": "Rp7,35 Miliar"
+  "price": 6650000000,
+  "text": "Rp6,65 Miliar",
+  "drop": {
+   "from": "Rp7,35 Miliar",
+   "to": "Rp6,65 Miliar",
+   "at": "2026-11-24",
+   "ts": "2026-11-24T03:52:56.279Z"
+  }
  },
  "tanah-2802-m2-view-sawah-di-singakerta": {
   "added": "2026-11-04",
