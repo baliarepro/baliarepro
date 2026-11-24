@@ -1,0 +1,55 @@
+# Posting ulang 1 listing di Instagram, Threads, Facebook & Telegram (mis. posting pertama tayang tanpa foto).
+# Hapus posting lama lewat API (tools/repost.js; yang tidak bisa dihapus dicatat di tools/repost-log.json),
+# lalu menjalankan workflow "Instagram" yang memposting ulang dengan gambar terbaru.
+name: Posting ulang listing
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "slug listing (bagian link setelah /listing/ tanpa .html)"
+        required: true
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  repost:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Hapus posting lama
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT: ${{ secrets.TELEGRAM_CHAT }}
+          SLUG: ${{ inputs.slug }}
+        run: node tools/repost.js "$SLUG"
+      - name: Simpan status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/ig-state.json tools/threads-state.json tools/fb-state.json tools/tg-state.json tools/repost-log.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Posting ulang: ${{ inputs.slug }}"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+      - name: Posting ulang (workflow Instagram)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run instagram.yml --ref main -f mode=new

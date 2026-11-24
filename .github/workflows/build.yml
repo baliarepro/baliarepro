@@ -31,24 +31,53 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+      - name: Tunggu foto dari Google Drive?
+        id: wait
+        run: |
+          # Iklan baru yang fotonya masih diambil dari Drive: build dilewati, workflow "Foto dari Google Drive" menjalankan build setelah foto masuk
+          if [ "${{ github.event_name }}" = "push" ] && [ -f foto-drive.json ] && node -e "process.exit(Object.keys(require('./foto-drive.json').pending||{}).length?0:1)"; then
+            echo "skip=1" >> "$GITHUB_OUTPUT"; echo "Foto dari Drive masih diproses — build dijalankan setelah foto masuk."
+          fi
       - uses: actions/setup-node@v4
+        if: steps.wait.outputs.skip != '1'
         with:
           node-version: 20
       - name: Pasang Playwright + Chromium
+        if: steps.wait.outputs.skip != '1'
         run: |
           npm install --no-save --no-package-lock playwright
           npx playwright install --with-deps chromium
       - name: Build
+        if: steps.wait.outputs.skip != '1'
         run: node tools/build-seo.js
       - name: Commit hasil build
+        if: steps.wait.outputs.skip != '1'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then echo "Tidak ada perubahan"; exit 0; fi
           git commit -m "Build otomatis setelah perubahan ${GITHUB_SHA::7}"
-          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+          BUILD=$(git rev-parse HEAD)
+          for i in 1 2 3 4; do
+            git fetch -q origin main
+            # File hasil build bentrok dengan build lain → pakai hasil build ini (dibuat dari sumber terbaru)
+            if git rebase -q -X theirs origin/main; then
+              git push origin HEAD:main && exit 0
+            else
+              git rebase --abort || true
+              git checkout -q -B main origin/main
+              git diff --name-status "$BUILD~1" "$BUILD" | while IFS=$'\t' read -r st f g; do
+                case "$st" in D) git rm -q --ignore-unmatch -- "$f" ;; R*) git rm -q --ignore-unmatch -- "$f"; git checkout "$BUILD" -- "$g" ;; *) git checkout "$BUILD" -- "$f" ;; esac
+              done
+              git commit -q -m "Build otomatis setelah perubahan ${GITHUB_SHA::7}" && git push origin HEAD:main && exit 0
+              git reset -q --hard "$BUILD"
+            fi
+            sleep 5
+          done
+          echo "::error::Hasil build gagal disimpan (bentrok terus)."; exit 1
       - name: Picu GitHub Pages
+        if: steps.wait.outputs.skip != '1'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

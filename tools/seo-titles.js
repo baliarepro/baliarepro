@@ -4,7 +4,9 @@
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
   "tanah-di-banjar-kulu-tampaksiring": {
-    id: { t: "Dijual tanah di Banjar Kulu, Tampaksiring, Bali", d: "Tanah di Banjar Kulu, Tampaksiring: SHM (Sertifikat Hak Milik), akses jalan Jalan lebar, mudah dilalui mobil, hadap Selatan, kavling 1 184 m². Rp3.500.000. Info & survei via WhatsApp." } },
+    id: { t: "Dijual Tanah 369 m² (2 Kavling) di Tampaksiring, Gianyar Bali", d: "2 kavling 184 + 185 m² SHM di Banjar Kulu, Tampaksiring, lebar ±12 m, hadap selatan, siap bangun. Rp3,5 jt/m², total Rp1,29 M. Dekat Ubud. Info & survei via WhatsApp." },
+    en: { t: "369 m² Land (2 Plots) for Sale in Tampaksiring, Gianyar, Bali", d: "Two SHM plots, 184 + 185 m², in Banjar Kulu, Tampaksiring; ±12 m frontage, south-facing, ready to build. IDR 3.5M/m², total IDR 1.29B. Near Ubud. Ask on WhatsApp." },
+    ru: { t: "Продажа участка 369 м² (2 надела), Тампаксиринг, Бали", d: "Два участка 184 + 185 м², SHM, Банджар Кулу, Тампаксиринг; фасад ±12 м, на юг, готовы к стройке. 3,5 млн IDR/м², всего 1,29 млрд IDR. Рядом Убуд. Пишите в WhatsApp." } },
   "villa-joglo-4-kamar-private-pool-di-kutuh-pandawa": {
     id: { t: "Dijual Villa Joglo 4 Kamar Private Pool di Kutuh, Pandawa Bali", d: "Villa joglo kayu jati 4 KT + kamar pembantu, tanah 300 m², pool 3×10 m, 1 menit ke Pantai Pandawa. Freehold Rp5,9 M nego atau sewa Rp450 jt/tahun. Tanya WA." },
     en: { t: "4-Bedroom Joglo Villa with Pool for Sale in Kutuh, Pandawa Bali", d: "Teak Joglo villa, 4 beds + maid room, 300 m² land, 3×10 m pool, 1 min to Pandawa Beach. Freehold IDR 5.9B negotiable, or rent IDR 450M/year. WhatsApp us." },

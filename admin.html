@@ -556,7 +556,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   }
   function rpFull(n) { return "Rp" + Math.round(n).toLocaleString("id-ID"); }
   function rpShort(n) {
-    if (n >= 1e9) return "Rp" + String(+(n / 1e9).toFixed(3)).replace(".", ",") + " Miliar";
+    if (n >= 1e9) return "Rp" + String(+(n / 1e9).toFixed(4)).replace(".", ",") + " Miliar";
     if (n >= 1e6 && n % 1e5 === 0) return "Rp" + String(+(n / 1e6).toFixed(1)).replace(".", ",") + " jt";
     return rpFull(n);
   }
@@ -599,11 +599,17 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     };
     var sec = "";
     lines.slice(1).forEach(function (l) {
-      var plain = l.replace(/^[•\-–·▪▫◦►➤✅✔☑✓👉🔹🔸⭐️]+\s*/u, "").replace(/^\d+[.)]\s+/, "").trim();
+      var emo = /^[^\p{L}\p{N}\s"'(]/u.test(l) && !/^[•\-–·*]/.test(l); // diawali emoji (📍, 📐, 💰 …)
+      var plain = l.replace(/^[^\p{L}\p{N}"'(]+/u, "").replace(/^\d+[.)]\s+/, "").trim();
       if (!plain) return;
-      // Judul bagian (huruf besar semua, tanpa titik dua berisi nilai)
-      if (/^[A-Z0-9 &/()–\-]{4,40}:?$/.test(l) && /[A-Z]{4}/.test(l) && !/\d{3}/.test(l)) {
-        sec = /harga|price|sewa|rental|biaya/i.test(l) ? "price" : /potensi|cocok|ideal|suitable|peruntukan|use|investasi/i.test(l) ? "use"
+      var words = plain.replace(/:$/, "").split(/\s+/).length;
+      // Judul bagian: HURUF BESAR semua, atau kalimat pendek tanpa angka berisi kata judul / diawali emoji / diakhiri titik dua
+      var isHead = (/^[A-Z0-9 &/()–\-]{4,40}:?$/.test(l.replace(/^[^\p{L}\p{N}]+/u, "")) && /[A-Z]{4}/.test(l) && !/\d{3}/.test(l)) ||
+        (words <= 4 && !/\d/.test(plain) && !/:\s*\S/.test(plain) && (/:$/.test(plain) || emo ||
+          /^(spesifikasi|ukuran|dimensi|harga|price|keunggulan|kelebihan|fasilitas|lokasi strategis|keunggulan lokasi|potensi|value proposition|detail|info(rmasi)?|catatan|kontak|legalitas|peruntukan|cocok untuk|ideal untuk)\b/i.test(plain)));
+      if (isHead) { l = plain.toUpperCase(); }
+      if (isHead) {
+        sec = /harga|price|sewa|rental|biaya/i.test(l) ? "price" : /value proposition|ringkasan|summary/i.test(l) ? "other" : /potensi|cocok|ideal|suitable|peruntukan|use|investasi/i.test(l) ? "use"
           : /unggul|kelebihan|highlight|advantage|fasilitas|feature|nilai plus|kenapa|why/i.test(l) ? "pt" : /spesifikasi|spec|detail|data|informasi|info/i.test(l) ? "spec" : "other";
         return;
       }
@@ -615,6 +621,8 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
         var k = kv[1].trim(), v = kv[2].trim().replace(/\s*meter\b/gi, " m").replace(/\((\d+[.,]?\d*)\s*Are\)/g, "($1 are)").replace(/\bAre\b/g, "are");
         if (/harga|price|nego|sewa|rent|rental/i.test(k) || (/^(rp|idr|usd|us\$)/i.test(v) && /\d/.test(v))) { r.money.push([k, v]); return; }
         var hit = KEYS.filter(function (x) { return x[0].test(k); })[0], name = hit ? hit[1] : sentence(k.toLowerCase());
+        if (name === "Sertifikat") v = v.replace(/^SHM\s*\(sertifikat hak milik\)/i, "SHM");
+        if (name === "Akses jalan") v = v.replace(/^jalan\s+/i, "").replace(/^./, function (c) { return c.toUpperCase(); });
         if (name === "Zona" && /^(pariwisata|pink|kuning|hijau|perumahan|komersial|perdagangan|campuran)$/i.test(v)) v = "Zona " + v.toLowerCase();
         if (name === "View" || name === "Lingkungan") v = sentence(v.toLowerCase().replace(/\bocean view\b/, "ocean view")).replace(/^Ocean view$/i, "Ocean view");
         r.specs.push([name, v]); return;
@@ -623,13 +631,20 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       var u = usesFrom(plain);
       if (u && sec === "use") { r.uses = r.uses.concat(u.items); return; }
       if (sec === "use") { if (plain.length < 60) r.uses.push(sentence(plain)); else r.desc.push(plain); return; }
-      if (sec === "pt") { r.points.push(sentence(plain)); return; }
+      if (sec === "pt") { var u3 = usesFrom(plain); if (u3 && plain.length < 80 && !u3.rest) { r.uses = r.uses.concat(u3.items); return; } r.points.push(sentence(plain)); return; }
       if (plain.length > 60) { r.desc.push(plain); return; }
       if (sec === "spec" && /m²|are\b|watt|kva|meter|\d/.test(plain)) { r.specs.push(["Keterangan", plain]); return; }
       r.points.push(sentence(plain));
     });
     var spec = function (n) { return ((r.specs.filter(function (x) { return x[0] === n; })[0]) || [])[1] || ""; };
     // Harga: per m² / per are → total dihitung dari luas tanah; baris pertama = harga utama
+    var kav = r.specs.filter(function (x) { return /^(kavling|kav\.?|plot|unit)\s*\d+$/i.test(x[0]) && /m²/.test(x[1]); });
+    if (!spec("Luas tanah") && kav.length) {
+      var tot = kav.reduce(function (a, x) { return a + waNum((x[1].match(/([\d.,]+)\s*m²/) || [0, "0"])[1]); }, 0);
+      r.specs = r.specs.filter(function (x) { return kav.indexOf(x) < 0; });
+      r.specs.unshift(["Luas tanah", Math.round(tot).toLocaleString("id-ID") + " m² (" + kav.length + " kavling: " + kav.map(function (x) { return x[1]; }).join(" + ") + ")"]);
+      r.kav = kav.map(function (x) { return waNum((x[1].match(/([\d.,]+)\s*m²/) || [0, "0"])[1]); });
+    }
     var lt = spec("Luas tanah"), m2 = 0, mm = lt.match(/([\d.,]+)\s*m²/), ma = lt.match(/([\d.,]+)\s*are/i);
     if (mm) m2 = waNum(mm[1]); else if (ma) m2 = waNum(ma[1]) * 100;
     var main = [], rest = [];
@@ -638,7 +653,8 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       if (!p) { rest.push([label, v]); return; }
       var neg = p.nego ? " (nego)" : "";
       if (p.usd) { (main.length ? rest : main).push([label, "US$" + Math.round(p.n).toLocaleString("id-ID") + neg]); return; }
-      if (p.unit === "m2") { if (m2) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2) + neg]); rest.push(["Harga per m²", rpFull(p.n)]); return; }
+      if (p.unit === "m2") { if (m2) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2) + neg]); rest.push(["Harga per m²", rpFull(p.n)]);
+        if (r.kav && r.kav.length > 1) r.kav.forEach(function (k) { rest.push(["Kavling " + k.toLocaleString("id-ID") + " m²", rpShort(p.n * k)]); }); return; }
       if (p.unit === "are") { if (m2) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2 / 100) + neg]); rest.push(["Harga per are (≈" + rpShort(p.n / 100) + "/m²)", rpShort(p.n)]); return; }
       if (p.unit === "tahun") { (main.length ? rest : main).push([/sewa/i.test(k) ? label : "Sewa per tahun", rpShort(p.n) + neg]); return; }
       (main.length ? rest : main).push([label, rpShort(p.n) + neg]);
@@ -667,7 +683,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     }
     r.uses = r.uses.filter(function (x, i, a) { return a.map(function (y) { return y.toLowerCase(); }).indexOf(x.toLowerCase()) === i; });
     r.badge = ov ? "Ocean view" : hook ? "Posisi hook" : "";
-    var d = r.desc.filter(function (x) { return !BOILER.test(x); });
+    var d = r.desc.filter(function (x, i, a) { return !BOILER.test(x) && a.indexOf(x) === i; });
     r.descText = d.slice(0, 2).join(" ").replace(/\s+/g, " ");
     if (!r.uses.length && r.descText) { var u2 = usesFrom(r.descText.split(/(?<=\.)\s+/).pop() || ""); if (u2) r.uses = u2.items; }
     var AREA = [[/ungasan|jimbaran|pecatu|uluwatu|kutuh|pandawa|balangan|nusa dua|benoa|labuan sait|melasti|bingin|kuta selatan|south kuta|goa gong|bali cliff|kedonganan|tanjung benoa|sawangan/i, "kuta-selatan"],
@@ -714,7 +730,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     var price = (nRows("nprice")[0] || [])[1] || "";
     var short = price.replace(/\s*Miliar/i, " M").replace(/\s*juta/i, " jt");
     $("#n-st").value = t ? ("Dijual " + t.charAt(0).toLowerCase() + t.slice(1)).replace(/^Dijual over kontrak/i, "Over kontrak") + ", Bali" : "";
-    var specs = nRows("nspec").filter(function (r) { return r[1] && !/^lokasi$/i.test(r[0]); }).slice(0, 4).map(function (r) { return /^(sertifikat|zona)$/i.test(r[0]) ? (/^zona$/i.test(r[0]) ? r[1].toLowerCase() : r[1]) : r[0].toLowerCase() + " " + r[1]; }).join(", ");
+    var specs = nRows("nspec").filter(function (r) { return r[1] && !/^lokasi$/i.test(r[0]); }).slice(0, 4).map(function (r) { return /^(sertifikat|zona)$/i.test(r[0]) ? (/^zona$/i.test(r[0]) ? r[1].toLowerCase() : r[1]) : r[0].toLowerCase() + " " + r[1].charAt(0).toLowerCase() + r[1].slice(1); }).join(", ");
     $("#n-sd").value = t ? (t + (specs ? ": " + specs : "") + ". " + (short ? short + ". " : "") + "Info & survei via WhatsApp.").replace(/\s+/g, " ").slice(0, 200) : "";
   }
   $("#nf").addEventListener("input", function (e) {

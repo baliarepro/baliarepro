@@ -232,7 +232,13 @@ async function main() {
   const inQueue = new Set(state.queue);
   // Listing yang fotonya masih diambil dari Google Drive (foto-drive.json) ditunda sampai fotonya masuk
   let waitPhotos = {}; try { waitPhotos = JSON.parse(fs.readFileSync(path.join(ROOT, "foto-drive.json"), "utf8")).pending || {}; } catch (e) {}
-  const todo = live.filter((l) => !state.posted[l.slug] && !inQueue.has(l.slug) && !waitPhotos[l.slug]).slice(0, 5);
+  // Gambar IG belum memuat foto listing (build berikutnya belum selesai) → tunggu, jangan posting tanpa foto
+  const stale = (slug) => {
+    const dir = path.join(ROOT, "img/listing", slug); if (!fs.existsSync(dir)) return false;
+    const n = fs.readdirSync(dir).filter((f) => /\.(jpe?g|png|webp)$/i.test(f)).length; if (!n) return false;
+    try { return (JSON.parse(fs.readFileSync(path.join(ROOT, "img/ig", slug, "meta.json"), "utf8")).images || 0) < 2; } catch (e) { return true; }
+  };
+  const todo = live.filter((l) => !state.posted[l.slug] && !inQueue.has(l.slug) && !waitPhotos[l.slug] && !(stale(l.slug) && (console.log(`… ${l.slug}: menunggu gambar dengan foto`), true))).slice(0, 5);
   let again = pickDrop(state, live);
   if (!again && mode === "queue") {
     const next = state.queue.map((s) => live.find((l) => l.slug === s)).find((l) => l && !state.posted[l.slug]);
