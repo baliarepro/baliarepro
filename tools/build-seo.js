@@ -37,7 +37,7 @@ const AGENT = { "@type": "RealEstateAgent", "@id": BASE + "#agent", name: "Bali 
   address: { "@type": "PostalAddress", streetAddress: "Jl. Sedap Malam No.18, Sanur Kaja", addressLocality: "Denpasar Selatan, Denpasar", addressRegion: "Bali", postalCode: "80237", addressCountry: "ID" },
   hasMap: "https://www.google.com/maps?cid=18329018382978472684",
   sameAs: ["https://www.google.com/maps?cid=18329018382978472684", "https://www.instagram.com/bali.are/", "https://www.threads.com/@bali.are",
-    "https://www.facebook.com/682981281566061", "https://t.me/baliareproperty", "https://whatsapp.com/channel/0029VbD8IGrEgGfNYeVYfD3J"] };
+    "https://www.facebook.com/682981281566061", "https://t.me/baliareproperty", "https://www.tiktok.com/@baliarepro", "https://whatsapp.com/channel/0029VbD8IGrEgGfNYeVYfD3J"] };
 
 const ogFile = (L) => (L === "id" ? "og.png" : "og-" + L + ".png");
 function seo({ L, pageUrl, alts, desc, ogTitle, jsonld, image }) {
