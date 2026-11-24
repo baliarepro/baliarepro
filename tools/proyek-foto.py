@@ -47,6 +47,11 @@ def images_from(path):
     except Exception:
         is_pdf = False
     if is_pdf:
+        if os.environ.get("PAGES"):  # render tiap halaman (untuk membaca teks brosur yang berupa gambar/outline)
+            pd = os.path.join(ROOT, "img/proyek", os.environ["SLUG_P"], "raw", "pages"); os.makedirs(pd, exist_ok=True)
+            for page in doc:
+                pix = page.get_pixmap(matrix=fitz.Matrix(1400 / page.rect.width, 1400 / page.rect.width))
+                Image.open(io.BytesIO(pix.tobytes("png"))).convert("RGB").save(os.path.join(pd, "p%02d.jpg" % (page.number + 1)), "JPEG", quality=75)
         for page in doc:
             for img in page.get_images(full=True):
                 try:
@@ -72,6 +77,7 @@ def main():
     if not re.match(r"^[a-z0-9-]+$", slug): sys.exit("slug tidak valid")
     out = os.path.join(ROOT, "img/proyek", slug, "raw")
     shutil.rmtree(out, ignore_errors=True); os.makedirs(out)
+    os.environ["SLUG_P"] = slug
     tmp = tempfile.mkdtemp()
     seen, keep = set(), []
     for p in grab(ids, tmp):

@@ -14,6 +14,10 @@ on:
       max:
         description: "maks. gambar"
         default: "40"
+      pages:
+        description: "render juga tiap halaman PDF (raw/pages) untuk dibaca"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -35,6 +39,7 @@ jobs:
           SLUG: ${{ inputs.slug }}
           IDS: ${{ inputs.ids }}
           MAX: ${{ inputs.max }}
+          PAGES: ${{ inputs.pages && '1' || '' }}
         run: python tools/proyek-foto.py "$SLUG" "$IDS" "$MAX"
       - name: Commit
         env:
