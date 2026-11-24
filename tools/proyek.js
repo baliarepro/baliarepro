@@ -95,27 +95,30 @@ function imagesOf(root, slug) {
 }
 
 const CSS = `<style>
-.pj{--g:#123F36;--gold:#946410;--gold2:#D9A441;--ln:#E2DACB;--mut:#59625D}
+.pj{--g:#123F36;--gold:#946410;--gold2:#D9A441;--ln:#E2DACB;--mut:#59625D;--card:#fff;--fill:#F0EADF;--fill2:#EDE6D8;--body:#3B4541;--gt:#123F36;--gt2:#7A520C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pj{--ln:#24392F;--mut:#A3B1A8;--card:#12241D;--fill:#173528;--fill2:#24392F;--body:#C9D3CC;--gt:#8CC9AE;--gt2:#D9A441;--gold:#D9A441}}
+:root[data-theme="dark"] .pj{--ln:#24392F;--mut:#A3B1A8;--card:#12241D;--fill:#173528;--fill2:#24392F;--body:#C9D3CC;--gt:#8CC9AE;--gt2:#D9A441;--gold:#D9A441}
+.pj h1,.pj h2,.pj h3,.pj h4{color:inherit}
 .pj h2{font-family:"Bricolage Grotesque",Arial,sans-serif}
 .pj-hero{background:var(--g);color:#F6F2EA;border-radius:22px;padding:44px 36px;margin:18px 0 26px;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end}
 .pj-hero .eyebrow{color:var(--gold2)}
 .pj-hero h1{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:clamp(34px,5vw,54px);line-height:1.03;margin:10px 0 12px;color:#F6F2EA}
 .pj-hero p{color:#DCE7E1;max-width:620px;margin:0;font-size:17px}
-.pj-feat{display:flex;flex-wrap:wrap;background:#fff;border:1px solid var(--ln);border-radius:22px;overflow:hidden;text-decoration:none;color:inherit}
-.pj-feat .ph{flex:1 1 520px;min-height:340px;position:relative;background:#EDE6D8}
+.pj-feat{display:flex;flex-wrap:wrap;background:var(--card);border:1px solid var(--ln);border-radius:22px;overflow:hidden;text-decoration:none;color:inherit}
+.pj-feat .ph{flex:1 1 520px;min-height:340px;position:relative;background:var(--fill2)}
 .pj-feat .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .pj-feat .tx{flex:1 1 380px;padding:30px;display:flex;flex-direction:column;gap:14px}
 .pj-badge{display:inline-block;background:var(--g);color:#F6F2EA;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px}
-.pj-badge.l{background:#F6F2EA;color:var(--g)}
+.pj-badge.l{background:#F6F2EA;color:#123F36}
 .pj-ph-tags{position:absolute;top:16px;left:16px;display:flex;gap:8px;flex-wrap:wrap}
 .pj-dev{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
 .pj-feat h2,.pj-h1{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:clamp(28px,3.4vw,38px);line-height:1.06;margin:4px 0 0}
 .pj-kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;border-top:1px solid var(--ln);padding-top:14px;margin:0}
 .pj-kv dt{font-size:12px;color:var(--mut)}.pj-kv dd{margin:2px 0 0;font-weight:600}
-.pj-kv dd.big{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:24px;font-weight:700;color:var(--g)}
+.pj-kv dd.big{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)}
 .pj-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;background:var(--g);color:#F6F2EA;text-decoration:none;font-weight:600}
-.pj-btn.wa{background:#1F8F55;color:#fff}.pj-btn.o{background:transparent;border:1.5px solid var(--g);color:var(--g)}.pj-btn.gold{background:var(--gold2);color:var(--g);font-weight:700}
-.pj-why{background:#fff;border:1px solid var(--ln);border-radius:22px;padding:30px;margin-top:34px;display:flex;flex-wrap:wrap;gap:28px}
+.pj-btn.wa{background:#1F8F55;color:#fff}.pj-btn.o{background:transparent;border:1.5px solid var(--gt);color:var(--gt)}.pj-btn.gold{background:var(--gold2);color:#123F36;font-weight:700}
+.pj-why{background:var(--card);border:1px solid var(--ln);border-radius:22px;padding:30px;margin-top:34px;display:flex;flex-wrap:wrap;gap:28px}
 .pj-why>div:first-child{flex:1 1 280px}.pj-why .gr{flex:2 1 480px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
 .pj-why b{display:block}.pj-why span{font-size:14px;color:var(--mut)}
 .pj-dev-cta{background:var(--g);color:#F6F2EA;border-radius:22px;padding:34px;margin-top:34px;display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between}
@@ -132,22 +135,22 @@ const CSS = `<style>
 .pj-cols{display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start}
 .pj-main{flex:999 1 600px;min-width:0;display:flex;flex-direction:column;gap:40px}
 .pj-side{flex:1 1 300px;min-width:0;position:sticky;top:70px;display:flex;flex-direction:column;gap:14px}
-.pj-box{background:#fff;border:1px solid var(--ln);border-radius:18px;padding:22px}
+.pj-box{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:22px}
 .pj-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.pj-two article{background:#fff;border:1px solid var(--ln);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.pj-two article{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}
 .pj-two h3{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:24px;margin:0;line-height:1.15}
-.pj-two p{margin:0;font-size:15px;color:#3B4541}
-.pj-tw{overflow-x:auto;border:1px solid var(--ln);border-radius:16px;background:#fff}
+.pj-two p{margin:0;font-size:15px;color:var(--body)}
+.pj-tw{overflow-x:auto;border:1px solid var(--ln);border-radius:16px;background:var(--card)}
 .pj-tw table{width:100%;border-collapse:collapse;font-size:15px;min-width:600px}
-.pj-tw th{background:#F0EADF;text-align:left;padding:12px 16px;font-weight:600}.pj-tw td{padding:12px 16px;border-top:1px solid var(--ln)}
-.pj-st{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#F6EAD0;color:#7A520C;white-space:nowrap}.pj-st.s{background:#EDE6D8;color:var(--mut)}
+.pj-tw th{background:var(--fill);text-align:left;padding:12px 16px;font-weight:600}.pj-tw td{padding:12px 16px;border-top:1px solid var(--ln)}
+.pj-st{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#F6EAD0;color:#7A520C;white-space:nowrap}.pj-st.s{background:var(--fill2);color:var(--mut)}
 .pj-note{font-size:13px;color:var(--mut);margin:10px 0 0}
 .pj-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.pj-steps li{background:#fff;border:1px solid var(--ln);border-radius:16px;padding:16px}.pj-steps li:last-child{background:var(--g);color:#F6F2EA;border-color:var(--g)}
+.pj-steps li{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:16px}.pj-steps li:last-child{background:var(--g);color:#F6F2EA;border-color:var(--gt)}
 .pj-steps small{font-family:"JetBrains Mono",monospace;color:var(--gold)}.pj-steps li:last-child small{color:var(--gold2)}
 .pj-steps b{display:block;margin-top:4px}.pj-steps span{font-size:14px;color:var(--mut)}.pj-steps li:last-child span{color:#DCE7E1}
 .pj-pill5{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.pj-pill5 div{background:#fff;border:1px solid var(--ln);border-radius:16px;padding:16px}
+.pj-pill5 div{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:16px}
 .pj-pill5 small{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
 .pj-pill5 b{display:block;margin:6px 0 4px}.pj-pill5 span{font-size:13px;color:var(--mut)}
 .pj-band{margin-top:14px;background:var(--g);color:#F6F2EA;border-radius:16px;padding:18px 22px;display:flex;flex-wrap:wrap;gap:8px 20px}
@@ -155,7 +158,7 @@ const CSS = `<style>
 .pj-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .pj-gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block}
 .pj-team{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:16px;overflow:hidden;margin:0}
-.pj-team div{background:#fff;padding:14px 16px}.pj-team dt{font-size:12px;color:var(--mut)}.pj-team dd{margin:2px 0 0;font-weight:600}
+.pj-team div{background:var(--card);padding:14px 16px}.pj-team dt{font-size:12px;color:var(--mut)}.pj-team dd{margin:2px 0 0;font-weight:600}
 .pj-side .pj-btn{width:100%;box-sizing:border-box}
 @media(max-width:700px){.pj-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pj-stats div:nth-child(2){border-right:0}.pj-hero,.pj-dhero .in{padding:26px 20px}.pj-side{position:static}}
 </style>`;
@@ -177,7 +180,7 @@ function renderProyekHub(o) {
   <div class="pj">
   <section class="pj-hero"><div style="flex:1 1 480px"><div class="eyebrow">${esc(t.eyebrow)}</div><h1>${esc(t.h1)}</h1><p>${esc(t.intro)}</p></div></section>
   ${cards}
-  <section class="pj-why"><div><div class="pj-dev">${esc(t.why)}</div><h2 style="font-size:28px;margin:8px 0">${esc(t.whyH)}</h2><p style="margin:0;color:#3B4541">${esc(t.whyP)}</p></div>
+  <section class="pj-why"><div><div class="pj-dev">${esc(t.why)}</div><h2 style="font-size:28px;margin:8px 0">${esc(t.whyH)}</h2><p style="margin:0;color:var(--body)">${esc(t.whyP)}</p></div>
     <div class="gr">${t.whyItems.map((w) => `<div><b>${esc(w[0])}</b><span>${esc(w[1])}</span></div>`).join("")}</div></section>
   <section class="pj-dev-cta"><div><div class="pj-dev" style="color:var(--gold2)">${esc(t.devH)}</div><h2>${esc(t.devT)}</h2><p>${esc(t.devP)}</p></div><a class="pj-btn gold" href="${wa(t.devMsg)}" target="_blank" rel="noopener">${esc(t.devBtn)}</a></section>
   </div>`;
@@ -187,39 +190,39 @@ function renderProyekHub(o) {
 function renderProyek(o) {
   const { L, esc, project: p, root } = o, t = P[L], c = p[L];
   const imgs = imagesOf(root, p.slug).map((x) => (L === "id" ? "../" : "../../") + x);
-  const row = (r) => `<tr><td><b>${esc(c.rowNames[r.k])}</b></td><td>${esc(r.beds)}</td><td>${esc(L === "ru" ? r.size.replace(/m²/g, "м²").replace("net", "чистая") : r.size)}</td><td style="font-weight:700;color:var(--g)">${r.price ? esc(priceTxt(r.price, L)) : "–"}</td><td><span class="pj-st${r.status === "sold" ? " s" : ""}">${esc(r.status === "sold" ? t.sold : t.limited)}</span></td></tr>`;
+  const row = (r) => `<tr><td><b>${esc(c.rowNames[r.k])}</b></td><td>${esc(r.beds)}</td><td>${esc(L === "ru" ? r.size.replace(/m²/g, "м²").replace("net", "чистая") : r.size)}</td><td style="font-weight:700;color:var(--gt)">${r.price ? esc(priceTxt(r.price, L)) : "–"}</td><td><span class="pj-st${r.status === "sold" ? " s" : ""}">${esc(r.status === "sold" ? t.sold : t.limited)}</span></td></tr>`;
   const prod = (x, from) => `<article><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="pj-dev">${x === c.villa ? "Villa" : (L === "ru" ? "Апартаменты" : L === "en" ? "Apartments" : "Apartemen")}</span><span class="pj-badge l" style="border:1px solid var(--ln)">${esc(x.own)}</span></div>
       <h3>${esc(x.h)}</h3><p>${esc(x.p)}</p>
-      <dl class="pj-kv"><div><dt>${esc(x.a)}</dt><dd>${esc(x.av)}</dd></div><div><dt>${esc(x.b)}</dt><dd>${esc(x.bv)}</dd></div><div><dt>${esc(t.from)}</dt><dd class="big">${esc(rpShort(from, L))}</dd></div><div><dt>Status</dt><dd style="color:#7A520C">${esc(t.limited)}</dd></div></dl></article>`;
+      <dl class="pj-kv"><div><dt>${esc(x.a)}</dt><dd>${esc(x.av)}</dd></div><div><dt>${esc(x.b)}</dt><dd>${esc(x.bv)}</dd></div><div><dt>${esc(t.from)}</dt><dd class="big">${esc(rpShort(from, L))}</dd></div><div><dt>Status</dt><dd style="color:var(--gt2)">${esc(t.limited)}</dd></div></dl></article>`;
   const body = `  ${top({ ...o, up: "../", current: "proyek" })}
   ${CSS}
   <div class="pj">
   <p class="crumbs"><a href="../proyek.html">← ${esc(t.crumb)}</a></p>
   <section class="pj-dhero">${imgs[0] ? `<img src="${imgs[0]}" alt="${esc(p.name)}">` : ""}<div class="in">
     <div class="eyebrow">${esc(p.developer)} · ${esc(c.area)}</div><h1>${esc(p.name)}</h1><p>${esc(c.intro)}</p>
-    <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="pj-badge l">Villa · ${esc(c.villa.own)}</span><span class="pj-badge l">${esc(L === "ru" ? "Апартаменты" : L === "en" ? "Apartments" : "Apartemen")} · ${esc(c.apt.own)}</span><span class="pj-badge" style="background:var(--gold2);color:var(--g)">${esc(t.done)} ${esc(COMPLETION[L](p.completion))}</span><span class="pj-badge">${esc(t.limited)}</span></div></div></section>
+    <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="pj-badge l">Villa · ${esc(c.villa.own)}</span><span class="pj-badge l">${esc(L === "ru" ? "Апартаменты" : L === "en" ? "Apartments" : "Apartemen")} · ${esc(c.apt.own)}</span><span class="pj-badge" style="background:var(--gold2);color:var(--gt)">${esc(t.done)} ${esc(COMPLETION[L](p.completion))}</span><span class="pj-badge">${esc(t.limited)}</span></div></div></section>
   <div class="pj-stats"><div><b>${p.units.land.toLocaleString(L === "en" ? "en-US" : "id-ID")} ${L === "ru" ? "м²" : "m²"}</b><span>${esc(t.land)}</span></div><div><b>${p.units.villa} + ${p.units.apt}</b><span>${esc(t.unitsL)}</span></div><div><b>±800 m</b><span>${esc(t.beach)}</span></div><div><b>${esc(rpShort(p.priceFrom, L))}</b><span>${esc(t.aptFrom)}</span></div></div>
   <div class="pj-cols"><div class="pj-main">
     <section><h2>${esc(t.two)}</h2><div class="pj-two">${prod(c.villa, p.villaFrom)}${prod(c.apt, p.priceFrom)}</div></section>
     <section><h2>${esc(t.types)}</h2><div class="pj-tw"><table><thead><tr>${t.typeCols.map((h) => `<th scope="col">${esc(h)}</th>`).join("")}</tr></thead><tbody>${p.rows.map(row).join("")}</tbody></table></div><p class="pj-note">${esc(t.priceNote)}</p></section>
     <section><h2>${esc(t.payH)}</h2><ol class="pj-steps">${c.pay.map((s, i) => `<li><small>0${i + 1}</small><b>${esc(s[0])}</b><span>${esc(s[1])}</span></li>`).join("")}</ol><p class="pj-note">${esc(c.payNote)}</p></section>
     ${imgs.length > 1 ? `<section><h2>${esc(t.gallery)}</h2><div class="pj-gal">${imgs.slice(1).map((x) => `<img src="${x}" alt="${esc(p.name)}" loading="lazy">`).join("")}</div><p class="pj-note">${esc(L === "id" ? "Render dan ilustrasi adalah gambaran artis dari developer." : L === "en" ? "Renders and illustrations are the developer's artist impressions." : "Рендеры и иллюстрации — художественное изображение девелопера.")}</p></section>` : ""}
-    <section><h2>${esc(t.wellH)}</h2><p style="margin:-6px 0 14px;color:#3B4541">${esc(t.wellP)}</p><div class="pj-pill5">${c.pillars.map((x) => `<div><small>${esc(x[0])}</small><b>${esc(x[1])}</b><span>${esc(x[2])}</span></div>`).join("")}</div>
+    <section><h2>${esc(t.wellH)}</h2><p style="margin:-6px 0 14px;color:var(--body)">${esc(t.wellP)}</p><div class="pj-pill5">${c.pillars.map((x) => `<div><small>${esc(x[0])}</small><b>${esc(x[1])}</b><span>${esc(x[2])}</span></div>`).join("")}</div>
       <div class="pj-band"><em>${esc(t.wellC)}</em>${c.wellness.map((w) => `<span>${esc(w)}</span>`).join('<span style="color:#4E7A6E">·</span>')}</div></section>
-    <section><h2>${esc(t.featH)}</h2><div class="pj-two">${c.feats.map((f) => `<article><h3 style="font-size:18px">${esc(f[0])}</h3><ul style="margin:0;padding-left:18px;font-size:14px;color:#3B4541">${f[1].map((x) => `<li>${esc(x)}</li>`).join("")}</ul></article>`).join("")}</div></section>
-    <section><h2>${esc(t.rentH)}</h2><p style="margin:-6px 0 14px;color:#3B4541">${esc(c.rental.p)}</p><div class="pj-two"><div class="pj-box"><div style="font-size:13px;color:var(--mut)">${esc(t.rentV)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--g)">${esc(c.rental.villa)}</div></div><div class="pj-box"><div style="font-size:13px;color:var(--mut)">${esc(t.rentA)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--g)">${esc(c.rental.apt)}</div></div></div><p class="pj-note">${esc(t.rentNote)}</p></section>
+    <section><h2>${esc(t.featH)}</h2><div class="pj-two">${c.feats.map((f) => `<article><h3 style="font-size:18px">${esc(f[0])}</h3><ul style="margin:0;padding-left:18px;font-size:14px;color:var(--body)">${f[1].map((x) => `<li>${esc(x)}</li>`).join("")}</ul></article>`).join("")}</div></section>
+    <section><h2>${esc(t.rentH)}</h2><p style="margin:-6px 0 14px;color:var(--body)">${esc(c.rental.p)}</p><div class="pj-two"><div class="pj-box"><div style="font-size:13px;color:var(--mut)">${esc(t.rentV)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--gt)">${esc(c.rental.villa)}</div></div><div class="pj-box"><div style="font-size:13px;color:var(--mut)">${esc(t.rentA)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:22px;font-weight:700;color:var(--gt)">${esc(c.rental.apt)}</div></div></div><p class="pj-note">${esc(t.rentNote)}</p></section>
     <section><h2>${esc(t.teamH)}</h2><dl class="pj-team">${p.team.map((x) => `<div><dt>${esc(t.team[x[0]])}</dt><dd>${esc(x[1])}</dd></div>`).join("")}</dl></section>
   </div>
   <aside class="pj-side">
     <div class="pj-box" style="display:flex;flex-direction:column;gap:12px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><div style="font-size:12px;color:var(--mut)">${esc(t.aptFrom)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700;color:var(--g)">${esc(rpShort(p.priceFrom, L))}</div></div><div><div style="font-size:12px;color:var(--mut)">${esc(t.villaFrom)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700;color:var(--g)">${esc(rpShort(p.villaFrom, L))}</div></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><div style="font-size:12px;color:var(--mut)">${esc(t.aptFrom)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)">${esc(rpShort(p.priceFrom, L))}</div></div><div><div style="font-size:12px;color:var(--mut)">${esc(t.villaFrom)}</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)">${esc(rpShort(p.villaFrom, L))}</div></div></div>
       <div style="font-size:13px;color:var(--mut)">${esc(t.direct)}</div>
       <a class="pj-btn wa" href="${wa(t.waMsg(p.name))}" target="_blank" rel="noopener">${IC_WA}${esc(t.waBtn)}</a>
       <a class="pj-btn o" href="${wa(t.visitMsg(p.name))}" target="_blank" rel="noopener">${esc(t.visit)}</a>
       <a href="../kalkulator.html?harga=${p.priceFrom}" style="text-align:center;font-weight:600">${esc(t.calc)}</a>
     </div>
-    <div class="pj-box"><b>${esc(t.locH)}</b><p style="margin:6px 0 10px;font-size:14px;color:#3B4541">${esc(c.area)}. ${esc(t.locP)}</p><a href="${wa(t.locMsg(p.name))}" target="_blank" rel="noopener" style="font-weight:600">${esc(t.locBtn)} →</a></div>
-    <div class="pj-box" style="background:var(--g);color:#F6F2EA;border-color:var(--g)"><div style="font-size:12px;color:#B9CCC4">Developer</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:20px;font-weight:700">${esc(p.developer)}</div><div style="font-size:13px;color:#DCE7E1">${esc(c.devAbout)}</div></div>
+    <div class="pj-box"><b>${esc(t.locH)}</b><p style="margin:6px 0 10px;font-size:14px;color:var(--body)">${esc(c.area)}. ${esc(t.locP)}</p><a href="${wa(t.locMsg(p.name))}" target="_blank" rel="noopener" style="font-weight:600">${esc(t.locBtn)} →</a></div>
+    <div class="pj-box" style="background:var(--g);color:#F6F2EA;border-color:var(--gt)"><div style="font-size:12px;color:#B9CCC4">Developer</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:20px;font-weight:700">${esc(p.developer)}</div><div style="font-size:13px;color:#DCE7E1">${esc(c.devAbout)}</div></div>
   </aside></div>
   <p class="pj-note" style="margin-top:34px;border-top:1px solid var(--ln);padding-top:14px">${esc(t.disclaimer)}</p>
   </div>`;
