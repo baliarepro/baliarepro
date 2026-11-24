@@ -1,0 +1,48 @@
+# Ambil & potong foto proyek developer dari Google Drive (PDF brosur / foto besar) → img/proyek/<slug>/raw/
+# untuk dipilih. Dijalankan manual: Actions → "Foto proyek developer" → isi slug + id file/folder Drive (pisah koma).
+name: Foto proyek developer
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "slug proyek (mis. the-ease)"
+        required: true
+      ids:
+        description: "id file Drive (pisah koma); awali 'folder:' untuk folder"
+        required: true
+      max:
+        description: "maks. gambar"
+        default: "40"
+
+permissions:
+  contents: write
+
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet gdown pillow pillow-heif pymupdf
+      - name: Unduh & ekstrak
+        env:
+          SLUG: ${{ inputs.slug }}
+          IDS: ${{ inputs.ids }}
+          MAX: ${{ inputs.max }}
+        run: python tools/proyek-foto.py "$SLUG" "$IDS" "$MAX"
+      - name: Commit
+        env:
+          SLUG: ${{ inputs.slug }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A "img/proyek/$SLUG/raw"
+          if git diff --cached --quiet; then echo "Tidak ada gambar"; exit 0; fi
+          git commit -m "Foto proyek $SLUG dari Google Drive (bahan pilihan)"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
