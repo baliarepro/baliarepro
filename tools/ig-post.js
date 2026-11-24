@@ -230,7 +230,9 @@ async function main() {
   const all = listings();
   const live = all.filter((l) => !l.hidden && !l.sold);
   const inQueue = new Set(state.queue);
-  const todo = live.filter((l) => !state.posted[l.slug] && !inQueue.has(l.slug)).slice(0, 5);
+  // Listing yang fotonya masih diambil dari Google Drive (foto-drive.json) ditunda sampai fotonya masuk
+  let waitPhotos = {}; try { waitPhotos = JSON.parse(fs.readFileSync(path.join(ROOT, "foto-drive.json"), "utf8")).pending || {}; } catch (e) {}
+  const todo = live.filter((l) => !state.posted[l.slug] && !inQueue.has(l.slug) && !waitPhotos[l.slug]).slice(0, 5);
   let again = pickDrop(state, live);
   if (!again && mode === "queue") {
     const next = state.queue.map((s) => live.find((l) => l.slug === s)).find((l) => l && !state.posted[l.slug]);

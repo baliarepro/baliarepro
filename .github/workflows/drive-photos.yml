@@ -1,0 +1,49 @@
+# Foto listing dari folder Google Drive (permintaan pemilik 24 Nov 2026).
+# admin.html menulis permintaan ke foto-drive.json ("pending") → workflow ini mengunduh maks. 3 foto (tools/drive-photos.py),
+# menyimpannya ke img/listing/<slug>/, commit, lalu menjalankan "Build website" (yang kemudian memicu posting Instagram dst.).
+name: Foto dari Google Drive
+
+on:
+  push:
+    branches: [main]
+    paths: ["foto-drive.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: drive-photos
+  cancel-in-progress: false
+
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pasang gdown + Pillow
+        run: pip install --quiet gdown pillow pillow-heif
+      - name: Unduh foto
+        run: python tools/drive-photos.py
+      - name: Commit foto
+        id: c
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A img/listing foto-drive.json
+          if git diff --cached --quiet; then echo "Tidak ada perubahan"; exit 0; fi
+          git commit -m "Foto listing dari Google Drive"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+          if git show --stat HEAD | grep -q "img/listing/"; then echo "build=1" >> "$GITHUB_OUTPUT"; fi
+      - name: Jalankan build website
+        if: steps.c.outputs.build == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run build.yml --ref main

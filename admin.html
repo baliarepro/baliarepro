@@ -358,8 +358,8 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   }
   function rowsHtml(name, rows, a, b) {
     return '<div data-rows="' + name + '">' + rows.map(function (r) {
-      return '<div class="grid2"><input placeholder="' + a + '" value="' + esc(r[0]) + '"><input placeholder="' + b + '" value="' + esc(r[1]) + '"><button type="button" class="x" data-del aria-label="Hapus baris">×</button></div>';
-    }).join("") + '</div><button type="button" class="btn ghost small" data-add="' + name + '" data-a="' + a + '" data-b="' + b + '">+ Tambah baris</button>';
+      return '<div class="grid2"><input aria-label="Keterangan" value="' + esc(r[0]) + '"><input aria-label="Nilai" value="' + esc(r[1]) + '"><button type="button" class="x" data-del aria-label="Hapus baris">×</button></div>';
+    }).join("") + '</div><button type="button" class="btn ghost small" data-add="' + name + '">+ Tambah baris</button>';
   }
   function openEdit(slug) {
     readFile(SRC).then(function (cur) {
@@ -378,22 +378,32 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
         '<label for="f-eb">Lokasi singkat (mis. Jl. Tulip · Ungasan)</label><input id="f-eb" value="' + esc(txt($(".card-top .eyebrow", c))) + '">' +
         '<label for="f-desc">Deskripsi</label><textarea id="f-desc">' + esc(txt($(".desc", c))) + '</textarea>' +
         ($(".card-top .badge", c) ? '<label for="f-badge">Label kecil (badge)</label><input id="f-badge" value="' + esc(txt($(".card-top .badge", c))) + '">' : "") +
-        '<fieldset><legend>Harga</legend>' + rowsHtml("price", $$(".price > div", c).map(function (d) { return [txt($("small", d)), txt($("b", d))]; }), "Keterangan (mis. Harga per m²)", "Nilai (mis. Rp6.500.000)") + '</fieldset>' +
-        '<fieldset><legend>Spesifikasi</legend>' + rowsHtml("spec", $$("dl.specs > div", c).map(function (d) { return [txt($("dt", d)), txt($("dd", d))]; }), "Nama (mis. Luas tanah)", "Isi (mis. 300 m²)") + '</fieldset>' +
+        '<fieldset><legend>Harga</legend>' + rowsHtml("price", $$(".price > div", c).map(function (d) { return [txt($("small", d)), txt($("b", d))]; })) + '</fieldset>' +
+        '<fieldset><legend>Spesifikasi</legend>' + rowsHtml("spec", $$("dl.specs > div", c).map(function (d) { return [txt($("dt", d)), txt($("dd", d))]; })) + '</fieldset>' +
         '<label for="f-points">Keunggulan (satu per baris)</label><textarea id="f-points">' + esc(lines("ul.points")) + '</textarea>' +
         '<label for="f-uses">Cocok untuk (satu per baris)</label><textarea id="f-uses">' + esc(lines("ul.uses")) + '</textarea>' +
         (map ? '<label for="f-map">Link Google Maps</label><input id="f-map" type="url" value="' + esc(map.getAttribute("href")) + '">' : "") +
         (drive ? '<label for="f-drive">Link folder foto (Google Drive)</label><input id="f-drive" type="url" value="' + esc(drive.getAttribute("href")) + '">' : "") +
+        '<fieldset><legend>Ganti foto dari Google Drive</legend><input id="f-dlink" type="url" aria-label="Link folder Google Drive" value="' + esc(drive ? drive.getAttribute("href") : "") + '"><button type="button" class="btn small" id="f-dgo" style="margin-top:8px">Ambil &amp; ganti foto</button><p class="muted">Maks. 3 foto dari folder (foto biasa dulu, lalu screenshot; video dilewati). Folder harus dibagikan "Siapa saja yang memiliki link". Foto lama diganti, ±3–5 menit.</p></fieldset>' +
         (s ? '<fieldset><legend>Google (SEO, Bahasa Indonesia)</legend><label for="f-st">Judul di Google</label><input id="f-st" maxlength="90" value="' + esc(s.t) + '"><label for="f-sd">Deskripsi di Google</label><textarea id="f-sd" maxlength="200">' + esc(s.d) + '</textarea><p class="muted">Bila harga atau luas berubah, ubah juga di sini.</p></fieldset>' : "") +
         '<p class="muted" style="margin-top:14px">Alamat link iklan tidak berubah, jadi jumlah dilihat & posisi di Google tetap.</p>';
       $("#dlg").showModal();
     }).catch(fail);
   }
   document.addEventListener("click", function (e) {
+    if (e.target.id === "f-dgo") {
+      var url = $("#f-dlink").value.trim(), b = e.target;
+      if (!/drive\.google\.com/.test(url)) return toast("Isi link folder Google Drive dulu.", true);
+      if (!confirm("Ganti foto iklan ini dengan foto dari folder Drive?")) return;
+      b.disabled = true;
+      driveReq(editing.slug, url, true).then(function (f) { return commit([f], "Admin: ambil foto dari Google Drive " + editing.slug); })
+        .then(function () { toast("Permintaan dikirim. Foto baru tampil ±3–5 menit lagi (cek tab Status bila gagal).", false, 8000); }).catch(fail).then(function () { b.disabled = false; });
+      return;
+    }
     var add = e.target.closest("[data-add]");
     if (add) {
       var box = $('[data-rows="' + add.dataset.add + '"]');
-      box.insertAdjacentHTML("beforeend", '<div class="grid2"><input placeholder="' + add.dataset.a + '"><input placeholder="' + add.dataset.b + '"><button type="button" class="x" data-del aria-label="Hapus baris">×</button></div>');
+      box.insertAdjacentHTML("beforeend", '<div class="grid2"><input aria-label="Keterangan"><input aria-label="Nilai"><button type="button" class="x" data-del aria-label="Hapus baris">×</button></div>');
       return;
     }
     var del = e.target.closest("[data-del]");
@@ -497,101 +507,199 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   function newForm() {
     var ar = areasOf(src);
     $("#nf").innerHTML =
-      '<fieldset><legend>✨ Tempel teks listing (dari WA)</legend><textarea id="n-paste" rows="6" placeholder="Tempel teks listing apa adanya, mis. DIJUAL TANAH – GATSU VI, DENPASAR … Luas Tanah: 202 m² … Harga: 7,5jt/m² … Maps: … Foto: https://drive.google.com/…"></textarea>' +
-      '<button type="button" class="btn small" id="n-fill">Isi form otomatis</button><p class="muted">Form di bawah terisi otomatis. Periksa &amp; rapikan dulu sebelum menyimpan; terjemahan EN/RU tetap dilengkapi Claude.</p></fieldset>' +
+      '<fieldset><legend>✨ Tempel teks listing (dari WA)</legend><textarea id="n-paste" rows="6"></textarea>' +
+      '<button type="button" class="btn small" id="n-fill">Isi form otomatis</button><p class="muted">Tempel teks listing apa adanya, lalu tekan tombol. Form di bawah terisi otomatis (judul, harga + total, spesifikasi, Maps, Drive). Periksa dulu sebelum menyimpan; terjemahan EN/RU dilengkapi Claude.</p></fieldset>' +
       '<div class="grid2" style="grid-template-columns:1fr 1fr"><div><label for="n-type">Jenis</label><select id="n-type">' + TYPES.map(function (t) { return '<option value="' + t[0] + '">' + t[1] + '</option>'; }).join("") + '</select></div>' +
       '<div><label for="n-area">Area</label><select id="n-area">' + ar.map(function (a) { return '<option value="' + a.key + '" data-kab="' + esc(a.kab) + '">' + esc(a.name) + '</option>'; }).join("") + '</select></div></div>' +
-      '<label for="n-title">Judul iklan</label><input id="n-title" placeholder="mis. Villa 3 kamar tidur dengan private pool di Ungasan">' +
-      '<label for="n-eb">Lokasi singkat</label><input id="n-eb" placeholder="mis. Jl. Tulip · Ungasan">' +
+      '<label for="n-title">Judul iklan</label><input id="n-title">' +
+      '<label for="n-eb">Lokasi singkat (jalan/desa · area)</label><input id="n-eb">' +
       '<label for="n-desc">Deskripsi (2–3 kalimat)</label><textarea id="n-desc"></textarea>' +
-      '<label for="n-badge">Label kecil (opsional, mis. Posisi hook, Baru 2025)</label><input id="n-badge">' +
-      '<fieldset><legend>Harga</legend>' + rowsHtml("nprice", [["Harga", ""]], "Keterangan (mis. Harga per m²)", "Nilai (mis. Rp6.500.000)") + '<p class="muted">Baris pertama = harga utama. Tulis seperti: Rp3,8 Miliar · Rp6.500.000 · Rp1,25 Miliar/tahun.</p></fieldset>' +
-      '<fieldset><legend>Spesifikasi</legend><div id="n-specbox">' + rowsHtml("nspec", SPEC0.tanah, "Nama", "Isi") + '</div><p class="muted">Baris yang isinya kosong tidak ditampilkan.</p></fieldset>' +
+      '<label for="n-badge">Label kecil di foto (opsional)</label><input id="n-badge">' +
+      '<fieldset><legend>Harga (kiri: keterangan · kanan: nilai)</legend><div id="n-pricebox">' + rowsHtml("nprice", [["Harga", ""]]) + '</div><p class="muted">Baris pertama = harga utama (tampil besar).</p></fieldset>' +
+      '<fieldset><legend>Spesifikasi (kiri: nama · kanan: isi)</legend><div id="n-specbox">' + rowsHtml("nspec", SPEC0.tanah) + '</div><p class="muted">Baris yang isinya kosong tidak ditampilkan.</p></fieldset>' +
       '<label for="n-points">Keunggulan (satu per baris)</label><textarea id="n-points"></textarea>' +
       '<label for="n-uses">Cocok untuk (satu per baris)</label><textarea id="n-uses"></textarea>' +
-      '<div id="n-mapbox"><label for="n-map">Link Google Maps (khusus tanah, opsional)</label><input id="n-map" type="url" placeholder="https://maps.app.goo.gl/…"></div>' +
-      '<label for="n-drive">Link folder foto Google Drive (opsional)</label><input id="n-drive" type="url" placeholder="https://drive.google.com/…">' +
-      '<fieldset><legend>Foto (maks. 3, foto pertama = foto utama)</legend><input id="n-photo" type="file" accept="image/jpeg,image/png,image/webp" multiple><div id="n-thumbs" class="row" style="margin-top:8px"></div><p class="muted">Foto otomatis dikecilkan &amp; diberi watermark. Foto HEIC dari iPhone: kirim lewat chat ke Claude bila tidak bisa dipilih.</p></fieldset>' +
+      '<div id="n-mapbox"><label for="n-map">Link Google Maps (khusus tanah, opsional)</label><input id="n-map" type="url"></div>' +
+      '<label for="n-drive">Link folder foto Google Drive (opsional)</label><input id="n-drive" type="url">' +
+      '<fieldset><legend>Foto (maks. 3, foto pertama = foto utama)</legend><input id="n-photo" type="file" accept="image/jpeg,image/png,image/webp" multiple><div id="n-thumbs" class="row" style="margin-top:8px"></div><label class="chk" style="display:flex;gap:8px;align-items:flex-start;margin-top:10px"><input type="checkbox" id="n-dfoto" style="width:auto;margin-top:4px"><span>Ambil foto otomatis dari link Google Drive di atas (maks. 3; foto biasa dulu, lalu screenshot; video dilewati). Folder harus dibagikan <b>"Siapa saja yang memiliki link"</b>. Foto masuk ±3–5 menit setelah disimpan; posting Instagram menunggu fotonya.</span></label><p class="muted">Atau pilih foto dari HP. Foto otomatis dikecilkan &amp; diberi watermark.</p></fieldset>' +
       '<fieldset><legend>Google (SEO)</legend><label for="n-st">Judul di Google</label><input id="n-st" maxlength="90"><label for="n-sd">Deskripsi di Google</label><textarea id="n-sd" maxlength="200"></textarea><p class="muted">Terisi otomatis dari data di atas, boleh diubah. Ideal: judul 50–70 huruf, deskripsi 140–165 huruf.</p></fieldset>' +
       '<p class="muted" id="n-slug"></p>';
     photos = []; seoAuto();
   }
+  // ---- Foto dari Google Drive (workflow "Foto dari Google Drive" + tools/drive-photos.py) ----
+  var DRV = "foto-drive.json";
+  function driveReq(slug, url, replace) {
+    return readFile(DRV).then(function (t) { return JSON.parse(t); }).catch(function () { return {}; }).then(function (j) {
+      j.pending = j.pending || {}; j.errors = j.errors || {}; j.done = j.done || {};
+      j.pending[slug] = { url: url, replace: !!replace, at: new Date().toISOString() }; delete j.errors[slug];
+      return { path: DRV, content: JSON.stringify(j, null, 1) + "\n" };
+    });
+  }
+  function driveHint() { var c = $("#n-dfoto"); if (c && !photos.length) c.checked = /drive\.google\.com/.test($("#n-drive").value); }
   // ---- Tempel teks WA → isi form (permintaan pemilik 24 Nov 2026) ----
+  // Contoh yang dipahami: "DO - TANAH DIJUAL – BY PASS PANDAWA, BALI", judul bagian (SPESIFIKASI / HARGA / POTENSI INVESTASI / KEUNGGULAN),
+  // baris "Kunci: nilai", harga "7.500.000/M²", "1,9M/are", "Rp5,9 Miliar nego", "USD 199,000", link Maps & Drive.
+  function waNum(v) { // "7.500.000" → 7500000 · "7,5" → 7.5 · "199,000" → 199000
+    v = String(v).trim();
+    if (/^\d{1,3}([.,]\d{3})+$/.test(v)) return +v.replace(/[.,]/g, "");
+    return +v.replace(/\./g, "").replace(",", ".");
+  }
+  function waMoney(s) { // → {n (rupiah), usd, unit: "m2"|"are"|"tahun"|""} atau null
+    var t = String(s).toLowerCase().replace(/\s+/g, " ");
+    var usd = /usd|us\$|\$/.test(t), m = t.match(/(\d[\d.,]*)\s*(miliar|milyar|m(?![²2a-z])|b(?:illion)?(?![a-z])|juta|jt|k(?![a-z]))?/);
+    if (!m) return null;
+    var n = waNum(m[1]), u = m[2] || "";
+    if (/^(miliar|milyar|m|b|billion)$/.test(u)) n *= 1e9; else if (/^(juta|jt)$/.test(u)) n *= 1e6; else if (u === "k") n *= 1e3;
+    if (!n || isNaN(n)) return null;
+    var unit = /\/\s*(m²|m2|meter)|per\s*(m²|m2|meter)/.test(t) ? "m2" : /\/\s*are|per\s*are/.test(t) ? "are" : /tahun|thn|year|\/th\b/.test(t) ? "tahun" : "";
+    return { n: n, usd: usd, unit: unit, nego: /nego/.test(t) };
+  }
+  function rpFull(n) { return "Rp" + Math.round(n).toLocaleString("id-ID"); }
+  function rpShort(n) {
+    if (n >= 1e9) return "Rp" + String(+(n / 1e9).toFixed(3)).replace(".", ",") + " Miliar";
+    if (n >= 1e6 && n % 1e5 === 0) return "Rp" + String(+(n / 1e6).toFixed(1)).replace(".", ",") + " jt";
+    return rpFull(n);
+  }
   function parseWA(raw) {
-    var txt = String(raw || "").replace(/\r/g, "").replace(/[*~]/g, "").replace(/(^|\s)_+|_+(\s|$)/g, "$1$2").replace(/(\d)\s?m2\b/gi, "$1 m²");
+    var txt = String(raw || "").replace(/\r/g, "").replace(/[*~]/g, "").replace(/(^|\s)_+|_+(\s|$)/g, "$1$2")
+      .replace(/(\d)\s?(m2|m²|M2|M²)(?![a-z])/g, "$1 m²").replace(/ /g, " ");
     var lines = txt.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
-    var low = txt.toLowerCase(), r = { prices: [], specs: [], points: [], uses: [], desc: [] };
-    r.type = /gudang|warehouse|ruko|shophouse|komersial|commercial|hotel|over kontrak|karaoke|restoran|restaurant|kantor|office/.test(low) ? "komersial"
-      : /\bvilla\b|joglo/.test(low) ? "villa" : /\brumah\b|\bhouse\b/.test(low) ? "rumah" : "tanah";
-    var urls = txt.match(/https?:\/\/\S+/g) || [];
-    urls.forEach(function (u) { u = u.replace(/[)\].,]+$/, "");
+    var r = { prices: [], specs: [], points: [], uses: [], desc: [], money: [] };
+    (txt.match(/https?:\/\/\S+/g) || []).forEach(function (u) { u = u.replace(/[)\].,]+$/, "");
       if (/maps\.app\.goo\.gl|google\.[a-z.]+\/maps|goo\.gl\/maps/.test(u)) r.map = u.replace(/\?g_st=\w+$/, "");
       else if (/drive\.google\.com/.test(u)) r.drive = u.replace(/\?usp=\w+$/, ""); });
-    var cap = function (t) { return t.toLowerCase().replace(/(^|[\s(\/-])([a-zà-ÿ])/g, function (m, a, b) { return a + b.toUpperCase(); }).replace(/\b(Di|Dan|Dengan|Ke|Dari|Untuk|Yang)\b/g, function (w) { return w.toLowerCase(); }).replace(/\bM2\b|\bM²\b/gi, "m²").replace(/\bShm\b/g, "SHM").replace(/\b(Ii|Iii|Iv|Vi|Vii|Viii|Ix|Xi|Xii)\b/g, function (w) { return w.toUpperCase(); }); };
-    // Judul dari baris pertama
-    var head = (lines[0] || "").replace(/^(dijual|disewakan|for sale|for rent|sale|jual|sewa)\s*[-–:]?\s*/i, "").replace(/\s*[-–]\s*/g, " – ");
-    var t0 = head.split(" – "), what = cap(t0[0] || ""), where = cap(t0.slice(1).join(", "));
-    var sec = "", KEYS = [
-      [/^(luas tanah|land size|land area|luas lahan|luas)$/i, "Luas tanah"], [/^(luas bangunan|building size|building area)$/i, "Luas bangunan"],
+    var cap = function (t) { return t.toLowerCase().replace(/(^|[\s(\/-])([a-zà-ÿ])/g, function (m, a, b) { return a + b.toUpperCase(); })
+      .replace(/\b(Di|Dan|Dengan|Ke|Dari|Untuk|Yang)\b/g, function (w) { return w.toLowerCase(); }).replace(/\bShm\b/g, "SHM").replace(/\bHgb\b/g, "HGB")
+      .replace(/\b(Ii|Iii|Iv|Vi|Vii|Viii|Ix|Xi|Xii)\b/g, function (w) { return w.toUpperCase(); }); };
+    var sentence = function (t) { t = t.trim().replace(/[.;]+$/, ""); return t.charAt(0).toUpperCase() + t.slice(1); };
+    // Baris judul: buang kode depan ("DO -"), kata dijual/disewakan; sisanya "<apa> – <lokasi>"
+    var head = (lines[0] || "").replace(/^[A-Z]{1,4}\s*[-–:]\s+(?=\S)/, "").replace(/\b(dijual|disewakan|for sale|for rent|over kontrak dijual)\b/gi, " ")
+      .replace(/\s*[-–|]\s*/g, " – ").replace(/^[\s–]+|[\s–]+$/g, "").replace(/(\s–\s)+/g, " – ").replace(/\s{2,}/g, " ");
+    var hp = head.split(" – "), what = cap(hp[0] || ""), where = cap(hp.slice(1).join(", ")).replace(/,?\s*Bali$/i, "").trim();
+    var hl = (lines[0] || "").toLowerCase(), low = txt.toLowerCase();
+    var tp = function (s) { return /gudang|warehouse|ruko|shophouse|komersial|commercial|hotel|resort|over kontrak|karaoke|restoran|restaurant|kantor|office|guest ?house|homestay/.test(s) ? "komersial"
+      : /\bvilla\b|joglo/.test(s) ? "villa" : /\brumah\b|\bhouse\b/.test(s) ? "rumah" : /\btanah\b|\bland\b|\blahan\b|kavling/.test(s) ? "tanah" : ""; };
+    r.type = tp(hl) || tp(low) || "tanah";
+    var KEYS = [
+      [/^(luas tanah|land size|land area|luas lahan|luas|lt)$/i, "Luas tanah"], [/^(luas bangunan|building size|building area|lb)$/i, "Luas bangunan"],
       [/^(kamar tidur|bedrooms?|kt)$/i, "Kamar tidur"], [/^(kamar mandi|bathrooms?|km)$/i, "Kamar mandi"],
-      [/^(sertifikat|sertipikat|certificate|legalitas|ownership|status)$/i, "Sertifikat"], [/^(zona|zoning|zonasi|itr|peruntukan)$/i, "Zona"],
-      [/^(listrik|electricity|power)$/i, "Listrik"], [/^(air|water)$/i, "Air"], [/^(akses|akses jalan|access|lebar jalan|road access)$/i, "Akses jalan"],
-      [/^(lokasi|location|alamat)$/i, "Lokasi"], [/^(posisi|position)$/i, "Posisi"], [/^(view|pemandangan)$/i, "View"], [/^(hadap|facing)$/i, "Hadap"],
-      [/^(lease period|masa sewa|lease|leasehold)$/i, "Masa sewa"], [/^(kolam renang|pool|swimming pool)$/i, "Kolam renang"], [/^(furnitur|furniture|furnished)$/i, "Furnitur"],
-      [/^(imb|pbg|imb\/pbg)$/i, "IMB/PBG"], [/^(lebar depan|frontage)$/i, "Lebar depan"], [/^(dimensi|ukuran|dimension)$/i, "Dimensi"]];
+      [/^(sertifikat|sertipikat|certificate|legalitas|ownership|status( tanah)?|surat)$/i, "Sertifikat"], [/^(zona|zoning|zonasi|itr|peruntukan|tata ruang)$/i, "Zona"],
+      [/^(listrik|electricity|power)$/i, "Listrik"], [/^(air|water)$/i, "Air"], [/^(akses|akses jalan|access|lebar jalan|road access|jalan)$/i, "Akses jalan"],
+      [/^(lokasi|location|alamat|area)$/i, "Lokasi"], [/^(posisi|position)$/i, "Posisi"], [/^(view|pemandangan)$/i, "View"], [/^(hadap|facing|arah)$/i, "Hadap"],
+      [/^(lease period|masa sewa|lease|leasehold|periode sewa)$/i, "Masa sewa"], [/^(kolam renang|pool|swimming pool)$/i, "Kolam renang"], [/^(furnitur|furniture|furnished|perabot)$/i, "Furnitur"],
+      [/^(imb|pbg|imb\/pbg)$/i, "IMB/PBG"], [/^(lebar depan|frontage|lebar muka)$/i, "Lebar depan"], [/^(dimensi|ukuran|dimension)$/i, "Dimensi"],
+      [/^(lingkungan|environment|surrounding)$/i, "Lingkungan"], [/^(kontur|contour|topografi)$/i, "Kontur"], [/^(lantai|floors?|jumlah lantai)$/i, "Jumlah lantai"]];
+    var BOILER = /hubungi|survei lokasi|survey lokasi|info(rmasi)? (harga|lebih|detail)|detail lebih lanjut|untuk penawaran|serius|minat\b|tanpa perantara|wa\.me|whatsapp/i;
+    var usesFrom = function (s) { // "…cocok untuk pembangunan private villa, luxury villa complex, maupun investasi …" → daftar
+      var m = s.match(/(?:sangat |juga )?(?:cocok|ideal|pas|sesuai|suitable|perfect)\s+(?:untuk|bagi|for)\s+(.+)$/i); if (!m) return null;
+      var rest = s.slice(0, m.index).replace(/[,;\s]+$/, "");
+      var items = m[1].replace(/[.!]+$/, "").split(/\s*,\s*|\s+(?:maupun|dan|atau|serta|and|or)\s+/i).map(function (x) {
+        return sentence(x.replace(/^(maupun|dan|atau|serta|and|or)\s+/i, "").replace(/^(pembangunan|membangun|dibangun|untuk|sebagai|usaha)\s+/i, "")); }).filter(function (x) { return x.length > 2 && x.length < 60; });
+      return { items: items, rest: rest };
+    };
+    var sec = "";
     lines.slice(1).forEach(function (l) {
-      if (/^https?:\/\//.test(l) || /^(maps|map|lokasi maps|foto|photo|photos|link)\s*:?\s*https?:/i.test(l)) return;
-      var plain = l.replace(/^[•\-–·▪▫️✅✔️✓*\d.)\s]+/, "").trim();
-      if (/^[A-ZÀ-Ý0-9 &/()–-]{4,}$/.test(l) && !/\d{3}/.test(l)) { // judul bagian, mis. KEUNGGULAN / HARGA
-        sec = /unggul|kelebihan|highlight|advantage|fasilitas|feature|lingkungan|dekat/i.test(l) ? "pt" : /potensi|cocok|ideal|suitable|use/i.test(l) ? "use" : /harga|price|sewa|rental/i.test(l) ? "price" : "spec"; return; }
-      var kv = plain.match(/^([^:]{2,32})\s*:\s*(.+)$/);
-      if (kv) {
-        var k = kv[1].trim(), v = kv[2].trim();
-        if (/harga|price|sewa|rent|rental|nego/i.test(k) || (/\b(rp|idr|usd|us\$)\b|jt|juta|miliar|\bm\b\/are/i.test(v) && /\d/.test(v))) { r.prices.push([cap(k), v]); return; }
-        var hit = KEYS.filter(function (x) { return x[0].test(k); })[0];
-        r.specs.push([hit ? hit[1] : cap(k), v]); return;
+      var plain = l.replace(/^[•\-–·▪▫◦►➤✅✔☑✓👉🔹🔸⭐️]+\s*/u, "").replace(/^\d+[.)]\s+/, "").trim();
+      if (!plain) return;
+      // Judul bagian (huruf besar semua, tanpa titik dua berisi nilai)
+      if (/^[A-Z0-9 &/()–\-]{4,40}:?$/.test(l) && /[A-Z]{4}/.test(l) && !/\d{3}/.test(l)) {
+        sec = /harga|price|sewa|rental|biaya/i.test(l) ? "price" : /potensi|cocok|ideal|suitable|peruntukan|use|investasi/i.test(l) ? "use"
+          : /unggul|kelebihan|highlight|advantage|fasilitas|feature|nilai plus|kenapa|why/i.test(l) ? "pt" : /spesifikasi|spec|detail|data|informasi|info/i.test(l) ? "spec" : "other";
+        return;
       }
-      if (sec === "price" || (/\b(rp|idr|usd|us\$)\b|\d\s*(jt|juta|miliar)\b/i.test(plain) && plain.length < 90)) { var pm = plain.match(/^(.*?)\s*[:=]?\s*((?:rp|idr|usd|us\$)\s?[\d.,]+.*|[\d.,]+\s*(?:jt|juta|miliar|m)\b.*)$/i); r.prices.push(pm && pm[1] ? [cap(pm[1]), pm[2]] : ["Harga", plain]); return; }
-      if (sec === "pt" || /^dekat |^akses |^\d+ ?(menit|min)/i.test(plain)) { r.points.push(plain.charAt(0).toUpperCase() + plain.slice(1)); return; }
-      if (sec === "use") { r.uses.push(plain.replace(/^(pembangunan|untuk)\s+/i, "").replace(/^./, function (c) { return c.toUpperCase(); })); return; }
-      if (plain.length > 60) r.desc.push(plain);
-      else if (sec === "spec" || /m²|m2|are\b|watt|kva|meter/i.test(plain)) r.specs.push(["Keterangan", plain]);
-      else r.points.push(plain.charAt(0).toUpperCase() + plain.slice(1));
+      var kv = plain.match(/^([^:]{2,32}?)\s*:\s*(.+)$/);
+      if (kv && /^https?:/.test(kv[2].trim())) return; // Foto: / Titik Lokasi: / Maps: <link>
+      if (/^https?:\/\//.test(plain)) return;
+      if (BOILER.test(plain) && !/\d/.test(plain.replace(/\d{3,}/g, ""))) return;
+      if (kv) {
+        var k = kv[1].trim(), v = kv[2].trim().replace(/\s*meter\b/gi, " m").replace(/\((\d+[.,]?\d*)\s*Are\)/g, "($1 are)").replace(/\bAre\b/g, "are");
+        if (/harga|price|nego|sewa|rent|rental/i.test(k) || (/^(rp|idr|usd|us\$)/i.test(v) && /\d/.test(v))) { r.money.push([k, v]); return; }
+        var hit = KEYS.filter(function (x) { return x[0].test(k); })[0], name = hit ? hit[1] : sentence(k.toLowerCase());
+        if (name === "Zona" && /^(pariwisata|pink|kuning|hijau|perumahan|komersial|perdagangan|campuran)$/i.test(v)) v = "Zona " + v.toLowerCase();
+        if (name === "View" || name === "Lingkungan") v = sentence(v.toLowerCase().replace(/\bocean view\b/, "ocean view")).replace(/^Ocean view$/i, "Ocean view");
+        r.specs.push([name, v]); return;
+      }
+      if (sec === "price" || (/^(rp|idr|usd|us\$)\s?\d/i.test(plain) && plain.length < 70)) { r.money.push(["Harga", plain]); return; }
+      var u = usesFrom(plain);
+      if (u && sec === "use") { r.uses = r.uses.concat(u.items); return; }
+      if (sec === "use") { if (plain.length < 60) r.uses.push(sentence(plain)); else r.desc.push(plain); return; }
+      if (sec === "pt") { r.points.push(sentence(plain)); return; }
+      if (plain.length > 60) { r.desc.push(plain); return; }
+      if (sec === "spec" && /m²|are\b|watt|kva|meter|\d/.test(plain)) { r.specs.push(["Keterangan", plain]); return; }
+      r.points.push(sentence(plain));
     });
-    var lt = (r.specs.filter(function (x) { return x[0] === "Luas tanah"; })[0] || [])[1] || "", kt = (r.specs.filter(function (x) { return x[0] === "Kamar tidur"; })[0] || [])[1] || "";
-    var place = where || cap(((r.specs.filter(function (x) { return x[0] === "Lokasi"; })[0] || [])[1] || "").split(",")[0]);
-    var base = /^(tanah|villa|rumah|gudang|ruko)/i.test(what) ? what : (TYPES.filter(function (x) { return x[0] === r.type; })[0][1] + (what ? " " + what.toLowerCase() : ""));
-    if (r.type === "tanah" && lt && !/\d/.test(base)) base = "Tanah " + lt.replace(/\s*\(.*\)/, "");
-    if (r.type !== "tanah" && kt && !/kamar/i.test(base)) base += " " + kt.replace(/\D.*/, "") + " kamar tidur";
-    r.title = (base + (place && base.toLowerCase().indexOf(place.toLowerCase()) < 0 ? " di " + place : "")).replace(/\s+/g, " ").trim();
-    r.eyebrow = place ? place.replace(/,\s*/g, " · ") : "";
-    r.descText = r.desc.slice(0, 3).join(" ");
-    var AREA = [[/ungasan|jimbaran|pecatu|uluwatu|kutuh|pandawa|balangan|nusa dua|benoa|labuan sait|melasti|bingin|kuta selatan|south kuta|goa gong/i, "kuta-selatan"],
-      [/canggu|berawa|pererenan|kerobokan|tibubeneng|dalung|umalas|padonan|kuta utara|north kuta|seminyak/i, "kuta-utara"], [/seseh|munggu|cemagi|mengwi|tumbak bayuh/i, "mengwi"],
-      [/denpasar|sanur|pidada|gatsu|renon/i, "denpasar"], [/ubud|tegallalang|lod tunduh/i, "ubud"], [/\bkuta\b|legian|tuban/i, "kuta"], [/sukawati|ketewel/i, "sukawati"], [/kediri|tabanan|nyanyi/i, "kediri"], [/abiansemal|sangeh/i, "abiansemal"], [/blahbatuh/i, "blahbatuh"]];
-    var a = AREA.filter(function (x) { return x[0].test(txt); })[0]; r.area = a ? a[1] : "";
+    var spec = function (n) { return ((r.specs.filter(function (x) { return x[0] === n; })[0]) || [])[1] || ""; };
+    // Harga: per m² / per are → total dihitung dari luas tanah; baris pertama = harga utama
+    var lt = spec("Luas tanah"), m2 = 0, mm = lt.match(/([\d.,]+)\s*m²/), ma = lt.match(/([\d.,]+)\s*are/i);
+    if (mm) m2 = waNum(mm[1]); else if (ma) m2 = waNum(ma[1]) * 100;
+    var main = [], rest = [];
+    r.money.forEach(function (kv) {
+      var k = kv[0], v = kv[1], p = waMoney(v), label = /^harga$/i.test(k.trim()) ? "Harga" : sentence(k.toLowerCase());
+      if (!p) { rest.push([label, v]); return; }
+      var neg = p.nego ? " (nego)" : "";
+      if (p.usd) { (main.length ? rest : main).push([label, "US$" + Math.round(p.n).toLocaleString("id-ID") + neg]); return; }
+      if (p.unit === "m2") { if (m2) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2) + neg]); rest.push(["Harga per m²", rpFull(p.n)]); return; }
+      if (p.unit === "are") { if (m2) main.push(["Total " + Math.round(m2).toLocaleString("id-ID") + " m²", rpShort(p.n * m2 / 100) + neg]); rest.push(["Harga per are (≈" + rpShort(p.n / 100) + "/m²)", rpShort(p.n)]); return; }
+      if (p.unit === "tahun") { (main.length ? rest : main).push([/sewa/i.test(k) ? label : "Sewa per tahun", rpShort(p.n) + neg]); return; }
+      (main.length ? rest : main).push([label, rpShort(p.n) + neg]);
+      if (r.type === "tanah" && m2 && p.n > 1e8) rest.push(["Setara per m²", rpFull(p.n / m2)]);
+    });
+    r.prices = main.concat(rest);
+    // Judul, lokasi singkat, badge
+    var ov = /ocean ?view|sea ?view|view laut|pemandangan laut/i.test(low), hook = /\bhook\b/i.test(low);
+    var place = where || cap((spec("Lokasi").split(",")[0] || "")).replace(/,?\s*Bali$/i, "");
+    var luasTxt = lt.replace(/\s*\(.*\)/, "");
+    var base;
+    if (r.type === "tanah") base = "Tanah" + (hook ? " hook" : "") + (ov ? " ocean view" : "") + (luasTxt ? " " + luasTxt : "");
+    else {
+      base = /^(tanah|villa|rumah|gudang|ruko|hotel|resort|kantor|guest)/i.test(what) ? what.charAt(0) + what.slice(1).toLowerCase() : (TYPES.filter(function (x) { return x[0] === r.type; })[0][1]);
+      var kt = spec("Kamar tidur").replace(/\D.*/, "");
+      if (kt && !/kamar/i.test(base)) base += " " + kt + " kamar tidur";
+      if (ov && !/view/i.test(base)) base += " ocean view";
+    }
+    r.title = (base + (place ? " di " + place : "")).replace(/\s+/g, " ").trim();
+    r.place = place;
+    if (!r.points.length) { // keunggulan otomatis dari spesifikasi bila teks tidak punya daftar keunggulan
+      var lc = function (t) { return t.charAt(0).toLowerCase() + t.slice(1); };
+      [spec("View") && sentence(spec("View")), spec("Lingkungan") && "Lingkungan " + lc(spec("Lingkungan")), spec("Lebar depan") && "Lebar depan " + spec("Lebar depan"),
+        spec("Posisi") && "Posisi " + lc(spec("Posisi")), spec("Akses jalan") && "Akses jalan " + lc(spec("Akses jalan")),
+        (spec("Sertifikat") || spec("Zona")) && [spec("Sertifikat"), spec("Zona") && lc(spec("Zona"))].filter(Boolean).join(", ")].forEach(function (x) { if (x) r.points.push(x); });
+    }
+    r.uses = r.uses.filter(function (x, i, a) { return a.map(function (y) { return y.toLowerCase(); }).indexOf(x.toLowerCase()) === i; });
+    r.badge = ov ? "Ocean view" : hook ? "Posisi hook" : "";
+    var d = r.desc.filter(function (x) { return !BOILER.test(x); });
+    r.descText = d.slice(0, 2).join(" ").replace(/\s+/g, " ");
+    if (!r.uses.length && r.descText) { var u2 = usesFrom(r.descText.split(/(?<=\.)\s+/).pop() || ""); if (u2) r.uses = u2.items; }
+    var AREA = [[/ungasan|jimbaran|pecatu|uluwatu|kutuh|pandawa|balangan|nusa dua|benoa|labuan sait|melasti|bingin|kuta selatan|south kuta|goa gong|bali cliff|kedonganan|tanjung benoa|sawangan/i, "kuta-selatan"],
+      [/canggu|berawa|pererenan|kerobokan|tibubeneng|dalung|umalas|padonan|kuta utara|north kuta|seminyak|kayu tulang|batu bolong|nelayan/i, "kuta-utara"], [/seseh|munggu|cemagi|mengwi|tumbak bayuh|kaba-kaba|buduk/i, "mengwi"],
+      [/denpasar|sanur|pidada|gatsu|gatot subroto|renon|panjer|sidakarya/i, "denpasar"], [/ubud|tegallalang|lod tunduh|singakerta|mas\b|peliatan/i, "ubud"], [/\bkuta\b|legian|tuban|dewi sri/i, "kuta"], [/sukawati|ketewel|ketewel/i, "sukawati"], [/kediri|tabanan|nyanyi|beraban/i, "kediri"], [/abiansemal|sangeh|blahkiuh/i, "abiansemal"], [/blahbatuh|pering/i, "blahbatuh"]];
+    var a = AREA.filter(function (x) { return x[0].test(head + " " + spec("Lokasi")) || x[0].test(txt); })[0]; r.area = a ? a[1] : "";
     return r;
   }
   function fillFromWA() {
-    var r = parseWA($("#n-paste").value); if (!$("#n-paste").value.trim()) { toast("Tempel teks listing dulu."); return; }
-    var set = function (id, v) { if (v) $(id).value = v; };
+    if (!$("#n-paste").value.trim()) { toast("Tempel teks listing dulu.", true); return; }
+    var r = parseWA($("#n-paste").value);
+    var set = function (id, v) { $(id).value = v || ""; };
     $("#n-type").value = r.type; $("#n-type").dispatchEvent(new Event("change", { bubbles: true }));
     if (r.area && $('#n-area option[value="' + r.area + '"]')) $("#n-area").value = r.area;
-    set("#n-title", r.title); set("#n-eb", r.eyebrow); set("#n-desc", r.descText);
+    var areaName = ($("#n-area").selectedOptions[0] || {}).textContent || "";
+    set("#n-title", r.title); set("#n-desc", r.descText); set("#n-badge", r.badge);
+    set("#n-eb", (r.place ? r.place + (areaName && r.place.toLowerCase().indexOf(areaName.toLowerCase()) < 0 ? " · " + areaName : "") : areaName).replace(/,\s*/g, " · "));
     set("#n-points", r.points.join("\n")); set("#n-uses", r.uses.join("\n"));
-    if (r.type === "tanah") set("#n-map", r.map); set("#n-drive", r.drive);
-    if (r.prices.length) $('[data-rows="nprice"]').parentNode.innerHTML = '<legend>Harga</legend>' + rowsHtml("nprice", r.prices, "Keterangan (mis. Harga per m²)", "Nilai (mis. Rp6.500.000)") + '<p class="muted">Baris pertama = harga utama. Tulis seperti: Rp3,8 Miliar · Rp6.500.000 · Rp1,25 Miliar/tahun.</p>';
-    var spec0 = SPEC0[r.type].map(function (row) { var f = r.specs.filter(function (x) { return x[0] === row[0]; })[0]; return [row[0], f ? f[1] : row[1]]; });
+    set("#n-map", r.type === "tanah" ? r.map : ""); set("#n-drive", r.drive);
+    $("#n-pricebox").innerHTML = rowsHtml("nprice", r.prices.length ? r.prices : [["Harga", ""]]);
+    var spec0 = SPEC0[r.type].map(function (row) { var f = r.specs.filter(function (x) { return x[0] === row[0]; })[0]; return [row[0], f ? f[1] : ""]; });
     r.specs.forEach(function (x) { if (!spec0.some(function (y) { return y[0] === x[0]; })) spec0.push(x); });
     if (r.type !== "tanah") spec0 = spec0.filter(function (x) { return x[0] !== "Lokasi"; }).concat([["Lokasi", "Diberikan saat survei"]]); // lokasi bangunan rahasia
-    $("#n-specbox").innerHTML = rowsHtml("nspec", spec0, "Nama", "Isi");
+    $("#n-specbox").innerHTML = rowsHtml("nspec", spec0);
+    driveHint();
     seoTouched = false; seoAuto();
     toast("Form terisi. Periksa judul, harga & spesifikasi sebelum menyimpan.");
     $("#n-title").scrollIntoView({ behavior: "smooth", block: "center" });
   }
   $("#nf").addEventListener("click", function (e) { if (e.target.id === "n-fill") fillFromWA(); });
   function slugify(t) {
-    return t.toLowerCase().replace(/²/g, "2").replace(/&/g, " ").replace(/\+/g, " plus ").normalize("NFD").replace(/[̀-ͯ]/g, "")
+    return t.toLowerCase().replace(/(\d)[.,](?=\d)/g, "$1").replace(/²/g, "2").replace(/&/g, " ").replace(/\+/g, " plus ").normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").replace(/-+/g, "-").slice(0, 90).replace(/-+$/, "");
   }
   function nRows(name) {
@@ -606,11 +714,12 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     var price = (nRows("nprice")[0] || [])[1] || "";
     var short = price.replace(/\s*Miliar/i, " M").replace(/\s*juta/i, " jt");
     $("#n-st").value = t ? ("Dijual " + t.charAt(0).toLowerCase() + t.slice(1)).replace(/^Dijual over kontrak/i, "Over kontrak") + ", Bali" : "";
-    var specs = nRows("nspec").slice(0, 4).map(function (r) { return r[0].toLowerCase() + " " + r[1]; }).join(", ");
-    $("#n-sd").value = t ? (t + (specs ? ": " + specs : "") + ". " + (short ? short + ". " : "") + "Tanya via WhatsApp.").replace(/\s+/g, " ").slice(0, 200) : "";
+    var specs = nRows("nspec").filter(function (r) { return r[1] && !/^lokasi$/i.test(r[0]); }).slice(0, 4).map(function (r) { return /^(sertifikat|zona)$/i.test(r[0]) ? (/^zona$/i.test(r[0]) ? r[1].toLowerCase() : r[1]) : r[0].toLowerCase() + " " + r[1]; }).join(", ");
+    $("#n-sd").value = t ? (t + (specs ? ": " + specs : "") + ". " + (short ? short + ". " : "") + "Info & survei via WhatsApp.").replace(/\s+/g, " ").slice(0, 200) : "";
   }
   $("#nf").addEventListener("input", function (e) {
     if (e.target.id === "n-st" || e.target.id === "n-sd") { seoTouched = true; return; }
+    if (e.target.id === "n-drive") driveHint();
     seoAuto();
   });
   $("#nf").addEventListener("change", function (e) {
@@ -641,6 +750,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     Promise.all(files.map(shrink)).then(function (r) { photos = photos.concat(r).slice(0, 3); thumbs(); }).catch(fail).then(function () { $("#n-photo").value = ""; });
   }
   function thumbs() {
+    if (photos.length && $("#n-dfoto")) $("#n-dfoto").checked = false;
     $("#n-thumbs").innerHTML = photos.map(function (p, i) {
       return '<span style="position:relative;display:inline-block"><img src="' + p.url + '" alt="" style="width:92px;height:70px;object-fit:cover;border-radius:8px;border:' + (i ? "1px solid var(--line)" : "2px solid var(--gold)") + '">' +
         '<button type="button" class="x" data-ph="' + i + '" aria-label="Hapus foto" style="position:absolute;top:-8px;right:-8px">×</button></span>';
@@ -706,11 +816,16 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
     d.slug = slugify(d.title);
     var miss = [!d.title && "judul", !d.eb && "lokasi singkat", !d.desc && "deskripsi", !d.prices.length && "harga", !d.specs.length && "spesifikasi"].filter(Boolean);
     if (miss.length) return toast("Lengkapi dulu: " + miss.join(", ") + ".", true);
-    if (!photos.length && !confirm("Belum ada foto. Tetap tayangkan tanpa foto?")) return;
+    var useDrive = !photos.length && $("#n-dfoto").checked && /drive\.google\.com/.test(d.drive);
+    if ($("#n-dfoto").checked && !photos.length && !useDrive) return toast("Isi dulu link folder Google Drive untuk mengambil foto.", true);
+    if (!photos.length && !useDrive && !confirm("Belum ada foto. Tetap tayangkan tanpa foto?")) return;
     btn.disabled = true; toast("Menyimpan iklan…", false, 0);
     Promise.all([readFile(SRC), readFile(SEO)]).then(function (r) {
       src = r[0]; seo = r[1];
       if (src.indexOf('href="listing/' + d.slug + '.html"') >= 0) throw new Error("Judul ini sudah dipakai iklan lain. Ubah sedikit judulnya.");
+      // Cegah iklan dobel: link Maps/Drive yang sama sudah ada di iklan lain
+      var dup = [d.map, d.drive].filter(function (u) { return u && u.length > 20; }).map(function (u) { var k = u.replace(/[?#].*$/, ""), i = src.indexOf(k); if (i < 0) return ""; var a = src.lastIndexOf("<article", i), h = src.slice(a, i).match(/<h4><a [^>]*>([^<]+)</); return h ? h[1] : "iklan lain"; }).filter(Boolean)[0];
+      if (dup && !confirm("Link Maps/Drive ini sudah dipakai iklan \"" + dup + "\". Iklan ini mungkin sudah tayang. Tetap simpan sebagai iklan baru?")) { var ab = new Error("Dibatalkan."); ab.quiet = true; throw ab; }
       var next = insertCard(src, d, buildCard(d));
       var entry = "  " + JSON.stringify(d.slug) + ": {\n    id: { t: " + JSON.stringify(d.st || d.title) + ", d: " + JSON.stringify(d.sd || d.desc) + " } },\n";
       var nseo = seo.replace(/module\.exports = \{\n/, function (m) { return m + entry; });
@@ -718,10 +833,12 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       photos.forEach(function (p, i) { files.push({ path: "img/listing/" + d.slug + "/" + (i + 1) + ".jpg", b64: p.b64 }); });
       return pending(d.slug).then(function (pj) {
         files.push({ path: PEND, content: pj });
-        return commit(files, "Admin: iklan baru " + d.slug);
+        return useDrive ? driveReq(d.slug, d.drive, false).then(function (f) { files.push(f); }) : null;
+      }).then(function () {
+        return commit(files, "Admin: iklan baru " + d.slug + (useDrive ? " (foto dari Google Drive)" : ""));
       }).then(function (sha) {
         src = next; seo = nseo; parseAll(); render();
-        afterCommit(sha, "Iklan \"" + d.title + "\" disimpan.");
+        afterCommit(sha, "Iklan \"" + d.title + "\" disimpan." + (useDrive ? " Foto dari Google Drive masuk ±3–5 menit lagi." : ""));
         seoTouched = false; newForm();
       });
     }).catch(fail).then(function () { btn.disabled = false; });
@@ -729,6 +846,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
 
   function fail(e) {
     console.error(e);
+    if (e && e.quiet) { toast(e.message); return; }
     if (e.status === 401) { toast("Token tidak berlaku. Silakan masuk lagi.", true, 0); logout(); return; }
     if (e.status === 403 || e.status === 404) { toast("Token tidak punya izin tulis ke repo baliarepro/baliarepro (Contents: Read and write).", true, 0); return; }
     toast("Gagal: " + (e.message || e), true, 0);
@@ -893,7 +1011,13 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       $$("[data-ttc]").forEach(function (b) { b.onclick = function () { var t = $("#ttcap" + b.dataset.ttc); t.select(); (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).then(function () { toast("Caption tersalin."); }).catch(function () { document.execCommand("copy"); toast("Caption tersalin."); }); }; });
       renderPop(r[8]);
       renderRem();
-      Promise.all([rj(META), rj(CHK)]).then(function (x) { meta = x[0]; chk = x[1]; renderChk(); });
+      Promise.all([rj(META), rj(CHK), rj(DRV)]).then(function (x) {
+        meta = x[0]; chk = x[1]; renderChk();
+        var dv = x[2] || {}, er = dv.errors || {}, pd = dv.pending || {};
+        var h = Object.keys(pd).map(function (k) { return '<div class="st"><h3>⏳ Foto dari Drive: ' + esc(k) + '</h3><div class="muted">Sedang diproses…</div></div>'; }).join("") +
+          Object.keys(er).map(function (k) { return '<div class="st bad"><h3>⚠️ Foto dari Drive gagal: ' + esc(k) + '</h3><div class="err">' + esc(er[k].msg) + '</div><div class="muted">Cek folder dibagikan "Siapa saja yang memiliki link", lalu coba lagi lewat Edit → Ganti foto dari Google Drive.</div></div>'; }).join("");
+        if (h) { $("#stlist").insertAdjacentHTML("afterbegin", h); $("#st-dot").hidden = false; }
+      });
       $("#st-dot").hidden = !(bad || rem.items.some(function (x) { return !x.done; }));
     });
   }
