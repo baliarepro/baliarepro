@@ -1,5 +1,11 @@
 {
- "pending": {},
+ "pending": {
+  "tanah-di-banjar-kulu-tampaksiring": {
+   "url": "https://drive.google.com/drive/folders/1ZBwuxJNxn9Fv4U-q5qOT_4sqYeM-PL7J",
+   "replace": false,
+   "at": "2026-11-24T13:12:08.563Z"
+  }
+ },
  "errors": {},
  "done": {
   "test-pandawa": {

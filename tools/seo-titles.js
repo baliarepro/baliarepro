@@ -3,6 +3,8 @@
 // d = deskripsi (±140–165 karakter: fakta utama + harga + ajakan WhatsApp). Fakta HANYA dari kartu di listings.html.
 // H1 di halaman tetap memakai judul kartu. Listing baru: tambahkan entri di sini dengan slug yang sama.
 module.exports = {
+  "tanah-di-banjar-kulu-tampaksiring": {
+    id: { t: "Dijual tanah di Banjar Kulu, Tampaksiring, Bali", d: "Tanah di Banjar Kulu, Tampaksiring: SHM (Sertifikat Hak Milik), akses jalan Jalan lebar, mudah dilalui mobil, hadap Selatan, kavling 1 184 m². Rp3.500.000. Info & survei via WhatsApp." } },
   "villa-joglo-4-kamar-private-pool-di-kutuh-pandawa": {
     id: { t: "Dijual Villa Joglo 4 Kamar Private Pool di Kutuh, Pandawa Bali", d: "Villa joglo kayu jati 4 KT + kamar pembantu, tanah 300 m², pool 3×10 m, 1 menit ke Pantai Pandawa. Freehold Rp5,9 M nego atau sewa Rp450 jt/tahun. Tanya WA." },
     en: { t: "4-Bedroom Joglo Villa with Pool for Sale in Kutuh, Pandawa Bali", d: "Teak Joglo villa, 4 beds + maid room, 300 m² land, 3×10 m pool, 1 min to Pandawa Beach. Freehold IDR 5.9B negotiable, or rent IDR 450M/year. WhatsApp us." },
