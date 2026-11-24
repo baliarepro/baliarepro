@@ -16,4 +16,16 @@ for (const sec of s.split('<section class="type" data-type="').slice(1)) {
     out.push({ s: m[1], t: dec(m[2]), y: type, a: area, e: dec(eb), p: hl ? dec(hl[2]) + (/tahun|unit|per m²|per are/i.test(hl[1]) ? " " + dec(hl[1]).replace(/^Harga\s*/i, "").toLowerCase() : "") : "" });
   }
 }
-process.stdout.write(JSON.stringify({ updated: new Date().toISOString().slice(0, 10), listings: out }) + "\n");
+// Kanal tempat iklan sudah tayang + jumlah dilihat (untuk laporan progres ke Owner di Bali Are Agen)
+const rd = (f) => { try { return JSON.parse(fs.readFileSync(path.join(__dirname, "..", f), "utf8")); } catch (e) { return {}; } };
+const st = { ig: rd("tools/ig-state.json"), th: rd("tools/threads-state.json"), fb: rd("tools/fb-state.json"), tg: rd("tools/tg-state.json"), reel: rd("tools/reels-state.json"), fbr: rd("tools/fb-reels-state.json"), tt: rd("tools/tiktok-state.json") };
+const meta = rd("tools/listing-meta.json"), rep = (rd("laporan-dilihat.json").report || {}), rows = {};
+(rep.rows || []).concat(rep.top || []).forEach((r) => { if (r && r.slug) rows[r.slug] = Object.assign(rows[r.slug] || {}, r); });
+for (const o of out) {
+  const ch = {};
+  for (const k of ["ig", "th", "fb", "tg", "reel", "fbr"]) { const p = ((st[k].posted || {})[o.s]) || null; if (p && p.permalink) ch[k] = p.permalink; }
+  if ((st.tt.posted || {})[o.s]) ch.tt = 1;
+  o.ch = ch; o.ad = (meta[o.s] || {}).added || "";
+  const r = rows[o.s]; if (r) { o.v = r.total || 0; o.vw = r.week || 0; if (r.wa != null) o.wa = r.wa; }
+}
+process.stdout.write(JSON.stringify({ updated: new Date().toISOString().slice(0, 10), report: rep.date || "", listings: out }) + "\n");
