@@ -299,27 +299,30 @@ footer>span{min-width:0}
       </div>
   </div>
   <style>
-.pj{--g:#123F36;--gold:#946410;--gold2:#D9A441;--ln:#E2DACB;--mut:#59625D}
+.pj{--g:#123F36;--gold:#946410;--gold2:#D9A441;--ln:#E2DACB;--mut:#59625D;--card:#fff;--fill:#F0EADF;--fill2:#EDE6D8;--body:#3B4541;--gt:#123F36;--gt2:#7A520C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pj{--ln:#24392F;--mut:#A3B1A8;--card:#12241D;--fill:#173528;--fill2:#24392F;--body:#C9D3CC;--gt:#8CC9AE;--gt2:#D9A441;--gold:#D9A441}}
+:root[data-theme="dark"] .pj{--ln:#24392F;--mut:#A3B1A8;--card:#12241D;--fill:#173528;--fill2:#24392F;--body:#C9D3CC;--gt:#8CC9AE;--gt2:#D9A441;--gold:#D9A441}
+.pj h1,.pj h2,.pj h3,.pj h4{color:inherit}
 .pj h2{font-family:"Bricolage Grotesque",Arial,sans-serif}
 .pj-hero{background:var(--g);color:#F6F2EA;border-radius:22px;padding:44px 36px;margin:18px 0 26px;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end}
 .pj-hero .eyebrow{color:var(--gold2)}
 .pj-hero h1{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:clamp(34px,5vw,54px);line-height:1.03;margin:10px 0 12px;color:#F6F2EA}
 .pj-hero p{color:#DCE7E1;max-width:620px;margin:0;font-size:17px}
-.pj-feat{display:flex;flex-wrap:wrap;background:#fff;border:1px solid var(--ln);border-radius:22px;overflow:hidden;text-decoration:none;color:inherit}
-.pj-feat .ph{flex:1 1 520px;min-height:340px;position:relative;background:#EDE6D8}
+.pj-feat{display:flex;flex-wrap:wrap;background:var(--card);border:1px solid var(--ln);border-radius:22px;overflow:hidden;text-decoration:none;color:inherit}
+.pj-feat .ph{flex:1 1 520px;min-height:340px;position:relative;background:var(--fill2)}
 .pj-feat .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .pj-feat .tx{flex:1 1 380px;padding:30px;display:flex;flex-direction:column;gap:14px}
 .pj-badge{display:inline-block;background:var(--g);color:#F6F2EA;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px}
-.pj-badge.l{background:#F6F2EA;color:var(--g)}
+.pj-badge.l{background:#F6F2EA;color:#123F36}
 .pj-ph-tags{position:absolute;top:16px;left:16px;display:flex;gap:8px;flex-wrap:wrap}
 .pj-dev{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
 .pj-feat h2,.pj-h1{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:clamp(28px,3.4vw,38px);line-height:1.06;margin:4px 0 0}
 .pj-kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;border-top:1px solid var(--ln);padding-top:14px;margin:0}
 .pj-kv dt{font-size:12px;color:var(--mut)}.pj-kv dd{margin:2px 0 0;font-weight:600}
-.pj-kv dd.big{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:24px;font-weight:700;color:var(--g)}
+.pj-kv dd.big{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)}
 .pj-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;background:var(--g);color:#F6F2EA;text-decoration:none;font-weight:600}
-.pj-btn.wa{background:#1F8F55;color:#fff}.pj-btn.o{background:transparent;border:1.5px solid var(--g);color:var(--g)}.pj-btn.gold{background:var(--gold2);color:var(--g);font-weight:700}
-.pj-why{background:#fff;border:1px solid var(--ln);border-radius:22px;padding:30px;margin-top:34px;display:flex;flex-wrap:wrap;gap:28px}
+.pj-btn.wa{background:#1F8F55;color:#fff}.pj-btn.o{background:transparent;border:1.5px solid var(--gt);color:var(--gt)}.pj-btn.gold{background:var(--gold2);color:#123F36;font-weight:700}
+.pj-why{background:var(--card);border:1px solid var(--ln);border-radius:22px;padding:30px;margin-top:34px;display:flex;flex-wrap:wrap;gap:28px}
 .pj-why>div:first-child{flex:1 1 280px}.pj-why .gr{flex:2 1 480px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
 .pj-why b{display:block}.pj-why span{font-size:14px;color:var(--mut)}
 .pj-dev-cta{background:var(--g);color:#F6F2EA;border-radius:22px;padding:34px;margin-top:34px;display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between}
@@ -336,22 +339,22 @@ footer>span{min-width:0}
 .pj-cols{display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start}
 .pj-main{flex:999 1 600px;min-width:0;display:flex;flex-direction:column;gap:40px}
 .pj-side{flex:1 1 300px;min-width:0;position:sticky;top:70px;display:flex;flex-direction:column;gap:14px}
-.pj-box{background:#fff;border:1px solid var(--ln);border-radius:18px;padding:22px}
+.pj-box{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:22px}
 .pj-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.pj-two article{background:#fff;border:1px solid var(--ln);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.pj-two article{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}
 .pj-two h3{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:24px;margin:0;line-height:1.15}
-.pj-two p{margin:0;font-size:15px;color:#3B4541}
-.pj-tw{overflow-x:auto;border:1px solid var(--ln);border-radius:16px;background:#fff}
+.pj-two p{margin:0;font-size:15px;color:var(--body)}
+.pj-tw{overflow-x:auto;border:1px solid var(--ln);border-radius:16px;background:var(--card)}
 .pj-tw table{width:100%;border-collapse:collapse;font-size:15px;min-width:600px}
-.pj-tw th{background:#F0EADF;text-align:left;padding:12px 16px;font-weight:600}.pj-tw td{padding:12px 16px;border-top:1px solid var(--ln)}
-.pj-st{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#F6EAD0;color:#7A520C;white-space:nowrap}.pj-st.s{background:#EDE6D8;color:var(--mut)}
+.pj-tw th{background:var(--fill);text-align:left;padding:12px 16px;font-weight:600}.pj-tw td{padding:12px 16px;border-top:1px solid var(--ln)}
+.pj-st{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#F6EAD0;color:#7A520C;white-space:nowrap}.pj-st.s{background:var(--fill2);color:var(--mut)}
 .pj-note{font-size:13px;color:var(--mut);margin:10px 0 0}
 .pj-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.pj-steps li{background:#fff;border:1px solid var(--ln);border-radius:16px;padding:16px}.pj-steps li:last-child{background:var(--g);color:#F6F2EA;border-color:var(--g)}
+.pj-steps li{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:16px}.pj-steps li:last-child{background:var(--g);color:#F6F2EA;border-color:var(--gt)}
 .pj-steps small{font-family:"JetBrains Mono",monospace;color:var(--gold)}.pj-steps li:last-child small{color:var(--gold2)}
 .pj-steps b{display:block;margin-top:4px}.pj-steps span{font-size:14px;color:var(--mut)}.pj-steps li:last-child span{color:#DCE7E1}
 .pj-pill5{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.pj-pill5 div{background:#fff;border:1px solid var(--ln);border-radius:16px;padding:16px}
+.pj-pill5 div{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:16px}
 .pj-pill5 small{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
 .pj-pill5 b{display:block;margin:6px 0 4px}.pj-pill5 span{font-size:13px;color:var(--mut)}
 .pj-band{margin-top:14px;background:var(--g);color:#F6F2EA;border-radius:16px;padding:18px 22px;display:flex;flex-wrap:wrap;gap:8px 20px}
@@ -359,7 +362,7 @@ footer>span{min-width:0}
 .pj-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
 .pj-gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block}
 .pj-team{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:16px;overflow:hidden;margin:0}
-.pj-team div{background:#fff;padding:14px 16px}.pj-team dt{font-size:12px;color:var(--mut)}.pj-team dd{margin:2px 0 0;font-weight:600}
+.pj-team div{background:var(--card);padding:14px 16px}.pj-team dt{font-size:12px;color:var(--mut)}.pj-team dd{margin:2px 0 0;font-weight:600}
 .pj-side .pj-btn{width:100%;box-sizing:border-box}
 @media(max-width:700px){.pj-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pj-stats div:nth-child(2){border-right:0}.pj-hero,.pj-dhero .in{padding:26px 20px}.pj-side{position:static}}
 </style>
@@ -371,7 +374,7 @@ footer>span{min-width:0}
       <p style="margin:0">Freehold villas and fully furnished apartments on 6,800 m² of land, about 800 m from the beach, with a wellness centre and five-star hospitality services.</p>
       <dl class="pj-kv"><div><dt>Apartments from</dt><dd class="big">IDR 3.28B</dd></div><div><dt>Villas from</dt><dd class="big">IDR 10.12B</dd></div><div><dt>Target completion</dt><dd>Q1 2027</dd></div><div><dt>Villa · Apartments</dt><dd>Freehold · Extensive leasehold</dd></div></dl>
       <span class="pj-btn" style="align-self:flex-start;margin-top:auto">View project →</span></div></a>
-  <section class="pj-why"><div><div class="pj-dev">Why buy through Bali Are Property</div><h2 style="font-size:28px;margin:8px 0">Buy new projects with peace of mind</h2><p style="margin:0;color:#3B4541">Same price as buying from the developer, no extra fee for buyers. We help from site visit to handover.</p></div>
+  <section class="pj-why"><div><div class="pj-dev">Why buy through Bali Are Property</div><h2 style="font-size:28px;margin:8px 0">Buy new projects with peace of mind</h2><p style="margin:0;color:var(--body)">Same price as buying from the developer, no extra fee for buyers. We help from site visit to handover.</p></div>
     <div class="gr"><div><b>Documents checked</b><span>We review the title, building permit and agreement with you before reservation.</span></div><div><b>Honest comparison</b><span>We compare with other listings and projects in the same area.</span></div><div><b>Progress updates</b><span>We pass on construction updates until handover.</span></div><div><b>Guided to the deed</b><span>PPJB, payment schedule, notary and key handover.</span></div></div></section>
   <section class="pj-dev-cta"><div><div class="pj-dev" style="color:var(--gold2)">For developers</div><h2>Market your project to local &amp; international buyers</h2><p>A project page in 3 languages (Indonesian, English, Russian), posts on Instagram, Facebook, Threads, Telegram, Reels/TikTok videos, and regular enquiry reports.</p></div><a class="pj-btn gold" href="https://wa.me/62812868080?text=Hi%20Bagoes%2C%20I'm%20a%20developer%20and%20would%20like%20to%20market%20our%20project%20with%20Bali%20Are%20Property." target="_blank" rel="noopener">List your project</a></section>
   </div>
