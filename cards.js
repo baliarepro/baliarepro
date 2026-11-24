@@ -127,8 +127,9 @@
       (mainFx ? '<span class="fx">' + esc(txt(mainFx)) + "</span>" : "");
 
     var parts = [typeOf(c)];
-    if (spec.beds && num(spec.beds)) parts.push(num(spec.beds) + " " + T.beds);
-    if (spec.baths && num(spec.baths)) parts.push(num(spec.baths) + " " + T.baths);
+    var one = function (n, w) { return L === "en" && +n === 1 ? w.replace(/s$/, "") : w; }; // "1 bed", bukan "1 beds"
+    if (spec.beds && num(spec.beds)) parts.push(num(spec.beds) + " " + one(num(spec.beds), T.beds));
+    if (spec.baths && num(spec.baths)) parts.push(num(spec.baths) + " " + one(num(spec.baths), T.baths));
     if (spec.bld && area(spec.bld)) parts.push(area(spec.bld) + " " + T.bld);
     if (spec.land && area(spec.land)) parts.push(area(spec.land) + " " + T.land);
     var cs = document.createElement("div");
