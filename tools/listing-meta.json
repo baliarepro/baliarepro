@@ -2,127 +2,152 @@
  "tanah-6000-m2-dekat-pantai-balangan": {
   "added": "2026-11-04",
   "price": 42000000000,
-  "text": "Rp42 Miliar"
+  "text": "Rp42 Miliar",
+  "st": "live"
  },
  "tanah-ocean-view-2-x-650-m2-di-balangan": {
   "added": "2026-11-04",
   "price": 18850000000,
-  "text": "Rp18,85 M"
+  "text": "Rp18,85 M",
+  "st": "live"
  },
  "tanah-hook-300-m2-di-jalan-tulip": {
   "added": "2026-11-04",
   "price": 1950000000,
-  "text": "Rp1,95 Miliar"
+  "text": "Rp1,95 Miliar",
+  "st": "live"
  },
  "tanah-hook-430-m2-di-poros-jalan-pantai-melasti": {
   "added": "2026-11-06",
   "price": 3225000000,
-  "text": "Rp3,225 Miliar"
+  "text": "Rp3,225 Miliar",
+  "st": "live"
  },
  "tanah-hook-2450-m2-dekat-hillstone-ungasan": {
   "added": "2026-11-06",
   "price": 15925000000,
-  "text": "Rp15,925 Miliar"
+  "text": "Rp15,925 Miliar",
+  "st": "live"
  },
  "tanah-15-ha-di-jalan-pura-mesuka": {
   "added": "2026-11-04",
   "price": 82500000000,
-  "text": "Rp82,5 Miliar"
+  "text": "Rp82,5 Miliar",
+  "st": "live"
  },
  "tanah-7000-m2-di-kawasan-villa-toyaning-ungasan": {
   "added": "2026-11-10",
   "price": 40250000000,
-  "text": "Rp40,25 Miliar"
+  "text": "Rp40,25 Miliar",
+  "st": "live"
  },
  "tanah-650-m2-di-kawasan-villa-toyaning-ungasan": {
   "added": "2026-11-15",
   "price": 4550000000,
-  "text": "Rp4,55 Miliar"
+  "text": "Rp4,55 Miliar",
+  "st": "live"
  },
  "tanah-400-m2-di-kawasan-bali-cliff": {
   "added": "2026-11-04",
   "price": 2800000000,
-  "text": "Rp2,8 Miliar"
+  "text": "Rp2,8 Miliar",
+  "st": "live"
  },
  "tanah-830-m2-siap-bangun-di-central-ungasan": {
   "added": "2026-11-04",
   "price": 4980000000,
-  "text": "Rp4,98 Miliar"
+  "text": "Rp4,98 Miliar",
+  "st": "live"
  },
  "tanah-1000-m2-di-kawasan-pantai-melasti": {
   "added": "2026-11-04",
   "price": 10000000000,
-  "text": "Rp10 Miliar"
+  "text": "Rp10 Miliar",
+  "st": "live"
  },
  "tanah-1990-m2-dekat-pantai-melasti-di-jalan-karma-kandara": {
   "added": "2026-11-04",
   "price": 12935000000,
-  "text": "Rp12,935 Miliar"
+  "text": "Rp12,935 Miliar",
+  "st": "live"
  },
  "tanah-6015-m2-dekat-karma-kandara": {
   "added": "2026-11-04",
   "price": 7500000,
-  "text": "Rp7.500.000"
+  "text": "Rp7.500.000",
+  "st": "sold"
  },
  "tanah-200-m2-di-kompleks-airis-ungasan": {
   "added": "2026-11-04",
   "price": 7500000,
-  "text": "Rp7.500.000"
+  "text": "Rp7.500.000",
+  "st": "sold"
  },
  "tanah-197-m2-di-kompleks-airis-ungasan": {
   "added": "2026-11-04",
   "price": 8000000,
-  "text": "Rp8.000.000"
+  "text": "Rp8.000.000",
+  "st": "sold"
  },
  "tanah-5300-m2-zona-pariwisata-dekat-pantai-pandawa": {
   "added": "2026-11-04",
   "price": 34450000000,
-  "text": "Rp34,45 Miliar"
+  "text": "Rp34,45 Miliar",
+  "st": "live"
  },
  "tanah-550-m2-dekat-pantai-tanah-barak-pandawa": {
   "added": "2026-11-04",
   "price": 5225000000,
-  "text": "Rp5,225 M"
+  "text": "Rp5,225 M",
+  "st": "live"
  },
  "tanah-ocean-view-3000-m2-posisi-hook-di-pandawa": {
   "added": "2026-11-04",
   "price": 6500000,
-  "text": "Rp6.500.000"
+  "text": "Rp6.500.000",
+  "st": "sold"
  },
  "tanah-395-m2-gandeng-di-labuan-sait": {
   "added": "2026-11-04",
   "price": 4938000000,
-  "text": "Rp4,938 M"
+  "text": "Rp4,938 M",
+  "st": "live"
  },
  "tanah-9025-m2-di-kawasan-villa-mewah-labuan-sait": {
   "added": "2026-11-04",
   "price": 90250000000,
-  "text": "Rp90,25 Miliar"
+  "text": "Rp90,25 Miliar",
+  "st": "live"
  },
  "tanah-215-m2-di-kompleks-villa-labuan-sait": {
   "added": "2026-11-04",
   "price": 2902500000,
-  "text": "Rp2,9025 Miliar"
+  "text": "Rp2,9025 Miliar",
+  "st": "live"
  },
  "tanah-ocean-view-805-m2-di-cluster-villa-blimbingsari-pecatu": {
   "added": "2026-11-14",
   "price": 8500000000,
-  "text": "Rp8,5 Miliar"
+  "text": "Rp8,5 Miliar",
+  "st": "live"
  },
  "tanah-ocean-view-775-m2-di-cluster-villa-blimbingsari-pecatu": {
   "added": "2026-11-14",
   "price": 6975000000,
-  "text": "Rp6,975 Miliar"
+  "text": "Rp6,975 Miliar",
+  "st": "live"
  },
  "tanah-1000-m2-ocean-view-di-blimbingsari": {
   "added": "2026-11-04",
   "price": 7000000,
-  "text": "Rp7.000.000"
+  "text": "Rp7.000.000",
+  "st": "sold"
  },
  "tanah-1620-m2-di-jalan-dewi-sri-area-nakula": {
   "added": "2026-11-04",
   "price": 29160000000,
-  "text": "Rp29,16 Miliar"
+  "text": "Rp29,16 Miliar",
+  "st": "live"
  },
  "tanah-350-m2-di-jalan-utama-canggu": {
   "added": "2026-11-04",
@@ -133,137 +158,164 @@
    "to": "Rp6,65 Miliar",
    "at": "2026-11-24",
    "ts": "2026-11-24T03:52:56.279Z"
-  }
+  },
+  "st": "live"
  },
  "tanah-2802-m2-view-sawah-di-singakerta": {
   "added": "2026-11-04",
   "price": 16812000000,
-  "text": "Rp16,812 Miliar"
+  "text": "Rp16,812 Miliar",
+  "st": "live"
  },
  "tanah-tebing-1236-m2-view-sungai-dan-hutan-di-lod-tunduh": {
   "added": "2026-11-04",
   "price": 7416000000,
-  "text": "Rp7,416 Miliar"
+  "text": "Rp7,416 Miliar",
+  "st": "live"
  },
  "tanah-450-m2-di-lingkungan-villa-kaba-kaba": {
   "added": "2026-11-04",
   "price": 1710000000,
-  "text": "Rp1,71 Miliar"
+  "text": "Rp1,71 Miliar",
+  "st": "live"
  },
  "tanah-1350-m2-strategis-di-gatot-subroto-barat-denpasar": {
   "added": "2026-11-14",
   "price": 16875000000,
-  "text": "Rp16,875 Miliar"
+  "text": "Rp16,875 Miliar",
+  "st": "live"
  },
  "villa-mewah-4-kamar-tidur-di-jalan-goa-gong": {
   "added": "2026-11-04",
   "price": 45000000000,
-  "text": "Rp45 Miliar"
+  "text": "Rp45 Miliar",
+  "st": "live"
  },
  "villa-5-kamar-tidur-ocean-view-dengan-rooftop-di-jimbaran": {
   "added": "2026-11-14",
   "price": 8500000000,
-  "text": "Rp8,5 Miliar"
+  "text": "Rp8,5 Miliar",
+  "st": "live"
  },
  "villa-2-lantai-3-kamar-tidur-di-jimbaran": {
   "added": "2026-11-19",
   "price": 3800000000,
-  "text": "Rp3,8 Miliar"
+  "text": "Rp3,8 Miliar",
+  "st": "live"
  },
  "estate-3-villa-ocean-view-di-bukit-labuan-sait": {
   "added": "2026-11-04",
   "price": 65000000000,
-  "text": "Rp65 Miliar"
+  "text": "Rp65 Miliar",
+  "st": "live"
  },
  "villa-modern-3-kamar-tidur-dekat-gwk-type-1": {
   "added": "2026-11-04",
   "price": 3500000000,
-  "text": "Rp3,5 Miliar"
+  "text": "Rp3,5 Miliar",
+  "st": "live"
  },
  "villa-modern-3-kamar-tidur-dekat-gwk-type-2": {
   "added": "2026-11-04",
   "price": 4388000000,
-  "text": "Rp4,388 Miliar"
+  "text": "Rp4,388 Miliar",
+  "st": "live"
  },
  "villa-3-kamar-tidur-dengan-rooftop-view-laut-di-ungasan": {
   "added": "2026-11-04",
   "price": 8500000000,
-  "text": "Rp8,5 Miliar"
+  "text": "Rp8,5 Miliar",
+  "st": "live"
  },
  "villa-3-lantai-dengan-pool-dan-jacuzzi-di-ungasan": {
   "added": "2026-11-04",
   "price": 3000000000,
-  "text": "Rp3 Miliar"
+  "text": "Rp3 Miliar",
+  "st": "live"
  },
  "villa-2-kamar-tidur-dengan-private-pool-dan-rooftop-di-ungasan": {
   "added": "2026-11-09",
   "price": 3500000000,
-  "text": "Rp3,5 Miliar"
+  "text": "Rp3,5 Miliar",
+  "st": "live"
  },
  "villa-3-kamar-tidur-fully-furnished-di-grand-ungasan": {
   "added": "2026-11-17",
   "price": 3800000000,
-  "text": "Rp3,8 Miliar"
+  "text": "Rp3,8 Miliar",
+  "st": "live"
  },
  "villa-2-kamar-tidur-dengan-indoor-heated-pool-di-dewi-sri": {
   "added": "2026-11-04",
   "price": 5000000000,
-  "text": "Rp5 Miliar"
+  "text": "Rp5 Miliar",
+  "st": "live"
  },
  "villa-4-kamar-tidur-di-kayu-tulang-kuta-utara": {
   "added": "2026-11-20",
   "price": 12000000000,
-  "text": "Rp12 Miliar"
+  "text": "Rp12 Miliar",
+  "st": "live"
  },
  "villa-modern-3-kamar-tidur-di-berawa": {
   "added": "2026-11-04",
   "price": 6900000000,
-  "text": "Rp6,9 Miliar"
+  "text": "Rp6,9 Miliar",
+  "st": "live"
  },
  "villa-4-plus-1-kamar-tidur-dengan-private-pool-di-berawa-canggu": {
   "added": "2026-11-16",
   "price": 14500000000,
-  "text": "Rp14,5 Miliar"
+  "text": "Rp14,5 Miliar",
+  "st": "live"
  },
  "villa-3-kamar-tidur-dengan-pool-dan-rooftop-di-pererenan": {
   "added": "2026-11-16",
   "price": 6800000000,
-  "text": "Rp6,8 Miliar"
+  "text": "Rp6,8 Miliar",
+  "st": "live"
  },
  "villa-3-kamar-tidur-view-sawah-dengan-infinity-pool-dekat-ubud": {
   "added": "2026-11-09",
   "price": 5900000000,
-  "text": "Rp5,9 Miliar"
+  "text": "Rp5,9 Miliar",
+  "st": "live"
  },
  "villa-baru-3-lantai-ocean-view-nusa-penida-di-ketewel": {
   "added": "2026-11-04",
   "price": 6900000000,
-  "text": "Rp6,9 Miliar"
+  "text": "Rp6,9 Miliar",
+  "st": "live"
  },
  "over-kontrak-gedung-ex-karaoke-24-room-di-kedonganan-jimbaran": {
   "added": "2026-11-19",
   "price": 1250000000,
-  "text": "Rp1,25 Miliar"
+  "text": "Rp1,25 Miliar",
+  "st": "live"
  },
  "villa-resort-30-unit-di-pererenan-canggu": {
   "added": "2026-11-19",
   "price": 75000000000,
-  "text": "Rp75 Miliar"
+  "text": "Rp75 Miliar",
+  "st": "live"
  },
  "properti-hospitality-20-are-dengan-18-kamar-di-tibubeneng": {
   "added": "2026-11-04",
   "price": 12900000000,
-  "text": "Rp12,9 Miliar"
+  "text": "Rp12,9 Miliar",
+  "st": "live"
  },
  "rumah-modern-3-lantai-4-kamar-tidur-di-nusa-dua": {
   "added": "2026-11-20",
   "price": 4900000000,
-  "text": "Rp4,9 Miliar"
+  "text": "Rp4,9 Miliar",
+  "st": "live"
  },
  "rumah-5-kamar-tidur-dekat-bandara-ngurah-rai": {
   "added": "2026-11-04",
   "price": 6500000000,
-  "text": "Rp6,5 Miliar"
+  "text": "Rp6,5 Miliar",
+  "st": "live"
  },
  "rumah-modern-victorian-2-lantai-di-dalung-tegal-jaya": {
   "added": "2026-11-04",
@@ -274,66 +326,85 @@
    "to": "Rp2,75 Miliar",
    "at": "2026-11-23",
    "ts": "2026-11-23T11:15:00.000Z"
-  }
+  },
+  "st": "live"
  },
  "rumah-2-kamar-tidur-di-perumahan-one-gate-pering": {
   "added": "2026-11-04",
   "price": 1200000000,
-  "text": "Rp1,2 Miliar"
+  "text": "Rp1,2 Miliar",
+  "st": "live"
  },
  "tanah-6000-m2-zona-pariwisata-dekat-bulgari-pecatu": {
   "added": "2026-11-21",
   "price": 60000000000,
-  "text": "Rp60 Miliar"
+  "text": "Rp60 Miliar",
+  "st": "live"
  },
  "tanah-tebing-5000-m2-sebelah-savaya-pecatu": {
   "added": "2026-11-21",
   "price": 125000000000,
-  "text": "Rp125 Miliar"
+  "text": "Rp125 Miliar",
+  "st": "live"
  },
  "tanah-tebing-14000-m2-sebelah-savaya-pecatu": {
   "added": "2026-11-21",
   "price": 238000000000,
-  "text": "Rp238 Miliar"
+  "text": "Rp238 Miliar",
+  "st": "live"
  },
  "villa-5-kamar-tidur-dengan-private-pool-di-kerobokan": {
   "added": "2026-11-23",
   "price": 8750000000,
-  "text": "Rp8,75 Miliar"
+  "text": "Rp8,75 Miliar",
+  "st": "live"
  },
  "tanah-350-m2-di-gang-taman-sri-pererenan": {
   "added": "2026-11-23",
   "price": 6825000000,
-  "text": "Rp6,825 Miliar"
+  "text": "Rp6,825 Miliar",
+  "st": "live"
  },
  "tanah-1300-m2-zona-pink-dekat-pantai-seseh": {
   "added": "2026-11-23",
   "price": 19500000000,
-  "text": "Rp19,5 Miliar"
+  "text": "Rp19,5 Miliar",
+  "st": "live"
  },
  "tanah-202-m2-di-gatsu-vi-denpasar": {
   "added": "2026-11-23",
   "price": 1515000000,
-  "text": "Rp1,515 Miliar"
+  "text": "Rp1,515 Miliar",
+  "st": "live"
  },
  "gudang-baru-924-m2-posisi-hook-disewakan-di-pidada-denpasar": {
   "added": "2026-11-23",
   "price": 700000000,
-  "text": "Rp700 jt"
+  "text": "Rp700 jt",
+  "st": "live"
  },
  "villa-1-kamar-private-pool-leasehold-di-tumbak-bayuh": {
   "added": "2026-11-23",
   "price": 3640000000,
-  "text": "US$199.000"
+  "text": "US$199.000",
+  "st": "live"
  },
  "villa-2-kamar-private-pool-leasehold-di-pererenan": {
   "added": "2026-11-23",
   "price": 3640000000,
-  "text": "US$199.000"
+  "text": "US$199.000",
+  "st": "live"
  },
  "villa-joglo-4-kamar-private-pool-di-kutuh-pandawa": {
   "added": "2026-11-23",
   "price": 5900000000,
-  "text": "Rp5,9 Miliar"
+  "text": "Rp5,9 Miliar",
+  "st": "live"
+ },
+ "tanah-ocean-view-2000-m2-di-bypass-pandawa": {
+  "added": "2026-11-24",
+  "price": 15000000000,
+  "text": "Rp15 Miliar",
+  "st": "live"
  }
 }
