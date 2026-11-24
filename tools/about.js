@@ -24,6 +24,13 @@ const A = {
       "Kami percaya transaksi properti yang berhasil dimulai dari informasi yang akurat, pemahaman lokasi yang jelas, dan komunikasi yang baik antara semua pihak.",
       "Kami berupaya memberikan peluang properti yang relevan dan wawasan pasar lokal yang praktis, agar klien dapat mengambil keputusan properti dengan tepat."
     ],
+    webH: "Mengapa website ini hadir di 2026",
+    web: [
+      "Setelah lebih dari 15 tahun bekerja lewat jaringan dan pertemuan langsung, kami meluncurkan baliareproperty.com pada September 2026.",
+      "Cara orang mencari properti terus berubah. Calon pembeli dari dalam dan luar negeri kini memulai pencarian dari ponsel: Google, Instagram, TikTok, hingga asisten AI. Strategi pemasaran pun harus ikut berkembang.",
+      "Kami tidak ingin kehilangan eksistensi di era baru ini. Karena itu setiap listing kami tampilkan lengkap dengan foto, harga, legalitas, dan PDF dalam tiga bahasa, terhubung langsung ke WhatsApp, dan dibagikan otomatis ke media sosial.",
+      "Pengalaman lapangan sejak 2009 tetap menjadi dasar kami. Yang berubah hanya caranya: lebih cepat, lebih terbuka, dan lebih mudah dijangkau dari mana saja."
+    ],
     missH: "Misi kami",
     miss: "Menghubungkan pemilik properti, pembeli, dan investor melalui informasi properti yang andal, pemahaman pasar lokal, dan layanan profesional.",
     closing: "Bali Are Property – Mitra properti lokal Anda di Bali sejak 2009."
@@ -50,6 +57,13 @@ const A = {
       "We believe successful property transactions begin with accurate information, a clear understanding of the location and good communication between all parties.",
       "We aim to provide clients with relevant property opportunities and practical local market insights to support informed property decisions."
     ],
+    webH: "Why this website launched in 2026",
+    web: [
+      "After more than 15 years of working through networks and face-to-face meetings, we launched baliareproperty.com in September 2026.",
+      "The way people look for property keeps changing. Buyers from Indonesia and abroad now start their search on their phones: Google, Instagram, TikTok and even AI assistants. Marketing strategy has to evolve with them.",
+      "We do not want to lose our presence in this new era. That is why every listing is shown in full, with photos, prices, legal details and a PDF in three languages, linked directly to WhatsApp and shared automatically on social media.",
+      "Our field experience since 2009 remains our foundation. Only the way we work has changed: faster, more transparent and easier to reach from anywhere."
+    ],
     missH: "Our mission",
     miss: "To connect property owners, buyers and investors through reliable property information, local market knowledge and professional service.",
     closing: "Bali Are Property – Your local property partner in Bali since 2009."
@@ -75,6 +89,13 @@ const A = {
     appr: [
       "Мы уверены, что успешная сделка начинается с точной информации, ясного понимания локации и хорошей коммуникации между всеми сторонами.",
       "Мы предлагаем клиентам подходящие объекты и практичные знания местного рынка, чтобы они могли принимать взвешенные решения."
+    ],
+    webH: "Почему этот сайт появился в 2026 году",
+    web: [
+      "После более чем 15 лет работы через личные связи и встречи мы запустили baliareproperty.com в сентябре 2026 года.",
+      "То, как люди ищут недвижимость, постоянно меняется. Покупатели из Индонезии и других стран начинают поиск со смартфона: Google, Instagram, TikTok и даже ИИ-ассистенты. Маркетинг должен развиваться вместе с ними.",
+      "Мы не хотим терять своё присутствие в новую эпоху. Поэтому каждый объект представлен полностью — с фото, ценой, юридической информацией и PDF на трёх языках, со связью через WhatsApp и автоматической публикацией в соцсетях.",
+      "Наш практический опыт с 2009 года остаётся основой. Изменился лишь способ работы: быстрее, прозрачнее и доступнее из любой точки мира."
     ],
     missH: "Наша миссия",
     miss: "Соединять владельцев недвижимости, покупателей и инвесторов благодаря надёжной информации, знанию местного рынка и профессиональному сервису.",
@@ -160,6 +181,11 @@ ${CSS}
   <section class="hsec" aria-labelledby="h-appr">
     <h2 id="h-appr">${esc(a.apprH)}</h2>
     <div class="appr">${a.appr.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
+  </section>
+
+  <section class="hsec" aria-labelledby="h-web">
+    <h2 id="h-web">${esc(a.webH)}</h2>
+    <div class="appr">${a.web.map((p) => `<p>${esc(p)}</p>`).join("")}</div>
   </section>
 
   <section class="mission" aria-labelledby="h-miss">
