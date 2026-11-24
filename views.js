@@ -73,6 +73,7 @@
   if (detail) {
     var card = document.querySelector("main article.card");
     if (card) count(detail, chipFor(card));
+    else if (/^proyek-/.test(detail)) count(detail, null); // halaman proyek developer
     return;
   }
 

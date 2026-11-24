@@ -7,6 +7,7 @@ const PROJECTS = [
     slug: "the-ease",
     name: "The Ease",
     developer: "Murino Group",
+    added: "2026-11-24", // tanggal tayang di website
     areaSlug: "kuta-utara",
     completion: "Q1 2027",
     priceFrom: 3281850000, // apartemen 1 KT (price list 6 Okt 2026)
@@ -74,6 +75,7 @@ const PROJECTS = [
     slug: "suvela",
     name: "Suvela",
     developer: "Uta",
+    added: "2026-11-25",
     areaSlug: "sanur",
     priceFrom: 6728956197, // Type C (price list 30 Okt 2026, belum PPN)
     priceDate: { villa: "2026-10-30" },

@@ -30,6 +30,8 @@ async function main() {
   const counts = {}, wa = {};
   for (const l of live) { counts[l.slug] = await count(l.slug); await wait(350); wa[l.slug] = await count(l.slug, "wa-"); await wait(350); }
   wa.umum = await count("umum", "wa-");
+  const PJS = require("./proyek-content.js").PROJECTS;
+  for (const pj of PJS) { const k = "proyek-" + pj.slug; counts[k] = await count(k); await wait(350); wa[k] = await count(k, "wa-"); await wait(350); }
   const ok = Object.values(counts).filter((v) => v !== null).length;
   if (!ok) { console.log("Penghitung tidak bisa dibaca, laporan tidak diperbarui."); return; }
   const today = new Date().toISOString().slice(0, 10);
@@ -50,7 +52,9 @@ async function main() {
     waTotal: rows.reduce((a, r) => a + (r.wa || 0), 0) + (wa.umum || 0), waUmum: wa.umum || 0,
     waTop: waRank.slice(0, 5).map((r) => ({ slug: r.slug, title: r.title, wa: r.wa, waWeek: r.waWeek })),
     quiet: (base ? byWeek.filter((r) => r.week === 0 && !r.isNew) : byTotal.filter((r) => r.total === 0)).map((r) => ({ slug: r.slug, title: r.title, total: r.total })),
-    rows };
+    rows,
+    projects: PJS.map((pj) => { const k = "proyek-" + pj.slug, t = counts[k] ?? null, b = base ? base.counts[k] : undefined, w = wa[k] ?? null, wb = base && base.wa ? base.wa[k] : undefined;
+      return { slug: pj.slug, name: pj.name, total: t, week: t !== null && typeof b === "number" ? Math.max(0, t - b) : null, wa: w, waWeek: w !== null && typeof wb === "number" ? Math.max(0, w - wb) : null }; }) };
   snaps.push({ date: today, counts, wa });
   const out = { updated: new Date().toISOString(), report, snapshots: snaps.filter((s, i, a) => a.findIndex((x) => x.date === s.date) === i).slice(-10) };
   fs.writeFileSync(FILE, JSON.stringify(out, null, 2) + "\n");

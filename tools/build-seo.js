@@ -675,6 +675,7 @@ ${copyScript}
       let html = PJ.renderProyek({ ...common, project: p, i18nSrc: rel(file, "i18n.js"),
         seoBlock: seo({ L, pageUrl: alts[L], alts, desc, ogTitle: `${p.name} – ${c.tagline}`, jsonld, image: imgs[0] || "" }) });
       html = setFlags(html, Object.fromEntries(LANGS.map((k) => [k, rel(file, langDir(k) + "proyek/" + p.slug + ".html")])), L);
+      html = html.replace("<body>", `<body data-listing="proyek-${p.slug}">`).replace("</body>", '<script src="/views.js" defer></script>\n</body>');
       write(file, html);
     }
   }
