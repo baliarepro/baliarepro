@@ -214,6 +214,13 @@ footer>span{min-width:0}
 .note{color:var(--muted);margin:0;max-width:70ch}
 .feat-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
 .feat-head a{color:var(--sea);font-weight:600;text-decoration:none}
+.pjh{display:grid;grid-template-columns:1.3fr 1fr;border-radius:18px;overflow:hidden;background:#123F36;color:#F6F2EA;text-decoration:none;min-height:260px}
+.pjh img{width:100%;height:100%;object-fit:cover;display:block}
+.pjh>span{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:28px}
+.pjh .eyebrow{color:#D9A441;font-size:11px}
+.pjh b{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.05}
+.pjh em{font-style:normal;color:#D9A441;font-weight:600;margin-top:6px}
+@media (max-width:700px){.pjh{grid-template-columns:1fr}.pjh img{height:220px}}
 .feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .feat a.fc{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
 .feat a.fc:hover{border-color:var(--sea)}
@@ -243,6 +250,7 @@ footer>span{min-width:0}
     <nav aria-label="Menu">
       <a href="about.html">О нас</a>
       <a href="listings.html">Объекты</a>
+      <a href="proyek.html">Проекты</a>
       <a href="news.html">Новости</a>
       <a href="guide.html">Гид</a>
       <a href="faq.html">Вопросы</a>
@@ -316,6 +324,11 @@ footer>span{min-width:0}
       <a class="fc" href="listing/tanah-ocean-view-2-x-650-m2-di-balangan.html"><span class="eyebrow">Balangan · Jimbaran</span><h3>Участки с видом на океан, 2 × 650 м² в Баланган</h3><b>Rp18,85 млрд</b></a>
       <a class="fc" href="listing/tanah-hook-300-m2-di-jalan-tulip.html"><span class="eyebrow">Jl. Tulip · Ungasan</span><h3>Угловой участок 300 м² на Jalan Tulip</h3><b>Rp1,95 млрд</b></a>
     </div>
+  </section>
+
+  <section class="hsec" aria-labelledby="h-pj">
+    <div class="feat-head"><h2 id="h-pj">Проект девелопера</h2><a href="proyek.html">Все проекты →</a></div>
+    <a class="pjh" href="proyek/the-ease.html"><img src="../img/proyek/the-ease/1.jpg" alt="The Ease" loading="lazy"><span><span class="eyebrow">Murino Group · Чангу, Северная Кута · Лоты ограничены</span><b>The Ease</b><span>Wellness-резиденции в эвкалиптовом лесу, Чангу</span><em>Апартаменты от 3,28 млрд IDR</em></span></a>
   </section>
 
   <section class="hsec" aria-labelledby="h-news">
