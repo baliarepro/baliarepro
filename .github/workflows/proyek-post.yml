@@ -75,6 +75,14 @@ jobs:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           REEL_KEEP: /tmp/reel-out
         run: node tools/proyek-post.js reel "${{ inputs.slug }}" || true
+      - name: Simpan video (unduh untuk TikTok manual)
+        if: ${{ inputs.reel }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: reel-${{ inputs.slug }}
+          path: /tmp/reel-out/
+          retention-days: 7
+          if-no-files-found: ignore
       - name: Draft TikTok
         if: ${{ inputs.reel }}
         env:
