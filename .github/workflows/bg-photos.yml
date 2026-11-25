@@ -1,0 +1,34 @@
+# Unduh foto latar alam Bali (Unsplash) → img/bg/. Manual: Actions → "Foto latar".
+name: Foto latar
+
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "nama foto saja (pisah koma), kosong = semua"
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  bg:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet pillow
+      - run: python tools/bg-photos.py "${{ inputs.only }}"
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A img/bg
+          git diff --cached --quiet && exit 0
+          git commit -m "Foto latar alam Bali (Unsplash)"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
