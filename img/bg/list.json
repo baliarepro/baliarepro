@@ -1,1 +1,83 @@
-[]
+[
+ {
+  "n": "kelingking",
+  "id": "Pantai Kelingking, Nusa Penida",
+  "en": "Kelingking Beach, Nusa Penida",
+  "ru": "Пляж Келингкинг, Нуса-Пенида",
+  "u": "https://commons.wikimedia.org/wiki/File:Kelingking_Beach_(T-Rex_Bay)_of_Nusa_Penida,_Bali_(2025)_-_img_09.jpg",
+  "by": "Chainwit.",
+  "lic": "CC BY 4.0"
+ },
+ {
+  "n": "sawah",
+  "id": "Terasering sawah, Bali",
+  "en": "Rice terraces, Bali",
+  "ru": "Рисовые террасы, Бали",
+  "u": "https://commons.wikimedia.org/wiki/File:Rice_terraces,_Bali.jpg",
+  "by": "Vyacheslav Argenberg",
+  "lic": "CC BY 4.0"
+ },
+ {
+  "n": "jatiluwih",
+  "id": "Sawah Jatiluwih, Tabanan",
+  "en": "Jatiluwih rice terraces, Tabanan",
+  "ru": "Рисовые террасы Джатилувих, Табанан",
+  "u": "https://commons.wikimedia.org/wiki/File:Jatiluwih_rice_terraces.jpg",
+  "by": "Imacim",
+  "lic": "CC BY-SA 4.0"
+ },
+ {
+  "n": "ulun-danu",
+  "id": "Pura Ulun Danu Beratan, Bedugul",
+  "en": "Ulun Danu Beratan Temple, Bedugul",
+  "ru": "Храм Улун Дану Братан, Бедугул",
+  "u": "https://commons.wikimedia.org/wiki/File:Brantan_Bali_Pura-Ulun-Danu-Bratan-01.jpg",
+  "by": "CEphoto, Uwe Aranas",
+  "lic": "CC BY-SA 3.0"
+ },
+ {
+  "n": "uluwatu",
+  "id": "Tebing Uluwatu",
+  "en": "Uluwatu cliffs",
+  "ru": "Скалы Улувату",
+  "u": "https://commons.wikimedia.org/wiki/File:Cliff_at_Uluwatu_temple,_Bali.jpg",
+  "by": "Emma THERY",
+  "lic": "CC BY-SA 4.0"
+ },
+ {
+  "n": "batur",
+  "id": "Gunung Batur, Kintamani",
+  "en": "Mount Batur, Kintamani",
+  "ru": "Вулкан Батур, Кинтамани",
+  "u": "https://commons.wikimedia.org/wiki/File:Gunung_Batur_Kintamani_Bali.jpg",
+  "by": "Denny Octora",
+  "lic": "CC BY-SA 4.0"
+ },
+ {
+  "n": "tanah-lot",
+  "id": "Pura Tanah Lot, Tabanan",
+  "en": "Tanah Lot Temple, Tabanan",
+  "ru": "Храм Танах Лот, Табанан",
+  "u": "https://commons.wikimedia.org/wiki/File:Burning_Sunset_at_Tanah_Lot_Wave.jpg",
+  "by": "Zexsen Xie",
+  "lic": "CC BY 2.0"
+ },
+ {
+  "n": "lempuyang",
+  "id": "Gerbang Lempuyang & Gunung Agung",
+  "en": "Lempuyang gate & Mount Agung",
+  "ru": "Врата Лемпуянг и вулкан Агунг",
+  "u": "https://commons.wikimedia.org/wiki/File:%22Heaven_Gate%22_Pura_Lempuyang.jpg",
+  "by": "Chainwit.",
+  "lic": "CC BY-SA 4.0"
+ },
+ {
+  "n": "padang",
+  "id": "Pesisir Padang Padang, Pecatu",
+  "en": "Padang Padang coast, Pecatu",
+  "ru": "Побережье Паданг-Паданг, Пекату",
+  "u": "https://commons.wikimedia.org/wiki/File:Pantai_Padang_Padang_3,_Bali.jpg",
+  "by": "Felly A",
+  "lic": "CC BY-SA 4.0"
+ }
+]
