@@ -53,7 +53,8 @@ ${link}
 <link rel="apple-touch-icon" href="${BASE}apple-touch-icon.png">
 <link rel="manifest" href="${BASE}site.webmanifest">
 <meta name="theme-color" content="#0B1E19">
-<link rel="stylesheet" href="/glass.css?v=3">
+<link rel="stylesheet" href="/glass.css?v=4">
+<script src="/bg.js?v=1" defer></script>
 <script src="/app.js" defer></script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Bali Are Property">
