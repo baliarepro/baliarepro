@@ -963,6 +963,25 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       return news;
     }).catch(function () { news = []; return news; });
   }
+  // Proyek developer (tools/proyek-content.js): lokasi hanya area, ketersediaan "Unit terbatas"
+  var projects = null;
+  function loadProjects() {
+    if (projects) return Promise.resolve(projects);
+    return readFile("tools/proyek-content.js").then(function (t) {
+      var m = { exports: {} }; new Function("module", "exports", "require", t)(m, m.exports, function () { return {}; });
+      projects = m.exports.PROJECTS || []; return projects;
+    }).catch(function () { projects = []; return projects; });
+  }
+  function rpS(n) { return "Rp" + (n / 1e9).toFixed(2).replace(/0$/, "").replace(".", ",") + " M"; }
+  function projectMsg(p) {
+    var c = p.id, exVat = c.priceCol && /belum/i.test(c.priceCol);
+    var L = ["🏗️ *PROYEK BARU – " + p.name + "*", "_" + c.tagline + "_", "📍 " + c.area + ", Bali · developer " + p.developer, "", c.card, ""];
+    p.rows.forEach(function (r) { L.push("💰 " + c.rowNames[r.k] + ": " + (r.status === "sold" ? "Terjual" : "*" + r.price + "*")); });
+    L.push(exVat ? "_Harga belum termasuk PPN 11%._" : "_Harga termasuk PPN, fully furnished._", "");
+    ((c.feats && c.feats[0] && c.feats[0][1]) || []).slice(0, 3).forEach(function (x) { L.push("✨ " + x); });
+    L.push("", "🔒 Unit terbatas · price list, lokasi & jadwal show unit via WhatsApp", "", "🔗 Detail proyek (3 bahasa):", BASE + "proyek/" + p.slug + ".html", "", "📲 Bagoes – Bali Are Property", "WA: wa.me/62812868080");
+    return L.join("\n");
+  }
   function loadShared() {
     return readFile(SHARED).then(function (t) {
       var r = JSON.parse(t);
@@ -994,6 +1013,13 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       if (!(wfilter === "todo" && sent[nk] && Object.keys(sent[nk]).length) && (!q || "berita news".indexOf(q) >= 0 || news.some(function (n) { return n.id.title.toLowerCase().indexOf(q) >= 0; })))
         out.push(card(nk, "Berita Properti Bali Minggu Ini", news.length + " berita · Edisi " + (function (d) { return (+d[2]) + " " + BLN[+d[1] - 1] + " " + d[0]; })(news[0].date.split("-")), "", ["SOUTH KUTA", "NORTH KUTA"], nm, true));
     }
+    (projects || []).forEach(function (p) {
+      var k = "proyek:" + p.slug;
+      if (wfilter === "todo" && sent[k] && Object.keys(sent[k]).length) return;
+      if (q && (p.name + " " + p.id.area + " proyek developer").toLowerCase().indexOf(q) < 0) return;
+      var m = projectMsg(p); msgs[k] = m;
+      out.push(card(k, "Proyek: " + p.name, p.developer + " · " + p.id.area + " · mulai " + rpS(p.priceFrom), "/img/proyek/" + p.slug + "/1.jpg", groupsFor({ eyebrow: p.id.area, area: "", title: p.name }), m));
+    });
     items.filter(function (it) { return !it.off && !it.sold; }).forEach(function (it) {
       if (wfilter === "todo" && sent[it.slug] && Object.keys(sent[it.slug]).length) return;
       if (q && (it.title + " " + it.eyebrow + " " + it.area).toLowerCase().indexOf(q) < 0) return;
@@ -1129,7 +1155,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
       $$(".tabs button").forEach(function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
       $("#tab-ads").hidden = t !== "ads"; $("#tab-wa").hidden = t !== "wa"; $("#tab-st").hidden = t !== "st"; $("#tab-new").hidden = t !== "new";
       if (t === "new" && !$("#n-title")) newForm();
-      if (t === "wa") { $("#walist").innerHTML = '<p class="muted">Memuat…</p>'; Promise.all([loadNews(), loadShared()]).then(renderWa); }
+      if (t === "wa") { $("#walist").innerHTML = '<p class="muted">Memuat…</p>'; Promise.all([loadNews(), loadShared(), loadProjects()]).then(renderWa); }
       if (t === "st") { $("#stlist").innerHTML = '<p class="muted">Memuat…</p>'; loadStatus().catch(fail); }
     });
   });

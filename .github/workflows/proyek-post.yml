@@ -1,0 +1,100 @@
+# Posting proyek developer ke semua kanal (tools/proyek-post.js): carousel Instagram, Threads, Facebook Page, Telegram,
+# Story IG + FB, Reel Instagram + Facebook Reels + draft TikTok. Manual: Actions → "Posting proyek developer" → isi slug.
+# Gambar dibuat di sini (font asli), di-commit ke img/proyek-ig/<slug>/ supaya online, lalu diposting. Status di tools/proyek-post-state.json.
+name: Posting proyek developer
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "slug proyek (mis. the-ease, suvela)"
+        required: true
+      reel:
+        description: "Buat Reel + Facebook Reels + draft TikTok"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Pasang Playwright, Chromium, ffmpeg
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium
+          if ! which ffmpeg; then
+            for i in 1 2 3; do
+              sudo apt-get -o Acquire::Retries=5 update && sudo apt-get -o Acquire::Retries=5 install -y --fix-missing ffmpeg && break
+              sleep 20
+            done
+          fi
+      - name: Buat gambar
+        run: node tools/proyek-post.js render "${{ inputs.slug }}"
+      - name: Commit gambar & picu GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A "img/proyek-ig/${{ inputs.slug }}"
+          if ! git diff --cached --quiet; then
+            git commit -m "Proyek ${{ inputs.slug }}: gambar posting"
+            for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+            gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
+          fi
+      - name: Posting (Instagram, Threads, Facebook, Telegram, Story)
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT: ${{ secrets.TELEGRAM_CHAT }}
+        run: node tools/proyek-post.js post "${{ inputs.slug }}"
+      - name: Reel Instagram
+        if: ${{ inputs.reel }}
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          REEL_KEEP: /tmp/reel-out
+        run: node tools/proyek-post.js reel "${{ inputs.slug }}" || true
+      - name: Draft TikTok
+        if: ${{ inputs.reel }}
+        env:
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+        run: node tools/tiktok-post.js post --dir=/tmp/reel-out || true
+      - name: Facebook Reels
+        if: ${{ inputs.reel }}
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: node tools/fb-reels.js post --dir=/tmp/reel-out || true
+      - name: Simpan status
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for f in tools/proyek-post-state.json tools/tiktok-state.json tools/fb-reels-state.json; do [ -f "$f" ] && git add "$f"; done
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Proyek ${{ inputs.slug }}: status posting"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done

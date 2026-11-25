@@ -34,7 +34,8 @@ const PJ = require("./proyek.js"), pst = rd("tools/proyek-post-state.json"), pro
 const projects = PJ.PROJECTS.map((p) => {
   const c = p.id, ch = {}, ps = (pst.posted || {})[p.slug] || {};
   for (const k of ["ig", "th", "fb", "tg", "reel", "fbr", "story"]) { const x = ps[k]; if (x) ch[k] = x.permalink || x.url || 1; }
-  if (ps.tt) ch.tt = 1;
+  if (ps.tt || (st.tt.posted || {})["proyek-" + p.slug]) ch.tt = 1;
+  const fr = (st.fbr.posted || {})["proyek-" + p.slug]; if (fr && fr.permalink && !ch.fbr) ch.fbr = fr.permalink;
   const r = prow[p.slug] || {};
   return { s: p.slug, t: p.name, d: p.developer, e: c.area, p: (c.apt ? "Apartemen mulai " : "Villa mulai ") + PJ.rpShort(p.priceFrom, "id") + (c.priceCol && /belum/.test(c.priceCol) ? " (belum PPN)" : ""),
     k: c.card, ad: p.added || "", ch, v: r.total || 0, vw: r.week || 0, wa: r.wa || 0, waw: r.waWeek || 0 };
