@@ -11,18 +11,27 @@ API = "https://commons.wikimedia.org/w/api.php?"
 PLACES = [
     # nama, kata kunci pencarian, tempat (ID / EN / RU)
     ("kelingking", "Kelingking beach Nusa Penida", "Pantai Kelingking, Nusa Penida", "Kelingking Beach, Nusa Penida", "Пляж Келингкинг, Нуса-Пенида"),
-    ("sawah", "Tegallalang rice terraces", "Terasering Tegallalang, Ubud", "Tegallalang rice terraces, Ubud", "Рисовые террасы Тегаллаланг, Убуд"),
+    ("sawah", "Tegallalang rice terraces", "Terasering sawah, Bali", "Rice terraces, Bali", "Рисовые террасы, Бали"),
     ("jatiluwih", "Jatiluwih rice terraces", "Sawah Jatiluwih, Tabanan", "Jatiluwih rice terraces, Tabanan", "Рисовые террасы Джатилувих, Табанан"),
     ("ulun-danu", "Pura Ulun Danu Bratan", "Pura Ulun Danu Beratan, Bedugul", "Ulun Danu Beratan Temple, Bedugul", "Храм Улун Дану Братан, Бедугул"),
     ("uluwatu", "Uluwatu cliff temple", "Tebing Uluwatu", "Uluwatu cliffs", "Скалы Улувату"),
     ("batur", "Mount Batur Kintamani", "Gunung Batur, Kintamani", "Mount Batur, Kintamani", "Вулкан Батур, Кинтамани"),
     ("tanah-lot", "Tanah Lot sunset", "Pura Tanah Lot, Tabanan", "Tanah Lot Temple, Tabanan", "Храм Танах Лот, Табанан"),
     ("lempuyang", "Pura Lempuyang gate Agung", "Gerbang Lempuyang & Gunung Agung", "Lempuyang gate & Mount Agung", "Врата Лемпуянг и вулкан Агунг"),
-    ("melasti", "Melasti beach Ungasan", "Pantai Melasti, Ungasan", "Melasti Beach, Ungasan", "Пляж Меласти, Унгасан"),
-    ("padang", "Padang Padang beach Bali", "Pantai Padang Padang, Pecatu", "Padang Padang Beach, Pecatu", "Пляж Паданг-Паданг, Пекату"),
+        ("padang", "Padang Padang beach Bali", "Pesisir Padang Padang, Pecatu", "Padang Padang coast, Pecatu", "Побережье Паданг-Паданг, Пекату"),
 ]
 # Pilihan akhir: nama → judul file Commons (diisi setelah melihat kandidat)
-PICK = {}
+PICK = {
+    "kelingking": "File:Kelingking Beach (T-Rex Bay) of Nusa Penida, Bali (2025) - img 09.jpg",
+    "sawah": "File:Rice terraces, Bali.jpg",
+    "jatiluwih": "File:Jatiluwih rice terraces.jpg",
+    "ulun-danu": "File:Brantan Bali Pura-Ulun-Danu-Bratan-01.jpg",
+    "uluwatu": "File:Cliff at Uluwatu temple, Bali.jpg",
+    "batur": "File:Gunung Batur Kintamani Bali.jpg",
+    "tanah-lot": "File:Burning Sunset at Tanah Lot Wave.jpg",
+    "lempuyang": "File:\"Heaven Gate\" Pura Lempuyang.jpg",
+    "padang": "File:Pantai Padang Padang 3, Bali.jpg",
+}
 
 
 def get(url):
