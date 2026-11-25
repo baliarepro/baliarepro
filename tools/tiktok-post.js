@@ -92,9 +92,8 @@ async function main() {
     for (let i = 0; i < 40 && /PROCESSING/.test(status); i++) {
       await wait(6000);
       let s;
-      // Setelah unggah berhasil, TikTok kadang menjawab "invalid_publish_id" untuk cek status (25 Nov 2026) → video tetap terkirim ke kotak masuk
       try { s = await call("post/publish/status/fetch/", { publish_id: init.publish_id }, token); }
-      catch (e) { if (/invalid_publish_id/.test(e.message) && i >= 2) { status = "UPLOADED"; break; } if (/invalid_publish_id/.test(e.message)) continue; throw e; }
+      catch (e) { if (/invalid_publish_id/.test(e.message) && i < 4) continue; throw e; } // jawaban sementara: coba lagi; tetap → gagal (draft tidak sampai, 25 Nov 2026)
       status = s.status || status;
       if (status === "FAILED") throw new Error("TikTok menolak video: " + (s.fail_reason || "tanpa alasan"));
     }
