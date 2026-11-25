@@ -1,0 +1,88 @@
+/* Tema "glassy" (permintaan pemilik 25 Nov 2026): panel kaca buram di atas foto Bali, warna logo (hijau hutan, krem, emas).
+   Dimuat di semua halaman lewat blok SEO (tools/build-seo.js). Hanya untuk layar: PDF/cetak tetap tema terang bawaan.
+   Token ditimpa dengan selektor html:root:root agar menang atas :root, mode gelap, dan data-theme di tiap halaman. */
+@media screen {
+  html:root:root {
+    --bg: #0B1E19;
+    --surface: rgba(16, 40, 33, .52);
+    --ink: #F3F1EA;
+    --muted: #C3D0C9;
+    --line: rgba(255, 255, 255, .16);
+    --sea: #9FD6BF;
+    --sea-soft: rgba(159, 214, 191, .14);
+    --sand: #E9BE6A;
+    --sand-soft: rgba(217, 164, 65, .16);
+    --sold: #FF8A80;
+    --wa: #1A8D4A;
+    --paper: #12302A;
+    --glass: rgba(255, 255, 255, .08);
+    --glass-strong: rgba(255, 255, 255, .13);
+    --glass-line: rgba(255, 255, 255, .2);
+    --blur: blur(18px) saturate(150%);
+    color-scheme: dark;
+  }
+  html:root:root .pj { --ln: rgba(255, 255, 255, .16); --mut: #C3D0C9; --card: transparent; --fill: rgba(255, 255, 255, .08); --fill2: rgba(255, 255, 255, .12); --body: #D5DED9; --gt: #9FD6BF; --gt2: #E9BE6A; --gold: #E9BE6A; }
+  .pj a:not([class]), main a:not([class]):not(:visited) { color: #9FD6BF; }
+  html { background: #0B1E19; }
+  body { background: transparent !important; color: var(--ink); }
+  body::before {
+    content: ""; position: fixed; inset: -40px; z-index: -2; pointer-events: none;
+    background: #0B1E19 url("/img/bg/bali-sunset.jpg") center 35% / cover no-repeat;
+    filter: blur(14px) saturate(115%); transform: scale(1.04);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background: linear-gradient(180deg, rgba(8, 26, 21, .62) 0%, rgba(8, 26, 21, .78) 45%, rgba(8, 26, 21, .9) 100%);
+  }
+  /* Homepage: foto lebih tajam di hero */
+  body:has(.hero)::before { filter: saturate(110%); transform: none; inset: 0; }
+  body:has(.hero)::after { background: linear-gradient(180deg, rgba(8, 26, 21, .35) 0%, rgba(8, 26, 21, .55) 28%, rgba(8, 26, 21, .86) 60%, rgba(8, 26, 21, .93) 100%); }
+  @media (max-width: 700px) { body::before { background-image: url("/img/bg/bali-sunset-m.jpg"); } }
+
+  /* Panel kaca */
+  .card, .cov article, .feat a.fc, .gd-card, .kc-box, .spec li, .price div, .pt-note, .visits, .cf, .ar-hub a, .ar-links a,
+  section.contact, .cta-duo .cta, .facts, .pj-box, .pj-two article, .pj-feat, .pj-why, .pj-steps li, .pj-pill5 div, .pj-tw, .pj-team div,
+  .cfn, #cf-notify, .nw-card, .news-card, details, .faq details, .calc, .kc, .quick a {
+    background: var(--glass) !important;
+    border: 1px solid var(--glass-line) !important;
+    -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .22);
+  }
+  .card { border-radius: 22px; }
+  /* Menu atas sebagai pil kaca */
+  .home-top, .lp-head {
+    background: var(--glass-strong); border: 1px solid var(--glass-line); border-radius: 999px;
+    -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    padding: 10px 16px !important; margin-top: 16px; box-shadow: 0 10px 34px rgba(0, 0, 0, .2);
+  }
+  .home-top nav a, .lp-head a { color: var(--ink); }
+  .home-top nav a[aria-current="page"] { background: rgba(255, 255, 255, .16); border-radius: 999px; padding: 4px 10px; }
+  @media (max-width: 700px) { .home-top, .lp-head { border-radius: 24px; } }
+  /* Hero */
+  .hero h1, header h1 { text-shadow: 0 2px 28px rgba(0, 0, 0, .3); }
+  .hero .lead, header .lead { color: #E6E1D5; }
+  /* Harga & aksen emas */
+  .hl b, .price .hl b, .feat .fc b, .pj-kv dd.big { color: #F2D28C !important; }
+  /* Kolom isian & chip */
+  input, select, textarea { background: rgba(0, 0, 0, .25) !important; color: var(--ink) !important; border-color: var(--glass-line) !important; }
+  .chip { background: var(--glass) !important; border-color: var(--glass-line) !important; color: var(--ink) !important; -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); }
+  .chip[aria-pressed="true"], .chip.on, .chip.active { background: #F6F2EA !important; color: #123F36 !important; }
+  /* Tabel */
+  table th { background: rgba(255, 255, 255, .08) !important; }
+  /* Garis tebal lama → garis kaca */
+  .facts { border-radius: 20px; border-width: 1px !important; }
+  .facts div + div { border-left-color: var(--glass-line) !important; }
+  footer { color: var(--muted); }
+  .price { background: transparent !important; border-color: var(--glass-line) !important; gap: 0 !important; }
+  .price div + div { border-left: 1px solid var(--glass-line) !important; }
+  .price div { box-shadow: none !important; border: 0 !important; background: rgba(0, 0, 0, .18) !important; }
+  /* Bagian yang dulu memakai --bg (krem) sebagai warna teks */
+  .contact, section.contact { color: var(--ink) !important; }
+  .contact h2 { color: var(--ink) !important; }
+  .contact .btn.ghost { border-color: var(--glass-line) !important; color: var(--ink) !important; }
+  .cta-duo .cta { color: var(--ink) !important; }
+  .cta-duo .cta:not(.owner) { background: rgba(159, 214, 191, .16) !important; }
+}
+@media screen and (prefers-reduced-transparency: reduce) {
+  html:root:root { --glass: rgba(16, 40, 33, .92); --glass-strong: rgba(16, 40, 33, .95); }
+}
