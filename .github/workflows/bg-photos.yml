@@ -4,9 +4,9 @@ name: Foto latar
 on:
   workflow_dispatch:
     inputs:
-      only:
-        description: "nama foto saja (pisah koma), kosong = semua"
-        required: false
+      mode:
+        description: "candidates (kandidat untuk dipilih) atau final"
+        default: "candidates"
 
 permissions:
   contents: write
@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install --quiet pillow
-      - run: python tools/bg-photos.py "${{ inputs.only }}"
+      - run: python tools/bg-photos.py "${{ inputs.mode }}"
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
