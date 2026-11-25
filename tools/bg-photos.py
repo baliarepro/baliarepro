@@ -1,6 +1,6 @@
 # Unduh foto latar alam Bali (lisensi Unsplash, boleh dipakai bebas) → img/bg/<nama>.jpg (1920 px) + <nama>-m.jpg (900 px)
 # dan img/bg/list.json. Dijalankan di GitHub Actions (workflow "Foto latar"), karena container Claude tidak bisa ke Unsplash.
-import io, json, os, sys, urllib.request
+import io, json, os, re, sys, urllib.request
 from PIL import Image, ImageOps
 
 PHOTOS = [
@@ -21,15 +21,22 @@ for name, pid, pid_id, pen, pru in PHOTOS:
     if only and name not in only:
         continue
     try:
-        req = urllib.request.Request(f"https://unsplash.com/photos/{pid}/download?force=true", headers={"User-Agent": "Mozilla/5.0"})
-        data = urllib.request.urlopen(req, timeout=60).read()
+        UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/124 Safari/537.36"}
+        html = urllib.request.urlopen(urllib.request.Request(f"https://unsplash.com/photos/{pid}", headers=UA), timeout=60).read().decode("utf8", "replace")
+        m = re.search(r'<meta[^>]+property="og:image"[^>]+content="([^"]+)"', html) or re.search(r'content="([^"]+)"[^>]+property="og:image"', html)
+        if not m:
+            raise RuntimeError("og:image tidak ditemukan")
+        img = m.group(1).replace("&amp;", "&").split("?")[0] + "?ixlib=rb-4.0.3&fm=jpg&q=85&w=2400"
+        t = re.search(r"<title>([^<]+)</title>", html)
+        by = re.search(r"by ([^|<]+?) on Unsplash", t.group(1)) if t else None
+        data = urllib.request.urlopen(urllib.request.Request(img, headers=UA), timeout=60).read()
         im = ImageOps.exif_transpose(Image.open(io.BytesIO(data))).convert("RGB")
         for suf, w, q in (("", 1920, 74), ("-m", 900, 72)):
             r = im.copy()
             if r.width > w:
                 r = r.resize((w, round(r.height * w / r.width)), Image.LANCZOS)
             r.save(f"img/bg/{name}{suf}.jpg", "JPEG", quality=q, optimize=True, progressive=True)
-        out.append({"n": name, "id": pid_id, "en": pen, "ru": pru, "u": f"https://unsplash.com/photos/{pid}", "w": im.width, "h": im.height})
+        out.append({"n": name, "id": pid_id, "en": pen, "ru": pru, "u": f"https://unsplash.com/photos/{pid}", "by": (by.group(1).strip() if by else ""), "w": im.width, "h": im.height})
         print("ok", name, im.size)
     except Exception as e:
         print("GAGAL", name, e)
