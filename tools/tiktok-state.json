@@ -23,14 +23,14 @@
       "status": "SEND_TO_USER_INBOX",
       "at": "2026-11-24T12:00:36.613Z",
       "caption": "🎥 DIJUAL Tanah 395 m² gandeng di Labuan Sait · Rp4,938 M\ntanah 214 m² + 181 m² · SHM · ITR Holti / P2\n📍 Labuan Sait · Pecatu, Bali\n\n💰 Harga per m²: Rp12.500.000\n💰 Kavling A · 214 m²: Rp2,675 M\n💰 Kavling B · 181 m²: Rp2,263 M\n💰 Gandeng · 395 m²: Rp4,938 M\n\n▫️ Luas tanah: 214 m² + 181 m²\n▫️ Total luas: 395 m²\n▫️ Sertifikat: SHM\n▫️ ITR: Holti / P2\n▫️ Peruntukan: Bisa dibangun, ketentuan khusus\n▫️ Hadap: Utara\n▫️ Akses: Jalan simpangan\n▫️ Lingkungan: Villa & akomodasi wisata\n\n📩 Mau jadwal viewing? DM kami atau WhatsApp Bagoes +62 812 868 080\n🔗 Foto lengkap & PDF: baliareproperty.com (link di bio)\n\n🇬🇧 Two adjoining SHM plots, 214 m² + 181 m², in Labuan Sait, Pecatu–Uluwatu. IDR 12.5M/m²; single plots from IDR 2.263B, both IDR 4.938B. Ask on WhatsApp.\n🇷🇺 Два смежных участка 214 + 181 м², SHM, Лабуан Саит (Пекату–Улувату). 12,5 млн IDR/м²; отдельно от 2,263 млрд IDR, вместе 4,938 млрд IDR. Пишите в WhatsApp.\n\n#tanahbali #uluwatu #baliproperty #balirealestate #propertibali"
-    }
-  },
-  "errors": {
+    },
     "proyek-the-ease": {
-      "msg": "post/publish/status/fetch/: invalid_params invalid_publish_id",
-      "at": "2026-11-25T04:07:26.114Z"
+      "status": "UPLOADED",
+      "at": "2026-11-25T04:07:26.114Z",
+      "note": "unggah berhasil; status TikTok tidak terbaca (invalid_publish_id)"
     }
   },
+  "errors": {},
   "token": {
     "iv": "br8deiQPlyxWN/ll",
     "tag": "ghS8e4CNwFgvBG/q/ALDhg==",
