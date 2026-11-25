@@ -75,14 +75,18 @@ jobs:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           REEL_KEEP: /tmp/reel-out
         run: node tools/proyek-post.js reel "${{ inputs.slug }}" || true
-      - name: Simpan video (unduh untuk TikTok manual)
+      - name: Simpan video di website (unggah TikTok manual)
         if: ${{ inputs.reel }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: reel-${{ inputs.slug }}
-          path: /tmp/reel-out/
-          retention-days: 7
-          if-no-files-found: ignore
+        run: |
+          [ -f /tmp/reel-out/reel.mp4 ] || exit 0
+          cp /tmp/reel-out/reel.mp4 "img/proyek-ig/${{ inputs.slug }}/reel.mp4"
+          node -e "const j=require('/tmp/reel-out/reel.json');require('fs').writeFileSync('img/proyek-ig/${{ inputs.slug }}/tiktok-caption.txt', j.caption.replace(/^🎥 /,''))"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "img/proyek-ig/${{ inputs.slug }}/reel.mp4" "img/proyek-ig/${{ inputs.slug }}/tiktok-caption.txt"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Proyek ${{ inputs.slug }}: video Reel untuk TikTok manual"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
       - name: Draft TikTok
         if: ${{ inputs.reel }}
         env:
