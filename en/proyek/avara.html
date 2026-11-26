@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en" data-static-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: catalog — header + kawasan filter chips, grouped by jenis properti then kawasan, each listing a brochure card; shared contact block at end */
+:root{
+  --bg:#F6F2EA; --surface:#FFFFFF; --ink:#1C2421; --muted:#59625D; --line:#E2DACB;
+  --sea:#123F36; --sea-soft:#E2EBE5; --sand:#946410; --sand-soft:#F6EAD0; --wa:#1A8D4A; --sold:#B3261E;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0B1814; --surface:#12241D; --ink:#EDF0EA; --muted:#A3B1A8; --line:#24392F;
+  --sea:#8CC9AE; --sea-soft:#173528; --sand:#D9A441; --sand-soft:#2E2A1F; --sold:#FF8A80; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:820px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.1}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+
+header{padding-block:44px 20px}
+h1{font-size:clamp(34px,7vw,56px);font-weight:800;letter-spacing:-.02em;margin-top:12px}
+.lead{color:var(--muted);font-size:17px;max-width:58ch;margin:12px 0 0}
+
+.filters{display:grid;gap:14px;margin-top:22px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flabel{flex-basis:100%;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.chip.empty{opacity:.4}
+.chip{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:600 14px var(--body);cursor:pointer}
+.chip small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.chip:focus-visible,.btn:focus-visible{outline:3px solid var(--sand);outline-offset:3px}
+
+.type{padding-block:28px 8px;border-top:2px solid var(--ink);margin-top:20px}
+.type-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.type-head h2{font-size:30px;font-weight:800}
+.type-head span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+.area{padding-block:24px 8px}
+.area-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px}
+.area-head h3{font-size:22px;font-weight:700}
+.area-head p{margin:0;color:var(--muted);font-size:14px}
+article.card[data-status="hidden"]{display:none!important}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px;display:grid;gap:18px}
+.card-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.card h4{font-family:var(--display);font-size:clamp(22px,4.5vw,28px);font-weight:700;margin:4px 0 0;line-height:1.15;text-wrap:balance}
+.card .desc{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.badge{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:var(--sea-soft);color:var(--sea);white-space:nowrap}
+.badge.sand{background:var(--sand-soft);color:var(--ink)}
+
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.price div{background:var(--surface);padding:14px 16px;min-width:0}
+.price small{display:block;font-size:12px;color:var(--muted)}
+.price b{font-family:var(--display);font-size:clamp(19px,4vw,24px);font-weight:700;font-variant-numeric:tabular-nums;display:block}
+.price .hl b{color:var(--sea)}
+.quick{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}.quick a{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--sea);background:var(--sea-soft);color:var(--sea);font-weight:700;font-size:15px;text-decoration:none;transition:transform .15s,filter .15s}.quick a:hover{filter:brightness(1.08);transform:translateY(-1px)}.quick svg{width:18px;height:18px;flex:none}
+.price .fx{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
+
+dl.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
+dl.specs div{padding:10px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+dt{color:var(--muted);font-size:14px}
+dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;min-width:0}
+
+.plot{background:var(--bg);border-radius:12px;padding:12px;overflow-x:auto}
+.plot svg{display:block;width:100%;min-width:300px;height:auto}
+.plot p{font-size:12px;color:var(--muted);margin:6px 0 0}
+
+.card.sold{position:relative;overflow:hidden}
+.sold-stamp{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 16px;border:3px solid var(--sold);border-radius:10px;color:var(--sold);transform:rotate(-6deg);font-family:var(--display);line-height:1;text-align:center;white-space:nowrap}
+.sold-stamp b{font-size:26px;font-weight:800;letter-spacing:.08em}
+.sold-stamp small{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.card.sold .price b{text-decoration:line-through;text-decoration-thickness:2px;opacity:.6}
+.card.sold .price .sold-note b{text-decoration:none;opacity:1;color:var(--sold)}
+.sold-stamp.plain{border-color:var(--muted);color:var(--muted);padding:10px 20px}
+.card.sold-plain .price .sold-note b{color:var(--muted)}
+.card.recommended{border:2px solid var(--sea)}
+.rec-tag{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;justify-self:start;background:var(--sea);color:var(--bg);border-radius:8px;padding:8px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;line-height:1.3}
+.rec-tag svg{width:20px;height:20px;flex:none}
+.rec-tag .rt{display:flex;flex-direction:column;gap:2px}
+.rec-tag b{font-size:13px;white-space:nowrap}
+.rec-tag small{font-size:10px;opacity:.85;white-space:nowrap}
+ul.points{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;font-size:15px}
+ul.points li{position:relative;padding-left:20px;min-width:0}
+ul.points li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;border-radius:2px;background:var(--sea)}
+@media (max-width:560px){ul.points{grid-template-columns:1fr}}
+ul.uses{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+ul.uses li{background:var(--sea-soft);border-radius:8px;padding:6px 12px;font-size:14px;font-weight:500}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;border:0;cursor:pointer;font-family:var(--body)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn.primary{background:var(--sea);color:var(--bg)}
+.btn.wa{background:var(--wa);color:#fff}
+.btn.ghost{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+.btn:hover{filter:brightness(1.08)}
+
+.cta-duo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:22px}
+.cta{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 14px;padding:16px 18px;border-radius:16px;text-decoration:none;background:var(--sea);color:var(--bg)}
+.cta.owner{background:var(--sand-soft);color:var(--ink);border:1.5px solid var(--sand)}
+.cta small{grid-column:1;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.8}
+.cta b{grid-column:1;font-family:var(--display);font-size:21px;line-height:1.15}
+.cta span{grid-column:1;font-size:14px;opacity:.85;line-height:1.4}
+.cta svg{grid-column:2;grid-row:1/3;width:22px;height:22px}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){.cta{transition:filter .15s,transform .15s}.cta:hover{transform:translateY(-1px)}}
+
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.langs{display:flex;gap:10px;margin-left:auto}
+.lang-btn{display:block;width:42px;height:42px;padding:0;border:0;border-radius:50%;overflow:hidden;cursor:pointer;background:transparent;box-shadow:0 0 0 1px var(--line);opacity:.82}
+.lang-btn svg{display:block;width:100%;height:100%}
+.lang-btn:hover{opacity:1}
+.lang-btn[aria-pressed="true"],.lang-btn[aria-current="true"]{opacity:1;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--sea)}
+.lang-btn:focus-visible{outline:2px solid var(--sea);outline-offset:7px}
+@media (prefers-reduced-motion:no-preference){.lang-btn{transition:box-shadow .15s,opacity .15s}}
+
+.card h4 a{color:inherit;text-decoration:none}
+.card h4 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+a.home-link{text-decoration:none}
+a.home-link:hover{text-decoration:underline}
+.contact{background:var(--ink);color:var(--bg);border-radius:18px;padding:26px 22px;margin-block:36px 24px;display:grid;gap:14px}
+.contact h2{color:var(--bg);font-size:26px}
+.contact p{margin:0;opacity:.8}
+.phone{font-family:var(--mono);font-size:clamp(22px,5vw,28px);user-select:all;letter-spacing:.04em}
+.contact .btn.primary{background:var(--sand);color:#1C2421}
+.contact .btn.ghost{border-color:var(--bg);color:var(--bg)}
+footer{font-size:13px;color:var(--muted);padding-block:0 40px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+footer>span{min-width:0}
+.visits{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px}
+.visits svg{width:16px;height:16px;flex:none;color:var(--sea)}
+.visits b{font-variant-numeric:tabular-nums}
+
+@media (max-width:560px){
+  dl.specs{grid-template-columns:1fr}
+  .card{padding:18px}
+}
+@media (prefers-reduced-motion:no-preference){.btn,.chip{transition:filter .15s,background .15s}}
+</style>
+
+<title>Avara Wellness Residences – 8 boutique wellness villas in Bingin, Uluwatu | Bali Are Property</title>
+<!--seo-->
+<meta name="description" content="Avara Wellness Residences (Azari Development Group) – A boutique collection of eight two-bedroom leasehold villas in Bingin on Bali's Bukit Peninsula, designed around privacy, views and a wellness-led lifestyle. Fully furnished and rental-ready at handover.">
+<link rel="canonical" href="https://baliareproperty.com/en/proyek/avara.html">
+<link rel="alternate" hreflang="id" href="https://baliareproperty.com/proyek/avara.html">
+<link rel="alternate" hreflang="en" href="https://baliareproperty.com/en/proyek/avara.html">
+<link rel="alternate" hreflang="ru" href="https://baliareproperty.com/ru/proyek/avara.html">
+<link rel="alternate" hreflang="x-default" href="https://baliareproperty.com/proyek/avara.html">
+<link rel="icon" href="https://baliareproperty.com/favicon.ico" sizes="48x48">
+<link rel="icon" href="https://baliareproperty.com/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="https://baliareproperty.com/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="https://baliareproperty.com/apple-touch-icon.png">
+<link rel="manifest" href="https://baliareproperty.com/site.webmanifest">
+<meta name="theme-color" content="#0B1E19">
+<link rel="stylesheet" href="/glass.css?v=4">
+<script src="/bg.js?v=1" defer></script>
+<script src="/app.js" defer></script>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bali Are Property">
+<meta property="og:title" content="Avara Wellness Residences – 8 boutique wellness villas in Bingin, Uluwatu">
+<meta property="og:description" content="Avara Wellness Residences (Azari Development Group) – A boutique collection of eight two-bedroom leasehold villas in Bingin on Bali's Bukit Peninsula, designed around privacy, views and a wellness-led lifestyle. Fully furnished and rental-ready at handover.">
+<meta property="og:url" content="https://baliareproperty.com/en/proyek/avara.html">
+<meta property="og:image" content="https://baliareproperty.com/img/proyek/avara/1.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"RealEstateAgent","@id":"https://baliareproperty.com/#agent","name":"Bali Are Property","url":"https://baliareproperty.com/","telephone":"+62812868080","image":"https://baliareproperty.com/og.png","logo":"https://baliareproperty.com/logo.png","areaServed":{"@type":"Place","name":"Bali, Indonesia"},"address":{"@type":"PostalAddress","streetAddress":"Jl. Sedap Malam No.18, Sanur Kaja","addressLocality":"Denpasar Selatan, Denpasar","addressRegion":"Bali","postalCode":"80237","addressCountry":"ID"},"hasMap":"https://www.google.com/maps?cid=18329018382978472684","sameAs":["https://www.google.com/maps?cid=18329018382978472684","https://www.instagram.com/bali.are/","https://www.threads.com/@bali.are","https://www.facebook.com/682981281566061","https://t.me/baliareproperty","https://www.tiktok.com/@baliarepro","https://whatsapp.com/channel/0029VbD8IGrEgGfNYeVYfD3J"]},{"@type":"Residence","name":"Avara Wellness Residences","description":"A boutique collection of eight two-bedroom leasehold villas in Bingin on Bali's Bukit Peninsula, designed around privacy, views and a wellness-led lifestyle. Fully furnished and rental-ready at handover.","url":"https://baliareproperty.com/en/proyek/avara.html","image":["https://baliareproperty.com/img/proyek/avara/1.jpg","https://baliareproperty.com/img/proyek/avara/2.jpg","https://baliareproperty.com/img/proyek/avara/3.jpg","https://baliareproperty.com/img/proyek/avara/4.jpg","https://baliareproperty.com/img/proyek/avara/5.jpg","https://baliareproperty.com/img/proyek/avara/6.jpg","https://baliareproperty.com/img/proyek/avara/7.jpg","https://baliareproperty.com/img/proyek/avara/8.jpg","https://baliareproperty.com/img/proyek/avara/9.jpg","https://baliareproperty.com/img/proyek/avara/10.jpg","https://baliareproperty.com/img/proyek/avara/11.jpg","https://baliareproperty.com/img/proyek/avara/12.jpg"],"address":{"@type":"PostalAddress","addressLocality":"Canggu","addressRegion":"Bali","addressCountry":"ID"},"offers":{"@type":"AggregateOffer","priceCurrency":"IDR","lowPrice":3931182000,"availability":"https://schema.org/LimitedAvailability","seller":{"@id":"https://baliareproperty.com/#agent"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bali Are Property","item":"https://baliareproperty.com/en/"},{"@type":"ListItem","position":2,"name":"Developer Projects","item":"https://baliareproperty.com/en/proyek.html"},{"@type":"ListItem","position":3,"name":"Avara Wellness Residences","item":"https://baliareproperty.com/en/proyek/avara.html"}]}]}</script>
+<!--/seo-->
+<style>
+/* Homepage: hero lebar, lalu bagian-bagian bertumpuk; memakai token warna & font yang sama dengan halaman listing */
+.wrap.home{max-width:1040px}
+.home-top{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;padding-block:22px 0}
+.home-top nav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-left:auto}
+.home-top nav a{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.home-top nav a:hover{color:var(--sea)}
+.home-top .langs{margin-left:0}
+.hero{padding-block:56px 40px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(38px,7.2vw,72px);font-weight:800;letter-spacing:-.025em;line-height:1.02}
+.hero .lead{font-size:clamp(17px,2.2vw,20px);max-width:52ch;margin:0}
+.hero .actions{margin-top:8px}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1.5px solid var(--ink);margin-bottom:12px}
+.facts div{padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.facts div+div{border-left:1px solid var(--line)}
+.facts b{font-family:var(--display);font-size:clamp(20px,3vw,28px);line-height:1.1;color:var(--sea)}
+.facts span{font-size:14px;color:var(--muted)}
+.hsec{padding-block:44px 8px;display:grid;gap:22px}
+.hsec h2{font-size:clamp(26px,4vw,36px);font-weight:700;letter-spacing:-.01em}
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:22px 48px;align-items:start}
+.about .text{display:grid;gap:14px;max-width:64ch}
+.about .text p{margin:0}
+.about .text p:first-child{font-size:18px}
+.more-link{color:var(--sea);font-weight:600;text-decoration:none}
+.more-link:hover{text-decoration:underline}
+.spec{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.spec li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 18px 18px 44px;position:relative;font-weight:600;line-height:1.35}
+.spec li::before{content:"";position:absolute;left:18px;top:24px;width:12px;height:12px;border-radius:3px;background:var(--sand);transform:rotate(45deg)}
+.cov{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cov article{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.cov h3{font-size:24px}
+.cov ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cov li{background:var(--sea-soft);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:500}
+.cov .more{font-size:14px;color:var(--muted);margin:0}
+.cov a{margin-top:auto;color:var(--sea);font-weight:600;text-decoration:none}
+.cov a:hover{text-decoration:underline}
+.note{color:var(--muted);margin:0;max-width:70ch}
+.feat-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.feat-head a{color:var(--sea);font-weight:600;text-decoration:none}
+.pjh{display:grid;grid-template-columns:1.3fr 1fr;border-radius:18px;overflow:hidden;background:#123F36;color:#F6F2EA;text-decoration:none;min-height:260px}
+.pjh img{width:100%;height:100%;object-fit:cover;display:block}
+.pjh>span{display:flex;flex-direction:column;justify-content:center;gap:10px;padding:28px}
+.pjh .eyebrow{color:#D9A441;font-size:11px}
+.pjh b{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.05}
+.pjh em{font-style:normal;color:#D9A441;font-weight:600;margin-top:6px}
+@media (max-width:700px){.pjh{grid-template-columns:1fr}.pjh img{height:220px}}
+.feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.feat a.fc{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;text-decoration:none;color:var(--ink)}
+.feat a.fc:hover{border-color:var(--sea)}
+.feat .fc .eyebrow{font-size:11px}
+.feat .fc h3{font-size:19px;line-height:1.2;font-weight:700}
+.feat .fc b{margin-top:auto;font-family:var(--display);font-size:20px;color:var(--sea);font-variant-numeric:tabular-nums}
+.band{background:var(--sea-soft);color:var(--ink);border-radius:20px;padding:32px 26px;margin-top:44px;display:grid;gap:18px}
+.band p{margin:0;font-family:var(--display);font-size:clamp(24px,3.8vw,34px);font-weight:700;line-height:1.15;max-width:28ch;text-wrap:balance}
+.band .cta-duo{margin-top:0}
+@media (max-width:760px){
+  .about{grid-template-columns:1fr}
+  .spec,.feat{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cov{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .spec,.feat{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+  .facts div+div{border-left:0;border-top:1px solid var(--line)}
+  .hero{padding-block:36px 28px}
+}
+</style>
+<style>
+.gd-hero{padding-block:56px 28px;display:grid;gap:14px;max-width:760px}
+.gd-hero h1{font-size:clamp(34px,6.4vw,60px);font-weight:800;letter-spacing:-.025em;line-height:1.04}
+.gd-hero p{margin:0;font-size:18px;color:var(--muted);max-width:60ch}
+.gd-sec{font-size:clamp(22px,3vw,28px);margin:28px 0 14px}
+.gd-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.gd-card{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;text-decoration:none;color:var(--ink)}
+.gd-card:hover{border-color:var(--sea)}
+.gd-card.first{grid-column:1/-1;background:var(--sea-soft);border-color:transparent}
+.gd-card.first h2{font-size:clamp(26px,3.6vw,34px)}
+.gd-card h2{font-size:clamp(20px,2.6vw,24px);line-height:1.2}
+.gd-card p{margin:0;color:var(--muted)}
+.gd-card .go{margin-top:auto;color:var(--sea);font-weight:600}
+.tag{display:inline-flex;align-self:flex-start;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+.art{max-width:720px;padding-block:28px 0;display:grid;gap:16px}
+.crumbs{font-size:14px;margin-top:20px}
+.crumbs a{color:var(--sea);font-weight:600;text-decoration:none}
+.art h1{font-size:clamp(30px,5.4vw,50px);font-weight:800;letter-spacing:-.02em;line-height:1.08}
+.art .meta{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
+.art .lead{font-size:19px;margin:0;color:var(--ink)}
+.art .body{display:grid;gap:14px;border-top:1.5px solid var(--ink);padding-top:22px;font-size:17px;line-height:1.7}
+.art .body h2{font-size:clamp(21px,2.8vw,26px);margin-top:14px}
+.art .body p{margin:0}
+.art .body ul{margin:0;padding-left:22px;display:grid;gap:8px}
+.art .body li::marker{color:var(--sand)}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;width:100%;font-size:15px;min-width:440px}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+.tbl th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.tbl td:nth-child(2){font-family:var(--display);font-weight:700;color:var(--sea);font-variant-numeric:tabular-nums}
+.tbl td:nth-child(3){font-variant-numeric:tabular-nums}
+.art .note{background:var(--sand-soft);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--ink)}
+.src{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:8px;font-size:14px}
+.src h2{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.src ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.src a{color:var(--sea);word-break:break-word}
+@media (max-width:760px){.gd-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-listing="proyek-avara">
+<div class="wrap home">
+  <div class="home-top">
+    <a class="eyebrow home-link" href="../"><svg class="bap-mark" viewBox="0 0 120 120" aria-hidden="true" style="width:32px;height:32px;vertical-align:-10px;margin-right:10px"><path d="M12 100V86h6V72h6V58h6V44h6V30h6V18h12v82zM108 100V86h-6V72h-6V58h-6V44h-6V30h-6V18H66v82z" fill="currentColor"/><circle cx="60" cy="44" r="7" fill="#D6BC84"/><path d="M8 110q13-7 26 0t26 0 26 0 26 0" fill="none" stroke="#D6BC84" stroke-width="6" stroke-linecap="round"/></svg>Bali Are Property</a>
+    <nav aria-label="Menu">
+      <a href="../about.html">About</a>
+      <a href="../listings.html">Listings</a>
+      <a href="../proyek.html" aria-current="page">Projects</a>
+      <a href="../news.html">News</a>
+      <a href="../guide.html">Guide</a>
+      <a href="../faq.html">FAQ</a>
+      <a href="#kontak">Contact</a>
+    </nav>
+    <div class="langs" role="group" aria-label="Pilih bahasa / Language">
+        <a class="lang-btn" data-lang="id" hreflang="id" href="../../proyek/avara.html" aria-label="Bahasa Indonesia" aria-current="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="18" fill="#CE1126"></rect><rect y="18" width="36" height="18" fill="#FFFFFF"></rect></svg></a>
+        <a class="lang-btn" data-lang="en" hreflang="en" href="avara.html" aria-label="English" aria-current="true"><svg viewBox="15 0 30 30" aria-hidden="true"><clipPath id="ukc"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"></path></clipPath><rect width="60" height="30" fill="#012169"></rect><path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" stroke-width="6"></path><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc)" stroke="#C8102E" stroke-width="4"></path><path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" stroke-width="10"></path><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"></path></svg></a>
+        <a class="lang-btn" data-lang="ru" hreflang="ru" href="../../ru/proyek/avara.html" aria-label="Русский" aria-current="false"><svg viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="12" fill="#FFFFFF"></rect><rect y="12" width="36" height="12" fill="#0039A6"></rect><rect y="24" width="36" height="12" fill="#D52B1E"></rect></svg></a>
+      </div>
+  </div>
+  <style>
+.pj{--g:#123F36;--gold:#946410;--gold2:#D9A441;--ln:#E2DACB;--mut:#59625D;--card:#fff;--fill:#F0EADF;--fill2:#EDE6D8;--body:#3B4541;--gt:#123F36;--gt2:#7A520C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pj{--ln:#24392F;--mut:#A3B1A8;--card:#12241D;--fill:#173528;--fill2:#24392F;--body:#C9D3CC;--gt:#8CC9AE;--gt2:#D9A441;--gold:#D9A441}}
+:root[data-theme="dark"] .pj{--ln:#24392F;--mut:#A3B1A8;--card:#12241D;--fill:#173528;--fill2:#24392F;--body:#C9D3CC;--gt:#8CC9AE;--gt2:#D9A441;--gold:#D9A441}
+.pj h1,.pj h2,.pj h3,.pj h4{color:inherit}
+.pj h2{font-family:"Bricolage Grotesque",Arial,sans-serif}
+.pj-hero{background:var(--g);color:#F6F2EA;border-radius:22px;padding:44px 36px;margin:18px 0 26px;display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end}
+.pj-hero .eyebrow{color:var(--gold2)}
+.pj-hero h1{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:clamp(34px,5vw,54px);line-height:1.03;margin:10px 0 12px;color:#F6F2EA}
+.pj-hero p{color:#DCE7E1;max-width:620px;margin:0;font-size:17px}
+.pj-feat+.pj-feat{margin-top:18px}
+.pj-feat{display:flex;flex-wrap:wrap;background:var(--card);border:1px solid var(--ln);border-radius:22px;overflow:hidden;text-decoration:none;color:inherit}
+.pj-feat .ph{flex:1 1 520px;min-height:340px;position:relative;background:var(--fill2)}
+.pj-feat .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pj-feat .tx{flex:1 1 380px;padding:30px;display:flex;flex-direction:column;gap:14px}
+.pj-badge{display:inline-block;background:var(--g);color:#F6F2EA;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px}
+.pj-badge.l{background:#F6F2EA;color:#123F36}
+.pj-ph-tags{position:absolute;top:16px;left:16px;display:flex;gap:8px;flex-wrap:wrap}
+.pj-dev{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.pj-feat h2,.pj-h1{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:clamp(28px,3.4vw,38px);line-height:1.06;margin:4px 0 0}
+.pj-kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;border-top:1px solid var(--ln);padding-top:14px;margin:0}
+.pj-kv dt{font-size:12px;color:var(--mut)}.pj-kv dd{margin:2px 0 0;font-weight:600}
+.pj-kv dd.big{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)}
+.pj-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;background:var(--g);color:#F6F2EA;text-decoration:none;font-weight:600}
+.pj-btn.wa{background:#1F8F55;color:#fff}.pj-btn.o{background:transparent;border:1.5px solid var(--gt);color:var(--gt)}.pj-btn.gold{background:var(--gold2);color:#123F36;font-weight:700}
+.pj-why{background:var(--card);border:1px solid var(--ln);border-radius:22px;padding:30px;margin-top:34px;display:flex;flex-wrap:wrap;gap:28px}
+.pj-why>div:first-child{flex:1 1 280px}.pj-why .gr{flex:2 1 480px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.pj-why b{display:block}.pj-why span{font-size:14px;color:var(--mut)}
+.pj-dev-cta{background:var(--g);color:#F6F2EA;border-radius:22px;padding:34px;margin-top:34px;display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between}
+.pj-dev-cta h2{color:#F6F2EA;font-size:28px;margin:8px 0}.pj-dev-cta p{color:#DCE7E1;margin:0;max-width:640px}
+.pj-dhero{position:relative;border-radius:22px;overflow:hidden;min-height:440px;display:flex;align-items:flex-end;background:#1B1612;margin:16px 0 0}
+.pj-dhero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7}
+.pj-dhero .in{position:relative;padding:34px;color:#F6F2EA}
+.pj-dhero h1{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:clamp(48px,8vw,84px);line-height:.95;margin:10px 0 12px;color:#fff;letter-spacing:-.02em}
+.pj-dhero p{font-size:19px;max-width:640px;margin:0 0 18px;color:#F3ECE0}
+.pj-dhero .eyebrow{color:#E9C27A}
+.pj-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--g);color:#F6F2EA;border-radius:0 0 18px 18px;margin-bottom:30px}
+.pj-stats div{padding:18px 20px;border-right:1px solid #2C5A4F}.pj-stats div:last-child{border:0}
+.pj-stats b{display:block;font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:26px}.pj-stats span{font-size:13px;color:#B9CCC4}
+.pj-cols{display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start}
+.pj-main{flex:999 1 600px;min-width:0;display:flex;flex-direction:column;gap:40px}
+.pj-side{flex:1 1 300px;min-width:0;position:sticky;top:70px;display:flex;flex-direction:column;gap:14px}
+.pj-box{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:22px}
+.pj-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.pj-two article{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.pj-two h3{font-family:"Bricolage Grotesque",Arial,sans-serif;font-size:24px;margin:0;line-height:1.15}
+.pj-two p{margin:0;font-size:15px;color:var(--body)}
+.pj-tw{overflow-x:auto;border:1px solid var(--ln);border-radius:16px;background:var(--card)}
+.pj-tw table{width:100%;border-collapse:collapse;font-size:15px;min-width:600px}
+.pj-tw th{background:var(--fill);text-align:left;padding:12px 16px;font-weight:600}.pj-tw td{padding:12px 16px;border-top:1px solid var(--ln)}
+.pj-st{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:#F6EAD0;color:#7A520C;white-space:nowrap}.pj-st.s{background:var(--fill2);color:var(--mut)}
+.pj-note{font-size:13px;color:var(--mut);margin:10px 0 0}
+.pj-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.pj-steps li{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:16px}.pj-steps li:last-child{background:var(--g);color:#F6F2EA;border-color:var(--gt)}
+.pj-steps small{font-family:"JetBrains Mono",monospace;color:var(--gold)}.pj-steps li:last-child small{color:var(--gold2)}
+.pj-steps b{display:block;margin-top:4px}.pj-steps span{font-size:14px;color:var(--mut)}.pj-steps li:last-child span{color:#DCE7E1}
+.pj-pill5{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.pj-pill5 div{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:16px}
+.pj-pill5 small{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.pj-pill5 b{display:block;margin:6px 0 4px}.pj-pill5 span{font-size:13px;color:var(--mut)}
+.pj-band{margin-top:14px;background:var(--g);color:#F6F2EA;border-radius:16px;padding:18px 22px;display:flex;flex-wrap:wrap;gap:8px 20px}
+.pj-band em{font-style:normal;font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2)}
+.pj-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.pj-gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;display:block}
+.pj-team{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:16px;overflow:hidden;margin:0}
+.pj-team div{background:var(--card);padding:14px 16px}.pj-team dt{font-size:12px;color:var(--mut)}.pj-team dd{margin:2px 0 0;font-weight:600}
+.pj-side .pj-btn{width:100%;box-sizing:border-box}
+@media(max-width:700px){.pj-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.pj-stats div:nth-child(2){border-right:0}.pj-hero,.pj-dhero .in{padding:26px 20px}.pj-side{position:static}}
+</style>
+  <div class="pj">
+  <p class="crumbs"><a href="../proyek.html">← Developer Projects</a></p>
+  <section class="pj-dhero"><img src="../../img/proyek/avara/1.jpg" alt="Avara Wellness Residences"><div class="in">
+    <div class="eyebrow">Azari Development Group · Bingin, Pecatu – Uluwatu</div><h1>Avara Wellness Residences</h1><p>A boutique collection of eight two-bedroom leasehold villas in Bingin on Bali's Bukit Peninsula, designed around privacy, views and a wellness-led lifestyle. Fully furnished and rental-ready at handover.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="pj-badge l">8 boutique villas</span><span class="pj-badge l">Leasehold</span><span class="pj-badge l">Fully furnished</span><span class="pj-badge" style="background:var(--gold2);color:#123F36">Target completion Q3 2027</span><span class="pj-badge">Limited units</span></div></div></section>
+  <div class="pj-stats"><div><b>8</b><span>boutique villas</span></div><div><b>2 BR</b><span>every villa</span></div><div><b>±9 min</b><span>to the beach</span></div><div><b>US$221,500</b><span>starting price</span></div></div>
+  <div class="pj-cols"><div class="pj-main">
+    <section><h2>Unit options</h2><div class="pj-two"><article><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="pj-dev">Villa</span><span class="pj-badge l" style="border:1px solid var(--ln)">Leasehold</span></div>
+      <h3>8 villas, 2 bedrooms</h3><p>Three types, each with a private pool: Type A with tree-top &amp; ocean-horizon views, a private rooftop and sauna; Type B with ocean-horizon views; Type C with the largest footprint, jungle/greenbelt views and a rooftop terrace.</p>
+      <dl class="pj-kv"><div><dt>Land size</dt><dd>96.9–161 m²</dd></div><div><dt>Building size</dt><dd>81.5–185 m²</dd></div><div><dt>From</dt><dd class="big">IDR 3.93B</dd></div><div><dt>Status</dt><dd style="color:var(--gt2)">Limited units</dd></div></dl></article></div></section>
+    <section><h2>Unit types &amp; prices</h2><div class="pj-tw"><table><thead><tr><th scope="col">Type</th><th scope="col">Bedrooms</th><th scope="col">Land / building</th><th scope="col">Price (discounted)</th><th scope="col">Status</th></tr></thead><tbody><tr><td><b>Type A · rooftop + sauna</b></td><td>2</td><td>100 / 136 m²</td><td style="font-weight:700;color:var(--gt)">US$263,000–270,000 (IDR 4.67–4.79B)</td><td><span class="pj-st">Limited units</span></td></tr><tr><td><b>Type B · ocean horizon</b></td><td>2</td><td>96.9 / 81.5 m²</td><td style="font-weight:700;color:var(--gt)">US$221,500–226,500 (IDR 3.93–4.02B)</td><td><span class="pj-st">Limited units</span></td></tr><tr><td><b>Type C · jungle view</b></td><td>2</td><td>161 / 185 m²</td><td style="font-weight:700;color:var(--gt)">US$330,000 (IDR 5.86B)</td><td><span class="pj-st">Limited units</span></td></tr></tbody></table></div><p class="pj-note">Prices from the developer's October 2026 agent update, already discounted; prices in USD, rupiah figures from the developer. Premium positions are slightly higher. Excludes buyer's taxes, notary and PT PMA set-up costs. Prices rise with construction progress and may change at any time.</p></section>
+    <section><h2>Payment plan</h2><ol class="pj-steps"><li><small>01</small><b>10% deposit</b><span>Refundable within 30 days</span></li><li><small>02</small><b>30% · Foundation complete</b><span>Linked to construction progress</span></li><li><small>03</small><b>20% · Walls erected</b><span>Linked to construction progress</span></li><li><small>04</small><b>20% · Roof installation</b><span>Linked to construction progress</span></li><li><small>05</small><b>15% · Interior &amp; fixtures</b><span>Linked to construction progress</span></li><li><small>06</small><b>5% · Handover</b><span>Scheduled for end of September 2027</span></li></ol><p class="pj-note">The payment plan follows construction progress at the time of purchase (developer terms). Construction started in June 2026 and was around 25% complete as of October 2026.</p></section>
+    <section><h2>Gallery</h2><div class="pj-gal"><img src="../../img/proyek/avara/2.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/3.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/4.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/5.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/6.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/7.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/8.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/9.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/10.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/11.jpg" alt="Avara Wellness Residences" loading="lazy"><img src="../../img/proyek/avara/12.jpg" alt="Avara Wellness Residences" loading="lazy"></div><p class="pj-note">Renders and illustrations are the developer's artist impressions.</p></section>
+    <section><h2>Why Avara</h2><p style="margin:-6px 0 14px;color:var(--body)">Boutique villas designed to perform as rentals from day one.</p><div class="pj-pill5"><div><small>Location</small><b>Bingin, Uluwatu</b><span>One of the most sought-after short-term rental corridors on the Bukit Peninsula.</span></div><div><small>View</small><b>Ocean horizon</b><span>Ocean or jungle views; Types A &amp; C with a rooftop.</span></div><div><small>Wellness</small><b>Gym next door</b><span>A fully equipped gym right next to the estate; sauna in Type A.</span></div><div><small>Community</small><b>Established estate</b><span>The last plot in a fully developed villa community, with no neighbouring construction.</span></div></div>
+      <div class="pj-band"><em>Included</em><span>Fully furnished</span><span style="color:#4E7A6E">·</span><span>Rental-ready</span><span style="color:#4E7A6E">·</span><span>Legal &amp; PT PMA set-up</span><span style="color:#4E7A6E">·</span><span>Buyer support through to handover</span></div></section>
+    <section><h2>Villa features &amp; specifications</h2><div class="pj-two"><article><h3 style="font-size:18px">Villa types</h3><ul style="margin:0;padding-left:18px;font-size:14px;color:var(--body)"><li>Type A: 100 m² land, 136 m² build, large pool, private rooftop + sauna</li><li>Type B: 96.9 m² land, 81.5 m² build, private pool</li><li>Type C: 161 m² land, 185 m² build (incl. rooftop), large pool; optional sauna or BBQ</li></ul></article><article><h3 style="font-size:18px">Materials &amp; services</h3><ul style="margin:0;padding-left:18px;font-size:14px;color:var(--body)"><li>Marble, natural stone, granite, teak wood</li><li>Bespoke furniture &amp; luxury sanitary fixtures</li><li>Fully furnished, rental-ready</li><li>Legal &amp; PT PMA set-up handled by the developer</li></ul></article></div></section>
+    
+    
+  </div>
+  <aside class="pj-side">
+    <div class="pj-box" style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><div style="font-size:12px;color:var(--mut)">From</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:24px;font-weight:700;color:var(--gt)">IDR 3.93B</div></div></div>
+      <div style="font-size:13px;color:var(--mut)">Developer pricing, already discounted</div>
+      <a class="pj-btn wa" href="https://wa.me/62812868080?text=Hi%20Bagoes%2C%20I'm%20interested%20in%20the%20Avara%20Wellness%20Residences%20project.%20Could%20you%20send%20the%20price%20list%2C%20brochure%20and%20location%20details%3F" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"/></svg>Get price list &amp; brochure</a>
+      <a class="pj-btn o" href="https://wa.me/62812868080?text=Hi%20Bagoes%2C%20I'd%20like%20to%20book%20a%20show-unit%20visit%20for%20Avara%20Wellness%20Residences." target="_blank" rel="noopener">Book a show-unit visit</a>
+      <a href="../kalkulator.html?harga=3931182000" style="text-align:center;font-weight:600">Calculate buying costs →</a>
+    </div>
+    <div class="pj-box"><b>Location</b><p style="margin:6px 0 10px;font-size:14px;color:var(--body)">Bingin, Pecatu – Uluwatu. We share the exact location, site plan and show-unit visit times directly on WhatsApp.</p><ul style="margin:0 0 10px;padding-left:18px;font-size:14px;color:var(--body)"><li>±2 min to cafes &amp; restaurants</li><li>±5 min to the golf course</li><li>±9 min to the beach</li><li>±35 min to the airport</li></ul><a href="https://wa.me/62812868080?text=Hi%20Bagoes%2C%20could%20you%20share%20the%20location%20of%20Avara%20Wellness%20Residences%3F" target="_blank" rel="noopener" style="font-weight:600">Ask for the location on WhatsApp →</a></div>
+    <div class="pj-box" style="background:var(--g);color:#F6F2EA;border-color:var(--gt)"><div style="font-size:12px;color:#B9CCC4">Developer</div><div style="font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:20px;font-weight:700">Azari Development Group</div><div style="font-size:13px;color:#DCE7E1">Azari Development Group — developer of Avara Wellness Residences, Bingin.</div></div>
+  </aside></div>
+  <p class="pj-note" style="margin-top:34px;border-top:1px solid var(--ln);padding-top:14px">Information from the developer's marketing materials (brochure, specifications and price list). Renders and illustrations are artist impressions. Please confirm availability on WhatsApp before reserving.</p>
+  </div>
+  <div id="kontak"><section class="contact" aria-labelledby="c-head">
+    <div class="eyebrow" style="color:var(--sand)">Info &amp; site visits</div>
+    <h2 id="c-head">Bali Are Property</h2>
+    <div class="phone" id="phone" data-noi18n="">0812 868 080</div>
+    <div class="actions">
+      <a class="btn primary" href="https://wa.me/62812868080?text=Hello%20Pak%20Bagoes%2C%20I'd%20like%20information%20about%20your%20property%20listings." target="_blank" rel="noopener" data-href-id="https://wa.me/62812868080?text=Halo%20Pak%20Bagoes%2C%20saya%20ingin%20info%20listing%20properti.">Chat on WhatsApp</a>
+      <button class="btn ghost" id="copy" type="button">Copy number</button>
+    </div>
+    <div class="actions">
+      <a class="btn ghost" href="inquiry.html#buyer">Property request form</a>
+      <a class="btn ghost" href="inquiry.html#owner">Owner listing form</a>
+    </div>
+    <p class="follow-l" style="margin:6px 0 0;font-size:14px;opacity:.85">Follow new listings &amp; property news:</p>
+    <div class="actions">
+      <a class="btn ghost" href="https://whatsapp.com/channel/0029VbD8IGrEgGfNYeVYfD3J" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.4-4.2A8 8 0 1 1 8.6 19z"></path></svg><span data-noi18n="">WhatsApp Channel</span></a>
+      <a class="btn ghost" href="https://t.me/baliareproperty" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4L3 11l6 2 2 6 3-4 5 4z"></path><path d="M9 13l12-9"></path></svg><span data-noi18n="">Telegram</span></a>
+      <a class="btn ghost" href="https://www.google.com/maps?cid=18329018382978472684" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg><span>Google Maps &amp; reviews</span></a>
+      <a class="btn ghost" href="https://search.google.com/local/writereview?placeid=ChIJISU0EPtB0i0R7FoJpxvBXf4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg><span>Review us on Google</span></a>
+    </div>
+  </section></div>
+  <footer><span>© 2009–2026 Bali Are Property · Prices may change at any time. Sketches are illustrations only; official data follows the land certificate.</span></footer>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var done=function(){btn.textContent='Nomor disalin';setTimeout(function(){btn.textContent='Salin nomor'},1800)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(document.getElementById('phone'));var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Nomor terpilih, tekan salin'};
+    try{navigator.clipboard.writeText('0812868080').then(done,sel)}catch(e){sel()}
+  });
+})();
+</script>
+<script src="../../i18n.js"></script>
+<script src="/views.js" defer></script>
+</body>
+</html>
