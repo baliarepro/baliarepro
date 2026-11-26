@@ -43,7 +43,7 @@ function caption(p, opts = {}) {
   L.push(c.card);
   L.push(`📍 ${c.area}, Bali · developer ${p.developer}`, "");
   p.rows.forEach((r) => L.push(`💰 ${c.rowNames[r.k]}${/KT/.test(c.rowNames[r.k]) ? "" : ` (${r.beds} KT)`}: ${r.status === "sold" ? "Terjual" : (typeof r.price === "object" ? r.price.id : r.price)}`));
-  L.push(exVat(c) ? "Harga peluncuran belum termasuk PPN 11%. Harga dapat berubah." : "Harga termasuk PPN, unit fully furnished. Harga dapat berubah.", "");
+  L.push(c.postNote || (exVat(c) ? "Harga peluncuran belum termasuk PPN 11%. Harga dapat berubah." : "Harga termasuk PPN, unit fully furnished. Harga dapat berubah."), "");
   ((c.feats && c.feats[0] && c.feats[0][1]) || []).slice(0, 4).forEach((x) => L.push(`✨ ${x}`));
   if (c.pay) L.push("", "💳 " + c.pay.slice(0, 3).map((s) => `${s[0]}: ${s[1].split(",")[0]}`).join(" · "));
   if (c.rental) L.push(`📈 Proyeksi sewa dari developer: villa ${c.rental.villa}; apartemen ${c.rental.apt} (proyeksi, bukan jaminan hasil & bukan nasihat investasi)`);
@@ -106,7 +106,7 @@ function slides(p) {
   if (!ph.length) throw new Error("Foto proyek belum ada di img/proyek/" + p.slug);
   out.push(`<div class="full" style="background-image:url('${uri(ph[0])}')"></div><div class="shade"></div>${top("Proyek baru")}
 <div class="low"><div class="dev">${esc(p.developer)} · ${esc(c.area)}</div><h1>${esc(p.name)}</h1><div class="sub">${esc(c.tagline)}</div>
-<div class="price"><b>${esc(PJ.rpShort(p.priceFrom, "id"))}</b><span>${esc(fromLabel(p).toLowerCase())}${exVat(c) ? " · belum PPN" : " · termasuk PPN"}</span></div><span class="pill">Unit terbatas</span></div>`);
+<div class="price"><b>${esc(PJ.rpShort(p.priceFrom, "id"))}</b><span>${esc(fromLabel(p).toLowerCase())}${exVat(c) ? " · belum PPN" : c.priceTag != null ? c.priceTag : " · termasuk PPN"}</span></div><span class="pill">Unit terbatas</span></div>`);
   const labels = [c.stats ? c.stats[0] : null];
   ph.slice(1, 5).forEach((f, i) => {
     const st = (c.stats || [])[i];
@@ -114,7 +114,7 @@ function slides(p) {
   });
   out.push(`<div class="pad">${top("")}<div class="dev" style="margin-top:20px">${esc(p.name)} · ${esc(c.area)}</div><h2>Tipe unit & harga</h2>
 <table>${p.rows.map((r) => `<tr><td><b>${esc(c.rowNames[r.k])}</b><small>${esc(r.beds)} kamar tidur · ${esc(r.size)}</small></td>${r.status === "sold" ? '<td class="s">Terjual</td>' : `<td class="p">${esc(typeof r.price === "object" ? r.price.id : r.price)}</td>`}</tr>`).join("")}</table>
-<div class="note">${esc(exVat(c) ? "Harga peluncuran dari price list developer, belum termasuk PPN 11%." : "Harga termasuk PPN, unit fully furnished.")} Harga dapat berubah. Unit terbatas.</div></div>`);
+<div class="note">${esc(c.postNote || ((exVat(c) ? "Harga peluncuran dari price list developer, belum termasuk PPN 11%." : "Harga termasuk PPN, unit fully furnished.") + " Harga dapat berubah."))} Unit terbatas.</div></div>`);
   const feats = ((c.feats && c.feats[0] && c.feats[0][1]) || []).slice(0, 5);
   out.push(`<div class="pad">${top("")}<div class="dev" style="margin-top:20px">${esc(p.name)}</div><h2>${esc(c.feats ? c.feats[0][0] : "Fasilitas")}</h2>
 <ul>${feats.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>

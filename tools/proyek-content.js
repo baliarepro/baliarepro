@@ -184,6 +184,8 @@ const PROJECTS = [
       priceCol: "Harga (sudah diskon)",
       priceNote: "Harga dari update agen developer Oktober 2026, sudah termasuk diskon; harga dalam USD, angka rupiah dari developer. Unit posisi premium sedikit lebih tinggi. Belum termasuk pajak pembeli, notaris, dan biaya pendirian PT PMA. Harga naik mengikuti progres pembangunan dan dapat berubah sewaktu-waktu.",
       direct: "Harga langsung dari developer, sudah diskon",
+      priceTag: " · harga sudah diskon",
+      postNote: "Harga dari developer (Okt 2026), sudah diskon, dalam USD. Belum termasuk pajak pembeli & notaris. Harga naik mengikuti progres pembangunan.",
       pay: [["Deposit 10%", "Dapat dikembalikan dalam 30 hari"], ["30% · Fondasi selesai", "Sesuai progres pembangunan"], ["20% · Dinding berdiri", "Sesuai progres pembangunan"], ["20% · Pemasangan atap", "Sesuai progres pembangunan"], ["15% · Interior & fixture", "Sesuai progres pembangunan"], ["5% · Serah terima", "Target akhir September 2027"]],
       payNote: "Skema pembayaran mengikuti progres pembangunan pada saat pembelian (ketentuan developer). Pembangunan dimulai Juni 2026 dan sekitar 25% selesai per Oktober 2026.",
       pillH: "Kenapa Avara", pillP: "Villa butik yang dirancang untuk disewakan sejak hari pertama.",
