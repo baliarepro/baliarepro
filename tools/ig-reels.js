@@ -173,7 +173,12 @@ async function main() {
     const pool = live.filter((l) => l !== next);
     const fresh = pool.filter((l) => !tt[l.slug]).sort((x, y) => (state.posted[x.slug] ? 0 : 1) - (state.posted[y.slug] ? 0 : 1));
     const old = pool.filter((l) => tt[l.slug] && Date.now() - Date.parse(tt[l.slug].at) >= 14 * 864e5).sort((x, y) => tt[x.slug].at.localeCompare(tt[y.slug].at));
-    live = [...fresh, ...old];
+    // Antrean prioritas (permintaan pemilik 26 Nov 2026): tools/tiktok-queue.json {slug: "waktu masuk antrean"} didahulukan
+    // sampai draft TikTok-nya terkirim setelah waktu itu (antrean bersih sendiri, tanpa perlu ditulis ulang).
+    const q = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, "tools/tiktok-queue.json"), "utf8")); } catch (e) { return {}; } })();
+    const queued = Object.keys(q).sort((a, b) => String(q[a]).localeCompare(String(q[b])))
+      .map((s) => all.find((l) => l.slug === s)).filter((l) => l && !l.hidden && !l.sold && photosOf(l.slug).length >= 2 && (!tt[l.slug] || tt[l.slug].at < q[l.slug]));
+    live = [...queued, ...[...fresh, ...old].filter((l) => !queued.includes(l))];
   }
   if (FB_BACKLOG && !want) {
     // Facebook Reels susulan (permintaan pemilik 23 Nov 2026): listing yang Reel IG-nya sudah tayang tapi belum ada di Facebook, urut Reel IG terlama
