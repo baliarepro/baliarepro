@@ -976,7 +976,7 @@ code{background:var(--green-soft);padding:1px 5px;border-radius:5px;font-size:14
   function projectMsg(p) {
     var c = p.id, exVat = c.priceCol && /belum/i.test(c.priceCol);
     var L = ["🏗️ *PROYEK BARU – " + p.name + "*", "_" + c.tagline + "_", "📍 " + c.area + ", Bali · developer " + p.developer, "", c.card, ""];
-    p.rows.forEach(function (r) { L.push("💰 " + c.rowNames[r.k] + ": " + (r.status === "sold" ? "Terjual" : "*" + r.price + "*")); });
+    p.rows.forEach(function (r) { L.push("💰 " + c.rowNames[r.k] + ": " + (r.status === "sold" ? "Terjual" : "*" + (typeof r.price === "object" ? r.price.id : r.price) + "*")); });
     L.push(exVat ? "_Harga belum termasuk PPN 11%._" : "_Harga termasuk PPN, fully furnished._", "");
     ((c.feats && c.feats[0] && c.feats[0][1]) || []).slice(0, 3).forEach(function (x) { L.push("✨ " + x); });
     L.push("", "🔒 Unit terbatas · price list, lokasi & jadwal show unit via WhatsApp", "", "🔗 Detail proyek (3 bahasa):", BASE + "proyek/" + p.slug + ".html", "", "📲 Bagoes – Bali Are Property", "WA: wa.me/62812868080");

@@ -86,7 +86,7 @@ const rpShort = (n, L) => {
   return L === "id" ? "Rp" + v.replace(".", ",") + " M" : L === "ru" ? v.replace(".", ",") + " млрд IDR" : "IDR " + v + "B";
 };
 const priceTxt = (s, L) => (L === "id" ? s : L === "en" ? s.replace("Rp", "IDR ").replace(/ – /, "–").replace(/(\d),(\d+) M/g, "$1.$2B").replace(/(\d),(\d+)/g, "$1.$2") : s.replace("Rp", "").replace(/ M$/, " млрд IDR").replace(/ – /, "–"));
-const COMPLETION = { id: (q) => q.replace("Q1 ", "Kuartal 1 "), en: (q) => q, ru: (q) => q.replace("Q1 ", "1 кв. ") };
+const COMPLETION = { id: (q) => q.replace(/Q(\d) /, "Kuartal $1 "), en: (q) => q, ru: (q) => q.replace(/Q(\d) /, "$1 кв. ") };
 
 function imagesOf(root, slug) {
   const dir = path.join(root, "img/proyek", slug);
@@ -203,7 +203,7 @@ function renderProyekHub(o) {
 function renderProyek(o) {
   const { L, esc, project: p, root } = o, t = P[L], c = p[L];
   const imgs = imagesOf(root, p.slug).map((x) => (L === "id" ? "../" : "../../") + x);
-  const row = (r) => `<tr><td><b>${esc(c.rowNames[r.k])}</b></td><td>${esc(r.beds)}</td><td>${esc(L === "ru" ? r.size.replace(/m²/g, "м²").replace("net", "чистая") : r.size)}</td><td style="font-weight:700;color:var(--gt)">${r.price ? esc(priceTxt(r.price, L)) : "–"}</td><td><span class="pj-st${r.status === "sold" ? " s" : ""}">${esc(r.status === "sold" ? t.sold : t.limited)}</span></td></tr>`;
+  const row = (r) => `<tr><td><b>${esc(c.rowNames[r.k])}</b></td><td>${esc(r.beds)}</td><td>${esc(L === "ru" ? r.size.replace(/m²/g, "м²").replace("net", "чистая") : L === "en" ? r.size.replace(/(\d),(\d)/g, "$1.$2") : r.size)}</td><td style="font-weight:700;color:var(--gt)">${r.price ? esc(typeof r.price === "object" ? r.price[L] : priceTxt(r.price, L)) : "–"}</td><td><span class="pj-st${r.status === "sold" ? " s" : ""}">${esc(r.status === "sold" ? t.sold : t.limited)}</span></td></tr>`;
   const prod = (x, from) => `<article><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="pj-dev">${x === c.villa ? "Villa" : APT[L]}</span>${x.own ? `<span class="pj-badge l" style="border:1px solid var(--ln)">${esc(x.own)}</span>` : ""}</div>
       <h3>${esc(x.h)}</h3><p>${esc(x.p)}</p>
       <dl class="pj-kv"><div><dt>${esc(x.a)}</dt><dd>${esc(x.av)}</dd></div><div><dt>${esc(x.b)}</dt><dd>${esc(x.bv)}</dd></div><div><dt>${esc(t.from)}</dt><dd class="big">${esc(rpShort(from, L))}</dd></div><div><dt>Status</dt><dd style="color:var(--gt2)">${esc(t.limited)}</dd></div></dl></article>`;

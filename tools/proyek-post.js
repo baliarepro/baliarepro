@@ -42,7 +42,7 @@ function caption(p, opts = {}) {
   L.push(`🏗️ PROYEK BARU · ${p.name} – ${c.area.split(",")[0]} · ${priceLine(p)}`);
   L.push(c.card);
   L.push(`📍 ${c.area}, Bali · developer ${p.developer}`, "");
-  p.rows.forEach((r) => L.push(`💰 ${c.rowNames[r.k]}${/KT/.test(c.rowNames[r.k]) ? "" : ` (${r.beds} KT)`}: ${r.status === "sold" ? "Terjual" : r.price}`));
+  p.rows.forEach((r) => L.push(`💰 ${c.rowNames[r.k]}${/KT/.test(c.rowNames[r.k]) ? "" : ` (${r.beds} KT)`}: ${r.status === "sold" ? "Terjual" : (typeof r.price === "object" ? r.price.id : r.price)}`));
   L.push(exVat(c) ? "Harga peluncuran belum termasuk PPN 11%. Harga dapat berubah." : "Harga termasuk PPN, unit fully furnished. Harga dapat berubah.", "");
   ((c.feats && c.feats[0] && c.feats[0][1]) || []).slice(0, 4).forEach((x) => L.push(`✨ ${x}`));
   if (c.pay) L.push("", "💳 " + c.pay.slice(0, 3).map((s) => `${s[0]}: ${s[1].split(",")[0]}`).join(" · "));
@@ -113,7 +113,7 @@ function slides(p) {
     out.push(`<div class="full" style="background-image:url('${uri(f)}')"></div><div class="corner">${R.MARK}<span>${esc(p.name)}</span></div>${st ? `<div class="cap">${esc(st[0])} · ${esc(st[1])}</div>` : ""}`);
   });
   out.push(`<div class="pad">${top("")}<div class="dev" style="margin-top:20px">${esc(p.name)} · ${esc(c.area)}</div><h2>Tipe unit & harga</h2>
-<table>${p.rows.map((r) => `<tr><td><b>${esc(c.rowNames[r.k])}</b><small>${esc(r.beds)} kamar tidur · ${esc(r.size)}</small></td>${r.status === "sold" ? '<td class="s">Terjual</td>' : `<td class="p">${esc(r.price)}</td>`}</tr>`).join("")}</table>
+<table>${p.rows.map((r) => `<tr><td><b>${esc(c.rowNames[r.k])}</b><small>${esc(r.beds)} kamar tidur · ${esc(r.size)}</small></td>${r.status === "sold" ? '<td class="s">Terjual</td>' : `<td class="p">${esc(typeof r.price === "object" ? r.price.id : r.price)}</td>`}</tr>`).join("")}</table>
 <div class="note">${esc(exVat(c) ? "Harga peluncuran dari price list developer, belum termasuk PPN 11%." : "Harga termasuk PPN, unit fully furnished.")} Harga dapat berubah. Unit terbatas.</div></div>`);
   const feats = ((c.feats && c.feats[0] && c.feats[0][1]) || []).slice(0, 5);
   out.push(`<div class="pad">${top("")}<div class="dev" style="margin-top:20px">${esc(p.name)}</div><h2>${esc(c.feats ? c.feats[0][0] : "Fasilitas")}</h2>
