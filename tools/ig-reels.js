@@ -198,7 +198,7 @@ async function main() {
     if (process.env.REEL_KEEP) { // salinan untuk draft TikTok (tools/tiktok-post.js, langkah berikutnya di reels.yml)
       fs.mkdirSync(process.env.REEL_KEEP, { recursive: true });
       fs.copyFileSync(v.file, path.join(process.env.REEL_KEEP, "reel.mp4"));
-      fs.writeFileSync(path.join(process.env.REEL_KEEP, "reel.json"), JSON.stringify({ slug: l.slug, caption: cap, noTiktok: FB_BACKLOG, noFb: TT_ONLY }));
+      fs.writeFileSync(path.join(process.env.REEL_KEEP, "reel.json"), JSON.stringify({ slug: l.slug, caption: cap, noTiktok: FB_BACKLOG || !!process.env.NO_TIKTOK, noFb: TT_ONLY }));
     }
     if (NO_IG) { console.log("Video disiapkan untuk " + (TT_ONLY ? "TikTok" : "Facebook Reels") + " saja."); return; }
     const r = await upload(v.file, cap, { igId, token, api: IG.api, ready: IG.ready });

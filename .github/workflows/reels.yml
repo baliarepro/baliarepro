@@ -28,6 +28,11 @@ on:
         type: boolean
         required: false
         default: false
+      no_tiktok:
+        description: "Jangan kirim draft TikTok (mis. TikTok lewat antrean tools/tiktok-queue.json)"
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -66,6 +71,7 @@ jobs:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           REEL_KEEP: /tmp/reel-out
           TIKTOK_ONLY: ${{ (inputs.tiktok_only || github.event.schedule == '37 3 * * *') && '1' || '' }}
+          NO_TIKTOK: ${{ inputs.no_tiktok && '1' || '' }}
           FB_BACKLOG: ${{ (inputs.fb_backlog || github.event.schedule == '7 5 * * *' || github.event.schedule == '37 8 * * *') && '1' || '' }}
         run: |
           if [ -n "${{ inputs.slug }}" ]; then node tools/ig-reels.js post --slug=${{ inputs.slug }}; else node tools/ig-reels.js post; fi
