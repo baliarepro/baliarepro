@@ -1,85 +1,90 @@
 {
-  "items": [
-    {
-      "id": "ig-caption-lama",
-      "text": "Edit caption 10 posting IG lama ke format baru (halaman \"Edit Caption Instagram\" di chat Claude: salin → buka posting → ⋯ Edit → tempel).",
-      "added": "2026-11-09",
-      "done": "2026-11-20T20:06:39.881Z"
-    },
-    {
-      "id": "ig-link-bio",
-      "text": "Pastikan link di bio Instagram @bali.are mengarah ke baliareproperty.com (semua caption IG menyebut \"link di bio\").",
-      "added": "2026-11-09",
-      "done": "2026-11-20T20:06:30.063Z"
-    },
-    {
-      "id": "fb-page",
-      "text": "Aktifkan posting otomatis Facebook Page: beri akses Page ke token Meta (izin pages_show_list, pages_read_engagement, pages_manage_posts), lalu simpan token sebagai secret GitHub FB_PAGE_TOKEN. Minta Claude memandu.",
-      "added": "2026-11-09",
-      "done": "2026-11-10"
-    },
-    {
-      "id": "gbp",
-      "text": "Buat/klaim Google Business Profile \"Bali Are Property\" di business.google.com (teks profil, kategori & layanan ada di dokumen Project \"claude/google-business-profile.md\"), lalu verifikasi.",
-      "added": "2026-11-09",
-      "done": "2026-11-23"
-    },
-    {
-      "id": "lokasi-sangeh",
-      "text": "Konfirmasi lokasi villa view sawah \"dekat Ubud\": masuk Sangeh/Abiansemal (Badung) atau Gianyar? Kabari Claude bila perlu dipindah.",
-      "added": "2026-11-09",
-      "done": "2026-11-09"
-    },
-    {
-      "id": "foto-hd",
-      "text": "Kirim foto asli resolusi tinggi (bukan dari WhatsApp) untuk villa 2 KT Ungasan dan villa view sawah Sangeh, bila ada.",
-      "added": "2026-11-09",
-      "done": "2026-11-23T10:19:39.452Z"
-    },
-    {
-      "id": "gsc-indexing",
-      "text": "Search Console → URL inspection → Request indexing untuk 2 villa baru (Ungasan 2 KT & view sawah dekat Ubud). Akhir November kirim screenshot menu Performance & Pages ke Claude.",
-      "added": "2026-11-09",
-      "done": "2026-11-10"
-    },
-    {
-      "id": "portal",
-      "text": "Hubungi Rumah123 / Lamudi / 99.co soal bulk upload / XML feed (draf pesan sudah dibuat Claude). Kirim jawabannya ke Claude.",
-      "added": "2026-11-09"
-    },
-    {
-      "id": "tiktok",
-      "text": "Putuskan TikTok: A (full otomatis, perlu review TikTok) atau B (dikirim ke draft, Bapak tinggal pilih lagu & posting).",
-      "added": "2026-11-09",
-      "done": "2026-11-23"
-    },
-    {
-      "id": "gsc-laporan",
-      "text": "Akhir November: kirim screenshot Search Console menu Performance & Pages ke Claude untuk dibaca (kata kunci & listing yang paling banyak dicari).",
-      "added": "2026-11-10"
-    },
-    {
-      "id": "musik-reels",
-      "text": "Unduh 4–6 lagu instrumental bebas royalti dari Pixabay Music (daftar dari Claude) lalu kirim filenya ke Claude, untuk musik latar Reels otomatis.",
-      "added": "2026-11-10",
-      "done": "2026-11-10"
-    },
-    {
-      "id": "telegram-bot",
-      "text": "Telegram otomatis: buat bot di @BotFather (/newbot), jadikan bot admin channel t.me/baliareproperty (izin Post messages), lalu simpan token bot sebagai secret GitHub TELEGRAM_BOT_TOKEN (Settings → Secrets → Actions). Jangan kirim token di chat.",
-      "added": "2026-11-20",
-      "done": "2026-11-20"
-    },
-    {
-      "id": "gbp-isi",
-      "text": "Google Business Profile: pastikan sudah terverifikasi, lalu lengkapi jam buka, logo, foto sampul, 5–10 foto listing, Layanan, dan Deskripsi (teks di dokumen Project \"claude/google-business-profile.md\"). Kirim link \"Minta ulasan\" (g.page/r/…) ke Claude.",
-      "added": "2026-11-23",
-      "done": "2026-11-23T10:19:29.658Z"
-    },
-    {
-      "id": "tiktok-app",
-      "text": "TikTok: aplikasi \"Bali Are Poster\" sudah diajukan review (23 Nov 2026). Bila email persetujuan datang: kabari Claude, kirim Client Key Production, ganti secret TIKTOK_CLIENT_KEY/SECRET ke Production, lalu login ulang di baliareproperty.com/tiktok.html. Sementara itu tiap hari ±10.37 & ±18.07 WIB ada draft video di kotak masuk TikTok: tambah lagu + caption (Salin caption di tab Status), posting ±11.30–12.30 & ±19.30–20.30 WIB.",
-      "added": "2026-11-23"
-    }
-  ]
+ "items": [
+  {
+   "id": "ig-caption-lama",
+   "text": "Edit caption 10 posting IG lama ke format baru (halaman \"Edit Caption Instagram\" di chat Claude: salin → buka posting → ⋯ Edit → tempel).",
+   "added": "2026-11-09",
+   "done": "2026-11-20T20:06:39.881Z"
+  },
+  {
+   "id": "ig-link-bio",
+   "text": "Pastikan link di bio Instagram @bali.are mengarah ke baliareproperty.com (semua caption IG menyebut \"link di bio\").",
+   "added": "2026-11-09",
+   "done": "2026-11-20T20:06:30.063Z"
+  },
+  {
+   "id": "fb-page",
+   "text": "Aktifkan posting otomatis Facebook Page: beri akses Page ke token Meta (izin pages_show_list, pages_read_engagement, pages_manage_posts), lalu simpan token sebagai secret GitHub FB_PAGE_TOKEN. Minta Claude memandu.",
+   "added": "2026-11-09",
+   "done": "2026-11-10"
+  },
+  {
+   "id": "gbp",
+   "text": "Buat/klaim Google Business Profile \"Bali Are Property\" di business.google.com (teks profil, kategori & layanan ada di dokumen Project \"claude/google-business-profile.md\"), lalu verifikasi.",
+   "added": "2026-11-09",
+   "done": "2026-11-23"
+  },
+  {
+   "id": "lokasi-sangeh",
+   "text": "Konfirmasi lokasi villa view sawah \"dekat Ubud\": masuk Sangeh/Abiansemal (Badung) atau Gianyar? Kabari Claude bila perlu dipindah.",
+   "added": "2026-11-09",
+   "done": "2026-11-09"
+  },
+  {
+   "id": "foto-hd",
+   "text": "Kirim foto asli resolusi tinggi (bukan dari WhatsApp) untuk villa 2 KT Ungasan dan villa view sawah Sangeh, bila ada.",
+   "added": "2026-11-09",
+   "done": "2026-11-23T10:19:39.452Z"
+  },
+  {
+   "id": "gsc-indexing",
+   "text": "Search Console → URL inspection → Request indexing untuk 2 villa baru (Ungasan 2 KT & view sawah dekat Ubud). Akhir November kirim screenshot menu Performance & Pages ke Claude.",
+   "added": "2026-11-09",
+   "done": "2026-11-10"
+  },
+  {
+   "id": "portal",
+   "text": "Hubungi Rumah123 / Lamudi / 99.co soal bulk upload / XML feed (draf pesan sudah dibuat Claude). Kirim jawabannya ke Claude.",
+   "added": "2026-11-09"
+  },
+  {
+   "id": "tiktok",
+   "text": "Putuskan TikTok: A (full otomatis, perlu review TikTok) atau B (dikirim ke draft, Bapak tinggal pilih lagu & posting).",
+   "added": "2026-11-09",
+   "done": "2026-11-23"
+  },
+  {
+   "id": "gsc-laporan",
+   "text": "Akhir November: kirim screenshot Search Console menu Performance & Pages ke Claude untuk dibaca (kata kunci & listing yang paling banyak dicari).",
+   "added": "2026-11-10"
+  },
+  {
+   "id": "musik-reels",
+   "text": "Unduh 4–6 lagu instrumental bebas royalti dari Pixabay Music (daftar dari Claude) lalu kirim filenya ke Claude, untuk musik latar Reels otomatis.",
+   "added": "2026-11-10",
+   "done": "2026-11-10"
+  },
+  {
+   "id": "telegram-bot",
+   "text": "Telegram otomatis: buat bot di @BotFather (/newbot), jadikan bot admin channel t.me/baliareproperty (izin Post messages), lalu simpan token bot sebagai secret GitHub TELEGRAM_BOT_TOKEN (Settings → Secrets → Actions). Jangan kirim token di chat.",
+   "added": "2026-11-20",
+   "done": "2026-11-20"
+  },
+  {
+   "id": "gbp-isi",
+   "text": "Google Business Profile: pastikan sudah terverifikasi, lalu lengkapi jam buka, logo, foto sampul, 5–10 foto listing, Layanan, dan Deskripsi (teks di dokumen Project \"claude/google-business-profile.md\"). Kirim link \"Minta ulasan\" (g.page/r/…) ke Claude.",
+   "added": "2026-11-23",
+   "done": "2026-11-23T10:19:29.658Z"
+  },
+  {
+   "id": "tiktok-app",
+   "text": "TikTok: aplikasi \"Bali Are Poster\" sudah diajukan review (23 Nov 2026). Bila email persetujuan datang: kabari Claude, kirim Client Key Production, ganti secret TIKTOK_CLIENT_KEY/SECRET ke Production, lalu login ulang di baliareproperty.com/tiktok.html. Sementara itu tiap hari ±10.37 & ±18.07 WIB ada draft video di kotak masuk TikTok: tambah lagu + caption (Salin caption di tab Status), posting ±11.30–12.30 & ±19.30–20.30 WIB.",
+   "added": "2026-11-23"
+  },
+  {
+   "id": "tiktok-production",
+   "text": "TikTok: cek status review aplikasi \"Bali Are Poster\" di developers.tiktok.com. Selama masih Sandbox, draft otomatis tidak sampai ke HP; setelah disetujui kabari Claude untuk ganti ke key Production.",
+   "added": "2026-11-27"
+  }
+ ]
 }
