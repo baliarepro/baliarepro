@@ -42,7 +42,7 @@ function caption(p, opts = {}) {
   L.push(`🏗️ PROYEK BARU · ${p.name} – ${c.area.split(",")[0]} · ${priceLine(p)}`);
   L.push(c.card);
   L.push(`📍 ${c.area}, Bali · developer ${p.developer}`, "");
-  p.rows.forEach((r) => L.push(`💰 ${c.rowNames[r.k]}${/KT/.test(c.rowNames[r.k]) ? "" : ` (${r.beds} KT)`}: ${r.status === "sold" ? "Terjual" : (typeof r.price === "object" ? r.price.id : r.price)}`));
+  p.rows.forEach((r) => L.push(`💰 ${c.rowNames[r.k]}${/KT/.test(c.rowNames[r.k]) || !/\d/.test(r.beds) ? "" : ` (${r.beds} KT)`}: ${r.status === "sold" ? "Terjual" : (typeof r.price === "object" ? r.price.id : r.price)}`));
   L.push(c.postNote || (exVat(c) ? "Harga peluncuran belum termasuk PPN 11%. Harga dapat berubah." : "Harga termasuk PPN, unit fully furnished. Harga dapat berubah."), "");
   ((c.feats && c.feats[0] && c.feats[0][1]) || []).slice(0, 4).forEach((x) => L.push(`✨ ${x}`));
   if (c.pay) L.push("", "💳 " + c.pay.slice(0, 3).map((s) => `${s[0]}: ${s[1].split(",")[0]}`).join(" · "));
