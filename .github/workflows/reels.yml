@@ -80,6 +80,15 @@ jobs:
           TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
           TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
         run: node tools/tiktok-post.js post --dir=/tmp/reel-out || true
+      - name: Simpan video TikTok (unggah manual)
+        # Selama aplikasi TikTok masih sandbox, draft inbox tidak sampai ke HP pemilik (27 Nov 2026):
+        # simpan video + caption di img/tiktok/ (4 terbaru) supaya bisa diunduh & diunggah manual.
+        run: |
+          [ -f /tmp/reel-out/reel.json ] || exit 0
+          node -e 'const m=require("/tmp/reel-out/reel.json");if(m.noTiktok)process.exit(1);require("fs").writeFileSync("/tmp/reel-out/slug",m.slug);require("fs").writeFileSync("/tmp/reel-out/cap.txt",m.caption)' || exit 0
+          S=$(cat /tmp/reel-out/slug); mkdir -p img/tiktok
+          cp /tmp/reel-out/reel.mp4 "img/tiktok/$S.mp4"; cp /tmp/reel-out/cap.txt "img/tiktok/$S.txt"
+          ls -t img/tiktok/*.mp4 | tail -n +5 | while read f; do rm -f "$f" "${f%.mp4}.txt"; done
       - name: Kirim ke Facebook Reels
         env:
           FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
@@ -93,6 +102,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for f in tools/reels-state.json tools/tiktok-state.json tools/fb-reels-state.json; do [ -f "$f" ] && git add "$f"; done
+          git add -A img/tiktok 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Reels: perbarui status posting"
           for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
