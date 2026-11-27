@@ -7,6 +7,11 @@ module.exports = {
     id: { t: "Dijual Tanah Ocean View 456 m² depan New Kuta Golf, Pecatu Bali", d: "Tanah 456 m² SHM zona pariwisata, ocean & sunset view, depan New Kuta Golf. ±500 m ke Pantai Balangan. Rp1,7 M/are, total Rp7,752 M nego. Tanya via WhatsApp." },
     en: { t: "456 m² Ocean-View Land for Sale by New Kuta Golf, Pecatu, Bali", d: "456 m² SHM plot, tourism zoning, ocean & sunset views, facing New Kuta Golf; ±500 m to Balangan Beach. IDR 1.7B/are, total IDR 7.752B, negotiable. WhatsApp us." },
     ru: { t: "Продажа участка 456 м² с видом на океан у New Kuta Golf, Пекату", d: "Участок 456 м², SHM, туристическая зона, вид на океан и закат, напротив New Kuta Golf; ±500 м до пляжа Баланган. 1,7 млрд IDR/ар, всего 7,752 млрд, торг. WhatsApp." } },
+  "tanah-1310-m2-jalan-utama-dharmawangsa-nusa-dua": {
+    id: { t: "Dijual Tanah 1.310 m² Jalan Utama Dharmawangsa, Nusa Dua Bali", d: "Tanah 13,1 are di Jl. Dharmawangsa, ±500 m dari Poltekpar (STP) Nusa Dua. Zona perdagangan & jasa, lebar 15 m. Rp7,5 jt/m², total Rp9,825 M. Tanya via WhatsApp." },
+    en: { t: "1,310 m² Main-Road Land for Sale on Dharmawangsa, Nusa Dua, Bali", d: "13.1 are on Jl. Dharmawangsa, ±500 m from Poltekpar (STP) Nusa Dua. Trade & services zoning, 15 m frontage. IDR 7.5M/m², total IDR 9.825B. WhatsApp us." },
+    ru: { t: "Продажа участка 1 310 м² на главной дороге, Нуса-Дуа, Бали", d: "13,1 ара на Jl. Dharmawangsa, ±500 м от Poltekpar (STP) Нуса-Дуа. Зона торговли и услуг, фасад 15 м. 7,5 млн IDR/м², всего 9,825 млрд IDR. Пишите в WhatsApp." }
+  },
   "tanah-di-banjar-kulu-tampaksiring": {
     id: { t: "Dijual Tanah 369 m² (2 Kavling) di Tampaksiring, Gianyar Bali", d: "2 kavling 184 + 185 m² SHM di Banjar Kulu, Tampaksiring, lebar ±12 m, hadap selatan, siap bangun. Rp3,5 jt/m², total Rp1,29 M. Dekat Ubud. Info & survei via WhatsApp." },
     en: { t: "369 m² Land (2 Plots) for Sale in Tampaksiring, Gianyar, Bali", d: "Two SHM plots, 184 + 185 m², in Banjar Kulu, Tampaksiring; ±12 m frontage, south-facing, ready to build. IDR 3.5M/m², total IDR 1.29B. Near Ubud. Ask on WhatsApp." },
