@@ -12,6 +12,11 @@ module.exports = {
     en: { t: "1,310 m² Main-Road Land for Sale on Dharmawangsa, Nusa Dua, Bali", d: "13.1 are on Jl. Dharmawangsa, ±500 m from Poltekpar (STP) Nusa Dua. Trade & services zoning, 15 m frontage. IDR 7.5M/m², total IDR 9.825B. WhatsApp us." },
     ru: { t: "Продажа участка 1 310 м² на главной дороге, Нуса-Дуа, Бали", d: "13,1 ара на Jl. Dharmawangsa, ±500 м от Poltekpar (STP) Нуса-Дуа. Зона торговли и услуг, фасад 15 м. 7,5 млн IDR/м², всего 9,825 млрд IDR. Пишите в WhatsApp." }
   },
+  "villa-2-kamar-private-pool-300-m-ke-pantai-berawa": {
+    id: { t: "Dijual Villa 2 Kamar Private Pool 300 m ke Pantai Berawa, Bali", d: "Villa 2 KT fully furnished, private pool, tanah 145 m², bangunan 160 m², SHM + PBG & SLF, zona pink, ±300 m ke Pantai Berawa. Rp5 M nego atau leasehold 25 th Rp4,5 M." },
+    en: { t: "2-Bedroom Pool Villa for Sale 300 m from Berawa Beach, Bali", d: "Fully furnished 2BR villa, private pool, 145 m² land, 160 m² built, SHM + PBG & SLF, pink zone, ±300 m to Berawa Beach. IDR 5B (neg.) or 25-yr leasehold IDR 4.5B." },
+    ru: { t: "Продажа виллы с 2 спальнями и бассейном у пляжа Берава, Бали", d: "Меблированная вилла, 2 спальни, бассейн, участок 145 м², дом 160 м², SHM + PBG и SLF, ±300 м до пляжа Берава. 5 млрд IDR (торг) или аренда 25 лет 4,5 млрд." }
+  },
   "tanah-di-banjar-kulu-tampaksiring": {
     id: { t: "Dijual Tanah 369 m² (2 Kavling) di Tampaksiring, Gianyar Bali", d: "2 kavling 184 + 185 m² SHM di Banjar Kulu, Tampaksiring, lebar ±12 m, hadap selatan, siap bangun. Rp3,5 jt/m², total Rp1,29 M. Dekat Ubud. Info & survei via WhatsApp." },
     en: { t: "369 m² Land (2 Plots) for Sale in Tampaksiring, Gianyar, Bali", d: "Two SHM plots, 184 + 185 m², in Banjar Kulu, Tampaksiring; ±12 m frontage, south-facing, ready to build. IDR 3.5M/m², total IDR 1.29B. Near Ubud. Ask on WhatsApp." },
