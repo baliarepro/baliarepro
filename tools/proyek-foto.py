@@ -65,7 +65,7 @@ def images_from(path):
         return out
     try:
         im = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
-        if im.width >= 1200: out.append((0, im))
+        if im.width >= int(os.environ.get("MIN_W") or 1200): out.append((0, im))
     except Exception:
         pass
     return out
